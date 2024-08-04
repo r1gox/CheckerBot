@@ -198,7 +198,7 @@ $message = "!".$data."";
 
 
 $date = time();
-$fn = "Admins";
+$fn = "Admins.json";
 $fp = fopen($fn, 'r+');
 $users = json_decode(file_get_contents($fn), true);
 
@@ -249,7 +249,7 @@ unlink("cookie.txt");
 
 
 $date = time();
-$fn = "Admins";
+$fn = "Admins.json";
 $fp = fopen($fn, 'r+');
 
 
@@ -311,7 +311,7 @@ die();
 
 
 $date = time();
-$fn = "users";
+$fn = "users.json";
 $fp = fopen($fn, 'r+');
 $users = file_get_contents($fn);
 $users = json_decode($users, true);
