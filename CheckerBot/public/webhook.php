@@ -34,6 +34,32 @@ $user = $update["from"]["username"];
 $admin = "D4rkGh0st3";
 
 
+
+
+// Configuración de mensajes
+$max_messages = 3; // Máximo de mensajes permitidos
+$wait_time = 45;   // Tiempo de espera en segundos
+
+// Inicializa la sesión para el usuario
+if (!isset($_SESSION['users'][$id])) {
+    $_SESSION['users'][$id] = [
+        'message_count' => 0,
+        'first_message_time' => time(),
+    ];
+}
+
+// Verifica si ha pasado el tiempo de espera
+if (time() - $_SESSION['users'][$id]['first_message_time'] > $wait_time) {
+    // Reinicia el contador si ha pasado el tiempo de espera
+    $_SESSION['users'][$id]['message_count'] = 0;
+    $_SESSION['users'][$id]['first_message_time'] = time();
+}
+
+// Función para enviar mensajes
+function sendMessage($chatID, $respuesta) {
+    $url = $GLOBALS["website"] . "/sendMessage?chat_id=" . $chatID . "&parse_mode=HTML&text=" . urlencode($respuesta);
+    file_get_contents($url);
+}
 //-----DATOS DE PRUEBA LOCAL--------//
 /*
 $id = "1292171163";
