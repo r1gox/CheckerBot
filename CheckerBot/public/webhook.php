@@ -10,9 +10,9 @@ header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
 header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 header("Pragma: no-cache");
 
-include("config.php");
+//include("config.php");
 //------TOKEN DEL BOT MIKASA ACKERMAN--------//
-//$token = "5405339405:AAG0kGkeN-8VueVsI2JCLQbHI3wYSnfoG7Y";
+$token = "5405339405:AAG0kGkeN-8VueVsI2JCLQbHI3wYSnfoG7Y";
 
 $website = "https://api.telegram.org/bot".$token;
 $data = file_get_contents("php://input");
@@ -193,12 +193,12 @@ $Users_premium = array(
 );
 
 //-----DATOS DE PRUEBA LOCAL--------//
-$chat_id = "1292171163";
-$id = "1292171163";
+//$chat_id = "1292171163";
+//$id = "1292171163";
 
-echo "TU CCS: ";
-$data = trim(fgets(STDIN));
-$message = "!".$data."";
+//echo "TU CCS: ";
+//$data = trim(fgets(STDIN));
+//$message = "!".$data."";
 //------------END PRUEBA------------//
 
 //if($id == "1292171163"){
@@ -1504,7 +1504,7 @@ $num = "$cc$mes$ano$cvv";
 //-----------------------------------------------------//
 
 $verify = substr($cc, 16, 1);
-if($verify != ""){[B
+if($verify != ""){
 $respuesta = "🚫ᴄᴄ ɴᴏ ᴠᴀʟɪᴅᴀ🚫\n";
 sendMessage($chat_id,$respuesta, $message_id);
 die();
