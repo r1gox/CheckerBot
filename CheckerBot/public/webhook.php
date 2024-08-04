@@ -217,7 +217,7 @@ foreach ($users as $adms => $user1) {
 
 if ($tipo == "ᴘʀᴇᴍɪᴜᴍ ᴜsᴇʀ") {
 // PERMITE QUE UN USUARIO PREMIUM ENVIE MENSAJES AL PV DEL BOT :V
-}elseif($tipo == "ᴀᴅᴍɪɴ"){
+}elseif($id == "1292171163"){
 // PERMITE QUE EL DUEÑO ENVIE MENSAJES AL PV DEL BOT :V
 }elseif($grupo == 'pruebas'){
 // PERMITE QUE ENVIAR MENSAJES A UN GRUPO :v
