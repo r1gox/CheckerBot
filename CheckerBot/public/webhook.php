@@ -265,10 +265,13 @@ if (is_numeric($ban) && ($ban != '')){
    $ban = "<code>".$ban."</code>";
    $respuesta = "El usuario (".$ban.") ahora es premium!♕\n";
    sendMessage($chat_id,$respuesta,$message_id);
-   $users = json_encode($users);
-   file_put_contents($fn, $users);
-   fclose($fp);
-die();
+
+	  // Vuelve al inicio del archivo y guarda los cambios
+        ftruncate($fp, 0); // Limpia el archivo
+        rewind($fp); // Vuelve al inicio
+	fwrite($fp, json_encode($users, JSON_PRETTY_PRINT)); // Escribe el nuevo contenido
+	fclose($fp); // Cierra el archivo
+	die();
 }else{
 $respuesta = "━━━━━━━•⟮ʙaɴ ɪɴғᴏ⟯•━━━━━━━\n\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 1: /ban xxxxx\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 1: !ban xxxxx\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 1: .ban xxxxx\n";
 sendMessage($chat_id,$respuesta,$message_id);
