@@ -1,10 +1,10 @@
 <?php
 
 error_reporting(0);
-set_time_limit(0);
+//set_time_limit(0);
 //error_reporting(0);
 date_default_timezone_set('America/Buenos_Aires');
-flush();
+//flush();
 
 header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
 header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
@@ -13,7 +13,6 @@ header("Pragma: no-cache");
 //include("config.php");
 //------TOKEN DEL BOT MIKASA ACKERMAN--------//
 $token = "5405339405:AAG0kGkeN-8VueVsI2JCLQbHI3wYSnfoG7Y";
-
 $website = "https://api.telegram.org/bot".$token;
 $data = file_get_contents("php://input");
 $json = json_decode($data, true);
@@ -82,74 +81,7 @@ function Calculate($ccnumber, $length)
         return $ccnumber;
     }
 
-/*
-function BinData($bin){
-$curl = curl_init('https://lookup.binlist.net/'.$bin.'');
-curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-$result = curl_exec($curl);
-curl_close($curl);
-//---------------------------------------------//
-$bank = capture($result, '"bank": {"name": "', '"');
-$emoji = capture($result, '"emoji":"', '"');
-$alpha = strtoupper(capture($result, '"alpha2":"', '"'));
-$scheme = strtoupper(capture($result, '"scheme":"', '"'));
-$type = strtoupper(capture($result, '"type":"', '"'));
-$currency = capture($result, '"currency":"', '"');
-//---------------------------------------------//
-if (empty($bank)) {
-$bank = "Unavailable";
-}
-if (empty($emoji)) {
-$emoji = "Unavailable";
-}
-if (empty($alpha)) {
-$alpha = "Unavailable";
-}
-if (empty($scheme)) {
-$scheme = "Unavailable";
-}
-if (empty($type)) {
-$type = "Unavailable";
-}
-if (empty($currency)) {
-$currency = "Unavailable";
-}
-$curl = curl_init('https://binlist.io/lookup/'.$bin.'');
-curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-$content = curl_exec($curl);
-curl_close($curl);
-$binna = json_decode($content,true);
-//---------------------------------------------//
-$level = $binna['category'];
-$brand = $binna['scheme'];
-$country = $binna['country']['name'];
-$type = $binna['type'];
-$bank = $binna['bank']['name'];
-$count = "".$country." - ".$alpha." ".$emoji."";
-if (empty($level)) {
-$level = "Unavailable";
-}
-if (empty($brand)) {
-$brand = "Unavailable";
-}
-if (empty($country)) {
-$country = "Unavailable";
-}
-if (empty($type)) {
-$type = "Unavailable";
-}
-if (empty($bank)) {
-$bank = "Unavailable";
-}
-if (empty($currency)) {
-$count = "Unavailable";
-}
-$bindata = "━━━━━━━━•⟮ʙɪɴ ᴅᴀᴛᴀ⟯•━━━━━━━\n➭ 𝙱𝙸𝙽: ".$bin."\n➭ 𝙱𝚁𝙰𝙽𝙳: ".$brand."\n➭ 𝚃𝚈𝙿𝙴: ".$type."\n➭ 𝙻𝙴𝚅𝙴𝙻: ".$level."\n➭ 𝙲𝙾𝚄𝙽𝚃𝚁𝚈: ".$count."\n➭ 𝙱𝙰𝙽𝙺: ".$bank."\n";
-return $bindata;
-}
-*/
+
 
 //-----------------------VARIABLES-------------------------//
 
@@ -191,8 +123,8 @@ $Users_premium = array(
 );
 
 //-----DATOS DE PRUEBA LOCAL--------//
-$chat_id = "1292171163";
-$id = "1292171163";
+//$chat_id = "1292171163";
+//$id = "1292171163";
 
 // echo "TU CCS: ";
 // $data = trim(fgets(STDIN));
