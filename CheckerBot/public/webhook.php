@@ -261,6 +261,10 @@ if((strpos($message, "!vip") === 0)||(strpos($message, "/vip") === 0)||(strpos($
 $ban = substr($message, 5);
 //$ban = "8383838386";
 if (is_numeric($ban) && ($ban != '')){
+	// Lee el contenido actual del archivo
+        $content = fread($fp, filesize($fn));
+        $users = json_decode($content, true); // Decodifica el JSON
+
    $users[$ban] = array('user' => $ban, 'premium' => true);
    $ban = "<code>".$ban."</code>";
    $respuesta = "El usuario (".$ban.") ahora es premium!♕\n";
