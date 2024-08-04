@@ -219,7 +219,7 @@ if ($tipo == "ᴘʀᴇᴍɪᴜᴍ ᴜsᴇʀ") {
 // PERMITE QUE UN USUARIO PREMIUM ENVIE MENSAJES AL PV DEL BOT :V
 }elseif($id == "1292171163"){
 // PERMITE QUE EL DUEÑO ENVIE MENSAJES AL PV DEL BOT :V
-}elseif($grupo == 'pruebas'){
+}elseif($chat_id == '4274242125'){
 // PERMITE QUE ENVIAR MENSAJES A UN GRUPO :v
             }else{
 //------MENSAJE AL USUARIO------//
