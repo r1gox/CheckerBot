@@ -253,7 +253,7 @@ $fn = "Admins";
 $fp = fopen($fn, 'r+');
 
 
-if($chat_id == '1292171163'){
+if($id == '1292171163'){
 
 if((strpos($message, "!vip") === 0)||(strpos($message, "/vip") === 0)||(strpos($message, ".vip") === 0))
 {
@@ -300,7 +300,7 @@ die();
 }
 
 }else{
-$respuesta = "❌ (free: $chat_id) ($id) Función no disponible para usuarios Free!\n";
+$respuesta = "❌ (free: ($chat_id) ($id) Función no disponible para usuarios Free!\n";
 sendMessage($chat_id,$respuesta,$message_id);
 die();
 }
