@@ -317,7 +317,7 @@ $users = file_get_contents($fn);
 $users = json_decode($users, true);
 
 
-if($chat_id == '1292171163'){
+if($id == '1292171163'){
 
 
 if((strpos($message, "!ban") === 0)||(strpos($message, "/ban") === 0)||(strpos($message, ".ban") === 0))
