@@ -300,7 +300,7 @@ die();
 }
 
 }else{
-$respuesta = "❌ Función no disponible para usuarios Free!\n";
+$respuesta = "❌ (free: $chat_id) ($id) Función no disponible para usuarios Free!\n";
 sendMessage($chat_id,$respuesta,$message_id);
 die();
 }
@@ -363,7 +363,7 @@ die();
 }
 
 }else{
-$respuesta = "❌ Función no disponible para usuarios Free!\n";
+$respuesta = "❌ Unban: $chat_id) ($id) Función no disponible para usuarios Free!\n";
 sendMessage($chat_id,$respuesta,$message_id);
 die();
 }
