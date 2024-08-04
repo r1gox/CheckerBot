@@ -242,42 +242,6 @@ if($id == "1292171163")
 // PERMITE QUE EL DUEÑO ENVIE MENSAJES AL PV DEL BOT :V
 } else {
 */
-if ($update) {
-    $id = $update["from"]["id"];
-    $chat_id = $update["chat"]["id"];
-    $name = $update["from"]["first_name"];
-    $message = $update["text"];
-
-    // Inicializa la sesión para el usuario
-    if (!isset($_SESSION['users'][$id])) {
-        $_SESSION['users'][$id] = [
-            'message_count' => 0,
-            'first_message_time' => time(),
-        ];
-    }
-
-    // Verifica si ha pasado el tiempo de espera
-    if (time() - $_SESSION['users'][$id]['first_message_time'] > $wait_time) {
-        // Reinicia el contador si ha pasado el tiempo de espera
-        $_SESSION['users'][$id]['message_count'] = 0;
-        $_SESSION['users'][$id]['first_message_time'] = time();
-    }
-
-    // Lógica para manejar el envío de mensajes
-    if ($_SESSION['users'][$id]['message_count'] < $max_messages) {
-        // Incrementa el contador de mensajes
-        $_SESSION['users'][$id]['message_count']++;
-
-        // Aquí puedes agregar la lógica para manejar el mensaje
-        $respuesta = "Mensaje recibido: " . $message; // Personaliza la respuesta
-        sendMessage($chat_id, $respuesta);
-    } else {
-        $remaining_time = ($wait_time - (time() - $_SESSION['users'][$id]['first_message_time']));
-        $respuesta = "Límite alcanzado. Espera $remaining_time segundos antes de enviar más mensajes.";
-        sendMessage($chat_id, $respuesta);
-    }
-}
-
 
 
 
