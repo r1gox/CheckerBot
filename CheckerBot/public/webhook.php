@@ -1,10 +1,9 @@
 <?php
 
 error_reporting(0);
-set_time_limit(0);
-error_reporting(0);
+
 date_default_timezone_set('America/Buenos_Aires');
-flush();
+
 
 header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
 header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
@@ -181,10 +180,10 @@ $live_array = array(
     'stolen_card',
     '"seller_message": "Payment complete."'
 );
-//$config['sk_keys'] =  array('sk_test_51JDr64Jc7G5hddto3n3OktvOxMtj0HcrEPzzpVc9is3hs90PpVvaOs1ifRRQVFoC6wzzAg2PxNG1T6Y7WQSXME0p00bBHlenhi');
+$config['sk_keys'] =  array('sk_test_51JDr64Jc7G5hddto3n3OktvOxMtj0HcrEPzzpVc9is3hs90PpVvaOs1ifRRQVFoC6wzzAg2PxNG1T6Y7WQSXME0p00bBHlenhi');
 
 
-//$config['sk_keys'] =  array('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');
+$config['sk_keys'] =  array('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');
 
 $admin = "<a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>";
 
