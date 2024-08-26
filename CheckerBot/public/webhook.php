@@ -260,9 +260,9 @@ die();
 */
 
 // Verificamos si el mensaje es personal o de grupo
-if ($message1["chat"]["type"] == "private") {
+if ($update["chat"]["type"] == "private") {
   // Si es un mensaje personal, verificamos si es de ti
-  if ($message1["from"]["id"] == $tu_id) {
+  if ($update["from"]["id"] == $tu_id) {
     // Si es de ti, procesamos el mensaje
 //    procesarMensaje($message);
   } else {
@@ -276,9 +276,9 @@ $personal = "Hola Rigo Jimenez, ".$name." Intento Acceder a tu Bot";
 sendMessage($tu_id,$personal);
 die();
   }
-} elseif ($message1["chat"]["type"] == "group") {
+} elseif ($update["chat"]["type"] == "group") {
   // Verificamos si el grupo es el específico
-  if ($message1["chat"]["id"] == $grupo_id) {
+  if ($update["chat"]["id"] == $grupo_id) {
     // Si es el grupo específico, procesamos el mensaje
 //    procesarMensaje($message);
   } else {
@@ -503,7 +503,7 @@ sendMessageNew($chat_id,$respuesta);
 // Start Commands
 if((strpos($message, "!start") === 0)||(strpos($message, "/start") === 0)||(strpos($message, ".start") === 0))
 {
-$respuesta = "─ Checker Panel ─\n\n⁕ Registered as ➞ ".$admin."\n⁕ Use ➞ $update["chat"]["type"] | $message1["chat"]["type"] /cmds to show available commands.\n⁕ Bot by: $admin\n";
+$respuesta = "─ Checker Panel ─\n\n⁕ Registered as ➞ ".$admin."\n⁕ Use ➞ ".$update["chat"]["type"]." | ".$message1["chat"]["type"]." /cmds to show available commands.\n⁕ Bot by: $admin\n";
 sendMessage($chat_id,$respuesta,$message_id);
 }
 // Cmds Commands
