@@ -32,6 +32,14 @@ $grupo = $update["chat"]["title"];
 $nuevo = $update["new_chat_member"]["first_name"]. ' '.$update["new_chat_member"]["last_name"];
 //----------------------END VARIABLES----------------------//
 $user = $update["from"]["username"];
+//------------seguridad-------------//
+// ID del grupo específico
+$grupo_id = "-4274242125"; // Reemplaza con el ID de tu grupo
+// ID de tu usuario (para permitir mensajes personales solo para ti)
+$tu_id = "1292171163"; // Reemplaza con tu ID de usuario
+// Recibimos el mensaje
+$message1 = json_decode(file_get_contents("php://input"), true);
+
 
 
 
@@ -212,7 +220,7 @@ $message = "!".$data."";
 */
 ///----+------------------------
 
-
+/*
 $date = time();
 $fn = "Admins.json";
 $fp = fopen($fn, 'r+');
@@ -249,6 +257,44 @@ sendMessage("1292171163",$personal);
 die();
 }
 //}
+*/
+
+// Verificamos si el mensaje es personal o de grupo
+if ($message1["chat"]["type"] == "private") {
+  // Si es un mensaje personal, verificamos si es de ti
+  if ($message1["from"]["id"] == $tu_id) {
+    // Si es de ti, procesamos el mensaje
+//    procesarMensaje($message);
+  } else {
+    // Si no es de ti, enviamos un mensaje de error
+$contact = "<a href='t.me/rigo_jz'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>";
+$respuesta = "━━━━━━━•⟮𝑁𝑎𝑧𝑢𝑛𝑎 𝑁𝑎𝑛𝑎𝑘𝑢𝑠𝑎⟯•━━━━━━━\nHola ".$name." este bot es premium y para poder acceder a el necesitas una key de autorización.\n\nAdquiérelo yaa!.\n\n".
+'Telegram ➜ '.$contact.'';
+sendMessage($id,$respuesta,$message_id);
+//------MENSAJE PERSONAL-------//
+$personal = "Hola Rigo Jimenez, ".$name." Intento Acceder a tu Bot";
+sendMessage($tu_id,$personal);
+die();
+  }
+} elseif ($message1["chat"]["type"] == "group") {
+  // Verificamos si el grupo es el específico
+  if ($message1["chat"]["id"] == $grupo_id) {
+    // Si es el grupo específico, procesamos el mensaje
+//    procesarMensaje($message);
+  } else {
+    // Si no es el grupo específico, enviamos un mensaje de error
+$contact = "<a href='t.me/rigo_jz'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>";
+$respuesta = "━━━━━━━•⟮𝑁𝑎𝑧𝑢𝑛𝑎 𝑁𝑎𝑛𝑎𝑘𝑢𝑠𝑎⟯•━━━━━━━\nHola ".$name." este bot es premium y para poder acceder a el necesitas una key de autorización.\n\nAdquiérelo yaa!.\n\n".
+'Telegram ➜ '.$contact.'';
+sendMessage($id,$respuesta,$message_id);
+//------MENSAJE PERSONAL-------//
+$personal = "Hola Rigo Jimenez, ".$name." Intento Acceder a tu Bot";
+sendMessage($tu_id,$personal);
+die();
+
+
+  }
+}
 
 
 
@@ -268,7 +314,7 @@ $date = time();
 $fn = "Admins.json";
 $fp = fopen($fn, 'r+');
 
-
+/*
 if($id == '1292171163'){
 
 if((strpos($message, "!vip") === 0)||(strpos($message, "/vip") === 0)||(strpos($message, ".vip") === 0))
@@ -392,9 +438,6 @@ die();
 }
 
 
-
-
-
 if($users[$id]['registered'] != true){
         $users[$id] = array('registered' => true, 'msgs' => 0, 'date' => $date, 'banned' => false);
     $users = json_encode($users);
@@ -408,6 +451,7 @@ sendMessage($chat_id,$respuesta,$message_id);
     fclose($fp);
     exit();
 }
+*/
 
 $users[$id]['msgs'] = $users[$id]['msgs'] + 1;
 $users = json_encode($users);
