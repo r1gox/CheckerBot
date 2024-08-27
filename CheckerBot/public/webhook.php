@@ -219,7 +219,7 @@ $message = "!".$data."";
 
 
 
-if ($myid == $chat_id) {
+if ($myid == $id) {
   $tipo = "ᴀᴅᴍɪɴ";
 } elseif (in_array($chat_id, $autorizados)) {
   $tipo = "ᴘʀᴇᴍɪᴜᴍ ᴜsᴇʀ";
