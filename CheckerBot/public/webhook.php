@@ -206,6 +206,9 @@ $live_array = array(
     '"seller_message": "Payment complete."'
 );
 
+$autorizados = array("1292171163");
+$grupos_autorizados = array("-4274242125");
+
 $admin = "<a href='t.me/rigo_jz'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>";
 
 
@@ -262,42 +265,36 @@ die();
 
 // Verificamos si el mensaje es personal o de grupo
 if ($update["chat"]["type"] == "private") {
-  // Si es un mensaje personal, verificamos si es de ti
-  if ($update["from"]["id"] == $chat_id) {
-    // Si es de ti, procesamos el mensaje
-//    procesarMensaje($message);
+  if (in_array($update["from"]["id"], $autorizados)) {
+    // Procesar mensaje
   } else {
-    // Si no es de ti, enviamos un mensaje de error
+    // Enviar mensaje de error
 $contact = "<a href='t.me/rigo_jz'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>";
 $respuesta = "━━━━━━━•⟮𝑁𝑎𝑧𝑢𝑛𝑎 𝑁𝑎𝑛𝑎𝑘𝑢𝑠𝑎⟯•━━━━━━━\nHola ".$name." este bot es premium y para poder acceder a el necesitas una key de autorización.\n\nAdquiérelo yaa!.\n\n".
 'Telegram ➜ '.$contact.'';
 sendMessage($id,$respuesta,$message_id);
 //------MENSAJE PERSONAL-------//
 $personal = "Hola Rigo Jimenez, ".$name." Intento Acceder a tu Bot";
-sendMessage($tu_id, $personal, $message_id);
-die();
-  }
-} elseif ($update["chat"]["type"] == "group") {
-  // Verificamos si el grupo es el específico
-  if ($update["chat"]["id"] == $grupo_id) {
-    // Si es el grupo específico, procesamos el mensaje
-//    procesarMensaje($message);
-  } else {
-    // Si no es el grupo específico, enviamos un mensaje de error
-$contact = "<a href='t.me/rigo_jz'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>";
-$respuesta = "━━━━━━━•⟮𝑁𝑎𝑧𝑢𝑛𝑎 𝑁𝑎𝑛𝑎𝑘𝑢𝑠𝑎⟯•━━━━━━━\nHola ".$name." este bot es premium y para poder acceder a el necesitas una key de autorización.\n\nAdquiérelo yaa!.\n\n".
-'Telegram ➜ '.$contact.'';
-sendMessage($id,$respuesta,$message_id);
-//------MENSAJE PERSONAL-------//
-$personal = "Hola Rigo Jimenez, ".$name." Intento Acceder a tu Bot";
-sendMessage($tu_id, $personal, $message_id);
+sendMessage($tu_id,$personal);
 die();
 
+  }
+} elseif ($update["chat"]["type"] == "group") {
+  if (in_array($update["chat"]["id"], $grupos_autorizados)) {
+    // Procesar mensaje
+  } else {
+    // Enviar mensaje de error
+$contact = "<a href='t.me/rigo_jz'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>";
+$respuesta = "━━━━━━━•⟮𝑁𝑎𝑧𝑢𝑛𝑎 𝑁𝑎𝑛𝑎𝑘𝑢𝑠𝑎⟯•━━━━━━━\nHola ".$name." este bot es premium y para poder acceder a el necesitas una key de autorización.\n\nAdquiérelo yaa!.\n\n".
+'Telegram ➜ '.$contact.'';
+sendMessage($id,$respuesta,$message_id);
+//------MENSAJE PERSONAL-------//
+$personal = "Hola Rigo Jimenez, ".$name." Intento Acceder a tu Bot";
+sendMessage($tu_id,$personal);
+die();
 
   }
 }
-
-
 
 
 //-------EXTRAE EL SK_LIVE----//
