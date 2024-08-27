@@ -33,14 +33,8 @@ $nuevo = $update["new_chat_member"]["first_name"]. ' '.$update["new_chat_member"
 //----------------------END VARIABLES----------------------//
 $user = $update["from"]["username"];
 //------------seguridad-------------//
-// ID del grupo específico
-$grupo_id = "-4274242125"; // Reemplaza con el ID de tu grupo
 // ID de tu usuario (para permitir mensajes personales solo para ti)
-$tu_id = "1292171163"; // Reemplaza con tu ID de usuario
-// Recibimos el mensaje
-$message1 = json_decode(file_get_contents("php://input"), true);
-
-
+$admin = "1292171163"; // Reemplaza con tu ID de usuario
 
 
 //4915110191768499-4915110176928790
@@ -224,25 +218,16 @@ $message = "!".$data."";
 ///----+------------------------
 
 
-$date = time();
-$fn = "Admins.json";
-$fp = fopen($fn, 'r+');
-$users = json_decode(file_get_contents($fn), true);
 
-//$chat_id = "1292171163";
-//$chat_id = "-4274242125";
-$tipo = "ғʀᴇᴇ ᴜsᴇʀ"; // Establecer tipo por defecto
-foreach ($users as $adms => $user1) {
-    if ($chat_id == "1292171163") {
-        $tipo = "ᴀᴅᴍɪɴ";
-//        break; // Salir del bucle si es admin
-    } elseif ($adms == $chat_id && $user1["premium"]) {
-        $tipo = "ᴘʀᴇᴍɪᴜᴍ ᴜsᴇʀ";
-//        break; // Salir del bucle si es premium
-    }
+$tipo = "ғʀᴇᴇ ᴜsᴇʀ";
+
+if ($admin == $chat_id) {
+  $tipo = "ᴀᴅᴍɪɴ";
+} elseif (in_array($chat_id, $autorizados)) {
+  $tipo = "ᴘʀᴇᴍɪᴜᴍ ᴜsᴇʀ";
 }
-/*
 
+/*
 if ($tipo == "ᴘʀᴇᴍɪᴜᴍ ᴜsᴇʀ") {
 // PERMITE QUE UN USUARIO PREMIUM ENVIE MENSAJES AL PV DEL BOT :V
 }elseif($id == "1292171163"){
@@ -275,7 +260,7 @@ $respuesta = "━━━━━━━•⟮𝑁𝑎𝑧𝑢𝑛𝑎 𝑁𝑎𝑛�
 sendMessage($id,$respuesta,$message_id);
 //------MENSAJE PERSONAL-------//
 $personal = "Hola Rigo Jimenez, ".$name." Intento Acceder a tu Bot";
-sendMessage($tu_id,$personal);
+sendMessage($admin,$personal, $message_id);
 die();
 
   }
@@ -290,7 +275,7 @@ $respuesta = "━━━━━━━•⟮𝑁𝑎𝑧𝑢𝑛𝑎 𝑁𝑎𝑛�
 sendMessage($id,$respuesta,$message_id);
 //------MENSAJE PERSONAL-------//
 $personal = "Hola Rigo Jimenez, ".$name." Intento Acceder a tu Bot";
-sendMessage($tu_id,$personal);
+sendMessage($admin, $personal, $message_id);
 die();
 
   }
