@@ -34,7 +34,7 @@ $nuevo = $update["new_chat_member"]["first_name"]. ' '.$update["new_chat_member"
 $user = $update["from"]["username"];
 //------------seguridad-------------//
 // ID de tu usuario (para permitir mensajes personales solo para ti)
-$admin_id = "1292171163"; // Reemplaza con tu ID de usuario
+$myid = "1292171163"; // Reemplaza con tu ID de usuario
 
 
 //4915110191768499-4915110176928790
@@ -221,7 +221,7 @@ $message = "!".$data."";
 
 $tipo = "ғʀᴇᴇ ᴜsᴇʀ";
 
-if ($admin_id == $chat_id) {
+if ($myid == $chat_id) {
   $tipo = "ᴀᴅᴍɪɴ";
 } elseif (in_array($chat_id, $autorizados)) {
   $tipo = "ᴘʀᴇᴍɪᴜᴍ ᴜsᴇʀ";
@@ -260,7 +260,7 @@ $respuesta = "━━━━━━━•⟮𝑁𝑎𝑧𝑢𝑛𝑎 𝑁𝑎𝑛�
 sendMessage($id,$respuesta,$message_id);
 //------MENSAJE PERSONAL-------//
 $personal = "Hola Rigo Jimenez, ".$name." Intento Acceder a tu Bot";
-sendMessage($admin_id, $personal, $message_id);
+sendMessage($myid, $personal, $message_id);
 die();
 
   }
@@ -275,7 +275,7 @@ $respuesta = "━━━━━━━•⟮𝑁𝑎𝑧𝑢𝑛𝑎 𝑁𝑎𝑛�
 sendMessage($id,$respuesta,$message_id);
 //------MENSAJE PERSONAL-------//
 $personal = "Hola Rigo Jimenez, ".$name." Intento Acceder a tu Bot";
-sendMessage($admin_id, $personal, $message_id);
+sendMessage($myid, $personal, $message_id);
 die();
 
   }
