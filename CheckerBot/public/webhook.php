@@ -256,7 +256,7 @@ if ($update["chat"]["type"] == "private") {
     // Enviar mensaje de error
 //------MENSAJE PERSONAL-------//
 $personal = "Hola Rigo Jimenez, ".$name." Intento Acceder a tu Bot";
-sendMessage($myid, $personal);
+sendMessage($myid, $personal, $message_id);
 
 $contact = "<a href='t.me/rigo_jz'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>";
 $respuesta = "━━━━━━━•⟮𝑁𝑎𝑧𝑢𝑛𝑎 𝑁𝑎𝑛𝑎𝑘𝑢𝑠𝑎⟯•━━━━━━━\nHola ".$name." este bot es premium y para poder acceder a el necesitas autorización.\n\nAdquiérelo yaa!.\n\n".
