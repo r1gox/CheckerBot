@@ -221,7 +221,7 @@ $message = "!".$data."";
 
 if ($myid == $id) {
   $tipo = "ᴀᴅᴍɪɴ";
-} elseif (in_array($chat_id, $autorizados)) {
+} elseif (in_array($id, $autorizados)) {
   $tipo = "ᴘʀᴇᴍɪᴜᴍ ᴜsᴇʀ";
 } else {
 	$tipo = "ғʀᴇᴇ ᴜsᴇʀ";
