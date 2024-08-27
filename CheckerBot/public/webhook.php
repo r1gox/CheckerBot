@@ -220,24 +220,25 @@ $message = "!".$data."";
 */
 ///----+------------------------
 
-/*
+
 $date = time();
 $fn = "Admins.json";
 $fp = fopen($fn, 'r+');
 $users = json_decode(file_get_contents($fn), true);
 
+//$chat_id = "1292171163";
+//$chat_id = "-4274242125";
 $tipo = "ғʀᴇᴇ ᴜsᴇʀ"; // Establecer tipo por defecto
 foreach ($users as $adms => $user1) {
-    if ($id == "1292171163") {
+    if ($chat_id == "1292171163") {
         $tipo = "ᴀᴅᴍɪɴ";
 //        break; // Salir del bucle si es admin
-    } elseif ($adms == $id && $user1["premium"]) {
+    } elseif ($adms == $chat_id && $user1["premium"]) {
         $tipo = "ᴘʀᴇᴍɪᴜᴍ ᴜsᴇʀ";
 //        break; // Salir del bucle si es premium
     }
 }
-
-
+/*
 
 if ($tipo == "ᴘʀᴇᴍɪᴜᴍ ᴜsᴇʀ") {
 // PERMITE QUE UN USUARIO PREMIUM ENVIE MENSAJES AL PV DEL BOT :V
@@ -262,7 +263,7 @@ die();
 // Verificamos si el mensaje es personal o de grupo
 if ($update["chat"]["type"] == "private") {
   // Si es un mensaje personal, verificamos si es de ti
-  if ($update["from"]["id"] == $tu_id) {
+  if ($update["from"]["id"] == $chat_id) {
     // Si es de ti, procesamos el mensaje
 //    procesarMensaje($message);
   } else {
@@ -273,12 +274,12 @@ $respuesta = "━━━━━━━•⟮𝑁𝑎𝑧𝑢𝑛𝑎 𝑁𝑎𝑛�
 sendMessage($id,$respuesta,$message_id);
 //------MENSAJE PERSONAL-------//
 $personal = "Hola Rigo Jimenez, ".$name." Intento Acceder a tu Bot";
-sendMessage($tu_id,$personal);
+sendMessage($tu_id, $personal, $message_id);
 die();
   }
 } elseif ($update["chat"]["type"] == "group") {
   // Verificamos si el grupo es el específico
-  if ($update["chat"]["id"] == $grupo_id) {
+  if ($update["chat"]["id"] == $chat_id) {
     // Si es el grupo específico, procesamos el mensaje
 //    procesarMensaje($message);
   } else {
@@ -289,7 +290,7 @@ $respuesta = "━━━━━━━•⟮𝑁𝑎𝑧𝑢𝑛𝑎 𝑁𝑎𝑛�
 sendMessage($id,$respuesta,$message_id);
 //------MENSAJE PERSONAL-------//
 $personal = "Hola Rigo Jimenez, ".$name." Intento Acceder a tu Bot";
-sendMessage($tu_id,$personal);
+sendMessage($tu_id, $personal, $message_id);
 die();
 
 
@@ -3067,7 +3068,7 @@ ob_flush();
 //-------------------END CHECKER CCS------------------//
 else if(isset($message)){
         $respuesta = "Perdón no te entiendo!!!";
-        sendMessage($chat_id,$respuesta,$message_if);
+        sendMessage($chat_id,$respuesta,$message_id);
 
 }
 
