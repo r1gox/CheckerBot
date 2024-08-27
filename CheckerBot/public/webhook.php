@@ -256,10 +256,10 @@ if ($update["chat"]["type"] == "private") {
     // Enviar mensaje de error
 //------MENSAJE PERSONAL-------//
 $personal = "Hola Rigo Jimenez, ".$name." Intento Acceder a tu Bot";
-sendMessage($myid, $personal, $message_id);
+sendMessage($myid, $personal);
 
 $contact = "<a href='t.me/rigo_jz'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>";
-$respuesta = "━━━━━━━•⟮𝑁𝑎𝑧𝑢𝑛𝑎 𝑁𝑎𝑛𝑎𝑘𝑢𝑠𝑎⟯•━━━━━━━\nHola ".$name." este bot es premium y para poder acceder a el necesitas una key de autorización.\n\nAdquiérelo yaa!.\n\n".
+$respuesta = "━━━━━━━•⟮𝑁𝑎𝑧𝑢𝑛𝑎 𝑁𝑎𝑛𝑎𝑘𝑢𝑠𝑎⟯•━━━━━━━\nHola ".$name." este bot es premium y para poder acceder a el necesitas autorización.\n\nAdquiérelo yaa!.\n\n".
 'Telegram ➜ '.$contact.'';
 sendMessage($id,$respuesta,$message_id);
 //------MENSAJE PERSONAL-------//
