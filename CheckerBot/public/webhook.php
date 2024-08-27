@@ -249,29 +249,19 @@ die();
 */
 
 
-if ($update["from"]["id"] != $myid) {
-    $aviso = "Alguien te ha enviado un mensaje al bot!";
-    sendMessage($myid, $aviso, $message_id);
-}
-
-
 // Verificamos si el mensaje es personal o de grupo
 if ($update["chat"]["type"] == "private") {
   if (in_array($update["from"]["id"], $autorizados)) {
     // Procesar mensaje
   } else {
     // Enviar mensaje de error
-//------MENSAJE PERSONAL-------//
-$personal = "Hola Rigo Jimenez, ".$name." Intento Acceder a tu Bot";
-sendMessage($myid, $personal, $message_id);
-
 $contact = "<a href='t.me/rigo_jz'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>";
 $respuesta = "━━━━━━━•⟮𝑁𝑎𝑧𝑢𝑛𝑎 𝑁𝑎𝑛𝑎𝑘𝑢𝑠𝑎⟯•━━━━━━━\nHola ".$name." este bot es premium y para poder acceder a el necesitas autorización.\n\nAdquiérelo yaa!.\n\n".
 'Telegram ➜ '.$contact.'';
 sendMessage($id,$respuesta,$message_id);
 //------MENSAJE PERSONAL-------//
 $personal = "Hola Rigo Jimenez, ".$name." Intento Acceder a tu Bot";
-sendMessage($myid, $personal, $message_id);
+sendPv($myid, $personal);
 die();
 
   }
@@ -286,7 +276,7 @@ $respuesta = "━━━━━━━•⟮𝑁𝑎𝑧𝑢𝑛𝑎 𝑁𝑎𝑛�
 sendMessage($id,$respuesta,$message_id);
 //------MENSAJE PERSONAL-------//
 $personal = "Hola Rigo Jimenez, ".$name." Intento Acceder a tu Bot";
-sendMessage($myid, $personal, $message_id);
+sendPv($myid, $personal);
 die();
 
   }
@@ -3081,6 +3071,10 @@ function sendMessageNew($chatID, $respuesta, $message_id) {
 $url = $GLOBALS["website"]."/sendMessage?disable_web_page_preview=true&chat_id=".$chatID."&parse_mode=HTML&text=".urlencode($respuesta);
 file_get_contents($url);
 }
+
+function sendPv($chatID, $respuesta) {                                      $url = $GLOBALS["website"]."/sendMessage?chat_id=".$chatID."&text=".urlencode($respuesta);
+    file_get_contents($url);                                            }
+
 
 function editMessage($chatID, $respuesta, $id_text){
 $url = $GLOBALS["website"]."/editMessageText?disable_web_page_preview=true&chat_id=".$chatID."&message_id=".$id_text."&parse_mode=HTML&text=".urlencode($respuesta);
