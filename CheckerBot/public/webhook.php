@@ -485,8 +485,8 @@ sendMessageNew($chat_id,$respuesta);
 }
 
 // Start Commands
-if((strpos($message, "!start") === 0)||(strpos($message, "/start") === 0)||(strpos($message, ".start") === 0))
-{
+//if((strpos($message, "!start") === 0)||(strpos($message, "/start") === 0)||(strpos($message, ".start") === 0)) {
+if (strpos($message, "!start") === 0 || strpos($message, "/start") === 0 || strpos($message, ".start") === 0) {
 $respuesta = "─ Checker Panel ─\n\n⁕ Registered as ➞ ".$admin."\n⁕ Use ➞ ".$update["chat"]["type"]." | ".$message1["chat"]["type"]." /cmds to show available commands.\n⁕ Bot by: $admin\n";
 sendMessage($chat_id,$respuesta,$message_id);
 }
