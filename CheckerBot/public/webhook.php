@@ -219,12 +219,12 @@ $message = "!".$data."";
 
 
 
-$tipo = "ғʀᴇᴇ ᴜsᴇʀ";
-
 if ($myid == $chat_id) {
   $tipo = "ᴀᴅᴍɪɴ";
 } elseif (in_array($chat_id, $autorizados)) {
   $tipo = "ᴘʀᴇᴍɪᴜᴍ ᴜsᴇʀ";
+} else {
+	$tipo = "ғʀᴇᴇ ᴜsᴇʀ";
 }
 
 /*
