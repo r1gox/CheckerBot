@@ -279,7 +279,7 @@ die();
   }
 } elseif ($update["chat"]["type"] == "group") {
   // Verificamos si el grupo es el específico
-  if ($update["chat"]["id"] == $chat_id) {
+  if ($update["chat"]["id"] == $grupo_id) {
     // Si es el grupo específico, procesamos el mensaje
 //    procesarMensaje($message);
   } else {
