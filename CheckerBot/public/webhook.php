@@ -248,6 +248,13 @@ die();
 //}
 */
 
+
+if ($update["from"]["id"] != $myid) {
+    $aviso = "Alguien te ha enviado un mensaje al bot!";
+    sendMessage($myid, $aviso, $message_id);
+}
+
+
 // Verificamos si el mensaje es personal o de grupo
 if ($update["chat"]["type"] == "private") {
   if (in_array($update["from"]["id"], $autorizados)) {
