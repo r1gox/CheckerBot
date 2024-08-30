@@ -2986,6 +2986,9 @@ $result1 = curl_exec($ch);
 curl_close($ch);
 $timetakeen = (microtime(true) - $startTime);
 $time = substr_replace($timetakeen, '',4);
+
+$data = json_decode($result1, true);
+	
 //------------------------------------------------------------------//
 $cvc_check = trim(strip_tags(getStr($result1,'"cvc_check":"','"')));
 $decline_check = trim(strip_tags(getStr($result1,'"decline_code":"','"')));
@@ -2997,8 +3000,9 @@ $proxy = "PROXY DEAD ❌";
 }
 
 ////////////////////////// [Card Response]  //////////////////////////
-$respo = trim(strip_tags(capture($result1,'"message":"',';')));
-
+//$respo = trim(strip_tags(capture($result1,'"message":"',';')));
+$respo = $data['status'] ?? trim(strip_tags(capture($result1,'"message":"',';')));
+	
 $bin = "<code>".$bin."</code>";
 $lista = "<code>".$lista."</code>";
 
