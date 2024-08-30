@@ -179,6 +179,7 @@ $live_array = array(
     '"status": "succeeded"',
     'Thank You For Donation.',
     'Success',
+    'SUCCEEDED',
     '"cvc_check": "fail"',
     '"cvc_check": "pass"',
     '"status": "succeeded"',
