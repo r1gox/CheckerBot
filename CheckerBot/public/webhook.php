@@ -12,6 +12,7 @@ header("Pragma: no-cache");
 
 include("config.php");
 include("CRH.php");
+include("cookie.txt");
 //------TOKEN DEL BOT MIKASA ACKERMAN--------//
 //$token = "5405339405:AAG0kGkeN-8VueVsI2JCLQbHI3wYSnfoG7Y";
 
