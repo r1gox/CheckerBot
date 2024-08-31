@@ -1495,7 +1495,6 @@ $nonce1 = '';
 if(preg_match('/<input type="hidden" id="woocommerce-register-nonce" name="woocommerce-register-nonce" value="([^"]+)"/', $response, $matches)) {
     $nonce1 = $matches[1];
 }
-
 echo "nonce1: $nonce1\n";
 
 curl_close($ch);
@@ -1504,7 +1503,7 @@ curl_close($ch);
     preg_match('/<input type="hidden" id="woocommerce-register-nonce" name="woocommerce-register-nonce" value="([^"]+)"/', $response, $matches);
     $nonce1 = isset($matches[1]) ? $matches[1] : null;
 
-echo "nonce1: $nonce1\n";
+// echo "nonce1: $nonce1\n";
 
 // Cierra la sesión cURL para liberar recursos
 curl_close($ch);
