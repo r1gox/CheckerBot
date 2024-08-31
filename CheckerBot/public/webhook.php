@@ -208,14 +208,14 @@ $admin = "<a href='t.me/rigo_jz'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>";
 
 
 //-----DATOS DE PRUEBA LOCAL--------//
-
+/*
 $chat_id = "1292171163";
 $id = "1292171163";
 
 echo "TU CCS: ";
 $data = trim(fgets(STDIN));
 $message = "!".$data."";
-
+*/
 ///----+------------------------
 
 
