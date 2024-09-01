@@ -474,7 +474,7 @@ fclose($fp);
 
 if (strpos($message, ".pr") === 0 || strpos($message, "!pr") === 0 || strpos($message, "/pr") === 0) {
 
-	sendPv($myid, 'error');
+	sendPv($myid, 'error...');
 $lista = "5218071187489214|08|2028|796";
 
 //$lista = substr($message, 5);
@@ -528,11 +528,12 @@ $respo = $matches[1];
 	
 if (empty($response)) {
     $response = "La Variable \$respo está vacía.";
-sendMessage($chat_id,$response,$message_id);
+//dendMessage($chat_id,$response,$message_id);
 	sendPv($myid, $response);
 } else {
 //echo "RESULT: $respo\n";
-sendMessage($chat_id,$response,$message_id);
+	sendPv($myid, $response);
+//sendMessage($chat_id,$response,$message_id);
 }
 
  
