@@ -42,9 +42,10 @@ $myid = "1292171163"; // Reemplaza con tu ID de usuario
 //4915110176928790-4915110191768499
 //-------------------FUNCIONES------------------//
 
+/*
 $curlHandler = new CurlRequestHandler();
 $i = $curlHandler->GenerateCorreo();
-
+*/
 
 $nombres = array("Juan", "María", "Pedro", "Ana", "Carlos", "Luisa", "Jorge", "Sofía");
 $nombre = $nombres[rand(0, count($nombres) - 1)];
