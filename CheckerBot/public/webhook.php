@@ -491,6 +491,8 @@ $headers[] = "upgrade-insecure-requests: 1";
 $headers[] = "user-agent: Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0";
 $headers[] = "accept-language:es-US,es;q=0.6";
 $headers[] = "accept:text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8";
+$headers[] = 'sec-ch-ua:"Chromium";v="128", "Not;A=Brand";v="24", "Brave";v="128"';
+$hesders[] = 'sec-ch-ua-platform:"Android"';
 $headers[] = "referer: https://www.warfighterhemp.com/my-account/add-payment-method/";
 $headers[] = "cookie: PHPSESSID=212fbc15f71bcc4c6523856b55168a5d";
 $headers[] = "cookie: sbjs_migrations=1418474375998%3D1";
