@@ -474,6 +474,13 @@ fclose($fp);
 if (strpos($message, ".pr") === 0 || strpos($message, "!pr") === 0 || strpos($message, "/pr") === 0) {
 
 
+function capture($string, $start, $end){
+$str = explode($start, $string);
+$str = explode($end, $str[1]);
+ return $str[0];
+}
+
+
 
 $lista = "5218071187489214|08|2028|796";
 
@@ -529,13 +536,13 @@ $respo = $matches[1];
 
 //echo "$result1\n";
 
-if (empty($respo)) {
-    $respo = "La variable \$respo está vacía.";
-sendMessage($chat_id,$respo,$message_id);
+if (empty($result1)) {
+    $result1 = "La Variable \$respo está vacía.";
+sendMessage($chat_id,$resul1,$message_id);
 
 } else {
 //echo "RESULT: $respo\n";
-sendMessage($chat_id,$respo,$message_id);
+sendMessage($chat_id,$result1,$message_id);
 }
 
  curl_close($ch);
