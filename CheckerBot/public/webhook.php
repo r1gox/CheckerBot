@@ -530,13 +530,14 @@ $result1 = (strpos($response, "Nice! New payment method added") !== false) ? "Ap
 $patron = "/failed: (.*)/";
 preg_match($patron, $result1, $matches);
 $respo = $matches[1];
-
+	
+sendPv($myid, $result1);
 
 //echo "RESULT: $respo\n";
 
 //echo "$result1\n";
 
-if (empty($result1)) {
+if (empty($respo)) {
     $result1 = "La Variable \$respo está vacía.";
 sendMessage($chat_id,$resul1,$message_id);
 
