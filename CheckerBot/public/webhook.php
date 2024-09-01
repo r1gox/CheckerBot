@@ -526,13 +526,13 @@ $patron = "/failed: (.*)/";
 preg_match($patron, $result1, $matches);
 $respo = $matches[1];
 	
-if (empty($respo)) {
-    $result1 = "La Variable \$respo está vacía.";
-sendMessage($chat_id,$resul1,$message_id);
+if (empty($response)) {
+    $response = "La Variable \$respo está vacía.";
+sendMessage($chat_id,$response,$message_id);
 	sendPv($myid, $respo);
 } else {
 //echo "RESULT: $respo\n";
-sendMessage($chat_id,$result1,$message_id);
+sendMessage($chat_id,$response,$message_id);
 }
 
  
