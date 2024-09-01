@@ -474,7 +474,7 @@ fclose($fp);
 
 if (strpos($message, ".pr") === 0 || strpos($message, "!pr") === 0 || strpos($message, "/pr") === 0) {
 
-	sendPv($myid, 'error2...');
+	sendPv($myid, 'error3...');
 $lista = "5218071187489214|08|2028|796";
 
 //$lista = substr($message, 5);
@@ -488,7 +488,9 @@ $headers = array();
 $headers[] = "Host:www.warfighterhemp.com";
 $headers[] = "cache-control: max-age=0";
 $headers[] = "upgrade-insecure-requests: 1";
-$headers[] = "user-agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36";
+$headers[] = "user-agent: Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0";
+$headers[] = "accept-language:es-US,es;q=0.6";
+$headers[] = "accept:text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8";
 $headers[] = "referer: https://www.warfighterhemp.com/my-account/add-payment-method/";
 $headers[] = "cookie: PHPSESSID=212fbc15f71bcc4c6523856b55168a5d";
 $headers[] = "cookie: sbjs_migrations=1418474375998%3D1";
