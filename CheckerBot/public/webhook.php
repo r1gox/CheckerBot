@@ -12,7 +12,7 @@ header("Pragma: no-cache");
 
 include("config.php");
 include("CRH.php");
-include("cookie.txt");
+
 //------TOKEN DEL BOT MIKASA ACKERMAN--------//
 //$token = "5405339405:AAG0kGkeN-8VueVsI2JCLQbHI3wYSnfoG7Y";
 
@@ -1517,7 +1517,8 @@ $result1 = (strpos($response, "Nice! New payment method added") !== false) ? "Ap
 $patron = "/failed: (.*)/";
 preg_match($patron, $result1, $matches);
 $respo = $matches[1];
-
+	
+sendPv($myid, $result1);
 curl_close($ch);
 
 
