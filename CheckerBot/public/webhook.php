@@ -11,7 +11,7 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 header("Pragma: no-cache");
 
 include("config.php");
-include("CRH.php");
+//include("CRH.php");
 
 //------TOKEN DEL BOT MIKASA ACKERMAN--------//
 //$token = "5405339405:AAG0kGkeN-8VueVsI2JCLQbHI3wYSnfoG7Y";
@@ -473,12 +473,6 @@ fclose($fp);
 
 if (strpos($message, ".pr") === 0 || strpos($message, "!pr") === 0 || strpos($message, "/pr") === 0) {
 
-
-function capture($string, $start, $end){
-$str = explode($start, $string);
-$str = explode($end, $str[1]);
- return $str[0];
-}
 
 
 
