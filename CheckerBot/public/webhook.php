@@ -1724,6 +1724,7 @@ sendMessage($chat_id,$respuesta, $message_id);
 //-----------EXTRAER ID DEL MENSAJE DE ESPERA---------//
 $id_text = file_get_contents("ID");
 //----------------------------------------------------//
+sleep(10);
 
 $startTime = microtime(true); //TIEMPO DE INICIO
 $curl = curl_init('https://lookup.binlist.net/'.$bin.'');
