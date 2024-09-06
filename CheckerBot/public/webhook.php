@@ -55,6 +55,26 @@ $fin = $fn[rand(0, count($fn) - 1)];
 $num = rand(1, 100);
 $correo = "$nombre$num$fin";
 
+
+
+// Nombres y apellidos de ejemplo
+$nombres = ["Liam", "Emma", "Noah", "Olivia", "Aiden", "Sophia"];
+$apellidos = ["Smith", "Johnson", "Brown", "Taylor", "Anderson", "Wilson"];
+$ciudades = ["Toronto", "Vancouver", "Montreal", "Calgary", "Ottawa"];
+$provincias = ["Ontario", "Quebec", "British Columbia", "Alberta", "Nova Scotia"];
+
+// Generar datos aleatorios
+$nombre = $nombres[array_rand($nombres)];
+$apellido = $apellidos[array_rand($apellidos)];
+$correo = strtolower($nombre) . "." . strtolower($apellido) . "".$fin."";
+$telefono = "(416) " . rand(100, 999) . "-" . rand(1000, 9999);
+$direccion1 = rand(100, 999) . " Main St";
+$direccion2 = rand(100, 999) . " Main St";
+$ciudad = $ciudades[array_rand($ciudades)];
+$zip = strtoupper(chr(rand(65, 90)) . rand(0, 9) . chr(rand(65, 90)) . ' ' . rand(0, 9) . chr(rand(65, 90)) . rand(0, 9));
+$provincia = $provincias[array_rand($provincias)];
+
+
 function capture($string, $start, $end){
 $str = explode($start, $string);
 $str = explode($end, $str[1]);
