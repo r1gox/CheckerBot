@@ -4,6 +4,7 @@ error_reporting(0);
 set_time_limit(0);
 //error_reporting(0);
 date_default_timezone_set('America/Buenos_Aires');
+$fecha = date("Y/m/d");
 //flush();
 
 header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
@@ -1576,6 +1577,41 @@ $count = "Unavailable";
 }
               ////RANDOM USER//
 $MV = ucwords(strtolower(trim($brand)));
+
+
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://panoramitalia.com/index.php/subscribe/',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_COOKIE => 'mailchimp_landing_site=https%3A%2F%2Fpanoramitalia.com%2F%3Fwc-ajax%3Dget_refreshed_fragments',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36',
+    'Accept-Encoding: gzip, deflate, br, zstd',
+    'sec-ch-ua: "Chromium";v="128", "Not;A=Brand";v="24", "Brave";v="128"',
+    'sec-ch-ua-mobile: ?1',
+    'sec-ch-ua-platform: "Android"',
+    'Upgrade-Insecure-Requests: 1',
+    'Accept-Language: es-US,es;q=0.6',
+    'Referer: https://panoramitalia.com/',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+curl_close($curl);
+
+$patron = '/name="_cf_verify" value="([^"]+)"/';
+preg_match($patron, $response, $coincidencias);
+$token = $coincidencias[1];
+
+
+	
 $curl = curl_init();
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://panoramitalia.com/cf-api/CF6317ae143565f',
@@ -1586,7 +1622,7 @@ curl_setopt_array($curl, [
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
   CURLOPT_POSTFIELDS => [
-    '_cf_verify' => '17607b8bf8',
+    '_cf_verify' => ''.$token.'',
     '_wp_http_referer' => '/index.php/subscribe/',
     '_cf_frm_id' => 'CF6317ae143565f',
     '_cf_frm_ct' => '1',
@@ -1613,7 +1649,7 @@ curl_setopt_array($curl, [
     'fld_778305' => 'AZ',
     'fld_4577367' => '20.00',
     'fld_3144093' => 'click',
-    'fld_5757786' => '2024/09/05',
+    'fld_5757786' => ''.$fecha.'',
     'fld_2545505' => '101204525',
     'fld_6974264' => '100',
     'instance' => '1',
