@@ -1678,6 +1678,13 @@ $data = json_decode($response, true);
 $respo = strip_tags($data['html']);
 curl_close($curl);
 
+////EXTRAE EL MENSAJE DE SUSCRPCION////
+$partes = explode('.', $respo);
+$respo = implode('.', array_slice($partes, 0, 2));
+if (!preg_match('/\.$/', $respo)) {
+    $respo .= '.';
+}
+
 $timetakeen = (microtime(true) - $startTime);
 $time = substr_replace($timetakeen, '', 4);
 $proxy = "LIVE ✅";
