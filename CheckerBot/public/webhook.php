@@ -74,7 +74,9 @@ $direccion2 = rand(100, 999) . " Main St";
 $ciudad = $ciudades[array_rand($ciudades)];
 $zip = strtoupper(chr(rand(65, 90)) . rand(0, 9) . chr(rand(65, 90)) . ' ' . rand(0, 9) . chr(rand(65, 90)) . rand(0, 9));
 $provincia = $provincias[array_rand($provincias)];
-
+// Nombres y apellidos de ejemplo
+$name = $nombre;
+$phone = $telefono;
 
 function capture($string, $start, $end){
 $str = explode($start, $string);
@@ -215,6 +217,10 @@ $live_array = array(
     "Your card's security code is invalid.",
     "Your card's security code is incorrect.",
     "The card's security code is incorrect.",
+    'Card Issuer Declined CVV',
+    'This transaction cannot be processed. Please enter a valid Credit Card Verification Number.',
+    'Insufficient Funds',
+    'Your payment method was rejected due to 3D Secure.',
     'transaction_not_allowed',
     'CVV INVALID',
     'incorrect_zip',
