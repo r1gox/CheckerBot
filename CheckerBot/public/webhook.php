@@ -1646,7 +1646,7 @@ curl_close($curl);
 
 //echo "$response\n";
 
-if ($success === true && $status === "requires_action") {
+if ($success === true && $status === "succeeded") {
     $respo = "Approved!";
 } else {
     $respo = $message;
