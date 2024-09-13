@@ -1648,6 +1648,8 @@ curl_close($curl);
 
 if ($success === true && $status === "succeeded") {
     $respo = "Approved!";
+} elseif ($success === true && $status === "requires_action") {
+    $respo = "Requires Action!";
 } else {
     $respo = $message;
 }
