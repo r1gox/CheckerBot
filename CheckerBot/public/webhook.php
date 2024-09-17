@@ -22,7 +22,7 @@ $json = json_decode($data, true);
 $update = $json["message"];
 //---------PERSONAL---------//
 $id = $update["from"]["id"];
-$name = $update["from"]["first_name"];
+$Name = $update["from"]["first_name"];
 $last = $update["from"]["last_name"];
 $message_id = $update["message_id"];
 $message = $update["text"];
@@ -619,7 +619,7 @@ sendMessage($chat_id,$respuesta,$message_id);
 
 elseif((strpos($message, "!me") === 0)||(strpos($message, "/me") === 0)||(strpos($message, ".me") === 0))
 {
-$respuesta = "⁕ ─ 𝑈𝑆𝐸𝑅 𝐼𝑁𝐹𝑂 ─ ⁕\n➩ 𝚄𝚂𝙴𝚁 𝙸𝙳: <code>".$id."</code>\n➩ 𝙵𝚄𝙻𝙻 𝙽𝙰𝙼𝙴: ".$name." ".$last."\n➩ 𝚄𝚂𝙴𝚁𝙽𝙰𝙼𝙴: @".$user."\n➩ 𝚄𝚂𝙴𝚁 𝚃𝚈𝙿𝙴: ".$tipo."\n";
+$respuesta = "⁕ ─ 𝑈𝑆𝐸𝑅 𝐼𝑁𝐹𝑂 ─ ⁕\n➩ 𝚄𝚂𝙴𝚁 𝙸𝙳: <code>".$id."</code>\n➩ 𝙵𝚄𝙻𝙻 𝙽𝙰𝙼𝙴: ".$Name." ".$last."\n➩ 𝚄𝚂𝙴𝚁𝙽𝙰𝙼𝙴: @".$user."\n➩ 𝚄𝚂𝙴𝚁 𝚃𝚈𝙿𝙴: ".$tipo."\n";
 sendMessage($chat_id,$respuesta,$message_id);
 }
 //--------------------------END INFO-------------------------//
