@@ -2,7 +2,7 @@
 //
 error_reporting(0);
 set_time_limit(0);
-//error_reporting(0);
+session_start();
 date_default_timezone_set('America/Buenos_Aires');
 $fecha = date("Y/m/d");
 //flush();
@@ -462,7 +462,7 @@ if($date > $users[$id]['date'] + 30){
 //sendMessage($id, "Ciao!");
 fclose($fp);
 */
-
+/*
 $date = time();
 static $users = array();
 
@@ -482,11 +482,45 @@ if ($date <= $users[$id]['date'] + 30 && $users[$id]['msgs'] >= 3) {
 if ($date > $users[$id]['date'] + 30) {
     $users[$id]['date'] = $date;
     $users[$id]['msgs'] = 0;
+}*/
+
+
+
+//Almacenar los tiempos de mensajes en la sesión
+if (!isset($_SESSION['message_times'])) {
+    $_SESSION['message_times'] = [];
 }
 
+// Obtener actualizaciones
 
+if (isset($json['message'])) {
+    $chat_id = $json['message']['chat']['id'];
 
+    // Inicializar el registro de mensajes para el usuario si no existe
+    if (!isset($_SESSION['message_times'][$chat_id])) {
+        $_SESSION['message_times'][$chat_id] = [];
+    }
 
+    // Filtrar mensajes antiguos (más de 30 segundos)
+    $_SESSION['message_times'][$chat_id] = array_filter(
+        $_SESSION['message_times'][$chat_id],
+        function ($timestamp) {
+            return time() - $timestamp < 30; // Mantener solo los mensajes dentro de los últimos 30 segundos
+        }
+    );
+
+    // Verificar cuántos mensajes ha enviado el usuario en los últimos 30 segundos
+    if (count($_SESSION['message_times'][$chat_id]) >= 2) {
+        sendMessage($chat_id, "⏳ Has alcanzado el límite de mensajes. Espera 30 segundos antes de enviar más.");
+        return;
+    }
+
+    // Agregar el nuevo mensaje a la lista de tiempos
+    $_SESSION['message_times'][$chat_id][] = time();
+
+    // Responder al mensaje del usuario
+    sendMessage($chat_id, "😊 Tu mensaje ha sido recibido.");
+}
 
 
 
@@ -2578,7 +2612,7 @@ elseif ((strpos($message, "!") === 0 && strlen($message) > 1) || (strpos($messag
 
 elseif (preg_match('/^[\/!\.]\w+/', $message)) {
     // Si el mensaje comienza con /, ! o . seguido de alguna palabra
-    $respuesta = "Perdón no te entiendo!!";
+    $respuesta = "Perdón no te entiendo!!!";
     sendMessage($chat_id,$respuesta,$message_id);
    // echo "$respuesta";
 } else {
