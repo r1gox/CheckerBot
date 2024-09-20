@@ -1666,7 +1666,8 @@ if ($success === true && $status === "succeeded") {
     $respo = "3DS Authenticate Attempt Successful ✅";
    // $respo = "Approved!";
 } elseif ($success === true && $status === "requires_action") {
-    $respo = "Requires Action!";
+   // $respo = "Requires Action!";
+    $respo = "3DS Authenticate Rejected ❌";
 } else {
     $respo = $message;
 }
