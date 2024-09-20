@@ -1663,7 +1663,8 @@ curl_close($curl);
 //echo "$response\n";
 
 if ($success === true && $status === "succeeded") {
-    $respo = "Approved!";
+    $respo = "3DS Authenticate Attempt Successful ✅";
+   // $respo = "Approved!";
 } elseif ($success === true && $status === "requires_action") {
     $respo = "Requires Action!";
 } else {
