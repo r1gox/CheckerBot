@@ -18,7 +18,7 @@ include("config.php");
 //$token = "5405339405:AAG0kGkeN-8VueVsI2JCLQbHI3wYSnfoG7Y";
 
 $website = "https://api.telegram.org/bot".$token;
-//$upda = json_decode(file_get_contents('php://input'), true);
+$upda = json_decode(file_get_contents('php://input'), true);
 $data = file_get_contents("php://input");
 $json = json_decode($data, true);
 $update = $json["message"];
@@ -496,8 +496,8 @@ if (!isset($_SESSION['message_times'])) {
 
 // Obtener actualizaciones
 
-if (isset($json['message'])) {
-    $chat_id = $json['message']['chat']['id'];
+if (isset($upda['message'])) {
+  //  $chat_id = $json['message']['chat']['id'];
 
     // Inicializar el registro de mensajes para el usuario si no existe
     if (!isset($_SESSION['message_times'][$chat_id])) {
