@@ -2568,7 +2568,8 @@ ob_flush();
 
 
 //-------------------END CHECKER CCS------------------//
-else if(isset($message)){
+//else if(isset($message)){
+elseif ((strpos($message, "!") === 0 && strlen($message) > 1) || (strpos($message, "/") === 0 && strlen($message) > 1) || (strpos($message, ".") === 0 && strlen($message) > 1)) {
         $respuesta = "Perdón no te entiendo!!!";
         sendMessage($chat_id,$respuesta,$message_id);
 
