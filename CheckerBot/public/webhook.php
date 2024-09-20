@@ -2569,13 +2569,21 @@ ob_flush();
 
 //-------------------END CHECKER CCS------------------//
 //else if(isset($message)){
+/*
 elseif ((strpos($message, "!") === 0 && strlen($message) > 1) || (strpos($message, "/") === 0 && strlen($message) > 1) || (strpos($message, ".") === 0 && strlen($message) > 1)) {
         $respuesta = "Perdón no te entiendo!!!";
         sendMessage($chat_id,$respuesta,$message_id);
-
 }
+*/
 
-
+elseif (preg_match('/^[\/!\.]\w+/', $message)) {
+    // Si el mensaje comienza con /, ! o . seguido de alguna palabra
+    $respuesta = "Perdón no te entiendo!!";
+    sendMessage($chat_id,$respuesta,$message_id)
+   // echo "$respuesta";
+} else {
+    // Ignorar mensajes que no son comandos
+}
 
 //-------FUNCION DE ENVIAR---------//
 function sendMessage($chatID, $respuesta, $message_id) {
