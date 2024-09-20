@@ -496,7 +496,7 @@ if (!isset($_SESSION['message_times'])) {
 
 // Obtener actualizaciones
 
-if (isset($upda['message'])) {
+//if (isset($upda['message'])) {
   //  $chat_id = $json['message']['chat']['id'];
 
     // Inicializar el registro de mensajes para el usuario si no existe
@@ -526,7 +526,7 @@ if (isset($upda['message'])) {
     // Responder al mensaje del usuario
 //    $respuesta = "😊 Tu mensaje ha sido recibido.";
 //    sendMessage($chat_id,$respuesta,$message_id);
-}
+//}
 
 
 
