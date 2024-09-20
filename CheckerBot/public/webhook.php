@@ -261,7 +261,7 @@ $respuesta = "━━━━━━━•⟮𝑁𝑎𝑧𝑢𝑛𝑎 𝑁𝑎𝑛�
 'Telegram ➜ '.$contact.'';
 sendMessage($id,$respuesta,$message_id);
 //------MENSAJE PERSONAL-------//
-$personal = "Hola Rigo Jimenez, ".$name." Intento Acceder a tu Bot";
+$personal = "Hola Rigo Jimenez, ".$Name." Intento Acceder a tu Bot";
 sendPv($myid, $personal);
 die();
 
@@ -276,7 +276,7 @@ $respuesta = "━━━━━━━•⟮𝑁𝑎𝑧𝑢𝑛𝑎 𝑁𝑎𝑛�
 'Telegram ➜ '.$contact.'';
 sendMessage($id,$respuesta,$message_id);
 //------MENSAJE PERSONAL-------//
-$personal = "Hola Rigo Jimenez, ".$name." Intento Acceder a tu Bot";
+$personal = "Hola Rigo Jimenez, ".$Name." Intento Acceder a tu Bot";
 sendPv($myid, $personal);
 die();
 
