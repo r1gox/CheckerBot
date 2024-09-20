@@ -1,8 +1,9 @@
 <?php
 //
+session_start();
 error_reporting(0);
 set_time_limit(0);
-session_start();
+
 date_default_timezone_set('America/Buenos_Aires');
 $fecha = date("Y/m/d");
 //flush();
