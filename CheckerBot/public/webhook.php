@@ -200,6 +200,7 @@ $live_array = array(
     "Your card's security code is invalid.",
     "Your card's security code is incorrect.",
     "The card's security code is incorrect.",
+    "Your card's expiration month is invalid.",
     'Card Issuer Declined CVV',
     'This transaction cannot be processed. Please enter a valid Credit Card Verification Number.',
     'Insufficient Funds',
