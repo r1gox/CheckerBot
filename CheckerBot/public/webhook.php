@@ -872,10 +872,23 @@ curl_close($ch);
         $phone = $matches1[1][0];
         preg_match_all("(\"postcode\":(.*),\")siU", $get, $matches1);
         $postcode = $matches1[1][0];
+//---------------------------////---------------------------//
+$response = file_get_contents('https://www.fakemailgenerator.com');                                                  
+preg_match('/value="([^"]+)"/', $response, $matches);
+$GmailUser = $matches[1];
+//---------------------------//
+// Extraer el valor del dominio                                                                                      
+preg_match('/<span id="domain">([^<]+)<\/span>/', $response, $matches);
+$dominio = trim($matches[1]); // Eliminar espacios en blanco
+//---------------------------//
+$usr = str_replace("@", "", $dominio);
+//---------------------------//                                                                                       
+$email = "$GmailUser$dominio";                                                                                        
+$link = "https://www.fakemailgenerator.com/#/$usr/$GmailUser/";
+
 $timetakeen = (microtime(true) - $startTime);
 $time = substr_replace($timetakeen, '',4);
-
-$respuesta = "━━━━━━•⟮ғᴀᴋᴇ ᴜsᴇʀ⟯•━━━━━━\n➭ 𝙽𝙰𝙼𝙴: $name\n➭ 𝙻𝙰𝚂𝚃 𝙽𝙰𝙼𝙴: $last\n➭ 𝙴𝙼𝙰𝙸𝙻: $email\n➭ 𝚂𝚃𝚁𝙴𝙴𝚃: $street\n➭ 𝙲𝙸𝚃𝚈: $city\n➭ 𝚂𝚃𝙰𝚃𝙴: $state\n➭ 𝙿𝙷𝙾𝙽𝙴: $phone\n➭ 𝙿𝙾𝚂𝚃 𝙲𝙾𝙳𝙴: $postcode\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝚄𝚂𝙴𝚁: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: $admin\n━━━━━━━━━━•么•━━━━━━━━━━\n";
+$respuesta = "━━━━━━•⟮ғᴀᴋᴇ ᴜsᴇʀ⟯•━━━━━━\n➭ 𝙽𝙰𝙼𝙴: <code>".$name."</code>\n➭ 𝙻𝙰𝚂𝚃 𝙽𝙰𝙼𝙴: <code>".$last."</code>\n➭ 𝙴𝙼𝙰𝙸𝙻: <code>".$email."</code> <a href='".$link."'>(ᴏᴘᴇɴ ʟɪɴᴋ)</a>\n➭ 𝚂𝚃𝚁𝙴𝙴𝚃: <code>".$street."</code>\n➭ 𝙲𝙸𝚃𝚈: <code>".$city."</code>\n➭ 𝚂𝚃𝙰𝚃𝙴: <code>".$state."</code>\n➭ 𝙿𝙷𝙾𝙽𝙴: <code>".$phone."</code>\n➭ 𝙿𝙾𝚂𝚃 𝙲𝙾𝙳𝙴: <code>".$postcode."</code>\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝚄𝚂𝙴𝚁: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: $admin\n━━━━━━━━━━•么•━━━━━━━━━━\n";
 editMessage($chat_id,$respuesta,$id_text);
 
 }
