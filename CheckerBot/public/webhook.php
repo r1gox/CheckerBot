@@ -221,19 +221,17 @@ $admin = "<a href='t.me/rigo_jz'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>";
 
 //-----DATOS DE PRUEBA LOCAL--------//
 
-
-
 /*
+
 $chat_id = "1292171163";
 $id = "1292171163";
 
 echo "TU CCS: ";
 $data = trim(fgets(STDIN));
 $message = "!".$data."";
-
+*/
 ///----+------------------------
 
-*/
 
 if ($myid == $id) {
   $tipo = "ᴀᴅᴍɪɴ";
@@ -873,17 +871,18 @@ curl_close($ch);
         preg_match_all("(\"postcode\":(.*),\")siU", $get, $matches1);
         $postcode = $matches1[1][0];
 //---------------------------////---------------------------//
-$response = file_get_contents('https://www.fakemailgenerator.com');                                                  
+$response = file_get_contents('https://www.fakemailgenerator.com');
 preg_match('/value="([^"]+)"/', $response, $matches);
 $GmailUser = $matches[1];
 //---------------------------//
-// Extraer el valor del dominio                                                                                      
+// Extraer el valor del dominio
 preg_match('/<span id="domain">([^<]+)<\/span>/', $response, $matches);
-$dominio = trim($matches[1]); // Eliminar espacios en blanco
+$dominio = trim($matches[1]);
+// Eliminar espacios en blanco
 //---------------------------//
 $usr = str_replace("@", "", $dominio);
-//---------------------------//                                                                                       
-$email = "$GmailUser$dominio";                                                                                        
+//---------------------------//
+$email = "$GmailUser$dominio";
 $link = "https://www.fakemailgenerator.com/#/$usr/$GmailUser/";
 
 $timetakeen = (microtime(true) - $startTime);
