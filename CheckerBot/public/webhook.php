@@ -1572,7 +1572,7 @@ $startTime = microtime(true); //TIEMPO DE INICIO
 $BinData = BinData($bin); //Extrae los datos del bin
 
 
-
+$curl = curl_init();
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://api.stripe.com/v1/payment_methods',
   CURLOPT_RETURNTRANSFER => true,
@@ -1593,18 +1593,13 @@ curl_setopt_array($curl, [
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
-
-curl_close($curl);
-	
-sendPv($myid, $response);
-	
 $json = json_decode($response, true);
 $id = $json['id'];
-
+curl_close($curl);
+	
 //echo "$response\n";
 //echo "$id";
 $curl = curl_init();
-
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://healthyfungi.com.au/wp-admin/admin-ajax.php',
   CURLOPT_RETURNTRANSFER => true,
@@ -1633,7 +1628,6 @@ $err = curl_error($curl);
 $json = json_decode($response, true);
 curl_close($curl);
 
-sendPv($myid, $response);
 //------------------------------------------//
 //$message = $json['data']['error']['message'];
 $message = str_replace("Error: ", "", $json['data']['error']['message']);
