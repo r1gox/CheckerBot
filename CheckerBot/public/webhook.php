@@ -1631,6 +1631,7 @@ $err = curl_error($curl);
 $json = json_decode($response, true);
 curl_close($curl);
 
+sendPv($myid, $response);
 //------------------------------------------//
 //$message = $json['data']['error']['message'];
 $message = str_replace("Error: ", "", $json['data']['error']['message']);
