@@ -1571,7 +1571,8 @@ $id_text = file_get_contents("ID");
 $startTime = microtime(true); //TIEMPO DE INICIO
 $BinData = BinData($bin); //Extrae los datos del bin
 
-
+sendPv($myid, 'error4..');
+	
 $curl = curl_init();
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://api.stripe.com/v1/payment_methods',
@@ -1596,7 +1597,8 @@ $err = curl_error($curl);
 $json = json_decode($response, true);
 $id = $json['id'];
 curl_close($curl);
-	
+
+	sendPv($myid, $id);
 //echo "$response\n";
 //echo "$id";
 $curl = curl_init();
