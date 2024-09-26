@@ -707,12 +707,10 @@ $d4 = "".$bin."xxxxxxxxxxxxxxxxx";
 if ($target == "37" || $target == "34"){
         $bin = substr($d4, 0, 14);
         $cant = "15";
-        $randCvv = rand(1000, 9999);
 
 }else{
         $bin = substr($d4, 0, 15);
         $cant = "16";
-        $randCvv = rand(100, 999);
 }
 	
 $Bin = substr($bin, 0, 6);
@@ -735,7 +733,11 @@ for ($i=$amount;$i>-0;$i--){
 //-------GERADOR DE MES - AÑO - CCV -------//
         $randMonth = rand(1, 12);
         $randYears = rand(25, 30);
-  //      $randCvv = rand(100, 999);
+if ($target == "37" || $target == "34"){
+        $randCvv = rand(1000, 9999);
+}else{
+        $randCvv = rand(100, 999);
+}
         $randMonth < 10 ? $randMonth = "0" . $randMonth : $randMonth = $randMonth;
         $randCvv < 100 ? $randCvv = "0" . $randCvv : $randCvv = $randCvv;
         $fecha = "|".$randMonth."|20".$randYears."|".$randCvv;
@@ -844,7 +846,7 @@ $Bin = "<code>$Bin</code>";
 
 $respuesta = "➭ 𝙱𝙸𝙽: $Bin\n➭ 𝙰𝙼𝙾𝚄𝙽𝚃: 10\n\n$ccs\n➭ 𝙱𝙸𝙽 𝙸𝙽𝙵𝙾: $brand - $type - $level\n➭ 𝙱𝙰𝙽𝙺: $bank\n➭ 𝙲𝙾𝚄𝙽𝚃𝚁𝚈: $count\n";
 editMessage($chat_id,$respuesta,$id_text);
-//unlink("cc-gen");
+unlink("cc-gen");
 die();
 }
 
