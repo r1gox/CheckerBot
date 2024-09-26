@@ -308,6 +308,53 @@ $sec = $sk[0];
 unlink("cookie.txt");
 
 
+if((strpos($message, "!cat") === 0)||(strpos($message, "/cat") === 0)||(strpos($message, ".cat") === 0)){
+
+
+$archivo = file_get_contents('Admins.json');
+$data = json_decode($archivo, true);
+sendPv($myid, $archivo);
+die();
+
+}
+
+
+if((strpos($message, "!vip") === 0)||(strpos($message, "/vip") === 0)||(strpos($message, ".vip") === 0))
+{
+
+
+$date = time();
+$fn = "Admins.json";
+$fp = fopen($fn, 'r+');
+
+
+$ban = substr($message, 5);
+//$ban = "8383838386";
+if (is_numeric($ban) && ($ban != '')){
+        // Lee el contenido actual del archivo
+        $content = fread($fp, filesize($fn));
+        $users = json_decode($content, true); // Decodifica el JSON
+
+   $users[$ban] = array('user' => $ban, 'premium' => true);
+   $ban = "<code>".$ban."</code>";
+   $respuesta = "El usuario (".$ban.") ahora es premium!♕\n";
+   sendMessage($chat_id,$respuesta,$message_id);
+
+          // Vuelve al inicio del archivo y guarda los cambios
+        ftruncate($fp, 0); // Limpia el archivo
+        rewind($fp); // Vuelve al inicio
+        fwrite($fp, json_encode($users, JSON_PRETTY_PRINT)); // Escribe el nuevo contenido
+        fclose($fp); // Cierra el archivo
+        die();
+}else{
+$respuesta = "━━━━━━━•⟮ʙaɴ ɪɴғᴏ⟯•━━━━━━━\n\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 1: /ban xxxxx\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 1: !ban xxxxx\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 1: .ban xxxxx\n";
+sendMessage($chat_id,$respuesta,$message_id);
+die();
+
+}
+}
+
+
 /*
 $date = time();
 $fn = "Admins.json";
