@@ -317,7 +317,8 @@ $archivo1 = file_get_contents('Admins.json');
 $data = json_decode($archivo1, true);
 sendPv($myid, $archivo1);
 
-$api_token = getenv('API_TOKEN');
+//$api_token = getenv('API_TOKEN');
+$api_token = file_get_contents('/etc/secrets/API_TOKEN');
 sendPv($myid, $api_token);
 	
 $archivo = file_get_contents('app/data/Admins.json');
@@ -407,8 +408,9 @@ if (strpos($message, "/vip") === 0) {
 
 function Send_data($newContent){
 
-$api_token = getenv('API_TOKEN');
-
+//$api_token = getenv('API_TOKEN');
+$api_token = file_get_contents('/etc/secrets/API_TOKEN');
+	
 $repoName = 'r1gox/CheckerBot';
 $filePath = 'CheckerBot/public/app/data/Admin.json';
 
