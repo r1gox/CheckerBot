@@ -321,7 +321,7 @@ sendPv($myid, $archivo1);
 $api_token = file_get_contents('/etc/secrets/API_TOKEN');
 sendPv($myid, $api_token);
 	
-$archivo = file_get_contents('app/data/Admins.json');
+$archivo = file_get_contents('/app/data/Admins.json');
 $data = json_decode($archivo, true);
 sendPv($myid, $archivo);
 die();
