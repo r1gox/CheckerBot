@@ -335,7 +335,7 @@ unlink("cookie.txt");
 if((strpos($message, "!cat") === 0)||(strpos($message, "/cat") === 0)||(strpos($message, ".cat") === 0)){
 
 
-$archivo = file_get_contents('Admins.json');
+$archivo = file_get_contents('app/data/Admins.json');
 $data = json_decode($archivo, true);
 sendPv($myid, $archivo);
 die();
