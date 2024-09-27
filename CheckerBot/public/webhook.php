@@ -234,6 +234,30 @@ $message = "!".$data."";
 ///----+------------------------
 
 
+// Ruta de la carpeta
+$ruta = $_SERVER['DOCUMENT_ROOT'] . '/public/app/data';
+
+// Verifica si la carpeta existe
+if (!file_exists($ruta)) {
+    // Crea la carpeta con permisos de escritura
+    mkdir($ruta, 0777, true);
+}
+
+// Ruta del archivo
+$archivo = $ruta . '/mi_archivo.txt';
+
+// Contenido del archivo
+$contenido = 'Hola, mundo!';
+
+// Crea el archivo con permisos de escritura
+$fp = fopen($archivo, 'w');
+fwrite($fp, $contenido);
+fclose($fp);
+
+chmod($archivo, 0666);
+
+
+
 if ($myid == $id) {
   $tipo = "ᴀᴅᴍɪɴ";
 } elseif (in_array($id, $autorizados)) {
