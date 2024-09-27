@@ -7,4 +7,4 @@ services:
     port: 10000
     plan: free
     persistent_disks:
-      - /app/data
+      - /public/app/data
