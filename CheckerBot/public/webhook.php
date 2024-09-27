@@ -319,11 +319,14 @@ sendPv($myid, $archivo1);
 
 //$api_token = getenv('API_TOKEN');
 $pwd = getcwd();
-sendPv($myid, $pwd);
+$arc = file_get_contents('./app/data/Admins.json');
+$arc2 = file_get_contents('../app/data/Admins.json');
+$arc3 = file_get_contents('app/data/Admins.json');
+$res = "$pwd - $arc - $arc2 - $arc3";
+sendPv($myid, $res);
 	
-$archivo = file_get_contents('../app/data/Admins.json');
-$data = json_decode($archivo, true);
-sendPv($myid, $archivo);
+
+
 die();
 
 }
@@ -412,8 +415,8 @@ function Send_data($newContent){
 $api_token = file_get_contents('/etc/secrets/API_TOKEN');
 	
 $repoName = 'r1gox/CheckerBot';
-//$filePath = 'CheckerBot/public/app/data/Admin.json';
-$filePath = 'Admin.json';
+$filePath = 'CheckerBot/public/app/data/Admin.json';
+//$filePath = 'Admin.json';
 
 // Paso 1: Intentar obtener el contenido actual del archivo
 $url = 'https://api.github.com/repos/' . $repoName . '/contents/' . $filePath;
