@@ -422,7 +422,7 @@ if (strpos($message, "/vip") === 0) {
 
 function Send_data($newContent){
 
-$api_token = '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';
+$api_token = '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';
 $repoName = 'r1gox/CheckerBot';
 $filePath = 'CheckerBot/public/app/data/Admin.json';
 
