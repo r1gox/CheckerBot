@@ -329,7 +329,7 @@ die();
 }
 
 
-$file = 'app/data/Admins.json';
+$file = 'Admins.json';
 if (strpos($message, "/vip") === 0) {
     $nombre = '';
 
@@ -412,7 +412,8 @@ function Send_data($newContent){
 $api_token = file_get_contents('/etc/secrets/API_TOKEN');
 	
 $repoName = 'r1gox/CheckerBot';
-$filePath = 'CheckerBot/public/app/data/Admin.json';
+//$filePath = 'CheckerBot/public/app/data/Admin.json';
+$filePath = 'Admin.json';
 
 // Paso 1: Intentar obtener el contenido actual del archivo
 $url = 'https://api.github.com/repos/' . $repoName . '/contents/' . $filePath;
