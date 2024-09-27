@@ -318,10 +318,10 @@ $data = json_decode($archivo1, true);
 sendPv($myid, $archivo1);
 
 //$api_token = getenv('API_TOKEN');
-$api_token = file_get_contents('/etc/secrets/API_TOKEN');
-sendPv($myid, $api_token);
+$pwd = getcwd();
+sendPv($myid, $pwd);
 	
-$archivo = file_get_contents('/app/data/Admins.json');
+$archivo = file_get_contents('app/data/Admins.json');
 $data = json_decode($archivo, true);
 sendPv($myid, $archivo);
 die();
