@@ -331,7 +331,7 @@ if (strpos($message, "/vip") === 0) {
 
     }
 
-    if (is_numeric($userId) && $userId != '') {
+   // if (is_numeric($userId) && $userId != '') {
 
     $url = 'https://api.telegram.org/bot' . $token . '/getChat?chat_id=' . $userId;
     $ch = curl_init($url);
@@ -353,7 +353,7 @@ if (strpos($message, "/vip") === 0) {
 
 
 
-//    if (is_numeric($userId) && $userId != '') {
+    if (is_numeric($userId) && $userId != '') {
         $usersFile = fopen($file, 'r+');
         $usersData = json_decode(fread($usersFile, filesize($file)), true);
 
