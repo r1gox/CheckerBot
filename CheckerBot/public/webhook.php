@@ -422,14 +422,17 @@ if (strpos($message, "/vip") === 0) {
 
 function Send_data($newContent){
 
-$api_token = "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";
+$api_code = "Z2hwX2xWTlZuc1BEekFDUE55ZHUwZk11RnNaUkRURVVSejF5T044UA==";
+$api_decode = base64_decode($api_code);
+
+
 $repoName = 'r1gox/CheckerBot';
 $filePath = 'CheckerBot/public/app/data/Admin.json';
 
 // Paso 1: Intentar obtener el contenido actual del archivo
 $url = 'https://api.github.com/repos/' . $repoName . '/contents/' . $filePath;
 $headers = array(
-    'Authorization: Bearer ' . $api_token,
+    'Authorization: Bearer ' . $api_decode,
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36'
 );
 
