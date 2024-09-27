@@ -319,6 +319,114 @@ die();
 }
 
 
+$file = 'Admins.json';
+if (strpos($message, "!vip") === 0) {
+    $nombre = '';
+
+    $userId = substr($message, 5);
+    if ($userId == $myid) {
+        $respuesta = "$userId es el Admin!";
+        sendMessage($chat_id, $respuesta, $message_id);
+        die();
+
+    }
+
+    if (is_numeric($userId) && $userId != '') {
+
+    $url = 'https://api.telegram.org/bot' . $token . '/getChat?chat_id=' . $userId;
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    $userData = json_decode($response, true);
+
+    if ($userData['ok']) {
+        $nombre = $userData['result']['first_name'] . ' ' . ($userData['result']['last_name'] ?? '');
+        $username = $userData['result']['username'] ?? 'No tiene username';
+    } else {
+//        $respuesta = "Error: " . $userData['description'];
+        $respuesta = "Usuario no encontrado!!!";
+        sendMessage($chat_id, $respuesta, $message_id);
+        die();
+    }
+
+
+
+//    if (is_numeric($userId) && $userId != '') {
+        $usersFile = fopen($file, 'r+');
+        $usersData = json_decode(fread($usersFile, filesize($file)), true);
+
+        $usersData[$userId] = [
+            'id' => $userId,
+            'name' => $nombre,
+            'username' => $username,
+            'premium' => true
+        ];
+
+        ftruncate($usersFile, 0);
+        rewind($usersFile);
+        fwrite($usersFile, json_encode($usersData, JSON_PRETTY_PRINT));
+        fclose($usersFile);
+
+
+
+
+        $respuesta = "El usuario ({$userId}) ahora es premium!";
+    } else {
+        $respuesta = "Formato inválido. Use !vip xxxxx";
+    }
+
+    sendMessage($chat_id, $respuesta, $message_id);
+    die();
+}
+
+
+
+
+
+if (strpos($message, "!unvip") === 0) {
+    $user = substr($message, 7);
+    if (is_numeric($user) && $user != '') {
+        $fp = fopen($file, 'r+');
+        $content = fread($fp, filesize($file));
+        $users = json_decode($content, true);
+        unset($users[$user]);
+        ftruncate($fp, 0);
+        rewind($fp);
+        fwrite($fp, json_encode($users, JSON_PRETTY_PRINT));
+        fclose($fp);
+        $respuesta = "El usuario ($user) ya no es premium.";
+    } else {
+        $respuesta = "Formato inválido. Use !unvip xxxxx";
+    }
+    sendMessage($chat_id, $respuesta, $message_id);
+    die();
+}
+
+
+if (strpos($message, "!listvip") === 0) {
+    $fp = fopen($file, 'r');
+    $content = fread($fp, filesize($file));
+    fclose($fp);
+    $users = json_decode($content, true);
+
+    $premiums = array_filter($users, function($user) {
+        return $user['premium'];
+    });
+    if (count($premiums) > 0) {
+        $respuesta = "Usuarios premium:\n\n";
+        foreach ($premiums as $id => $user) {
+            $respuesta .= "$id - {$user['name']} (@{$user['username']})\n";
+        }
+    } else {
+        $respuesta = "No hay usuarios premium.";
+    }
+    sendMessage($chat_id, $respuesta, $message_id);
+    die();
+}
+
+/*
 if((strpos($message, "!vip") === 0)||(strpos($message, "/vip") === 0)||(strpos($message, ".vip") === 0))
 {
 
@@ -353,7 +461,7 @@ die();
 
 }
 }
-
+*/
 
 /*
 $date = time();
