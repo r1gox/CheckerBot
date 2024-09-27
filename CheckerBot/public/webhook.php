@@ -320,7 +320,7 @@ die();
 
 
 $file = 'Admins.json';
-if (strpos($message, "!vip") === 0) {
+if (strpos($message, "/vip") === 0) {
     $nombre = '';
 
     $userId = substr($message, 5);
@@ -385,7 +385,7 @@ if (strpos($message, "!vip") === 0) {
 
 
 
-if (strpos($message, "!unvip") === 0) {
+if (strpos($message, "/unvip") === 0) {
     $user = substr($message, 7);
     if (is_numeric($user) && $user != '') {
         $fp = fopen($file, 'r+');
@@ -405,7 +405,7 @@ if (strpos($message, "!unvip") === 0) {
 }
 
 
-if (strpos($message, "!listvip") === 0) {
+if (strpos($message, "/listvip") === 0) {
     $fp = fopen($file, 'r');
     $content = fread($fp, filesize($file));
     fclose($fp);
