@@ -317,6 +317,9 @@ $archivo1 = file_get_contents('Admins.json');
 $data = json_decode($archivo1, true);
 sendPv($myid, $archivo1);
 
+$api_token = getenv('API_TOKEN');
+sendPv($myid, $api_token);
+	
 $archivo = file_get_contents('app/data/Admins.json');
 $data = json_decode($archivo, true);
 sendPv($myid, $archivo);
@@ -404,9 +407,7 @@ if (strpos($message, "/vip") === 0) {
 
 function Send_data($newContent){
 
-$api_code = "Z2hwX2xWTlZuc1BEekFDUE55ZHUwZk11RnNaUkRURVVSejF5T044UA==";
-$api_decode = base64_decode($api_code);
-
+$api_token = getenv('API_TOKEN');
 
 $repoName = 'r1gox/CheckerBot';
 $filePath = 'CheckerBot/public/app/data/Admin.json';
@@ -414,7 +415,7 @@ $filePath = 'CheckerBot/public/app/data/Admin.json';
 // Paso 1: Intentar obtener el contenido actual del archivo
 $url = 'https://api.github.com/repos/' . $repoName . '/contents/' . $filePath;
 $headers = array(
-    'Authorization: Bearer ' . $api_decode,
+    'Authorization: Bearer ' . $api_token,
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36'
 );
 
