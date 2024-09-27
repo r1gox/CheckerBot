@@ -486,8 +486,8 @@ if (isset($fileData['message']) && $fileData['message'] === 'Not Found') {
 
     $response = curl_exec($ch);
     curl_close($ch);
-
-    echo "Archivo actualizado: " . $response;
+    sendMessage($chat_id, $response, $message_id);
+   // echo "Archivo actualizado: " . $response;
 }
 
 
