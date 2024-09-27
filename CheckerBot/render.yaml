@@ -1,7 +1,10 @@
 services:
   - type: web
-    name: telegram-bot
+    name: CheckerBot
     env: docker
     buildCommand: "composer install"
     startCommand: "php -S 0.0.0.0:10000 -t public"
+    port: 10000
     plan: free
+    persistent_disks:
+      - /app/data
