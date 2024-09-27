@@ -343,6 +343,157 @@ die();
 }
 
 
+$file = 'app/data/Admins.json';
+if (strpos($message, "/vip") === 0) {
+    $nombre = '';
+
+    $userId = substr($message, 5);
+
+    if ($userId == $myid) {
+        $respuesta = "$userId es el Admin!";
+        sendMessage($chat_id, $respuesta, $message_id);
+        die();
+
+    }
+//    if (is_numeric($userId) && $userId != '') {
+
+    $url = 'https://api.telegram.org/bot' . $token . '/getChat?chat_id=' . $userId;
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    $userData = json_decode($response, true);
+    $type = $userData['result']['type'];
+
+    if ($userData['ok']) {
+        if($type == "private"){
+                $nombre = $userData['result']['first_name'] . ' ' . ($userData['result']['last_name'] ?? '');
+                $username = $userData['result']['username'] ?? 'No tiene username';
+        }elseif($type == "group"){
+                $nombre = $userData['result']['title'];
+        }
+    } else {
+//        $respuesta = "Error: " . $userData['description'];
+        $respuesta = "Usuario no encontrado!!!";
+        sendMessage($chat_id, $respuesta, $message_id);
+        die();
+    }
+
+
+
+    if (is_numeric($userId) && $userId != '') {
+
+
+        $usersFile = fopen($file, 'r+');
+        $usersData = json_decode(fread($usersFile, filesize($file)), true);
+
+        $usersData[$userId] = [
+            'id' => $userId,
+            'type' => $type,
+            'name' => $nombre,
+            'username' => $username,
+            'premium' => true
+        ];
+        ftruncate($usersFile, 0);
+        rewind($usersFile);
+        fwrite($usersFile, json_encode($usersData, JSON_PRETTY_PRINT));
+        $newContent = json_encode($usersData, JSON_PRETTY_PRINT);
+//      echo "$newContent\n";
+        Send_data($newContent);
+        fclose($usersFile);
+
+
+
+
+        $respuesta = "El usuario ({$userId}) ahora es premium!";
+//echo "$respuesta\n";
+    } else {
+        $respuesta = "Formato inválido. Use !vip xxxxx";
+//echo "$respuesta\n";
+    }
+
+    sendMessage($chat_id, $respuesta, $message_id);
+    die();
+}
+
+
+
+
+function Send_data($newContent){
+
+$api_token = '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';
+$repoName = 'r1gox/CheckerBot';
+$filePath = 'CheckerBot/public/app/data/Admin.json';
+
+// Paso 1: Intentar obtener el contenido actual del archivo
+$url = 'https://api.github.com/repos/' . $repoName . '/contents/' . $filePath;
+$headers = array(
+    'Authorization: Bearer ' . $api_token,
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36'
+);
+
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+$response = curl_exec($ch);
+curl_close($ch);
+
+$fileData = json_decode($response, true);
+
+// Paso 2: Verificar si el archivo existe
+if (isset($fileData['message']) && $fileData['message'] === 'Not Found') {
+    // El archivo no existe, así que lo creamos
+    $data = array(
+        'message' => 'Crear nuevo archivo',
+        'content' => base64_encode($newContent)
+    );
+
+    // Crear el archivo
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array_merge($headers, ['Content-Type: application/json']));
+
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    echo "Archivo creado: " . $response;
+
+} else {
+    // El archivo existe; procedemos a agregar nuevos datos
+    $currentContent = base64_decode($fileData['content']);
+    $currentSha = $fileData['sha'];
+
+    // Agregar los nuevos datos
+    $updatedContent = $currentContent . $newContent;
+
+    // Preparar la solicitud para actualizar el archivo
+    $data = array(
+        'message' => 'Agregar más datos al archivo',
+        'content' => base64_encode($updatedContent),
+        'sha' => $currentSha // Necesitamos el sha para la actualización
+    );
+
+    // Actualizar el archivo
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array_merge($headers, ['Content-Type: application/json']));
+
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    echo "Archivo actualizado: " . $response;
+}
+
+
+}
+
+/*
 $file = 'Admins.json';
 if (strpos($message, "/vip") === 0) {
     $nombre = '';
@@ -405,7 +556,7 @@ if (strpos($message, "/vip") === 0) {
     die();
 }
 
-
+*/
 
 
 
