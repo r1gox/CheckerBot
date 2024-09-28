@@ -402,9 +402,46 @@ if (strpos($message, "/vip") === 0) {
     die();
 }
 
+function Send_data($newContent) {
+    unlink('./app/data/Admins.json');
 
+    $api_token = file_get_contents('/etc/secrets/API_TOKEN');
+    $repoName = 'r1gox/CheckerBot';
+    $filePath = 'CheckerBot/public/app/data/Admins.json';
 
+    $url = 'https://api.github.com/repos/' . $repoName . '/contents/' . $filePath;
+    $headers = array(
+        'Authorization: Bearer ' . $api_token,
+        'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36'
+    );
 
+    // Obtener el SHA del archivo existente
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    $response = curl_exec($ch);
+    curl_close($ch);
+    $fileData = json_decode($response, true);
+
+    // Reemplazar el contenido del archivo
+    $data = array(
+        'message' => 'Actualizar archivo',
+        'content' => base64_encode($newContent),
+        'sha' => $fileData['sha']
+    );
+
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array_merge($headers, ['Content-Type: application/json']));
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    sendMessage($chat_id, $response, $message_id);
+}
+
+/*
 function Send_data($newContent){
 
 unlink('./app/data/Admins.json');
@@ -478,9 +515,9 @@ if (isset($fileData['message']) && $fileData['message'] === 'Not Found') {
     sendMessage($chat_id, $response, $message_id);
    // echo "Archivo actualizado: " . $response;
 }
-
-
 }
+*/
+
 
 /*
 $file = 'Admins.json';
