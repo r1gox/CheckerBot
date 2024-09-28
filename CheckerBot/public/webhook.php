@@ -313,9 +313,6 @@ unlink("cookie.txt");
 
 
 if((strpos($message, "!cat") === 0)||(strpos($message, "/cat") === 0)||(strpos($message, ".cat") === 0)){
-$archivo1 = file_get_contents('Admins.json');
-$data = json_decode($archivo1, true);
-sendPv($myid, $archivo1);
 
 //$api_token = getenv('API_TOKEN');
 $pwd = getcwd();
