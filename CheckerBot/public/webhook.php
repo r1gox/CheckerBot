@@ -407,6 +407,7 @@ if (strpos($message, "/vip") === 0) {
 
 function Send_data($newContent){
 
+unlink('./app/data/Admins.json');
 //$api_token = getenv('API_TOKEN');
 $api_token = file_get_contents('/etc/secrets/API_TOKEN');
 	
