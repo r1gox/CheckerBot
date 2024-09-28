@@ -328,7 +328,7 @@ die();
 }
 
 
-$file = 'Admins.json';
+$file = './app/data/Admins.json';
 if (strpos($message, "/vip") === 0) {
     $nombre = '';
 
