@@ -213,9 +213,14 @@ $live_array = array(
     'stolen_card',
     '"seller_message": "Payment complete."'
 );
-
+/*
 $autorizados = array("1292171163");
 $grupos_autorizados = array("-4274242125");
+*/
+
+$content = file_get_contents('./app/data/Admins.json');
+$data = json_decode($content, true);
+$autorizados = array_column($data, 'id');
 
 $admin = "<a href='t.me/rigo_jz'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>";
 
@@ -285,7 +290,7 @@ die();
 
   }
 } elseif ($update["chat"]["type"] == "group") {
-  if (in_array($update["chat"]["id"], $grupos_autorizados)) {
+  if (in_array($update["chat"]["id"], $autorizados)) { //$grupos_autorizados)
     // Procesar mensaje
   } else {
     // Enviar mensaje de error
