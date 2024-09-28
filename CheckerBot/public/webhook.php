@@ -321,7 +321,7 @@ sendPv($myid, $archivo1);
 $pwd = getcwd();
 $arc = file_get_contents('./app/data/Admins.json');
 $arc2 = file_get_contents('../app/data/Admins.json');
-$arc3 = file_get_contents('/app/data/Admins.json');
+$arc3 = file_get_contents('app/data/Admins.json');
 $res = "$pwd - $arc - $arc3";
 sendPv($myid, $res);
 	
