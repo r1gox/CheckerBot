@@ -568,23 +568,29 @@ if (strpos($message, "/unvip") === 0) {
 }
 
 
-if (strpos($message, "/listvip") === 0) {
-    $fp = fopen($file, 'r');
-    $content = fread($fp, filesize($file));
-    fclose($fp);
-    $users = json_decode($content, true);
 
+
+
+$file = file_get_contents('./app/data/Admins.json');
+
+if (strpos($message, "!listvip") === 0) {
+
+    $users = json_decode($file, true);
     $premiums = array_filter($users, function($user) {
         return $user['premium'];
     });
+
     if (count($premiums) > 0) {
-        $respuesta = "Usuarios premium:\n\n";
+        $respuesta = "♕ ᵁˢᵘᵃʳᶤᵒˢ ᴾʳᵉᵐᶤᵘᵐ ♕\n\n";
         foreach ($premiums as $id => $user) {
-            $respuesta .= "$id - {$user['name']} (@{$user['username']})\n";
+            $username = !empty($user['username']) ? "(@{$user['username']})" : '';
+            $type = !empty($user['type']) ? " - {$user['type']}" : '';
+            $respuesta .= "➩ <code>$id</code> - {$user['name']} $username$type\n";
         }
     } else {
         $respuesta = "No hay usuarios premium.";
     }
+
     sendMessage($chat_id, $respuesta, $message_id);
     die();
 }
