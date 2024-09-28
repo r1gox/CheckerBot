@@ -352,12 +352,14 @@ if (strpos($message, "/vip") === 0) {
     $type = $userData['result']['type'];
 
     if ($userData['ok']) {
-        if($type == "private"){
+
+	if ($type == "private") {
                 $nombre = $userData['result']['first_name'] . ' ' . ($userData['result']['last_name'] ?? '');
                 $username = $userData['result']['username'] ?? 'No tiene username';
-        }elseif($type == "group"){
+        } elseif (in_array($type, ["group", "supergroup"])) {
                 $nombre = $userData['result']['title'];
-        }
+	}
+	    
     } else {
 //        $respuesta = "Error: " . $userData['description'];
         $respuesta = "Usuario no encontrado!!!";
