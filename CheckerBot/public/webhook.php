@@ -221,7 +221,7 @@ $grupos_autorizados = array("-4274242125");
 if((strpos($message, "!id") === 0)||(strpos($message, "/id") === 0)||(strpos($message, ".id") === 0)){
 
 
-$json = json_decode($update, true);
+$json = json_decode($data, true);
 $group_id = $json['message']['sender_chat']['id'];
 $group_title = $json['message']['sender_chat']['title'];
 
