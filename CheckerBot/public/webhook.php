@@ -226,8 +226,7 @@ $group_id = $json['message']['chat']['id'];
 $group_title = $json['message']['sender_chat']['title'];
 
 $respuesta = "Nombre: ".$group_title."\n\nTU ID: <code>".$group_id."</code>";
-sendPv($myid, $respuesta);
-sendMessage($id,$respuesta,$message_id);
+sendMessage($chat_id,$respuesta,$message_id);
 
 die();
 
