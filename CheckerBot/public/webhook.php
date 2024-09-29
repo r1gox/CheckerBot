@@ -270,7 +270,7 @@ if((strpos($message, "!id") === 0)||(strpos($message, "/id") === 0)||(strpos($me
 
 //$ri = $update["chat"]["type"];
 $group_id = $update["chat"]["id"];
-$respuesta = "TU ID: <code>".$group_id."";
+$respuesta = "TU ID: <code>".$group_id."</code>";
 //sendPv($myid, $respuesta);
 sendMessage($id,$respuesta,$message_id);
 
