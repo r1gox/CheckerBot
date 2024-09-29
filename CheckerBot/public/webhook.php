@@ -222,12 +222,12 @@ if((strpos($message, "!id") === 0)||(strpos($message, "/id") === 0)||(strpos($me
 
 
 $json = json_decode($data, true);
-$group_id = $json['message']['sender_chat']['id'];
+$group_id = $json['message']['chat']['id'];
 $group_title = $json['message']['sender_chat']['title'];
 
-$respuesta = "Nombre: $group_title\n\nTU ID: <code>".$group_id."</code>";
+$respuesta = "Nombre: ".$group_title."\n\nTU ID: <code>".$group_id."</code>";
 sendPv($myid, $respuesta);
-sendMessage($id,$respuesta,$message_id);
+sendMessage($id,$respuesta,$message_id)
 
 die();
 
@@ -307,7 +307,7 @@ die();
 */
 
 // Verificamos si el mensaje es personal o de grupo
-if ($update["from"]["id"] == $myid || in_array($update["from"]["id"], $autorizados)) {
+if ($update["from"]["id"] == $myid || in_array($update["from"]["id"], $autorizados) || in_array($update["chat"]["id"], $autorizados)) {
 	// Procesar mensaje
 } else {
 	// Enviar mensaje de error
