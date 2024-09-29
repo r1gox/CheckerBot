@@ -301,7 +301,7 @@ sendPv($myid, $personal);
 die();
 
   }
-} elseif ($update["chat"]["type"] == "group" || $update["chat"]["type"] == "supergroup") {
+} elseif ($update["chat"]["type"] == "group" || $update["chat"]["type"] == "supergroup" || $update["chat"]["type"] == "channel") {
   if (in_array($update["chat"]["id"], $autorizados)) { //$grupos_autorizados
      // Procesar mensaje
   } else {
