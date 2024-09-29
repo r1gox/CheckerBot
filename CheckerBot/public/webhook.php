@@ -252,10 +252,8 @@ $message = "!".$data."";
 
 // 
 
-$ri = $update["chat"]["type"];
-$ad = $update["chat"]["id"];
-$ena = "$ri - $ad";
-sendPv($myid, $ena);
+
+
 
 
 if ($myid == $id) {
@@ -264,6 +262,20 @@ if ($myid == $id) {
   $tipo = "ᴘʀᴇᴍɪᴜᴍ ᴜsᴇʀ";
 } else {
 	$tipo = "ғʀᴇᴇ ᴜsᴇʀ";
+}
+
+
+
+if((strpos($message, "!id") === 0)||(strpos($message, "/id") === 0)||(strpos($message, ".id") === 0)){
+
+//$ri = $update["chat"]["type"];
+$group_id = $update["chat"]["id"];
+$respuesta = "TU ID: <code>".$group_id."";
+//sendPv($myid, $respuesta);
+sendMessage($id,$respuesta,$message_id);
+
+die();
+
 }
 
 /*
@@ -315,20 +327,6 @@ $sec = $sk[0];
 unlink("cookie.txt");
 
 
-if((strpos($message, "!cat") === 0)||(strpos($message, "/cat") === 0)||(strpos($message, ".cat") === 0)){
-
-//$api_token = getenv('API_TOKEN');
-$pwd = getcwd();
-$arc = file_get_contents('./app/data/Admins.json');
-
-$res = "$arc";
-sendPv($myid, $res);
-	
-
-
-die();
-
-}
 
 
 $file = './app/data/Admins.json';
