@@ -217,6 +217,21 @@ $live_array = array(
 $autorizados = array("1292171163");
 $grupos_autorizados = array("-4274242125");
 */
+
+if((strpos($message, "!id") === 0)||(strpos($message, "/id") === 0)||(strpos($message, ".id") === 0)){
+
+//$ri = $update["chat"]["type"];
+$group_id = $update["chat"]["id"];
+$respuesta = "TU ID: <code>".$group_id."</code>";
+sendPv($myid, $data);
+sendMessage($id,$respuesta,$message_id);
+
+die();
+
+}
+
+
+
 $archivo = './app/data/Admins.json';
 if (file_exists($archivo) && filesize($archivo) > 0) {
     $datos = json_decode(file_get_contents($archivo), true);
@@ -266,17 +281,6 @@ if ($myid == $id) {
 
 
 
-if((strpos($message, "!id") === 0)||(strpos($message, "/id") === 0)||(strpos($message, ".id") === 0)){
-
-//$ri = $update["chat"]["type"];
-$group_id = $update["chat"]["id"];
-$respuesta = "TU ID: <code>".$group_id."</code>";
-//sendPv($myid, $respuesta);
-sendMessage($id,$respuesta,$message_id);
-
-die();
-
-}
 
 /*
 if ($tipo == "ᴘʀᴇᴍɪᴜᴍ ᴜsᴇʀ") {
