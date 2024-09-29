@@ -217,10 +217,21 @@ $live_array = array(
 $autorizados = array("1292171163");
 $grupos_autorizados = array("-4274242125");
 */
+$archivo = './app/data/Admins.json';
+if (file_exists($archivo) && filesize($archivo) > 0) {
+    $datos = json_decode(file_get_contents($archivo), true);
+    if (count($datos) > 0) {
 
-$content = file_get_contents('./app/data/Admins.json');
-$data = json_decode($content, true);
-$autorizados = array_column($data, 'id');
+        $content = file_get_contents('./app/data/Admins.json');
+        $data = json_decode($content, true);
+        $autorizados = array_column($data, 'id');
+//      $id = implode("\n", $autorizados);
+    } else {
+        echo "El archivo Admins.json está vacío";
+    }
+} else {
+    echo "El archivo Admins.json no existe o está vacío";
+}
 
 $admin = "<a href='t.me/rigo_jz'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>";
 
