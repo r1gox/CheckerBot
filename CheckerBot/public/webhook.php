@@ -220,10 +220,13 @@ $grupos_autorizados = array("-4274242125");
 
 if((strpos($message, "!id") === 0)||(strpos($message, "/id") === 0)||(strpos($message, ".id") === 0)){
 
-//$ri = $update["chat"]["type"];
-$group_id = $update["chat"]["id"];
-$respuesta = "TU ID: <code>".$group_id."</code>";
-sendPv($myid, $data);
+
+$json = json_decode($update, true);
+$group_id = $json['message']['sender_chat']['id'];
+$group_title = $json['message']['sender_chat']['title'];
+
+$respuesta = "Nombre: $group_title\n\nTU ID: <code>".$group_id."</code>";
+sendPv($myid, $respuesta);
 sendMessage($id,$respuesta,$message_id);
 
 die();
