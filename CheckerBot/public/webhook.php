@@ -410,6 +410,7 @@ if (strpos($message, "/vip") === 0) {
                 $username = $userData['result']['username'] ?? 'No tiene username';
         } elseif (in_array($type, ["group", "supergroup", "channel"])) {
                 $nombre = $userData['result']['title'];
+		$username = $userData['result']['username'];
 	}
 	    
     } else {
