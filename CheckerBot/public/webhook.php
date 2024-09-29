@@ -408,7 +408,7 @@ if (strpos($message, "/vip") === 0) {
 	if ($type == "private") {
                 $nombre = $userData['result']['first_name'] . ' ' . ($userData['result']['last_name'] ?? '');
                 $username = $userData['result']['username'] ?? 'No tiene username';
-        } elseif (in_array($type, ["group", "supergroup"])) {
+        } elseif (in_array($type, ["group", "supergroup", "channel"])) {
                 $nombre = $userData['result']['title'];
 	}
 	    
