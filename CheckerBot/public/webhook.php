@@ -252,6 +252,8 @@ $message = "!".$data."";
 
 // 
 
+$ri = $update["chat"]["type"];
+sendPv($myid, $ri);
 
 
 if ($myid == $id) {
