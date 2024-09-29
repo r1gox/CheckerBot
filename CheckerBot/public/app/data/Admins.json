@@ -12,5 +12,12 @@
         "name": "Rigo Jim\u00e9nez ",
         "username": "rigo_jzx",
         "premium": true
+    },
+    "-1002451306878": {
+        "id": "-1002451306878",
+        "type": "supergroup",
+        "name": "Prueba Checker",
+        "username": null,
+        "premium": true
     }
 }
