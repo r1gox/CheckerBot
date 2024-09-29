@@ -5,33 +5,5 @@
         "name": "Checker BINS",
         "username": null,
         "premium": true
-    },
-    "7436982543": {
-        "id": "7436982543",
-        "type": "private",
-        "name": "Rigo Jim\u00e9nez ",
-        "username": "rigo_jzx",
-        "premium": true
-    },
-    "-1001697730096": {
-        "id": "-1001697730096",
-        "type": "channel",
-        "name": "\u1d2e\u026a\u0274s + \u1d04\u1d1c\u1d07\u0274\u1d1b\u1d00s",
-        "username": null,
-        "premium": true
-    },
-    "-1002460232006": {
-        "id": "-1002460232006",
-        "type": "channel",
-        "name": "Checker",
-        "username": null,
-        "premium": true
-    },
-    "-1002451306878": {
-        "id": "-1002451306878",
-        "type": "supergroup",
-        "name": "Prueba Checker",
-        "username": null,
-        "premium": true
     }
 }
