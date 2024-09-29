@@ -242,7 +242,7 @@ $message = "!".$data."";
 // 
 
 
-
+sendPv($myid, 'antes');
 if ($myid == $id) {
   $tipo = "ᴀᴅᴍɪɴ";
 } elseif (in_array($id, $autorizados)) {
@@ -250,7 +250,7 @@ if ($myid == $id) {
 } else {
 	$tipo = "ғʀᴇᴇ ᴜsᴇʀ";
 }
-
+sendPv($myid, $tipo);
 /*
 if ($tipo == "ᴘʀᴇᴍɪᴜᴍ ᴜsᴇʀ") {
 // PERMITE QUE UN USUARIO PREMIUM ENVIE MENSAJES AL PV DEL BOT :V
