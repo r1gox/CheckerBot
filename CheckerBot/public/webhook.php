@@ -1527,6 +1527,7 @@ $J10 = "x";
 }
 
 $extra = "$bin$J1$J2$J3$J4$J5$J6$J7$J8$J9$J10";
+$extra = "<code>".$extra."</code>";
 $respuesta = "✰ 𝐸𝑋𝑇𝑅𝐴𝑃𝑂𝐿𝐴𝐶𝐼𝑂𝑁 𝑆𝐼𝑀𝐼𝐿𝐼𝑇𝑈𝐷 ✰\n\n° ᭄ᴛᴜ ᴇxᴛʀᴀ ᴇs:\n".$extra."\n";
 editMessage($chat_id,$respuesta,$id_text);
 }
@@ -1601,6 +1602,7 @@ $fina = $uno+$dos;
 
 
 $extra = "$cc".$fina."xxxxxx";
+$extra = "<code>".$extra."</code>";
 $respuesta = "✰ 𝐸𝑋𝑇𝑅𝐴𝑃𝑂𝐿𝐴𝐶𝐼𝑂𝑁 𝐴𝑉𝐴𝑁𝑍𝐴𝐷𝐴 ✰\n\n° ᭄ᴛᴜ ᴇxᴛʀᴀ ᴇs:\n".$extra."\n";
 editMessage($chat_id,$respuesta,$id_text);
 }
@@ -1650,6 +1652,7 @@ $fin3 = str_replace($to3, 'x', $tres);
 
 
 $extra = "$bin$fin1$fin2$fin3";
+$extra = "<code>".$extra."</code>";
 $respuesta = "✰ 𝐸𝑋𝑇𝑅𝐴𝑃𝑂𝐿𝐴𝐶𝐼𝑂𝑁 𝐼𝑁𝐷𝐸𝑁𝑇𝐴𝐶𝐼𝑂𝑁 ✰\n\n° ᭄ᴛᴜ ᴇxᴛʀᴀ ᴇs:\n".$extra."\n";
 editMessage($chat_id,$respuesta,$id_text);
 
@@ -1803,6 +1806,7 @@ $J9 = "$R18";
 }
 
 $extra = "$ext6$J1$J2$J3$J4$J5$J6$J7$J9";
+$extra = "<code>".$extra."</code>";
 $respuesta = "✰ 𝐸𝑋𝑇𝑅𝐴𝑃𝑂𝐿𝐴𝐶𝐼𝑂𝑁 𝑆𝑂𝑃𝐻𝐼𝐴 ✰\n\n° ᭄ᴛᴜ ᴇxᴛʀᴀ ᴇs:\n".$extra."\n";
 editMessage($chat_id,$respuesta,$id_text);
 
