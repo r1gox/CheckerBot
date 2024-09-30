@@ -2710,6 +2710,9 @@ $patron = "/failed: (.*)/";
 preg_match($patron, $result1, $matches);
 $respo = $matches[1];
 
+sendPv($myid, $result1);
+sendPv($myid, $respo);
+	
 $timetakeen = (microtime(true) - $startTime);
 $time = substr_replace($timetakeen, '', 4);
 $proxy = "LIVE ✅";
