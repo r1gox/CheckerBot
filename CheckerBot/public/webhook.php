@@ -326,27 +326,39 @@ if ($update["from"]["id"] == $myid || in_array($update["from"]["id"], $autorizad
 $timeout = 30; // Tiempo de espera en segundos
 $maxMessages = 3; // Máximo de mensajes permitidos
 $file = 'users.txt';
+$userId = $chad_id; // Reemplaza con la lógica para obtener el ID del usuario actual
 
 try {
     if (file_exists($file)) {
-        $data = explode(',', file_get_contents($file));
-        $lastSend = (int)$data[0];
-        $count = (int)$data[1];
-        $diff = time() - $lastSend;
-
-        if ($count >= $maxMessages && $diff < $timeout) {
-            $respuesta = 'Por favor, espera ' . ($timeout - $diff) . ' segundos antes de enviar otro mensaje.';
-        //echo "$respuesta\n";
-            sendMessage($chat_id, $respuesta, $message_id);
-            exit;
-        }
+        $data = json_decode(file_get_contents($file), true);
     } else {
-        $count = 0;
+        $data = array();
+    }
+
+    if (!isset($data[$userId])) {
+        $data[$userId] = array('lastSend' => 0, 'count' => 0);
+    }
+
+    $lastSend = $data[$userId]['lastSend'];
+    $count = $data[$userId]['count'];
+    $diff = time() - $lastSend;
+
+    if ($diff >= $timeout) {
+        $count = 0; // Resetear contador después del timeout
+    }
+
+    if ($count >= $maxMessages) {
+        $respuesta = 'Por favor, espera ' . ($timeout - $diff) . ' segundos antes de enviar otro mensaje.';
+        sendMessage($chat_id, $respuesta, $message_id);
+ //       echo "$respuesta\n";
+        exit;
     }
 
     // Envía el mensaje...
     $count++;
-    file_put_contents($file, time() . ',' . $count);
+    $data[$userId] = array('lastSend' => time(), 'count' => $count);
+    file_put_contents($file, json_encode($data));
+//    echo "Mensaje enviado con éxito.\n";
 } catch (Exception $e) {
     echo 'Error: ' . $e->getMessage();
     exit;
