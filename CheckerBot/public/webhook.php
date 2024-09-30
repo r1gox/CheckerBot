@@ -204,6 +204,7 @@ $live_array = array(
     'Card Issuer Declined CVV',
     'This transaction cannot be processed. Please enter a valid Credit Card Verification Number.',
     'Insufficient Funds',
+    'Transaction not permitted by issuer',
 //    'Your payment method was rejected due to 3D Secure.',
     'transaction_not_allowed',
     'CVV INVALID',
