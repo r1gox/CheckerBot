@@ -12,5 +12,12 @@
         "name": "Alta San",
         "username": null,
         "premium": true
+    },
+    "-1002498758649": {
+        "id": "-1002498758649",
+        "type": "supergroup",
+        "name": "Alta San",
+        "username": null,
+        "premium": true
     }
 }
