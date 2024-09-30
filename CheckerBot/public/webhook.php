@@ -321,7 +321,7 @@ if ($update["from"]["id"] == $myid || in_array($update["from"]["id"], $autorizad
         die();
 }
 
-
+if((strpos($message, "!") === 0)||(strpos($message, "/") === 0)||(strpos($message, ".") === 0)){
 
 $timeout = 30; // Tiempo de espera en segundos
 $maxMessages = 3; // Máximo de mensajes permitidos
@@ -348,7 +348,7 @@ try {
     }
 
     if ($count >= $maxMessages) {
-        $respuesta = 'Por favor, espera ' . ($timeout - $diff) . ' segundos antes de enviar otro mensaje.';
+        $respuesta = '⏳Por favor, espera ' . ($timeout - $diff) . ' segundos antes de enviar otro mensaje.';
         sendMessage($chat_id, $respuesta, $message_id);
  //       echo "$respuesta\n";
         exit;
@@ -363,7 +363,7 @@ try {
     echo 'Error: ' . $e->getMessage();
     exit;
 }
-
+}
 
 
 
