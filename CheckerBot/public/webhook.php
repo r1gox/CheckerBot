@@ -323,36 +323,33 @@ if ($update["from"]["id"] == $myid || in_array($update["from"]["id"], $autorizad
 
 
 
-$tokenLifetime = 30; // Tiempo de vida del token en segundos
-$maxMessages = 3; // Máximo de mensajes permitidos                                                                                           
-// Genera un token único para cada usuario
-if (!isset($_COOKIE['antiSpamToken'])) {
-    $token = bin2hex(random_bytes(16));
-    setcookie('antiSpamToken', $token, time() + $tokenLifetime);
-    setcookie('antiSpamCount', 0, time() + $tokenLifetime);
-}
+$timeout = 30; // Tiempo de espera en segundos
+$maxMessages = 3; // Máximo de mensajes permitidos
+$file = 'users.txt';
 
-// Verifica el token
-if (isset($_COOKIE['antiSpamToken'])) {
-    $token = $_COOKIE['antiSpamToken'];
-    $count = $_COOKIE['antiSpamCount'];
-    $timeout = time() - $_COOKIE['antiSpamTimestamp'];
+try {
+    if (file_exists($file)) {
+        $data = explode(',', file_get_contents($file));
+        $lastSend = (int)$data[0];
+        $count = (int)$data[1];
+        $diff = time() - $lastSend;
 
-    if ($count >= $maxMessages && $timeout < $tokenLifetime) {
-        $respuesta = 'Por favor, espera ' . ($tokenLifetime - $timeout) . ' segundos antes de enviar otro mensaje.';
-        sendMessage($chat_id, $respuesta, $message_id);
-        return;
+        if ($count >= $maxMessages && $diff < $timeout) {
+            $respuesta = 'Por favor, espera ' . ($timeout - $diff) . ' segundos antes de enviar otro mensaje.';
+        //echo "$respuesta\n";
+            sendMessage($chat_id, $respuesta, $message_id);
+            exit;
+        }
     } else {
-        // Envía el mensaje...
-        // Actualiza el token, timestamp y contador
-        $count++;
-        setcookie('antiSpamCount', $count, time() + $tokenLifetime);
-        setcookie('antiSpamTimestamp', time(), time() + $tokenLifetime);
+        $count = 0;
     }
-} else {
-    $respuesta = 'Error: Token no encontrado.';
-    sendMessage($chat_id, $respuesta, $message_id);
-    return;
+
+    // Envía el mensaje...
+    $count++;
+    file_put_contents($file, time() . ',' . $count);
+} catch (Exception $e) {
+    echo 'Error: ' . $e->getMessage();
+    exit;
 }
 
 
