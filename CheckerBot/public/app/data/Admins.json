@@ -5,5 +5,12 @@
         "name": "Alta San",
         "username": null,
         "premium": true
+    },
+    "-1002452370727": {
+        "id": "-1002452370727",
+        "type": "supergroup",
+        "name": "Checker BINS",
+        "username": "checker_bins",
+        "premium": true
     }
 }
