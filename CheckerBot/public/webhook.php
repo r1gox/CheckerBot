@@ -323,6 +323,39 @@ if ($update["from"]["id"] == $myid || in_array($update["from"]["id"], $autorizad
 
 
 
+$tokenLifetime = 30; // Tiempo de vida del token en segundos
+$maxMessages = 3; // Máximo de mensajes permitidos                                                                                           
+// Genera un token único para cada usuario
+if (!isset($_COOKIE['antiSpamToken'])) {
+    $token = bin2hex(random_bytes(16));
+    setcookie('antiSpamToken', $token, time() + $tokenLifetime);
+    setcookie('antiSpamCount', 0, time() + $tokenLifetime);
+}
+
+// Verifica el token
+if (isset($_COOKIE['antiSpamToken'])) {
+    $token = $_COOKIE['antiSpamToken'];
+    $count = $_COOKIE['antiSpamCount'];
+    $timeout = time() - $_COOKIE['antiSpamTimestamp'];
+
+    if ($count >= $maxMessages && $timeout < $tokenLifetime) {
+        $respuesta = 'Por favor, espera ' . ($tokenLifetime - $timeout) . ' segundos antes de enviar otro mensaje.';
+        sendMessage($chat_id, $respuesta, $message_id);
+        return;
+    } else {
+        // Envía el mensaje...
+        // Actualiza el token, timestamp y contador
+        $count++;
+        setcookie('antiSpamCount', $count, time() + $tokenLifetime);
+        setcookie('antiSpamTimestamp', time(), time() + $tokenLifetime);
+    }
+} else {
+    $respuesta = 'Error: Token no encontrado.';
+    sendMessage($chat_id, $respuesta, $message_id);
+    return;
+}
+
+
 
 //-------EXTRAE EL SK_LIVE----//
 $sk = $config['sk_keys'];
