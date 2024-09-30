@@ -326,7 +326,7 @@ if ($update["from"]["id"] == $myid || in_array($update["from"]["id"], $autorizad
 $timeout = 30; // Tiempo de espera en segundos
 $maxMessages = 3; // Máximo de mensajes permitidos
 $file = 'users.txt';
-$userId = $chad_id; // Reemplaza con la lógica para obtener el ID del usuario actual
+$userId = $id; // Reemplaza con la lógica para obtener el ID del usuario actual
 
 try {
     if (file_exists($file)) {
@@ -364,7 +364,8 @@ try {
     exit;
 }
 
-
+$respuesta = file_get_contents('users.txt');
+sendMessage($chat_id, $respuesta, $message_id);
 
 //-------EXTRAE EL SK_LIVE----//
 $sk = $config['sk_keys'];
