@@ -364,8 +364,8 @@ try {
     exit;
 }
 
-$respuesta = file_get_contents('users.txt');
-sendMessage($chat_id, $respuesta, $message_id);
+
+
 
 //-------EXTRAE EL SK_LIVE----//
 $sk = $config['sk_keys'];
