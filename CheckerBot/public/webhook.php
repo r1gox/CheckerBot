@@ -381,8 +381,18 @@ unlink("cookie.txt");
 
 	
 $file = './app/data/Admins.json';
-//if (strpos($message, "/vip") === 0) {
-if ($id == $myid && strpos($message, "/vip") === 0) {
+if (strpos($message, "/vip") === 0) {
+//if ($id == $myid && strpos($message, "/vip") === 0) {
+
+	
+if ($id !== $myid){
+    // Mensaje de error para IDs no autorizados
+    $respuesta = "Acceso restringido.";
+    sendMessage($chat_id, $respuesta, $message_id);
+    die();
+}
+
+	
     $nombre = '';
 
     $userId = substr($message, 5);
@@ -457,13 +467,7 @@ if ($id == $myid && strpos($message, "/vip") === 0) {
     sendMessage($chat_id, $respuesta, $message_id);
     die();
 }
-/*
-} else {
-    // Mensaje de error para IDs no autorizados
-    $respuesta = "Acceso restringido.";
-    sendMessage($chat_id, $respuesta, $message_id);
-    die();
-}*/
+
 
 
 function Send_data($newContent) {
