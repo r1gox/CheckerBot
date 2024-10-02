@@ -382,92 +382,82 @@ unlink("cookie.txt");
 	
 $file = './app/data/Admins.json';
 if (strpos($message, "/vip") === 0) {
-//if ($id == $myid && strpos($message, "/vip") === 0) {
-
 	
-if ($id == $myid){
-
-} else {
+	if ($id == $myid){
+		
+	} else {
     // Mensaje de error para IDs no autorizados
-    $respuesta = "Acceso restringido!!!";
-    sendMessage($chat_id, $respuesta, $message_id);
-    die();
-}
-
-	
-    $nombre = '';
-
-    $userId = substr($message, 5);
-
-    if ($userId == $myid) {
-        $respuesta = "$userId es el Admin!";
-        sendMessage($chat_id, $respuesta, $message_id);
-        die();
-
-    }
-//    if (is_numeric($userId) && $userId != '') {
-
-    $url = 'https://api.telegram.org/bot' . $token . '/getChat?chat_id=' . $userId;
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $response = curl_exec($ch);
-    curl_close($ch);
-
-    $userData = json_decode($response, true);
-    $type = $userData['result']['type'];
-
-    if ($userData['ok']) {
-
-	if ($type == "private") {
-                $nombre = $userData['result']['first_name'] . ' ' . ($userData['result']['last_name'] ?? '');
-                $username = $userData['result']['username'] ?? 'No tiene username';
-        } elseif (in_array($type, ["group", "supergroup", "channel"])) {
-                $nombre = $userData['result']['title'];
-		$username = $userData['result']['username'];
+		$respuesta = "Acceso restringido!!!";
+		sendMessage($chat_id, $respuesta, $message_id);
+		die();
 	}
-	    
-    } else {
+
+	$nombre = '';
+	$userId = substr($message, 5);
+
+	if ($userId == $myid) {
+		$respuesta = "$userId es el Admin!";
+		sendMessage($chat_id, $respuesta, $message_id);
+		die();
+	}
+	
+	if (is_numeric($userId) && $userId != '') {
+		
+		$url = 'https://api.telegram.org/bot' . $token . '/getChat?chat_id=' . $userId;
+		$ch = curl_init($url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		$response = curl_exec($ch);
+		curl_close($ch);
+
+		$userData = json_decode($response, true);
+		$type = $userData['result']['type'];
+
+		if ($userData['ok']) {
+
+			if ($type == "private") {
+				$nombre = $userData['result']['first_name'] . ' ' . ($userData['result']['last_name'] ?? '');
+				$username = $userData['result']['username'] ?? 'No tiene username';
+			} elseif (in_array($type, ["group", "supergroup", "channel"])) {
+				$nombre = $userData['result']['title'];
+				$username = $userData['result']['username'];
+			}
+		} else {
 //        $respuesta = "Error: " . $userData['description'];
-        $respuesta = "Usuario no encontrado!!!";
-        sendMessage($chat_id, $respuesta, $message_id);
-        die();
-    }
+			$respuesta = "Usuario no encontrado!!!";
+			sendMessage($chat_id, $respuesta, $message_id);
+			die();
+		}
 
 
 
-    if (is_numeric($userId) && $userId != '') {
+   // if (is_numeric($userId) && $userId != '') {
 
+		$usersFile = fopen($file, 'r+');
+		$usersData = json_decode(fread($usersFile, filesize($file)), true);
 
-        $usersFile = fopen($file, 'r+');
-        $usersData = json_decode(fread($usersFile, filesize($file)), true);
-
-        $usersData[$userId] = [
-            'id' => $userId,
-            'type' => $type,
-            'name' => $nombre,
-            'username' => $username,
-            'premium' => true
-        ];
-        ftruncate($usersFile, 0);
-        rewind($usersFile);
-        fwrite($usersFile, json_encode($usersData, JSON_PRETTY_PRINT));
-        $newContent = json_encode($usersData, JSON_PRETTY_PRINT);
+		$usersData[$userId] = [
+			'id' => $userId,
+			'type' => $type,
+			'name' => $nombre,
+			'username' => $username,
+			'premium' => true
+			];
+		ftruncate($usersFile, 0);
+		rewind($usersFile);
+		fwrite($usersFile, json_encode($usersData, JSON_PRETTY_PRINT));
+		$newContent = json_encode($usersData, JSON_PRETTY_PRINT);
 //      echo "$newContent\n";
-        Send_data($newContent);
-        fclose($usersFile);
+		Send_data($newContent);
+		fclose($usersFile);
 
-
-
-
-        $respuesta = "El usuario ({$userId}) ahora es premium!";
+		$respuesta = "El usuario ({$userId}) ahora es premium!";
+		
+	} else {
+		$respuesta = "Formato inválido. Use !vip xxxxx";
 //echo "$respuesta\n";
-    } else {
-        $respuesta = "Formato inválido. Use !vip xxxxx";
-//echo "$respuesta\n";
-    }
-
-    sendMessage($chat_id, $respuesta, $message_id);
-    die();
+	}
+	sendMessage($chat_id, $respuesta, $message_id);
+	die();
 }
 
 
