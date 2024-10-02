@@ -385,9 +385,11 @@ if (strpos($message, "/vip") === 0) {
 //if ($id == $myid && strpos($message, "/vip") === 0) {
 
 	
-if ($id !== $myid){
+if ($id == $myid){
+
+} else {
     // Mensaje de error para IDs no autorizados
-    $respuesta = "Acceso restringido.";
+    $respuesta = "Acceso restringido!!!";
     sendMessage($chat_id, $respuesta, $message_id);
     die();
 }
