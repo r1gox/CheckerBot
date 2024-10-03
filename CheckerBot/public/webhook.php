@@ -206,6 +206,7 @@ $live_array = array(
     'Insufficient Funds',
     'Transaction not permitted by issuer',
     'EXISTING_ACCOUNT_RESTRICTED',
+    'VALIDATION_ERROR',
 //    'Your payment method was rejected due to 3D Secure.',
     'transaction_not_allowed',
     'CVV INVALID',
