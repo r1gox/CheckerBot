@@ -207,6 +207,7 @@ $live_array = array(
     'Transaction not permitted by issuer',
     'EXISTING_ACCOUNT_RESTRICTED',
     'VALIDATION_ERROR',
+    '3DS authentication is required.',
 //    'Your payment method was rejected due to 3D Secure.',
     'transaction_not_allowed',
     'CVV INVALID',
@@ -2834,9 +2835,39 @@ curl_setopt_array($curl, [
 $response = curl_exec($curl);
 $err = curl_error($curl);
 $json = json_decode($response, true);
-$respo = $json['errors'][0]['data'][0]['code'];
-$mensaje = $json['errors'][0]['message'];
+//$respo = $json['errors'][0]['data'][0]['code'];
+//$mensaje = $json['errors'][0]['message'];
 curl_close($curl);
+
+
+// Verifica si hay errores
+if (isset($json['errors'])) {
+
+   if (isset($json['errors'][0]['data'][0]['code'])){
+       $respo = $json['errors'][0]['data'][0]['code'];
+
+   } elseif (isset($json['errors'][0]['message'])){
+       $respo = $json['errors'][0]['message'];
+   }
+
+} elseif (isset($json['data']['approveGuestPaymentWithCreditCard']) && $json['data']['approveGuestPaymentWithCreditCard'] !== null) {
+    // Requerimiento de 3DS
+    if (isset($json['data']['approveGuestPaymentWithCreditCard']['flags']['is3DSecureRequired']) && $json['data']['approveGuestPaymentWithCreditCard']['flags']['is3DSecureRequired']) {
+        $respo = "3DS authentication is required.";
+    }
+
+    // Estado del pago
+    if (isset($json['data']['approveGuestPaymentWithCreditCard']['status'])) {
+        if ($json['data']['approveGuestPaymentWithCreditCard']['status'] == 'approved') {
+            $respo = "Pago aprobado con éxito. ID: " . $json['data']['approveGuestPaymentWithCreditCard']['id'];
+        } else {
+            $respo = "Pago rechazado";
+        }
+    }
+} else {
+$respo = $response;
+}
+	
 	
 $timetakeen = (microtime(true) - $startTime);
 $time = substr_replace($timetakeen, '', 4);
@@ -2844,21 +2875,17 @@ $proxy = "LIVE ✅";
 
 
 
-
+/*
 if (empty($respo)) {
 $respo = $response;
 } else {
 $respo = $respo;
 }
-
+*/
 
 $bin = "<code>".$bin."</code>";
 $lista = "<code>".$lista."</code>";
 
-if (empty($respo)) {
-        $respo = $response;
-}
-echo "$respo\n";
 
 // Aquí podrías guardar $responseLog en un archivo o base de datos para depuración
 if (array_in_string($respo, $live_array)) {
