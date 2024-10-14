@@ -971,10 +971,20 @@ if (!isset($_SESSION['message_times'])) {
 
 
 //-----BIENVENIDA NUEVO INTEGRANTE------//
+if ($upda['message']['new_chat_members']) {
+            // Persona se unió al grupo
+            $respuesta = "Bienvenido $Name ($userId) al grupo $chatId!";
+            sendMessageNew($chat_id,$respuesta);
+        } elseif ($upda['message']['left_chat_member']) {
+            // Persona salió del grupo
+            $respuesta = "$userName ($userId) salió del grupo $chatId";
+            sendMessageNew($chat_id,$respuesta);
+}
+
 if(trim($nuevo) != '')
 {
 $respuesta = "━━━━━━━━━━ × ━━━━━━━━━━\n⁕ Nazuna Nanakusa 『ﾑ』⁕\n\n     ⚠️ 𝙱𝙸𝙴𝙽𝚅𝙴𝙽𝙸𝙳𝙾 ⚠️\n\n➭ 𝚄𝚂𝙴𝚁 𝙸𝙳: ".$id_new."  ✔\n➭ 𝙽𝙾𝙼𝙱𝚁𝙴: ".$nuevo."  ✔\n➭ 𝚄𝚂𝚄𝙰𝚁𝙸𝙾: ".$user."  ✔\n\n凸-.-凸 ".$grupo." 凸-.-凸\n━━━━━━━━━━ × ━━━━━━━━━━\n";
-sendMessageNew($chat_id,$respuesta);
+sendMessage($chat_id,$respuesta);
 }
 
 // Start Commands
