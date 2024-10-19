@@ -1903,8 +1903,6 @@ for ($i = 0; $i < strlen($cc); $i += $longitud) {
     $partes[] = $parte;
 }
 
-$cc = implode('+', $partes);
-
 	
 //-----------------------------------------------------//
 $verify = substr($cc, 16, 1);
@@ -1966,6 +1964,7 @@ $patron_nonce = '/"createSetupIntentNonce":"([^"]*)"/';
 preg_match($patron_nonce, $response, $matches_nonce);
 $nonce = $matches_nonce[1];
 
+$cc = implode('+', $partes);
 
 $curl = curl_init();
 curl_setopt_array($curl, [
