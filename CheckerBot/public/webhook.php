@@ -176,6 +176,43 @@ $bindata = "━━━━━━━━•⟮ʙɪɴ ᴅᴀᴛᴀ⟯•━━━━�
 return $bindata;
 }
 
+function Bin_Gen_Info($Bin){
+$curl = curl_init('https://binlist.io/lookup/'.$Bin.'');
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+$content = curl_exec($curl);
+$data = json_decode($content, true);
+curl_close($curl);
+// Extraer cada uno de los elementos
+$scheme = $data['scheme']; // Esquema
+$type = $data['type']; // Tipo
+$category = $data['category']; // Categoría
+$alpha2 = $data['country']['alpha2']; // Código de país alpha2
+$country = $data['country']['name']; // Nombre del país
+$emoji = $data['country']['emoji']; // Emoji del país
+$bank = $data['bank']['name']; // Nombre del banco
+$count = "".$country." - ".$alpha2." ".$emoji."";
+
+if (empty($category)){
+   $curl = curl_init('https://bincheck.io/es/details/'.$Bin.'');
+   curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+   curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+   $response = curl_exec($curl);
+   curl_close($curl);
+    //_Nivel de tarjeta_
+   preg_match('/Nivel de tarjeta<\/td>\s*<td width="65%" class="p-2">\s*([^<]+)\s*<\/td>/', $response, $matches);
+   $category = trim($matches[1]);
+
+}                                                                                       
+$type = trim($type);
+$bank = trim($bank);
+
+$Bin = "<code>".$Bin."</code>";
+//$bindata = "━━━━━━━━•⟮ʙɪɴ ᴅᴀᴛᴀ⟯•━━━━━━━\n➭ 𝙱𝙸𝙽: ".$in."\n➭ 𝙱𝚁𝙰𝙽𝙳: ".$scheme."".$tipo."".$level."\n➭ 𝙲𝙾𝚄𝙽𝚃𝚁𝚈: ".$count."".$banco."";
+$bingeninfo = "➭ 𝙱𝙸𝙽 𝙸𝙽𝙵𝙾: $scheme - $type - $category\n➭ 𝙱𝙰𝙽𝙺: $bank\n➭ 𝙲𝙾𝚄𝙽𝚃𝚁𝚈: $count\n";
+
+return $bingeninfo;
+}
 
 //-----------------------VARIABLES-------------------------//
 
@@ -1112,71 +1149,13 @@ $da = "".$data."\n";
         }
 
         $ccs = file_get_contents("cc-gen");
-$curl = curl_init('https://lookup.binlist.net/'.$Bin.'');
-curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-$result = curl_exec($curl);
-curl_close($curl);
-//---------------------------------------------//
-$bank = capture($result, '"bank": {"name": "', '"');
-$emoji = capture($result, '"emoji":"', '"');
-$alpha = strtoupper(capture($result, '"alpha2":"', '"'));
-$scheme = strtoupper(capture($result, '"scheme":"', '"'));
-$type = strtoupper(capture($result, '"type":"', '"'));
-$currency = capture($result, '"currency":"', '"');
-//---------------------------------------------//
-if (empty($bank)) {
-$bank = "Unavailable";
-}
-if (empty($emoji)) {
-$emoji = "Unavailable";
-}
-if (empty($alpha)) {
-$alpha = "Unavailable";
-}
-if (empty($scheme)) {
-$scheme = "Unavailable";
-}
-if (empty($type)) {
-$type = "Unavailable";
-}
-if (empty($currency)) {
-$currency = "Unavailable";
-}
-$curl = curl_init('https://binlist.io/lookup/'.$Bin.'');
-curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-$content = curl_exec($curl);
-curl_close($curl);
-$binna = json_decode($content,true);
-//---------------------------------------------//
-$level = $binna['category'];
-$brand = $binna['scheme'];
-$country = $binna['country']['name'];
-$type = $binna['type'];
-$bank = $binna['bank']['name'];
-$count = "".$country." - ".$alpha." ".$emoji."";
-if (empty($level)) {
-$level = "Unavailable";
-}
-if (empty($brand)) {
-$brand = "Unavailable";
-}
-if (empty($country)) {
-$country = "Unavailable";
-}
-if (empty($type)) {
-$type = "Unavailable";
-}
-if (empty($bank)) {
-$bank = "Unavailable";
-}
-if (empty($currency)) {
-$count = "Unavailable";
-}
-$Bin = "<code>$Bin</code>";
 
-$respuesta = "➭ 𝙱𝙸𝙽: $Bin\n➭ 𝙰𝙼𝙾𝚄𝙽𝚃: 10\n\n$ccs\n➭ 𝙱𝙸𝙽 𝙸𝙽𝙵𝙾: $brand - $type - $level\n➭ 𝙱𝙰𝙽𝙺: $bank\n➭ 𝙲𝙾𝚄𝙽𝚃𝚁𝚈: $count\n";
+$Bin_Gen = Bin_Gen_Info($Bin); //
+
+$respuesta = "➭ 𝙱𝙸𝙽: $Bin\n➭ 𝙰𝙼𝙾𝚄𝙽𝚃: 10\n\n$ccs\n".$Bin_Gen."";
+//$Bin = "<code>$Bin</code>";
+
+//$respuesta = "➭ 𝙱𝙸𝙽: $Bin\n➭ 𝙰𝙼𝙾𝚄𝙽𝚃: 10\n\n$ccs\n➭ 𝙱𝙸𝙽 𝙸𝙽𝙵𝙾: $brand - $type - $level\n➭ 𝙱𝙰𝙽𝙺: $bank\n➭ 𝙲𝙾𝚄𝙽𝚃𝚁𝚈: $count\n";
 editMessage($chat_id,$respuesta,$id_text);
 unlink("cc-gen");
 die();
