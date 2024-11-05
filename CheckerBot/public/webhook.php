@@ -2040,10 +2040,12 @@ if (strlen($ano) == 2) {
 
 $bin = substr($lista, 0, 6);
 $num = "$cc$mes$ano1$cvv";
-//-----------------------------------------------------//       $verify = substr($cc, 16, 1);                                   if($verify != ""){
-$respuesta = "🚫ᴄᴄ ɴᴏ ᴠᴀʟɪᴅᴀ🚫\n";
-sendMessage($chat_id,$respuesta, $message_id);
-die();
+//-----------------------------------------------------//
+$verify = substr($cc, 16, 1);
+	if($verify != ""){
+		$respuesta = "🚫ᴄᴄ ɴᴏ ᴠᴀʟɪᴅᴀ🚫\n";
+		sendMessage($chat_id,$respuesta, $message_id);
+		die();
 }
 
 if(is_numeric($num) && $lista != '' && $cc != '' && $mes != '' && $ano != '' && $cvv != ''){
