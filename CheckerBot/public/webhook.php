@@ -245,6 +245,8 @@ $live_array = array(
     'EXISTING_ACCOUNT_RESTRICTED',
     'VALIDATION_ERROR',
     '3DS authentication is required.',
+    '𝑨𝒑𝒑𝒓𝒐𝒗𝒆𝒅!',
+    'Insufficient balance',
 //    'Your payment method was rejected due to 3D Secure.',
     'transaction_not_allowed',
     'CVV INVALID',
