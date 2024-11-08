@@ -42,7 +42,7 @@ $myid = "1292171163"; // Reemplaza con tu ID de usuario
 
 
 //-------------------FUNCIONES------------------//
-sendPv($myid, $upda);
+sendPv($myid, $data);
 
 $nombres = array("Juan", "María", "Pedro", "Ana", "Carlos", "Luisa", "Jorge", "Sofía");
 $nombre = $nombres[rand(0, count($nombres) - 1)];
