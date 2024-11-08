@@ -2740,6 +2740,7 @@ curl_setopt_array($curl, [
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
+$json = json_decode($response, true);
 curl_close($curl);
 
 	
