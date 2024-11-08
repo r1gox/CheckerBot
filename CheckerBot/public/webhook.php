@@ -214,6 +214,61 @@ $bingeninfo = "➭ 𝙱𝙸𝙽 𝙸𝙽𝙵𝙾: $scheme - $type - $category\n�
 return $bingeninfo;
 }
 
+function Bininfo($bin){
+$curl = curl_init('https://binlist.io/lookup/'.$bin.'');
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+$content = curl_exec($curl);
+$data = json_decode($content, true);
+curl_close($curl);
+
+// Extraer cada uno de los elementos
+$iin = $data['number']['iin']; // Número IIN
+$scheme = $data['scheme']; // Esquema
+$type = $data['type']; // Tipo
+$category = $data['category']; // Categoría
+$alpha2 = $data['country']['alpha2']; // Código de país alpha2
+$country = $data['country']['name']; // Nombre del país
+$emoji = $data['country']['emoji']; // Emoji del país
+$bank = $data['bank']['name']; // Nombre del banco
+$success = $data['success']; // Estado de éxito
+$count = "".$country." - ".$alpha2." ".$emoji."";                     
+if (empty($category) || empty($currency)){
+   $curl = curl_init('https://bincheck.io/es/details/'.$bin.'');
+   curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+   curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+   $response = curl_exec($curl);
+   curl_close($curl);
+	//_Nivel de tarjeta_
+   preg_match('/Nivel de tarjeta<\/td>\s*<td width="65%" class="p-2">\s*([^<]+)\s*<\/td>/', $response, $matches);
+   $category = trim($matches[1]);
+   $patron = '/Moneda del país ISO<\/td>\s*<td[^>]*>\s*<div class="font-medium">([^<]+)<\/div>/';
+   preg_match($patron, $response, $matches);
+   $currency = trim($matches[1]);
+
+}
+
+$type = trim($type);
+$bank = trim($bank);
+
+
+if ($type !== "" ){
+$typo = "\n➭ 𝚃𝚈𝙿𝙴: ".$type."";
+}
+if ($category !== "" ){
+$level = "\n➭ 𝙻𝙴𝚅𝙴𝙻: ".$category."";
+}
+if (trim($bank !== "" )){
+$banco = "\n➭ 𝙱𝙰𝙽𝙺: ".$bank."";
+}
+if ($currency !== "" ){
+$moneda = "\n➭ 𝙲𝚄𝚁𝚁𝙴𝙽𝙲𝚈: 💲".$currency."";
+}
+
+$Bin = "<code>".$bin."</code>";
+$bininfo = "━━━━━━━•⟮ʙɪɴ ᴄʜᴇᴄᴋᴇʀ⟯•━━━━━━━\n➭ 𝙱𝙸𝙽: ".$Bin."\n➭ 𝙱𝚁𝙰𝙽𝙳: ".$scheme."".$typo."".$level."\n➭ 𝙲𝙾𝚄𝙽𝚃𝚁𝚈: ".$count."".$moneda."".$banco."\n";
+return $bininfo;
+}
 //-----------------------VARIABLES-------------------------//
 
 $live_array = array(
@@ -1377,74 +1432,15 @@ $id_text = file_get_contents("ID");
 
 
 $bin = substr($message, 5);
-
 $bin = substr("$bin", 0, 6);
 $startTime = microtime(true); //TIEMPO DE INICIO
-$curl = curl_init('https://lookup.binlist.net/'.$bin.'');
-curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-$result = curl_exec($curl);
-curl_close($curl);
-//---------------------------------------------//
-$bank = capture($result, '"bank": {"name": "', '"');
-$emoji = capture($result, '"emoji":"', '"');
-$alpha = strtoupper(capture($result, '"alpha2":"', '"'));
-$scheme = strtoupper(capture($result, '"scheme":"', '"'));
-$type = strtoupper(capture($result, '"type":"', '"'));
-$currency = capture($result, '"currency":"', '"');
-if (empty($bank)) {
-$bank = "Unavailable";
-}
-if (empty($emoji)) {
-$emoji = "Unavailable";
-}
-if (empty($alpha)) {
-$alpha = "Unavailable";
-}
-if (empty($scheme)) {
-$scheme = "Unavailable";
-}
-if (empty($type)) {
-$type = "Unavailable";
-}
-if (empty($currency)) {
-$currency = "Unavailable";
-}
-//---------------------------------------------//
-$curl = curl_init('https://binlist.io/lookup/'.$bin.'');
-curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-$content = curl_exec($curl);
-curl_close($curl);
-$binna = json_decode($content,true);
-//---------------------------------------------//
-$level = $binna['category'];
-$brand = $binna['scheme'];
-$country = $binna['country']['name'];
-$type = $binna['type'];
-$bank = $binna['bank']['name'];
-$name = "".$country." - ".$alpha." ".$emoji."";
-if (empty($level)) {
-$level = "Unavailable";
-}
-if (empty($brand)) {
-$brand = "Unavailable";
-}
-if (empty($country)) {
-$country = "Unavailable";
-}
-if (empty($type)) {
-$type = "Unavailable";
-}
-if (empty($bank)) {
-$bank = "Unavailable";
-}
-if (empty($name)) {
-$name = "Unavailable";
-}
-$bin = "<code>".$bin."</code>";
 
-$respuesta = "━━━━━━━•⟮ʙɪɴ ᴄʜᴇᴄᴋᴇʀ⟯•━━━━━━━\n➭ 𝙱𝙸𝙽: ".$bin."\n➭ 𝙱𝚁𝙰𝙽𝙳: ".$brand."\n➭ 𝚃𝚈𝙿𝙴: ".$type."\n➭ 𝙻𝙴𝚅𝙴𝙻: ".$level."\n➭ 𝙲𝙾𝚄𝙽𝚃𝚁𝚈: ".$name."\n➭ 𝙲𝚄𝚁𝚁𝙴𝙽𝙲𝚈: 💲".$currency."\n➭ 𝙱𝙰𝙽𝙺: ".$bank."\n━━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━━•么•━━━━━━━━━━\n";
+
+//Extrae la información del bin///
+$bin_info = Bininfo($bin);
+$respuesta = "".$bin_info."━━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━━•么•━━━━━━━━━━\n";
+
+//$respuesta = "━━━━━━━•⟮ʙɪɴ ᴄʜᴇᴄᴋᴇʀ⟯•━━━━━━━\n➭ 𝙱𝙸𝙽: ".$bin."\n➭ 𝙱𝚁𝙰𝙽𝙳: ".$brand."\n➭ 𝚃𝚈𝙿𝙴: ".$type."\n➭ 𝙻𝙴𝚅𝙴𝙻: ".$level."\n➭ 𝙲𝙾𝚄𝙽𝚃𝚁𝚈: ".$name."\n➭ 𝙲𝚄𝚁𝚁𝙴𝙽𝙲𝚈: 💲".$currency."\n➭ 𝙱𝙰𝙽𝙺: ".$bank."\n━━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━━•么•━━━━━━━━━━\n";
 editMessage($chat_id,$respuesta,$id_text);
 }
 //----------------------END CHECK BIN-----------------------//
