@@ -2609,7 +2609,7 @@ for ($i = 0; $i < strlen($cc); $i += $longitud) {
     $parte = substr($cc, $i, $longitud);
     $partes[] = $parte;
 }
-$cc = implode('+', $partes);
+
 	
 //-----------------------------------------------------//
 $verify = substr($cc, 16, 1);
@@ -2636,7 +2636,7 @@ $id_text = file_get_contents("ID");
 
 $startTime = microtime(true); //TIEMPO DE INICIO
 $BinData = BinData($bin); //Extrae los datos del bin
-
+$cc = implode('+', $partes);
 //sendPv($myid, 'error4..');
 
 $curl = curl_init();
