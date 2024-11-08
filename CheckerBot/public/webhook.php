@@ -1085,7 +1085,9 @@ if (isset($data['message']['new_chat_participant']) ||
     $new_username = $data['message']['new_chat_participant']['username'] ??
                     $data['message']['new_chat_member']['username'] ??
                     $data['message']['new_chat_members'][0]['username'];
-
+	
+    $chat_title = $data['message']['chat']['title'];
+	
 $respuesta =  "¡Hola $new_user_name! Bienvenido/a al Chat de $chat_title.\n\n‣ ᴜsᴇʀ ɪᴅ: <code>$new_user_id</code>\n‣ ғᴜʟʟ ɴᴀᴍᴇ: $new_user_name\n‣ ᴜsᴇʀɴᴀᴍᴇ: @$new_username\n‣ ᴜsᴇʀ ᴛʏᴘᴇ: $tipo\n\nDisfruta de nuestra comunidad y recuerda respetar las reglas para asegurar una experiencia óptima.\n";
 sendMessage($chat_id,$respuesta,$message_id);
 
