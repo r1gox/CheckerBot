@@ -1065,21 +1065,50 @@ if (!isset($_SESSION['message_times'])) {
 
 
 //-----BIENVENIDA NUEVO INTEGRANTE------//
-if ($upda['message']['new_chat_members']) {
-            // Persona se unió al grupo
-            $respuesta = "Bienvenido $Name ($userId) al grupo $chatId!";
-            sendMessageNew($chat_id,$respuesta);
-        } elseif ($upda['message']['left_chat_member']) {
-            // Persona salió del grupo
-            $respuesta = "$userName ($userId) salió del grupo $chatId";
-            sendMessageNew($chat_id,$respuesta);
+
+//$data = json_decode($json, true);
+$data = $upda;
+
+if (isset($data['message']['new_chat_participant']) ||
+    isset($data['message']['new_chat_member']) ||
+    isset($data['message']['new_chat_members'])) {
+
+    // Un nuevo usuario se ha unido al grupo
+    $new_user_id = $data['message']['new_chat_participant']['id'] ??
+                   $data['message']['new_chat_member']['id'] ??
+                   $data['message']['new_chat_members'][0]['id'];
+
+    $new_user_name = $data['message']['new_chat_participant']['first_name'] ??
+                     $data['message']['new_chat_member']['first_name'] ??
+                     $data['message']['new_chat_members'][0]['first_name'];
+
+    $new_username = $data['message']['new_chat_participant']['username'] ??
+                    $data['message']['new_chat_member']['username'] ??
+                    $data['message']['new_chat_members'][0]['username'];
+
+$respuesta =  "¡Hola $new_user_name! Bienvenido/a al Chat de $chat_title.\n\n‣ ᴜsᴇʀ ɪᴅ: <code>$new_user_id</code>\n‣ ғᴜʟʟ ɴᴀᴍᴇ: $new_user_name\n‣ ᴜsᴇʀɴᴀᴍᴇ: @$new_username\n‣ ᴜsᴇʀ ᴛʏᴘᴇ: $tipo\n\nDisfruta de nuestra comunidad y recuerda respetar las reglas para asegurar una experiencia óptima.\n";
+sendMessage($chat_id,$respuesta);
+
+} elseif (isset($data['message']['left_chat_participant']) ||
+          isset($data['message']['left_chat_member'])) {
+    // Una persona ha salido del grupo
+    $left_user_id = $data['message']['left_chat_participant']['id'] ??
+                    $data['message']['left_chat_member']['id'];
+
+    $left_user_name = $data['message']['left_chat_participant']['first_name'] ??
+                      $data['message']['left_chat_member']['first_name'];
+
+    $left_username = $data['message']['left_chat_participant']['username'] ??
+                      $data['message']['left_chat_member']['username'];
+
+
+$respuesta =  "¡Hasta luego $left_user_name, nadie te extrañara!\n\n‣ ᴜsᴇʀ ɪᴅ: <code>$left_user_id</code>\n‣ ғᴜʟʟ ɴᴀᴍᴇ: $left_user_name\n‣ ᴜsᴇʀɴᴀᴍᴇ: @$left_username\n";
+sendMessage($chat_id,$respuesta);
+} else {
+    // No es un evento de entrada o salida
 }
 
-if(trim($nuevo) != '')
-{
-$respuesta = "━━━━━━━━━━ × ━━━━━━━━━━\n⁕ Nazuna Nanakusa 『ﾑ』⁕\n\n     ⚠️ 𝙱𝙸𝙴𝙽𝚅𝙴𝙽𝙸𝙳𝙾 ⚠️\n\n➭ 𝚄𝚂𝙴𝚁 𝙸𝙳: ".$id_new."  ✔\n➭ 𝙽𝙾𝙼𝙱𝚁𝙴: ".$nuevo."  ✔\n➭ 𝚄𝚂𝚄𝙰𝚁𝙸𝙾: ".$user."  ✔\n\n凸-.-凸 ".$grupo." 凸-.-凸\n━━━━━━━━━━ × ━━━━━━━━━━\n";
-sendMessage($chat_id,$respuesta);
-}
+
 
 // Start Commands
 if (strpos($message, ".start") === 0 || strpos($message, "!start") === 0 || strpos($message, "/start") === 0) {
