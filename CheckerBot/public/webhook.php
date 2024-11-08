@@ -1087,7 +1087,7 @@ if (isset($data['message']['new_chat_participant']) ||
                     $data['message']['new_chat_members'][0]['username'];
 
 $respuesta =  "¡Hola $new_user_name! Bienvenido/a al Chat de $chat_title.\n\n‣ ᴜsᴇʀ ɪᴅ: <code>$new_user_id</code>\n‣ ғᴜʟʟ ɴᴀᴍᴇ: $new_user_name\n‣ ᴜsᴇʀɴᴀᴍᴇ: @$new_username\n‣ ᴜsᴇʀ ᴛʏᴘᴇ: $tipo\n\nDisfruta de nuestra comunidad y recuerda respetar las reglas para asegurar una experiencia óptima.\n";
-sendMessage($chat_id,$respuesta);
+sendMessage($chat_id,$respuesta,$message_id);
 
 } elseif (isset($data['message']['left_chat_participant']) ||
           isset($data['message']['left_chat_member'])) {
@@ -1103,7 +1103,7 @@ sendMessage($chat_id,$respuesta);
 
 
 $respuesta =  "¡Hasta luego $left_user_name, nadie te extrañara!\n\n‣ ᴜsᴇʀ ɪᴅ: <code>$left_user_id</code>\n‣ ғᴜʟʟ ɴᴀᴍᴇ: $left_user_name\n‣ ᴜsᴇʀɴᴀᴍᴇ: @$left_username\n";
-sendMessage($chat_id,$respuesta);
+sendMessage($chat_id,$respuesta,$message_id);
 } else {
     // No es un evento de entrada o salida
 }
