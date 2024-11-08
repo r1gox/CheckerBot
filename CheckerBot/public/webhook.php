@@ -2609,7 +2609,7 @@ for ($i = 0; $i < strlen($cc); $i += $longitud) {
     $parte = substr($cc, $i, $longitud);
     $partes[] = $parte;
 }
-$cc = implode('+', $partes)
+$cc = implode('+', $partes);
 	
 //-----------------------------------------------------//
 $verify = substr($cc, 16, 1);
