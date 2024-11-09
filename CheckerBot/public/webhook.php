@@ -320,18 +320,23 @@ if((strpos($message, "!id") === 0)||(strpos($message, "/id") === 0)||(strpos($me
 
 $json = json_decode($data, true);
 $group_id = $json['message']['chat']['id'];
+$private_id = $json['message']['from']['id'];
 $private_title = $json['message']['from']['first_name'];
 $group_title = $json['message']['chat']['title'];
+$chat_type = $json['message']['chat']['type'];
 
 
-if (empty($group_title)){
-$name_title = $group_title;
+echo "$chat_type\n";
+
+
+if ($private_title == "Channel"){
+        $name_title = $group_title;
+        $ID = $group_id;
+}else{
+        $name_title = $private_title;
+        $ID = $private_id;
 }
-if (empty($private_title)){
-$name_title = $private_title;
-}
-
-$respuesta = "Nombre: ".$name_title."\n\nTU ID: <code>".$group_id."</code>";
+$respuesta = "Nombre: ".$name_title."\nChat: ".$chat_type."\nTU ID: <code>".$ID."</code>";
 sendMessage($chat_id,$respuesta,$message_id);
 die();
 
