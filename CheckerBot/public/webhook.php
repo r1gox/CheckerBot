@@ -320,8 +320,8 @@ if((strpos($message, "!id") === 0)||(strpos($message, "/id") === 0)||(strpos($me
 
 $json = json_decode($data, true);
 $group_id = $json['message']['chat']['id'];
-$private_title = $data['message']['from']['first_name'];
-$group_title = $data['message']['chat']['title'];
+$private_title = $json['message']['from']['first_name'];
+$group_title = $json['message']['chat']['title'];
 
 
 if (empty($group_title)){
