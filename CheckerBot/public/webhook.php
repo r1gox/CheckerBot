@@ -302,6 +302,7 @@ $live_array = array(
     '3DS authentication is required.',
     '𝑨𝒑𝒑𝒓𝒐𝒗𝒆𝒅!',
     'Insufficient balance',
+    'Charged $10',
 //    'Your payment method was rejected due to 3D Secure.',
     'transaction_not_allowed',
     'CVV INVALID',
@@ -2039,6 +2040,11 @@ $respo = trim(strip_tags($json['messages']));
 $partes = explode(':', $respo);
 $respo = trim($partes[1]);
 curl_close($curl);
+
+$result = $json['result'];
+if ($result == "success"){
+$respo = "Charged $10";
+}
 	
 $timetakeen = (microtime(true) - $startTime);
 $time = substr_replace($timetakeen, '', 4);
