@@ -42,7 +42,7 @@ $myid = "1292171163"; // Reemplaza con tu ID de usuario
 
 
 //-------------------FUNCIONES------------------//
-sendPv($myid, $data);
+//sendPv($myid, $data);
 
 $nombres = array("Juan", "María", "Pedro", "Ana", "Carlos", "Luisa", "Jorge", "Sofía");
 $nombre = $nombres[rand(0, count($nombres) - 1)];
@@ -1100,9 +1100,15 @@ if (isset($data['message']['new_chat_participant']) ||
                     $data['message']['new_chat_members'][0]['username'];
 	
     $chat_title = $data['message']['chat']['title'];
+
+
+//$chat_id = 1292171163; // Reemplaza con el ID del chat donde quieres enviar la foto
+$photoID = 'AgACAgEAAxkBAAI1-GcyYUp-dDkeJgZASNIMKESwTVr3AAJ9rTEbRFOYRa60ta4yFkQsAQADAgADcwADNgQ';
+$message_id = isset($update['message_id']) ? $update['message_id'] : null; // Obtén el ID del mensaje actual si existe
 	
 $respuesta =  "¡Hola $new_user_name! Bienvenido/a al Chat de $chat_title.\n\n‣ ᴜsᴇʀ ɪᴅ: <code>$new_user_id</code>\n‣ ғᴜʟʟ ɴᴀᴍᴇ: $new_user_name\n‣ ᴜsᴇʀɴᴀᴍᴇ: @$new_username\n‣ ᴜsᴇʀ ᴛʏᴘᴇ: $tipo\n\nDisfruta de nuestra comunidad y recuerda respetar las reglas para asegurar una experiencia óptima.\n";
-sendMessage($chat_id,$respuesta,$message_id);
+sendPhoto($chat_id, $photoID, $respuesta, $message_id);
+//sendMessage($chat_id,$respuesta,$message_id);
 
 } elseif (isset($data['message']['left_chat_participant']) ||
           isset($data['message']['left_chat_member'])) {
@@ -3919,8 +3925,10 @@ $url = $GLOBALS["website"]."/sendMessage?disable_web_page_preview=true&chat_id="
 file_get_contents($url);
 }
 
-function sendPv($chatID, $respuesta) {                                      $url = $GLOBALS["website"]."/sendMessage?chat_id=".$chatID."&text=".urlencode($respuesta);
-    file_get_contents($url);                                            }
+function sendPv($chatID, $respuesta) {
+     $url = $GLOBALS["website"]."/sendMessage?chat_id=".$chatID."&text=".urlencode($respuesta);
+    file_get_contents($url);                                    
+}
 
 
 function editMessage($chatID, $respuesta, $id_text){
@@ -3946,7 +3954,37 @@ $url = $GLOBALS["website"]."/unbanChatMember?chat_id=".$chatID."&user_id=".$id."
 file_get_contents($url);
 }
 
+function sendPhoto($chatID, $photoID, $description = '', $message_id = null) {                                                      $url = $GLOBALS["website"] . "/sendPhoto";
 
+    // Inicializa cURL
+    $ch = curl_init();                                          
+    // Configura los datos a enviar
+    $data = [
+	 'chat_id' => $chatID,
+        'photo' => $photoID,
+        'caption' => $description,
+        'parse_mode' => 'HTML',
+    ];
+
+    // Añade el ID del mensaje si se proporciona
+    if ($message_id) {
+        $data['reply_to_message_id'] = $message_id;
+    }
+
+    // Configura cURL para enviar una solicitud POST
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    // Ejecuta la solicitud
+    $response = curl_exec($ch);
+
+    // Cierra cURL
+    curl_close($ch);
+
+    return $response; // Puedes manejar la respuesta según lo necesites
+ }
 
 
 
