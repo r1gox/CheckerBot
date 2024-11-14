@@ -1990,7 +1990,7 @@ preg_match($patron, $response, $coincidencias);
 $nonce = $coincidencias[1];
 curl_close($curl);
 
-
+sendPv($myid, $nonce);
 /////////PAYEMNT ID//////
 $curl = curl_init();
 curl_setopt_array($curl, [
@@ -2016,7 +2016,7 @@ $err = curl_error($curl);
 $json = json_decode($response, true);
 $id = $json["id"];
 curl_close($curl);
-
+sendPv($myid, $id);
 ///////PAYMENT CHECKOUT///////
 $curl = curl_init();
 curl_setopt_array($curl, [
@@ -2046,7 +2046,8 @@ $respo = trim(strip_tags($json['messages']));
 $partes = explode(':', $respo);
 $respo = trim($partes[1]);
 curl_close($curl);
-
+sendPv($myid, response);
+	
 $result = $json['result'];
 if ($result == "success"){
 $respo = "Charged $10";
