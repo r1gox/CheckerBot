@@ -1967,7 +1967,7 @@ $id_text = file_get_contents("ID");
 $startTime = microtime(true); //TIEMPO DE INICIO
 $BinData = BinData($bin); //Extrae los datos del bin
 	
-$curl = curl_init();                                                                   
+$curl = curl_init();
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://facesandvoicesofrecovery.org/checkout/',
   CURLOPT_RETURNTRANSFER => true,
@@ -1990,7 +1990,7 @@ preg_match($patron, $response, $coincidencias);
 $nonce = $coincidencias[1];
 curl_close($curl);
 
-sendPv($myid, $nonce);
+
 /////////PAYEMNT ID//////
 $curl = curl_init();
 curl_setopt_array($curl, [
@@ -2016,7 +2016,7 @@ $err = curl_error($curl);
 $json = json_decode($response, true);
 $id = $json["id"];
 curl_close($curl);
-sendPv($myid, $id);
+
 ///////PAYMENT CHECKOUT///////
 $curl = curl_init();
 curl_setopt_array($curl, [
@@ -2037,7 +2037,7 @@ curl_setopt_array($curl, [
     'referer: https://facesandvoicesofrecovery.org/checkout/',
   ],
 ]);
-
+	
 $response = curl_exec($curl);
 $err = curl_error($curl);
 //echo "$response\n";
