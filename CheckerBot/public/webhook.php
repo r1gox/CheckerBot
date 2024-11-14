@@ -1989,7 +1989,7 @@ $patron = '/name="woocommerce-process-checkout-nonce" value="([a-zA-Z0-9]+)"/';
 preg_match($patron, $response, $coincidencias);
 $nonce = $coincidencias[1];
 curl_close($curl);
-
+sendPv($myid, $nonce);
 
 /////////PAYEMNT ID//////
 $curl = curl_init();
@@ -2016,7 +2016,7 @@ $err = curl_error($curl);
 $json = json_decode($response, true);
 $id = $json["id"];
 curl_close($curl);
-
+sendPv($myid, $id);
 ///////PAYMENT CHECKOUT///////
 $curl = curl_init();
 curl_setopt_array($curl, [
