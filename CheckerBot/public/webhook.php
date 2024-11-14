@@ -1992,6 +1992,7 @@ $patron = '/name="woocommerce-process-checkout-nonce" value="([a-zA-Z0-9]+)"/';
 preg_match($patron, $response, $coincidencias);
 $nonce = $coincidencias[1];
 curl_close($curl);
+$nonce = "0c226d85e5";
 sendPv($myid, $nonce);
 
 /////////PAYEMNT ID//////
