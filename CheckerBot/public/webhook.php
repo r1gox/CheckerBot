@@ -2231,7 +2231,13 @@ curl_setopt($ch, CURLOPT_POSTFIELDS, 'g-recaptcha-response=03ANYolqtrAXy5zIt2AjP
 $response = curl_exec($ch);
 $err = curl_error($ch);
 $json = json_decode($response, true);
+
+$respo = $json["status"];
+
+if (empty($respo)){
 $respo = explode(';', $json['message'])[0];
+}
+
 curl_close($ch);
 	
 
