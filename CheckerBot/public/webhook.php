@@ -1051,7 +1051,7 @@ if (!isset($_SESSION['message_times'])) {
     $_SESSION['message_times'][$chat_id] = array_filter(
         $_SESSION['message_times'][$chat_id],
         function ($timestamp) {
-            return time() - $timestamp < 30; // Mantener solo los mensajes dentro de los últimos 30 segundos
+            return time() - $timestamp < 120; // Mantener solo los mensajes dentro de los últimos 30 segundos
         }
     );
 
