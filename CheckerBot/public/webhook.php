@@ -1109,20 +1109,12 @@ $message_id = isset($update['message_id']) ? $update['message_id'] : null; // Ob
 $respuesta =  "¡Hola $new_user_name! Bienvenido/a al Chat de $chat_title.\n\n‣ ᴜsᴇʀ ɪᴅ: <code>$new_user_id</code>\n‣ ғᴜʟʟ ɴᴀᴍᴇ: $new_user_name\n‣ ᴜsᴇʀɴᴀᴍᴇ: @$new_username\n‣ ᴜsᴇʀ ᴛʏᴘᴇ: $tipo\n\nDisfruta de nuestra comunidad y recuerda respetar las reglas para asegurar una experiencia óptima.\n";
 sendPhoto($chat_id, $photoID, $respuesta, $message_id);
 //sendMessage($chat_id,$respuesta,$message_id);
-
-} elseif (isset($data['message']['left_chat_participant']) ||
-          isset($data['message']['left_chat_member'])) {
-    // Una persona ha salido del grupo
-    $left_user_id = $data['message']['left_chat_participant']['id'] ??
-                    $data['message']['left_chat_member']['id'];
-
-    $left_user_name = $data['message']['left_chat_participant']['first_name'] ??
-                      $data['message']['left_chat_member']['first_name'];
-
-    $left_username = $data['message']['left_chat_participant']['username'] ??
-                      $data['message']['left_chat_member']['username'];
-
-
+	
+} elseif (isset($data['message']['left_chat_participant']) || isset($data['message']['left_chat_member'])) {
+    // Un usuario ha salido del grupo
+    $left_user_id = $data['message']['left_chat_participant']['id'] ?? $data['message']['left_chat_member']['id'];
+    $left_user_name = $data['message']['left_chat_participant']['first_name'] ?? $data['message']['left_chat_member']['first_name'];
+    $left_username = $data['message']['left_chat_participant']['username'] ?? $data['message']['left_chat_member']['username'];
 $respuesta =  "¡Hasta luego $left_user_name, nadie te extrañara!\n\n‣ ᴜsᴇʀ ɪᴅ: <code>$left_user_id</code>\n‣ ғᴜʟʟ ɴᴀᴍᴇ: $left_user_name\n‣ ᴜsᴇʀɴᴀᴍᴇ: @$left_username\n";
 sendMessage($chat_id,$respuesta,$message_id);
 } else {
