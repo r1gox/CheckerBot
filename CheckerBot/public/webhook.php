@@ -433,8 +433,8 @@ if ($update["from"]["id"] == $myid || in_array($update["from"]["id"], $autorizad
 
 if((strpos($message, "!") === 0)||(strpos($message, "/") === 0)||(strpos($message, ".") === 0)){
 
-$timeout = 30; // Tiempo de espera en segundos
-$maxMessages = 3; // Máximo de mensajes permitidos
+$timeout = 60; // Tiempo de espera en segundos
+$maxMessages = 2; // Máximo de mensajes permitidos
 $file = 'users.txt';
 $userId = $id; // Reemplaza con la lógica para obtener el ID del usuario actual
 
