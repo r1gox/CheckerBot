@@ -2688,7 +2688,7 @@ $status = $json['data']['status'];
 curl_close($curl);
 
 if ($success === true && $status === "succeeded") {
-    $respo = "𝑨𝒑𝒑𝒓𝒐𝒗𝒆𝒅!";
+    $respo = "Approved (1000)";
 
 $curl = curl_init();
 curl_setopt_array($curl, [
