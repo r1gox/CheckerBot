@@ -1996,7 +1996,7 @@ $json = json_decode($response, true);
 $id = $json["id"];
 curl_close($curl);
 sendPv($myid, $id);
-sendPv($myid, '1');
+
 
 $curl = curl_init();
 curl_setopt_array($curl, [
@@ -2011,20 +2011,20 @@ curl_setopt_array($curl, [
   CURLOPT_COOKIE => 'sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-30%2020%3A04%3A22%7C%7C%7Cep%3Dhttps%3A%2F%2Ffacesandvoicesofrecovery.org%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-30%2020%3A04%3A22%7C%7C%7Cep%3Dhttps%3A%2F%2Ffacesandvoicesofrecovery.org%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F131.0.0.0%20Mobile%20Safari%2F537.36; woocommerce_items_in_cart=1; woocommerce_cart_hash=ed9acd73c817522d26e819b0cfc4e423; __stripe_mid=9b1a0ea1-0156-4186-9458-c4e8fe27376f75e12a; __stripe_sid=e8d0ef65-cbfe-4a06-980f-007ab0e3293d922cf1; wordpress_logged_in_508923f30af7c37ea20c1d6887bb80bd=carlos.perez-6019%7C1734206856%7Chn6GYxnU76sz0R0Vgotg9rjfL5wbxk85jfucUf92y1M%7C1d3a440d52aca054b16825ba30fb4d92b7be0a6a191ad86016bb2aec1ff6e7fa; wp_woocommerce_session_508923f30af7c37ea20c1d6887bb80bd=19118%7C%7C1733169952%7C%7C1733166352%7C%7C77a77fe5309e22612909f381962748e7; wfwaf-authcookie-084fa67f8cdb5120d8f1ead9606207d0=19118%7Cother%7Cread%7Caed4d4f6aae423a49e392ed087989ec1b5de69732a5c9794c096926523df75fa; sbjs_session=pgs%3D11%7C%7C%7Ccpg%3Dhttps%3A%2F%2Ffacesandvoicesofrecovery.org%2Fengage%2Fdonate%2F',
   CURLOPT_HTTPHEADER => [
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
-    'Accept-Encoding: gzip, deflate, br, zstd',
-    'sec-ch-ua-platform: "Android"',
-    'x-requested-with: XMLHttpRequest',
-    'sec-ch-ua: "Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+  //  'Accept-Encoding: gzip, deflate, br, zstd',
+    //'sec-ch-ua-platform: "Android"',
+    //'x-requested-with: XMLHttpRequest',
+   // 'sec-ch-ua: "Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
     'content-type: application/x-www-form-urlencoded; charset=UTF-8',
-    'sec-ch-ua-mobile: ?1',
-    'sec-gpc: 1',
-    'accept-language: es-US,es;q=0.7',
+   // 'sec-ch-ua-mobile: ?1',
+   // 'sec-gpc: 1',
+    //'accept-language: es-US,es;q=0.7',
     'origin: https://facesandvoicesofrecovery.org',
-    'sec-fetch-site: same-origin',
-    'sec-fetch-mode: cors',
-    'sec-fetch-dest: empty',
+   // 'sec-fetch-site: same-origin',
+    //'sec-fetch-mode: cors',
+   // 'sec-fetch-dest: empty',
     'referer: https://facesandvoicesofrecovery.org/engage/donate/',
-    'priority: u=1, i',
+    //'priority: u=1, i',
   ],
 ]);
 
@@ -2032,7 +2032,7 @@ $response = curl_exec($curl);
 $err = curl_error($curl);
 curl_close($curl);
 sendPv($myid, $response);
-	
+sendPv($myid, '2');
 editMessage($chat_id, $response, $id_text);
 
 
