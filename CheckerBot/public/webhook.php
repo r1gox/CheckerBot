@@ -3982,10 +3982,11 @@ $partes = explode('.', $respo);
 $respo = implode('.', array_slice($partes, 0, 2));
 if (!preg_match('/\.$/', $respo)) {
     $respo .= '.';
+	if ($respo == "Subscription form has been successfully submitted. Thank you."){
     $partes = explode(".", $respo);
     $gracias = trim(ucwords($partes[1]));
     $respo = "$gracias 20$";
-	
+	}
 }
 
 $timetakeen = (microtime(true) - $startTime);
