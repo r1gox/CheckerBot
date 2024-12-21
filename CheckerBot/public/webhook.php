@@ -232,25 +232,51 @@ $country = $data['country']['name']; // Nombre del país
 $emoji = $data['country']['emoji']; // Emoji del país
 $bank = $data['bank']['name']; // Nombre del banco
 $success = $data['success']; // Estado de éxito
-$count = "".$country." - ".$alpha2." ".$emoji."";                     
-if (empty($category) || empty($currency)){
-   $curl = curl_init('https://bincheck.io/es/details/'.$bin.'');
-   curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-   curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-   $response = curl_exec($curl);
-   curl_close($curl);
-	//_Nivel de tarjeta_
-   preg_match('/Nivel de tarjeta<\/td>\s*<td width="65%" class="p-2">\s*([^<]+)\s*<\/td>/', $response, $matches);
-   $category = trim($matches[1]);
-   $patron = '/Moneda del país ISO<\/td>\s*<td[^>]*>\s*<div class="font-medium">([^<]+)<\/div>/';
-   preg_match($patron, $response, $matches);
-   $currency = trim($matches[1]);
 
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://bincheck.io/es/details/'.$Bin.'',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+//  CURLOPT_COOKIE => 'XSRF-TOKEN=eyJpdiI6IlVxQmFHdW1NUkZSYzgyVktnbncyRnc9PSIsInZhbHVlIjoiajZMY09qQlVyQlloR2JiV3JlczEyVnc2ZzM2amZzdWZvdjY4cXN5SlZuQjJpUThrK0hSbTJJdDNtZDkxRWpNOEIxT29TT3EycHFGL1hTMmU2MmwxRTlNT3FRa0M2RXJBallwalJYTGRuSW1SLzU5d3BvYytPQnIrRW5xZG91TVAiLCJtYWMiOiIxZDI2YzFlOGIxZjkzNzIwZTI3M2UzOGJhNDFjZDU3NTBlZmI4YzcxNWMxMGZlM2MwNTRiMWQ4Njk1ZjE2OGViIiwidGFnIjoiIn0%3D; bincheck_session=eyJpdiI6Ii9WbDdYTS9BaXRzWnd5R1JkblpUYlE9PSIsInZhbHVlIjoiOWJlNmJOa0xNTnNWTHlkS2haNncxdlgrMmdIQm1ZRmF4WUVUMkNxdWlUa251QmZyZFVUd1FxSkNNOFdPbmg4bTZYTDI0ejVlcVQ4TE5VQmo2elVrUnpoRmtTVDNNQW5ZV3FKR29mSXorbUlNRXd2OEZCSm53QVJScmJuYmpNSngiLCJtYWMiOiIyZjZhMzZkNzgxMTI1NjE5YTg4YTg2ODY5ZWIyODNjNGQzMDU2NGYzNmIyNTVhNTIzM2UwMTRjNzRiMzNiN2UwIiwidGFnIjoiIn0%3D',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+//    'referer: https://bincheck.io/es/details/474340',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+curl_close($curl);
+
+
+preg_match('/Nombre del emisor \/ Banco<\/td>\s*<td width="65%" class="p-2">\s*<a[^>]*>([^<]+)<\/a>/', $response, $matches);
+$bank1 = trim($matches[1]);
+preg_match('/Nombre de país ISO<\/td>\s*<td width="65%" class="p-2">\s*<a[^>]*>\s*([^<]+)\s*<\/a>/', $response, $matches);
+$country1 = trim($matches[1]);
+preg_match('/Código de país ISO A2<\/td>\s*<td width="65%" class="p-2">([^<]+)<\/td>/', $response, $matches);
+$alpha1 = trim($matches[1]);
+preg_match('/<td width="35%" class="p-2 font-medium">Nivel de tarjeta<\/td>\s*<td width="65%" class="p-2">([^<]+)<\/td>/', $response, $matches);
+$category1 = trim($matches[1]);
+preg_match('/<td width="35%" class="p-2 font-medium">Moneda del país ISO<\/td>\s*<td width="65%" class="p-2">\s*<div class="font-medium">([^<]+)<\/div>/', $response, $matches);
+$currency1 = trim($matches[1]);
+
+
+if ($country != $country1) {
+$alpha2 = $alpha1;
+$country = $country1;
+$bank = $bank1;
+$category = $category1;
+$currency = $currency1;
 }
-
 $type = trim($type);
 $bank = trim($bank);
 
+$count = "".$country." - ".$alpha2." ".$emoji."";
 
 if ($type !== "" ){
 $typo = "\n➭ 𝐓𝐲𝐩𝐞: ".$type."";
