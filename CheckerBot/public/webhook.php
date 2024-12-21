@@ -256,14 +256,15 @@ curl_close($curl);
 
 preg_match('/Nombre del emisor \/ Banco<\/td>\s*<td width="65%" class="p-2">\s*<a[^>]*>([^<]+)<\/a>/', $response, $matches);
 $bank1 = trim($matches[1]);
-preg_match('/Nombre de país ISO<\/td>\s*<td width="65%" class="p-2">\s*<a[^>]*>\s*([^<]+)\s*<\/a>/', $response, $matches);
+preg_match('/Nombre de país ISO<\/td>\s*<td width="65%" class="p-2">\s*<a[^>]*>([^<]+)<\/a>/', $response, $matches);
 $country1 = trim($matches[1]);
 preg_match('/Código de país ISO A2<\/td>\s*<td width="65%" class="p-2">([^<]+)<\/td>/', $response, $matches);
 $alpha1 = trim($matches[1]);
 preg_match('/<td width="35%" class="p-2 font-medium">Nivel de tarjeta<\/td>\s*<td width="65%" class="p-2">([^<]+)<\/td>/', $response, $matches);
 $category1 = trim($matches[1]);
-preg_match('/<td width="35%" class="p-2 font-medium">Moneda del país ISO<\/td>\s*<td width="65%" class="p-2">\s*<div class="font-medium">([^<]+)<\/div>/', $response, $matches);
+preg_match('/Moneda del país ISO<\/td>\s*<td width="65%" class="p-2">\s*<div class="font-medium">([^<]+)<\/div>/', $response, $matches);
 $currency1 = trim($matches[1]);
+
 
 
 if ($country != $country1) {
@@ -272,6 +273,7 @@ $country = $country1;
 $bank = $bank1;
 $category = $category1;
 $currency = $currency1;
+$emoji = '';
 }
 //$type = trim($type);
 //$bank = trim($bank);
