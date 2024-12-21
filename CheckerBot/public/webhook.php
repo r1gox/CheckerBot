@@ -235,7 +235,7 @@ $success = $data['success']; // Estado de éxito
 
 $curl = curl_init();
 curl_setopt_array($curl, [
-  CURLOPT_URL => 'https://bincheck.io/es/details/'.$Bin.'',
+  CURLOPT_URL => 'https://bincheck.io/es/details/'.$bin.'',
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => '',
   CURLOPT_MAXREDIRS => 10,
