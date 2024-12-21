@@ -273,8 +273,8 @@ $bank = $bank1;
 $category = $category1;
 $currency = $currency1;
 }
-$type = trim($type);
-$bank = trim($bank);
+//$type = trim($type);
+//$bank = trim($bank);
 
 $count = "".$country." - ".$alpha2." ".$emoji."";
 
