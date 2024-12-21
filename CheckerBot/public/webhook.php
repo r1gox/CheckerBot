@@ -4481,7 +4481,7 @@ elseif ((strpos($message, "!") === 0 && strlen($message) > 1) || (strpos($messag
 elseif (preg_match('/^[\/!\.]\w+/', $message)) {
     // Si el mensaje comienza con /, ! o . seguido de alguna palabra
     $respuesta = "Perdón no te entiendo!!!";
-    sendMessage($chat_id,$respuesta,$message_id);
+   // sendMessage($chat_id,$respuesta,$message_id);
    // echo "$respuesta";
 } else {
     // Ignorar mensajes que no son comandos
