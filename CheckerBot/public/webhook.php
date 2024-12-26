@@ -3857,7 +3857,7 @@ ob_flush();
 
 
 ////https://panoramitalia.com/index.php/subscribe/
-elseif((strpos($message, "!pa") === 0)||(strpos($message, "/pa") === 0)||(strpos($message, ".pa") === 0)){
+elseif((strpos($message, "!br") === 0)||(strpos($message, "/br") === 0)||(strpos($message, ".br") === 0)){
 
 $lista = substr($message, 4);
 $i = preg_split('/[|:| ]/', $lista);
@@ -3869,7 +3869,7 @@ $bin = substr($lista, 0, 6);
 
 $verify = substr($cc, 16, 1);
 if($verify != ""){
-        $respuesta = "🚫 Oops!\nUse this format: /pa CC|MM|YYYY|CVV\n";
+        $respuesta = "🚫 Oops!\nUse this format: /br CC|MM|YYYY|CVV\n";
         sendMessage($chat_id,$respuesta, $message_id);
         die();
 }
@@ -3877,7 +3877,7 @@ if($verify != ""){
 if(is_numeric($num) && $lista != '' && $cc != '' && $mes != '' && $ano != '' && $cvv != ''){
 
 }else{
-        $respuesta = "🚫 Oops!\nUse this format: /pa CC|MM|YYYY|CVV\n";
+        $respuesta = "🚫 Oops!\nUse this format: /br CC|MM|YYYY|CVV\n";
         sendMessage($chat_id,$respuesta, $message_id);
         die();
 }
