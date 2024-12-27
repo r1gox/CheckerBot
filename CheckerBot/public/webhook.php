@@ -2355,7 +2355,37 @@ $respo = "Rejected: avs";
 }else{
 $respo = $status;
 }
-	
+
+$timetakeen = (microtime(true) - $startTime);
+$time = substr_replace($timetakeen, '', 4);
+$proxy = "LIVE ✅";
+
+$bin = "<code>".$bin."</code>";
+$lista = "<code>".$lista."</code>";
+
+
+
+if (array_in_string($respo, $live_array)) {
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ AVS\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n➭ 𝐂𝐚𝐫𝐝: ".$lista."\n➭ 𝐒𝐭𝐚𝐭𝐮𝐬: APPROVED ✅\n➭ 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n➭ 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n➭ 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n➭ 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n➭ 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
+    $live = True;
+} elseif (strpos($respo, 'This transaction cannot be processed.') !== false || strpos($respo, 'Your card was declined.') !== false) {
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ AVS\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n➭ 𝐂𝐚𝐫𝐝: ".$lista."\n➭ 𝐒𝐭𝐚𝐭𝐮𝐬: DECLINED ❌\n➭ 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n➭ 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n➭ 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n➭ 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n➭ 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
+    $live = False;
+} else {
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ AVS\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n➭ 𝐂𝐚𝐫𝐝: ".$lista."\n➭ 𝐒𝐭𝐚𝐭𝐮𝐬: DECLINED ❌\n➭ 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n➭ 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n➭ 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n➭ 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n➭ 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
+    $live = False;
+}
+
+if ($live) {
+    editMessage($chat_id, $respuesta, $id_text);
+} else {
+    editMessage($chat_id, $respuesta, $id_text);
+}
+
+//--------FIN DEL CHECKER MERCHAND - CHARGED--------/
+ob_flush();
+
+}
 
 elseif((strpos($message, "!na") === 0)||(strpos($message, "/na") === 0)||(strpos($message, ".na") === 0)){
 $lista = substr($message, 4);
