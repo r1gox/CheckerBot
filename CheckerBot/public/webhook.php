@@ -2356,6 +2356,10 @@ $respo = "Rejected: avs";
 $respo = $status;
 }
 
+if ($respo == "authenticate_successful"){
+$respo = "Your card was declined.";
+}
+	
 $timetakeen = (microtime(true) - $startTime);
 $time = substr_replace($timetakeen, '', 4);
 $proxy = "LIVE ✅";
