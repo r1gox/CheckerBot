@@ -1225,6 +1225,9 @@ $bin = explode("|", $lista)[0];
 $mes1 = explode("|", $lista)[1];
 $ano1 = explode("|", $lista)[2];
 $cvv1 = explode("|", $lista)[3];
+if (strlen($ano1) == 2) {
+    $ano1 = '20' . $ano1;
+}
 $d4 = "".$bin."xxxxxxxxxxxxxxxxx";
 
 if ($target == "37" || $target == "34"){
@@ -2242,6 +2245,10 @@ $mes   = trim($i[1]);
 $ano   = trim($i[2]);
 $cvv   = trim($i[3]);
 
+if (strlen($ano) == 2) {
+    $ano = '20' . $ano;
+}
+	
 $bin = substr($lista, 0, 6);
 
 $verify = substr($cc, 16, 1);
