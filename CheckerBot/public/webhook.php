@@ -2347,11 +2347,11 @@ $json_obj = json_decode($response, true);
 $status = $json_obj["paymentMethod"]["threeDSecureInfo"]["status"];
 $acs_url = $json_obj["paymentMethod"]["threeDSecureInfo"]["acsUrl"];
 
-echo "Status: $status\n";
-echo "AcsUrl: $acs_url\n";
+//echo "Status: $status\n";
+//echo "AcsUrl: $acs_url\n";
 
 if (!empty($acs_url) || $status == "challenge_required"){
-$response = "Rejected: avs";
+$respo = "Rejected: avs";
 }else{
 $respo = $status;
 }
