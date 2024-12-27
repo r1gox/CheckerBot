@@ -2202,7 +2202,9 @@ $lista = "<code>".$lista."</code>";
 if (empty($respo)) {
         $respo = $response;
 }
-
+if ($respo == "SUCCEEDED"){
+    $respo = "Charged $5";
+}
 // Aquí podrías guardar $responseLog en un archivo o base de datos para depuración
 if (array_in_string($respo, $live_array)) {
     $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Charged 5$\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n➭ 𝐂𝐚𝐫𝐝: ".$lista."\n➭ 𝐒𝐭𝐚𝐭𝐮𝐬: APPROVED ✅\n➭ 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n➭ 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n➭ 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n➭ 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n➭ 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
