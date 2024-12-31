@@ -3067,7 +3067,7 @@ curl_close($curl);
 
 echo "$respo\n";
 
-$if(empty($respo)){
+if(empty($respo)){
 $respo = $response;
 }
 
