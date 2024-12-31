@@ -160,7 +160,7 @@ if (empty($category)){
 
 $type = trim($type);
 $bank = trim($bank);
-
+/*
 if ($type !== "" ){
 $tipo = "\n➭ 𝐓𝐲𝐩𝐞: ".$type."";
 }
@@ -172,7 +172,20 @@ $banco = "\n➭ 𝐁𝐚𝐧𝐤: ".$bank."";
 }
 $in = "<code>".$bin."</code>";
 $bindata = "————✧◦⟮ʙɪɴ ᴅᴀᴛᴀ⟯◦✧————\n➭ 𝐁𝐢𝐧: ".$in."\n➭ 𝐁𝐫𝐚𝐧𝐝: ".$scheme."".$tipo."".$level."\n➭ 𝐂𝐨𝐮𝐧𝐭𝐫𝐲: ".$count."".$banco."";
-	
+*/
+
+if ($type !== "" ){
+$tipo = " - ".$type."";
+}
+if ($category !== "" ){
+$level = " - ".$category."";
+}
+if ($bank !== "" ){
+$banco = "\n➭ 𝐁𝐚𝐧𝐤: ".$bank."";
+}
+$in = "<code>".$bin."</code>";
+
+$bindata = "————✧◦⟮ʙɪɴ ᴅᴀᴛᴀ⟯◦✧————\n➭ 𝐁𝐢𝐧: ".$in."\n➭ 𝐈𝐧𝐟𝐨: ".$scheme."".$tipo."".$level."\n➭ 𝐂𝐨𝐮𝐧𝐭𝐫𝐲: ".$count."".$banco."";
 return $bindata;
 }
 
