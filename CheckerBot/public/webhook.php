@@ -332,6 +332,7 @@ $live_array = array(
     'Your payment has already been processed',
     'Nice! New payment method added',
     'Approved',
+    'Charged $5',
     'insufficient_funds',
     'Your card has insufficient funds.',
     "Your card's security code is invalid.",
