@@ -1506,15 +1506,21 @@ editMessage($chat_id,$respuesta,$id_text);
 
 
 elseif((strpos($message, "!bin") === 0)||(strpos($message, "/bin") === 0)||(strpos($message, ".bin") === 0)){
-$si = substr($message, 5);
-$bin = substr($si, 0, 6);
-	
-if (is_numeric($si) && ($si != '')){
-}else{
-$respuesta = "🚫 Oops!\nUse this format: /bin xxxxxx\n";
+$tr = explode(" ", $message);
+$comando = ltrim($tr[0], "/.!"); // elimina /, . o ! del inicio del comando
+if (count($tr) > 1) {
+    $numero = $tr[1];
+    $primeros6 = substr($numero, 0, 6);
+    if (strlen($primeros6) == 6 && ctype_digit($primeros6)) {
+     $bin = $primeros6;
+    // echo "bin: $primeros6";
+    } else {
+	    $respuesta = "🚫 Oops!\nUse this format: /bin xxxxxx\n";
 //$respuesta = "━━━━━━━•⟮ʙɪɴ ɪɴғᴏ⟯•━━━━━━━\n\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 1: /bin xxxxxx\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 1: !bin xxxxxx\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 1: .bin xxxxxx\n";
-sendMessage($chat_id,$respuesta,$message_id);
-die();
+	    sendMessage($chat_id,$respuesta,$message_id);
+	    die();
+	   
+    }
 }
 
 //----------------MENSAGE DE ESPERA-------------------//
