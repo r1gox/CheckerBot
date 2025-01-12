@@ -1405,7 +1405,7 @@ $cc    = trim($i[0]);
 $mes   = trim($i[1]);
 $ano  = trim(substr($i[2], -2));
 $cvv   = trim($i[3]);
-$lista = "$cc|$mes|$ano|cvv";
+$lista = "$cc|$mes|$ano|$cvv";
 
 $bin = substr($lista, 0, 6);
 $ma = "$mes/$ano1";
@@ -2783,8 +2783,13 @@ $ano   = $i[2];
 $cvv   = $i[3];
 $bin = substr($lista, 0, 6);
 
+if (strlen($ano) == 2) {
+    $ano = '20' . $ano;
+}
+
 $mes = explode("|", $lista);
 $mes = intval($mes[1]);
+
 
 //Verifi//
 if (!is_numeric($cc) || strlen($cc) != 16 || !is_numeric($mes) || !is_numeric($ano) || !is_numeric($cvv)) {
