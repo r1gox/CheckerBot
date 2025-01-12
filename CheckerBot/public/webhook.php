@@ -1405,6 +1405,7 @@ $cc    = trim($i[0]);
 $mes   = trim($i[1]);
 $ano  = trim(substr($i[2], -2));
 $cvv   = trim($i[3]);
+$lista = "$cc|$mes|$ano|cvv";
 
 $bin = substr($lista, 0, 6);
 $ma = "$mes/$ano1";
@@ -1565,6 +1566,7 @@ $mes   = $i[1];
 $ano  = trim(substr($i[2], -2));
 $cvv   = $i[3];
 
+$lista = "$cc|$mes|$ano|cvv";
 
 
 $bin = substr($lista, 0, 6);
