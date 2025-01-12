@@ -42,7 +42,7 @@ $myid = "1292171163"; // Reemplaza con tu ID de usuario
 
 
 //-------------------FUNCIONES------------------//
-sendPv($myid, $data);
+//sendPv($myid, $data);
 
 
 $nombres = array("Juan", "María", "Pedro", "Ana", "Carlos", "Luisa", "Jorge", "Sofía");
@@ -685,6 +685,68 @@ if (strpos($message, "!listvip") === 0) {
 if($date <= $users[$id]['date'] + 30 and $users[$id]['msgs'] >= 3){
 $respuesta = "[ANTI SPAM] Try again after 30s\n";
 */
+
+if (strpos($message, ".ref") === 0 || strpos($message, "!ref") === 0 || strpos($message, "/ref") === 0) {
+
+        if ($id == $myid){
+
+        } else {
+               // Mensaje de error para IDs no autorizados
+                $respuesta = "Acceso restringido!!!";
+                sendMessage($chat_id, $respuesta, $message_id);
+                die();
+        }
+
+
+$data = $upda;
+
+$reply_to_message = $data['message']['reply_to_message'];
+// Obtener los datos de Alfa
+$alfa_data = $reply_to_message['from'];
+$user_id = $alfa_data['id'];
+$user_username = $alfa_data['username'];
+$user_first_name = $alfa_data['first_name'];
+// Obtener los datos de la foto
+$photo_data = $reply_to_message['photo'];
+$photo_token = $photo_data[0]['file_id'];
+$message = $reply_to_message['caption'];
+
+
+
+///ENVIA LA FOTO AL CANAL DE REFERENCIAS//)
+$chat_id = '1292171163'; // reemplaza con el ID del chat
+$file_id = $photo_token;
+$i = "<a href='https://t.me/ReferenciasAlyaSan'>么</a>";
+$descripcion = "<i>Referencias</i> 𝐀𝐥𝐲𝐚-𝐒𝐚𝐧 🔥\n- - - - - - - - - - - - - - - - - - - -\n[$i] <b>Message:</b> $message\n[$i] <b>ID:</b> <code>$user_id</code>\n[$i] <b>Username:</b> @$user_username\n[$i] <b>Name:</b> $user_first_name\n- - - - - - - - - - - - - - - - - - - -\n";
+
+
+$url = $GLOBALS["website"] . "/sendPhoto";
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, array(
+    'chat_id' => $chat_id,
+    'photo' => $file_id,
+    'caption' => $descripcion,
+    'parse_mode' => 'HTML'
+));
+$response = curl_exec($ch);
+curl_close($ch);
+
+//echo $response;
+$response = json_decode($response, true);
+
+if ($response['ok'] == true) {
+    $respuesta = "Sent successfully ✅\n";
+    sendMessage($chat_id,$respuesta,$message_id);
+} else {
+    echo "Error al enviar el mensaje\n";
+}
+
+
+}
+
+
+
 
 
 
