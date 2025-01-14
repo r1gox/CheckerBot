@@ -726,19 +726,12 @@ $i = "<a href='https://t.me/ReferenciasAlyaSan'>么</a>";
 $descripcion = "<i>Referencias</i> 𝐀𝐥𝐲𝐚-𝐒𝐚𝐧 🔥\n- - - - - - - - - - - - - - - - - - - -\n[$i] <b>Message:</b> $message\n[$i] <b>ID:</b> <code>$user_id</code>\n[$i] <b>Username:</b> @$user_username\n[$i] <b>Name:</b> $user_first_name $user_last_name\n- - - - - - - - - - - - - - - - - - - -\n";
 
 
-sendRefes1($chat_id_1, $file_id, $descripcion, $message_id); //REFES
 
-sendRefes2($chat_id_2, $file_id, $descripcion, $message_id); //CANAL
-
-
-
-
-/*
 $url = $GLOBALS["website"] . "/sendPhoto";
 $ch = curl_init($url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_POSTFIELDS, array(
-    'chat_id' => $chat_id,
+    'chat_id' => $chat_id_1,
     'photo' => $file_id,
     'caption' => $descripcion,
     'parse_mode' => 'HTML'
@@ -751,12 +744,14 @@ $response = json_decode($response, true);
 
 if ($response['ok'] == true) {
     $respuesta = "Sent successfully ✅\n";
+
     sendMessage($chat_id,$respuesta,$message_id);
+    sendRefes($chat_id_2, $file_id, $descripcion); //CANAL
+
 } else {
     echo "Error al enviar el mensaje\n";
 }
 
-*/
 }
 
 
@@ -3464,49 +3459,29 @@ function sendPhoto($chatID, $photoID, $description = '', $message_id = null) {
 
 
 
-function sendRefes1($chat_id, $file_id, $descripcion, $message_id) {
+function sendRefes($chat_id_2, $file_id, $descripcion) {
     $url = $GLOBALS["website"] . "/sendPhoto";
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, array(
-        'chat_id' => $chat_id,
+        'chat_id' => $chat_id_2,
         'photo' => $file_id,
         'caption' => $descripcion,
         'parse_mode' => 'HTML'
     ));
     $response = curl_exec($ch);
     curl_close($ch);
-
     $response = json_decode($response, true);
     if ($response['ok'] == true) {
-            $respuesta = "Sent successfully \n";
-            sendMessage($chat_id, $respuesta, $message_id);
+        $respuesta = "Sent successfully \n";
     } else {
         echo "Error al enviar el mensaje al canal $chat_id\n";
     }
+
 }
 
-function sendRefes2($chat_id, $file_id, $descripcion, $message_id) {
-    $url = $GLOBALS["website"] . "/sendPhoto";
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, array(
-        'chat_id' => $chat_id,
-        'photo' => $file_id,
-        'caption' => $descripcion,
-        'parse_mode' => 'HTML'
-    ));
-    $response = curl_exec($ch);
-    curl_close($ch);
 
-    $response = json_decode($response, true);
-    if ($response['ok'] == true) {
-            $respuesta = "Sent successfully \n";
-//            sendMessage($chat_id, $respuesta, $message_id);
-    } else {
-        echo "Error al enviar el mensaje al canal $chat_id\n";
-    }
-}
+
 
 
 
