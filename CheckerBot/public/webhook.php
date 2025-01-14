@@ -42,7 +42,7 @@ $myid = "1292171163"; // Reemplaza con tu ID de usuario
 
 
 //-------------------FUNCIONES------------------//
-sendPv($myid, $data);
+//sendPv($myid, $data);
 
 
 $nombres = array("Juan", "María", "Pedro", "Ana", "Carlos", "Luisa", "Jorge", "Sofía");
@@ -708,6 +708,7 @@ $alfa_data = $reply_to_message['from'];
 $user_id = $alfa_data['id'];
 $user_username = $alfa_data['username'];
 $user_first_name = $alfa_data['first_name'];
+$user_last_name = $alfa_data['last_name'];
 // Obtener los datos de la foto
 $photo_data = $reply_to_message['photo'];
 $photo_token = $photo_data[0]['file_id'];
@@ -722,7 +723,7 @@ $chat_id_2 = '-1001697730096'; //CANAL DEL GRUPO
 
 $file_id = $photo_token;
 $i = "<a href='https://t.me/ReferenciasAlyaSan'>么</a>";
-$descripcion = "<i>Referencias</i> 𝐀𝐥𝐲𝐚-𝐒𝐚𝐧 🔥\n- - - - - - - - - - - - - - - - - - - -\n[$i] <b>Message:</b> $message\n[$i] <b>ID:</b> <code>$user_id</code>\n[$i] <b>Username:</b> @$user_username\n[$i] <b>Name:</b> $user_first_name\n- - - - - - - - - - - - - - - - - - - -\n";
+$descripcion = "<i>Referencias</i> 𝐀𝐥𝐲𝐚-𝐒𝐚𝐧 🔥\n- - - - - - - - - - - - - - - - - - - -\n[$i] <b>Message:</b> $message\n[$i] <b>ID:</b> <code>$user_id</code>\n[$i] <b>Username:</b> @$user_username\n[$i] <b>Name:</b> $user_first_name $user_last_name\n- - - - - - - - - - - - - - - - - - - -\n";
 
 
 sendRefes1($chat_id_1, $file_id, $descripcion, $message_id); //REFES
