@@ -742,7 +742,7 @@ if ($response['ok'] == true) {
     $respuesta = "Sent successfully ✅\n";
 
     sendMessage($chat_id,$respuesta,$message_id);
-    sendRefes($chat_id_chanel, $file_id); //CANAL
+    sendRefes($chat_id_chanel, $file_id, $descripcion); //CANAL
 
 } else {
     $respuesta = "Error al enviar el mensaje\n";
@@ -3456,7 +3456,7 @@ function sendPhoto($chatID, $photoID, $description = '', $message_id = null) {
 
 
 
-function sendRefes($chat_id_chanel, $file_id) {
+function sendRefes($chat_id_chanel, $file_id, $descripcion) {
     $url = $GLOBALS["website"] . "/sendPhoto";
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
