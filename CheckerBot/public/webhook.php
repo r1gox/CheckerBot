@@ -715,12 +715,21 @@ $message = $reply_to_message['caption'];
 
 ///ENVIA LA FOTO AL CANAL DE REFERENCIAS//)
 //$chat_id = '1292171163'; // reemplaza con el ID del chat
-$chat_id = '-1002324412436';
+$chat_id_1 = '-1002324412436'; //CANAL DE REFERENCIAS
+$chat_id_2 = '-1001697730096'; //CANAL DEL GRUPO
+
 $file_id = $photo_token;
 $i = "<a href='https://t.me/ReferenciasAlyaSan'>么</a>";
 $descripcion = "<i>Referencias</i> 𝐀𝐥𝐲𝐚-𝐒𝐚𝐧 🔥\n- - - - - - - - - - - - - - - - - - - -\n[$i] <b>Message:</b> $message\n[$i] <b>ID:</b> <code>$user_id</code>\n[$i] <b>Username:</b> @$user_username\n[$i] <b>Name:</b> $user_first_name\n- - - - - - - - - - - - - - - - - - - -\n";
 
 
+sendRefes($chat_id_1, $file_id, $descripcion, $message_id);
+sendRefes($chat_id_2, $file_id, $descripcion, $message_id);
+
+
+
+
+/*
 $url = $GLOBALS["website"] . "/sendPhoto";
 $ch = curl_init($url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -743,7 +752,7 @@ if ($response['ok'] == true) {
     echo "Error al enviar el mensaje\n";
 }
 
-
+*/
 }
 
 
@@ -3448,6 +3457,33 @@ function sendPhoto($chatID, $photoID, $description = '', $message_id = null) {
 
     return $response; // Puedes manejar la respuesta según lo necesites
  }
+
+
+
+
+function sendRefes($chat_id, $file_id, $descripcion, $message_id) {
+    $url = $GLOBALS["website"] . "/sendPhoto";
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, array(
+        'chat_id' => $chat_id,
+        'photo' => $file_id,
+        'caption' => $descripcion,
+        'parse_mode' => 'HTML'
+    ));
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    $response = json_decode($response, true);
+    if ($response['ok'] == true) {
+        if ($chat_id == '-1002324412436') {
+            $respuesta = "Sent successfully \n";
+            sendMessage($chat_id, $respuesta, $message_id);
+        }
+    } else {
+        echo "Error al enviar el mensaje al canal $chat_id\n";
+    }
+}
 
 
 
