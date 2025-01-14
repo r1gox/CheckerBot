@@ -688,7 +688,9 @@ $respuesta = "[ANTI SPAM] Try again after 30s\n";
 
 if (strpos($message, ".ref") === 0 || strpos($message, "!ref") === 0 || strpos($message, "/ref") === 0) {
 
-        if ($id == $myid){
+$my_id = ($id == "1087968824") ? "1087968824" : "1292171163";
+
+        if ($id == $my_id){
 
         } else {
                // Mensaje de error para IDs no autorizados
