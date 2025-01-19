@@ -42,7 +42,7 @@ $myid = "1292171163"; // Reemplaza con tu ID de usuario
 
 
 //-------------------FUNCIONES------------------//
-sendPv($myid, $data);
+//sendPv($myid, $data);
 
 
 $nombres = array("Juan", "María", "Pedro", "Ana", "Carlos", "Luisa", "Jorge", "Sofía");
@@ -704,17 +704,37 @@ $my_id = ($id == "1087968824" || $id == "6394424738") ? $id : "1292171163";
 
 $data = $upda;
 
+///Para comtestar el mensaje///
 $reply_to_message = $data['message']['reply_to_message'];
+////Cuando el mensaje es reenviado de un usuario al grupo//
+$forwardFrom = $data['message']['reply_to_message']['forward_from'];
+
+if ($forwardFrom == True){
+
+$id = $forwardFrom['id'];
+$user_username = $forwardFrom['username'];
+$user_first_name = $forwardFrom['first_name'];
+$user_first_name = $forwardFrom['last_name'];
+
+} else {
+
 // Obtener los datos de Alfa
 $alfa_data = $reply_to_message['from'];
+///Informacion del usuario//
 $user_id = $alfa_data['id'];
 $user_username = $alfa_data['username'];
 $user_first_name = $alfa_data['first_name'];
 $user_last_name = $alfa_data['last_name'];
+}
+
 // Obtener los datos de la foto
 $photo_data = $reply_to_message['photo'];
 $photo_token = $photo_data[0]['file_id'];
 $message = $reply_to_message['caption'];
+
+
+// Extraer información de s1lCc0
+
 
 ///ENVIA LA FOTO AL CANAL DE REFERENCIAS//)
 //$chat_id = '1292171163'; // reemplaza con el ID del chat
