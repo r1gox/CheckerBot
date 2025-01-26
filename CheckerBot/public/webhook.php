@@ -1963,9 +1963,8 @@ curl_setopt_array($curl, [
 $response = curl_exec($curl);
 $err = curl_error($curl);
 $json = json_decode($response, true);
-
+/*
 $respo = $json["status"];
-
 if (empty($respo)){
 $respo = explode(';', $json['message'])[0];
 }
@@ -1975,6 +1974,22 @@ $mensaje = preg_match('/<p>(.*?)<\/p>/', $response, $matches);
 $respo = $matches[1];
 } else {
 $respo = "Service Unavailable";
+}*/
+
+$respo = '';
+
+if (isset($json['status'])) {
+    $respo = $json['status'];
+} elseif (isset($json['message'])) {
+    $messages = explode(';', $json['message']);
+    $respo = trim($messages[0]);
+} else {
+    preg_match('/<p>(.*?)<\/p>/', $response, $matches);
+    if (isset($matches[1])) {
+        $respo = trim($matches[1]);
+    } else {
+        $respo = 'Service Unavailable';
+    }
 }
 
 curl_close($curl);
