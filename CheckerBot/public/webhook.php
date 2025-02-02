@@ -2439,7 +2439,7 @@ curl_setopt_array($curl, [
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Mobile Safari/537.36',
     'Content-Type: application/json',
     'sec-ch-ua-platform: "Android"',
-    'authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjIwMTgwNDI2MTYtcHJvZHVjdGlvbiIsImlzcyI6Imh0dHBzOi8vYXBpLmJyYWludHJlZWdhdGV3YXkuY29tIn0.eyJleHAiOjE3MzgxMDA0MTEsImp0aSI6IjhhNmUwNWVkLTY1Y2YtNDZmYi1iZGFlLTg4ZDE1ZGVkMWZlYiIsInN1YiI6InN4cDkydHZodmZ6cWpkOXkiLCJpc3MiOiJodHRwczovL2FwaS5icmFpbnRyZWVnYXRld2F5LmNvbSIsIm1lcmNoYW50Ijp7InB1YmxpY19pZCI6InN4cDkydHZodmZ6cWpkOXkiLCJ2ZXJpZnlfY2FyZF9ieV9kZWZhdWx0IjpmYWxzZX0sInJpZ2h0cyI6WyJtYW5hZ2VfdmF1bHQiXSwic2NvcGUiOlsiQnJhaW50cmVlOlZhdWx0Il0sIm9wdGlvbnMiOnsibWVyY2hhbnRfYWNjb3VudF9pZCI6ImZzdG9wbGxjX2luc3RhbnQifX0.G8IPLVySLb5e4F-2AbhqCEDQFKxc6aPiFJd4RIY-2sQuH94d1nkdiBTgLnVy__vDksvkArnC9yLxAmLIGBUMnA',
+    'authorization: Bearer '.$authbear.'',
     'braintree-version: 2018-05-10',
     'accept-language: es-US,es;q=0.8',
     'origin: https://assets.braintreegateway.com',
