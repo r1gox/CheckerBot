@@ -717,8 +717,8 @@ $respuesta = "[ANTI SPAM] Try again after 30s\n";
 if (strpos($message, ".ref") === 0 || strpos($message, "!ref") === 0 || strpos($message, "/ref") === 0) {
 
 //$my_id = ($id == "1087968824") ? "1087968824" : "1292171163";
-$my_id = ($id == "1087968824" || $id == "6394424738") ? $id : "1292171163";
-
+//$my_id = ($id == "1087968824" || $id == "6394424738") ? $id : "1292171163";
+	/*
         if ($id == $my_id){
 
         } else {
@@ -726,7 +726,18 @@ $my_id = ($id == "1087968824" || $id == "6394424738") ? $id : "1292171163";
                 $respuesta = "Acceso restringido!!!";
                 sendMessage($chat_id, $respuesta, $message_id);
                 die();
-        }
+        }*/
+
+
+	if (in_array($id, $my_id)) {
+	    // Código para IDs autorizados
+	} else {
+	    // Mensaje de error para IDs no autorizados
+	    $respuesta = "Acceso restringido!!!";
+	    sendMessage($chat_id, $respuesta, $message_id);
+	    die();
+	}
+
 
 
 $data = $upda;
