@@ -782,14 +782,20 @@ $chat_id_chanel = '-1001697730096'; //CANAL DEL GRUPO
 $file_id = $photo_token;
 $i = "<a href='https://t.me/ReferenciasAlyaSan'>么</a>";
 
-if (!empty($message)){
+if (!empty($message)){ //MENSAJE//
 $mesa = "[$i] <b>Message:</b> $message\n";
 }
-if (!empty($user_id)){
+if (!empty($user_id)){ //ID USER//
 $us = "[$i] <b>ID:</b> <code>$user_id</code>\n";
 }
+if (!empty($user_username)){ //@USERNAME//
+$usna = "[$i] <b>Username:</b> @$user_username\n";
+}
+if (!empty($user_first_name)){ //NAME//
+$nam = "[$i] <b>Name:</b> $user_first_name $user_last_name\n";
+}
 
-$descripcion = "<i>Referencias</i> 𝐀𝐥𝐲𝐚-𝐒𝐚𝐧 🔥\n- - - - - - - - - - - - - - - - - - - -\n".$mesa."".$us."[$i] <b>Username:</b> @$user_username\n[$i] <b>Name:</b> $user_first_name $user_last_name\n- - - - - - - - - - - - - - - - - - - -\n";
+$descripcion = "<i>Referencias</i> 𝐀𝐥𝐲𝐚-𝐒𝐚𝐧 🔥\n- - - - - - - - - - - - - - - - - - - -\n".$mesa."".$us."".$usna."".$nam."- - - - - - - - - - - - - - - - - - - -\n";
 
 $url = $GLOBALS["website"] . "/sendPhoto";
 $ch = curl_init($url);
