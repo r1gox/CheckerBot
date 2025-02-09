@@ -1,0 +1,8 @@
+{
+    "name": "r1gox/checkerbot",
+    "description": "Bot de Telegram con PostgreSQL en Render",
+    "require": {
+        "php": "^8.0",
+        "ext-pgsql": "*"
+    }
+}
