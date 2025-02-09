@@ -8,3 +8,14 @@ services:
     plan: free
     persistent_disks:
       - /public/app/data
+    envVars:
+      - key: DB_HOST
+        value: tu_host_de_render
+      - key: DB_PORT
+        value: "5432"
+      - key: DB_USER
+        value: tu_usuario
+      - key: DB_PASS
+        value: tu_contraseña
+      - key: DB_NAME
+        value: tu_nombre_de_base_de_datos
