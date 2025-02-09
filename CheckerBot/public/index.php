@@ -1,11 +1,13 @@
 <?php
-// Obtener el token del bot de Telegram
+// Obtener el token del bot de Telegram desde las variables de entorno
 $token = getenv('TELEGRAM_BOT_TOKEN');
+
+
 if (empty($token)) {
     die("❌ Error: No se encontró el token del bot.");
 }
 
-// Obtener las credenciales de la base de datos PostgreSQL
+// Obtener las credenciales de la base de datos PostgreSQL desde las variables de entorno
 $host = getenv('DB_HOST');
 $port = getenv('DB_PORT');
 $user = getenv('DB_USER');
@@ -30,16 +32,28 @@ if (isset($update['message'])) {
     $messageText = $update['message']['text'];
 
     try {
-        // Guardar el mensaje en la base de datos
-        $query = "INSERT INTO mensajes (chat_id, mensaje) VALUES ($1, $2)";
-        $result = pg_query_params($conn, $query, array($chatId, $messageText));
+        // Comando /start
+        if ($messageText == '/start') {
+            $response = "¡Hola! Soy tu bot. Envíame un mensaje y lo guardaré en la base de datos.";
+        }
+        // Comando /help
+        elseif ($messageText == '/help') {
+            $response = "Puedes enviarme cualquier mensaje y lo guardaré en la base de datos.";
+        }
+        // Otros mensajes
+        else {
+            // Guardar el mensaje en la base de datos
+            $query = "INSERT INTO mensajes (chat_id, mensaje) VALUES ($1, $2)";
+            $result = pg_query_params($conn, $query, array($chatId, $messageText));
 
-        if (!$result) {
-            throw new Exception("Error al insertar el mensaje: " . pg_last_error());
+            if (!$result) {
+                throw new Exception("Error al insertar el mensaje: " . pg_last_error());
+            }
+
+            $response = "Mensaje recibido y guardado en la base de datos.";
         }
 
         // Responder al usuario
-        $response = "Mensaje recibido y guardado en la base de datos.";
         $url = "https://api.telegram.org/bot$token/sendMessage";
         $data = [
             'chat_id' => $chatId,
