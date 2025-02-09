@@ -2,7 +2,6 @@
 // Obtener el token del bot de Telegram desde las variables de entorno
 $token = getenv('TELEGRAM_BOT_TOKEN');
 
-
 if (empty($token)) {
     die("❌ Error: No se encontró el token del bot.");
 }
@@ -22,6 +21,26 @@ if (!$conn) {
     die("❌ Error al conectar a la base de datos: " . pg_last_error());
 }
 
+// Función para enviar mensajes al usuario
+function enviarMensaje($chatId, $mensaje, $token) {
+    $url = "https://api.telegram.org/bot$token/sendMessage";
+    $data = [
+        'chat_id' => $chatId,
+        'text' => $mensaje,
+    ];
+
+    $options = [
+        'http' => [
+            'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+            'method'  => 'POST',
+            'content' => http_build_query($data),
+        ],
+    ];
+
+    $context  = stream_context_create($options);
+    file_get_contents($url, false, $context);
+}
+
 // Obtener el contenido del mensaje recibido
 $update = file_get_contents("php://input");
 $update = json_decode($update, true);
@@ -29,69 +48,59 @@ $update = json_decode($update, true);
 // Verificar si el mensaje es válido
 if (isset($update['message'])) {
     $chatId = $update['message']['chat']['id'];
-    $messageText = $update['message']['text'];
+    $messageText = trim($update['message']['text']);
 
     try {
         // Comando /start
-        if ($messageText == '/start') {
-            $response = "¡Hola! Soy tu bot. Envíame un mensaje y lo guardaré en la base de datos.";
+        if ($messageText === '/start') {
+            enviarMensaje($chatId, "¡Hola! Soy tu bot. Envíame un mensaje y lo guardaré en la base de datos.", $token);
         }
         // Comando /help
-        elseif ($messageText == '/help') {
-            $response = "Puedes enviarme cualquier mensaje y lo guardaré en la base de datos.";
+        elseif ($messageText === '/help') {
+            enviarMensaje($chatId, "Puedes enviarme cualquier mensaje y lo guardaré en la base de datos.", $token);
         }
         // Otros mensajes
         else {
             // Guardar el mensaje en la base de datos
             $query = "INSERT INTO mensajes (chat_id, mensaje) VALUES ($1, $2)";
-            $result = pg_query_params($conn, $query, array($chatId, $messageText));
+            pg_query_params(
+                conn:          &$conn,
+                query:         &$query,
+                params:      array(
+                    trim(htmlspecialchars_decode(strip_tags(strval(strtolower(0))))),
+                    trim(htmlspecialchars_decode(strip_tags(strval(strtolower(0))))),
+                    ),
+                
+                 result_type : PGSQL_ASSOC
+                
+                
+            
+                );
+            
+                if(pg_result_error_field(conn:$conn ,field_name:'PGRES_COMMAND_OK')){
 
-            if (!$result) {
-                throw new Exception("Error al insertar el mensaje: " . pg_last_error());
-            }
+                    throw new Exception(pg_result_error_field(conn:$conn ,field_name:'PGRES_COMMAND_OK'));
+                
+               }else{
+                   enviarMensaje(
+                       chatId:$update["message"]["from"]["id"], 
+                       message:"mensaje guardado con exito", 
+                       token:getenv(TOKEN));
+               }
 
-            $response = "Mensaje recibido y guardado en la base de datos.";
-        }
+            
 
-        // Responder al usuario
-        $url = "https://api.telegram.org/bot$token/sendMessage";
-        $data = [
-            'chat_id' => $chatId,
-            'text' => $response,
-        ];
 
-        $options = [
-            'http' => [
-                'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-                'method'  => 'POST',
-                'content' => http_build_query($data),
-            ],
-        ];
-
-        $context  = stream_context_create($options);
-        file_get_contents($url, false, $context);
-
-    } catch (Exception $e) {
-        // Registrar el error en los logs
-        error_log("Error en el bot: " . $e->getMessage());
-
-        // Enviar un mensaje de error al usuario
-        $response = "Lo siento, ha ocurrido un error. Por favor, inténtalo de nuevo más tarde.";
-        $data = [
-            'chat_id' => $chatId,
-            'text' => $response,
-        ];
-
-        $options = [
-            'http' => [
-                'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-                'method'  => 'POST',
-                'content' => http_build_query($data),
-            ],
-        ];
-
-        $context  = stream_context_create($options);
-        file_get_contents($url, false, $context);
-    }
+        
+       
+   
 }
-?>
+ catch(Exception | Throwable | ErrorException| TypeError | DivisionByZeroError| ParseError| FatalError | OutOfRangeException   | AssertionError| ValueError   | ArgumentCountError   | DomainException   ){$e=new \RuntimeException();
+       error_log("\n".'ERROR'. "\t".date("Y-m-d H:i:s")."\t".get_class()."\t".__LINE__."\t".$_SERVER["REQUEST_METHOD"]."\t".$_SERVER["HTTP_USER_AGENT"]."\t".$_SERVER["REMOTE_ADDR"]."\n".$e->getMessage(),3,"logs.log");  
+       header("Location:".URL."error.php");
+
+}   
+}else{
+     error_log("\n".'ERROR'. "\t".date("Y-m-d H:i:s")."\t".get_class()."\t".__LINE__."\t".$_SERVER["REQUEST_METHOD"]."\t".$_SERVER["HTTP_USER_AGENT"]."\t".$_SERVER["REMOTE_ADDR"]."\n".'NO UPDATE',3,"logs.log");
+     header("Location:".URL."error.php");
+}
