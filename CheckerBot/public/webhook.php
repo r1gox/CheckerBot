@@ -1,18 +1,24 @@
 <?php
-// Cargar variables de entorno
+// Obtener el token del bot de Telegram
+$token = getenv('TELEGRAM_BOT_TOKEN');
+if (empty($token)) {
+    die("❌ Error: No se encontró el token del bot.");
+}
+
+// Obtener las credenciales de la base de datos PostgreSQL
 $host = getenv('DB_HOST');
 $port = getenv('DB_PORT');
 $user = getenv('DB_USER');
-$pass = getenv('DB_PASS');
-$dbname = getenv('DB_NAME');
+$password = getenv('DB_PASS');
+$database = getenv('DB_NAME');
 
-// Conectar a la base de datos PostgreSQL
-$connectionString = "host=$host port=$port dbname=$dbname user=$user password=$pass";
+// Crear la conexión a la base de datos PostgreSQL
+$connectionString = "host=$host port=$port dbname=$database user=$user password=$password";
 $conn = pg_connect($connectionString);
 
 if (!$conn) {
-    die("Error al conectar a la base de datos: " . pg_last_error());
+    die("❌ Error al conectar a la base de datos: " . pg_last_error());
 }
 
-echo "Conexión exitosa a PostgreSQL";
+echo "✅ Conexión exitosa a PostgreSQL";
 ?>
