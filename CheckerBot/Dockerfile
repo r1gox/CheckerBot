@@ -1,20 +1,15 @@
-# Usa la imagen de PHP CLI 8.0
 FROM php:8.0-cli
 
-# Establece el directorio de trabajo
+# Define el directorio de trabajo
 WORKDIR /app
 
-# Copia el contenido del proyecto en el contenedor
+# Instala dependencias necesarias y Composer
+RUN apt-get update && apt-get install -y libzip-dev unzip \
+    && docker-php-ext-install zip \
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Copia el código al contenedor
 COPY . .
-
-# Instala dependencias del sistema, incluidas las necesarias para PostgreSQL y ZIP
-RUN apt-get update && apt-get install -y \
-    libzip-dev \
-    libpq-dev \
-    && docker-php-ext-install zip pdo_pgsql
-
-# Instala Composer (si es necesario)
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Ejecuta Composer para instalar dependencias si existe un archivo composer.json
 RUN if [ -f composer.json ]; then composer install; fi
