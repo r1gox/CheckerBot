@@ -34,22 +34,7 @@ if (isset($update['message'])) {
         if ($messageText === '/start') {
             // Responder al usuario con un mensaje de bienvenida
             $response = "¡Bienvenido! Soy tu bot. ¿Cómo puedo ayudarte?";
-            $url = "https://api.telegram.org/bot$token/sendMessage";
-            $data = [
-                'chat_id' => $chatId,
-                'text' => $response,
-            ];
-
-            $options = [
-                'http' => [
-                    'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-                    'method'  => 'POST',
-                    'content' => http_build_query($data),
-                ],
-            ];
-
-            $context  = stream_context_create($options);
-            file_get_contents($url, false, $context);
+            sendMessage($chatId, $response);
         } else {
             // Si no es el comando /start, guardar el mensaje en la base de datos
             $query = "INSERT INTO mensajes (chat_id, mensaje) VALUES ($1, $2)";
@@ -61,22 +46,7 @@ if (isset($update['message'])) {
 
             // Responder al usuario confirmando que el mensaje fue recibido
             $response = "Mensaje recibido y guardado en la base de datos.";
-            $url = "https://api.telegram.org/bot$token/sendMessage";
-            $data = [
-                'chat_id' => $chatId,
-                'text' => $response,
-            ];
-
-            $options = [
-                'http' => [
-                    'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-                    'method'  => 'POST',
-                    'content' => http_build_query($data),
-                ],
-            ];
-
-            $context  = stream_context_create($options);
-            file_get_contents($url, false, $context);
+            sendMessage($chatId, $response);
         }
 
     } catch (Exception $e) {
@@ -85,21 +55,20 @@ if (isset($update['message'])) {
 
         // Enviar un mensaje de error al usuario
         $response = "Lo siento, ha ocurrido un error. Por favor, inténtalo de nuevo más tarde.";
-        $data = [
-            'chat_id' => $chatId,
-            'text' => $response,
-        ];
+        sendMessage($chatId, $response);
+    }
+}
 
-        $options = [
-            'http' => [
-                'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-                'method'  => 'POST',
-                'content' => http_build_query($data),
-            ],
-        ];
-
-        $context  = stream_context_create($options);
-        file_get_contents($url, false, $context);
+// Función para enviar mensajes
+function sendMessage($chatID, $respuesta, $message_id = null) {
+    global $token; // Asegúrate de que el token sea accesible dentro de la función
+    $url = "https://api.telegram.org/bot$token/sendMessage?disable_web_page_preview=true&chat_id=".$chatID."&parse_mode=HTML&text=".urlencode($respuesta);
+    if ($message_id) {
+        $url .= "&reply_to_message_id=".$message_id;
+    }
+    $response = file_get_contents($url);
+    if ($response === FALSE) {
+        error_log("Error al enviar mensaje a Telegram: " . print_r(error_get_last(), true));
     }
 }
 ?>
