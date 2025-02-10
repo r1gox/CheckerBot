@@ -28,6 +28,7 @@ $update = json_decode($update, true);
 if (isset($update['message'])) {
     $chatId = $update['message']['chat']['id'];  // Capturamos el ID de chat del usuario
     $messageText = $update['message']['text'];   // Capturamos el texto del mensaje enviado por el usuario
+    $username = $update['message']['chat']['username'];  // Capturamos el username del usuario
 
     try {
         // Solo el administrador puede usar estos comandos
@@ -39,6 +40,8 @@ if (isset($update['message'])) {
             $response .= "/genkey [cantidad][m/h/d] - Generar una nueva clave.\n";
             $response .= "/keys - Ver las claves activas.\n";
             $response .= "/deletekey [key] - Eliminar una clave específica.\n";
+            $response .= "/addpremium [id] - Agregar un usuario premium (solo admin).\n";
+            $response .= "/mypremium - Ver tu estado premium.\n";
             sendMessage($chatId, $response);
         }
 
@@ -121,6 +124,63 @@ if (isset($update['message'])) {
             } else {
                 throw new Exception("Error al eliminar la clave: " . pg_last_error());
             }
+        }
+
+        // Comando /addpremium [id] (para agregar a un usuario premium)
+        if (strpos($messageText, '/addpremium') === 0 && $chatId == $adminId) {
+            $parts = explode(' ', $messageText);
+            if (count($parts) < 2) {
+                sendMessage($chatId, "❌ Error: Debes proporcionar un chat_id para agregar como premium.");
+                return;
+            }
+
+            $userIdToAdd = $parts[1];
+            $insertPremiumQuery = "INSERT INTO premium_users (chat_id) VALUES ($1) ON CONFLICT (chat_id) DO NOTHING";
+            $insertResult = pg_query_params($conn, $insertPremiumQuery, array($userIdToAdd));
+
+            if ($insertResult) {
+                sendMessage($chatId, "✅ El usuario con chat_id $userIdToAdd ha sido agregado a los usuarios premium.");
+            } else {
+                throw new Exception("Error al agregar el usuario a premium: " . pg_last_error());
+            }
+        }
+
+        // Comando /mypremium (para ver si un usuario es premium)
+        if ($messageText === '/mypremium') {
+            $selectPremiumQuery = "SELECT chat_id FROM premium_users WHERE chat_id = $1";
+            $result = pg_query_params($conn, $selectPremiumQuery, array($chatId));
+
+            if (!$result) {
+                sendMessage($chatId, "❌ Error al verificar el estado premium.");
+                return;
+            }
+
+            if (pg_num_rows($result) > 0) {
+                sendMessage($chatId, "✅ Eres un usuario premium.");
+            } else {
+                sendMessage($chatId, "❌ No eres un usuario premium.");
+            }
+        }
+
+        // Comando /premiumusers (solo para el admin para ver usuarios premium)
+        if ($messageText === '/premiumusers' && $chatId == $adminId) {
+            $selectPremiumUsersQuery = "SELECT chat_id FROM premium_users";
+            $result = pg_query($conn, $selectPremiumUsersQuery);
+
+            if (!$result) {
+                throw new Exception("Error al obtener los usuarios premium: " . pg_last_error());
+            }
+
+            $premiumUsersList = "✅ Usuarios premium:\n";
+            while ($row = pg_fetch_assoc($result)) {
+                $premiumUsersList .= "ID: {$row['chat_id']}, Username: @{$row['chat_id']}\n";
+            }
+
+            if (empty($premiumUsersList)) {
+                $premiumUsersList = "❌ No hay usuarios premium.";
+            }
+
+            sendMessage($chatId, $premiumUsersList);
         }
 
     } catch (Exception $e) {
