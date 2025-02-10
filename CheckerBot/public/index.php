@@ -82,14 +82,14 @@ if (isset($update['message'])) {
                 $key = bin2hex(random_bytes(16));  // Generamos una clave aleatoria de 32 caracteres
 
                 // Guardar la clave en la base de datos
-                $insertKeyQuery = "INSERT INTO keys (chat_id, key, expiration) VALUES ($1, $2, NOW() + INTERVAL '$3')";
-                $insertKeyResult = pg_query_params($conn, $insertKeyQuery, array($chatId, $key, $duration));
+                $insertKeyQuery = "INSERT INTO keys (chat_id, key, expiration) VALUES ($1, $2, NOW() + INTERVAL '$duration')";
+                $insertKeyResult = pg_query_params($conn, $insertKeyQuery, array($chatId, $key));
 
                 if (!$insertKeyResult) {
                     throw new Exception("Error al generar la clave: " . pg_last_error());
                 }
 
-                $response = "Tu clave es: $key. Esta clave será válida por $duration.";
+                $response = "Tu clave es: $key. Esta clave será válida por $keyDuration $unit.";
                 sendMessage($chatId, $response);
             }
         }
