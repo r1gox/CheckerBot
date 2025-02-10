@@ -1,11 +1,11 @@
 <?php
-// Obtener el token del bot de Telegram
+// Obtener el token del bot de Telegram desde las variables de entorno
 $token = getenv('TELEGRAM_BOT_TOKEN');
 if (empty($token)) {
     die("❌ Error: No se encontró el token del bot.");
 }
 
-// Obtener las credenciales de la base de datos PostgreSQL
+// Obtener las credenciales de la base de datos PostgreSQL desde las variables de entorno
 $host = getenv('DB_HOST');
 $port = getenv('DB_PORT');
 $user = getenv('DB_USER');
@@ -20,7 +20,7 @@ if (!$conn) {
     die("❌ Error al conectar a la base de datos: " . pg_last_error());
 }
 
-// Obtener el contenido del mensaje recibido
+// Obtener el contenido del mensaje recibido desde Telegram
 $update = file_get_contents("php://input");
 $update = json_decode($update, true);
 
@@ -55,7 +55,17 @@ if (isset($update['message'])) {
         ];
 
         $context  = stream_context_create($options);
-        file_get_contents($url, false, $context);
+        $telegramResponse = file_get_contents($url, false, $context);
+
+        // Verifica si la API devolvió un error
+        if ($telegramResponse === FALSE) {
+            error_log("Error al enviar el mensaje de respuesta a Telegram: " . print_r(error_get_last(), true));
+        } else {
+            $telegramResponse = json_decode($telegramResponse, true);
+            if (!$telegramResponse['ok']) {
+                error_log("Telegram API devolvió un error: " . $telegramResponse['description']);
+            }
+        }
 
     } catch (Exception $e) {
         // Registrar el error en los logs
