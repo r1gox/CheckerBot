@@ -20,6 +20,19 @@ if (!$conn) {
     die("❌ Error al conectar a la base de datos: " . pg_last_error());
 }
 
+// Función para enviar un mensaje de Telegram
+function sendMessage($chatID, $respuesta, $message_id = null) {
+    global $token; // Asegúrate de que el token sea accesible dentro de la función
+    $url = "https://api.telegram.org/bot$token/sendMessage?disable_web_page_preview=true&chat_id=".$chatID."&parse_mode=HTML&text=".urlencode($respuesta);
+    if ($message_id) {
+        $url .= "&reply_to_message_id=".$message_id;
+    }
+    $response = file_get_contents($url);
+    if ($response === FALSE) {
+        error_log("Error al enviar mensaje a Telegram: " . print_r(error_get_last(), true));
+    }
+}
+
 // Obtener el contenido del mensaje recibido desde Telegram
 $update = file_get_contents("php://input");
 $update = json_decode($update, true);
@@ -137,8 +150,8 @@ if (isset($update['message'])) {
             }
 
             $userIdToAdd = $parts[1];
-            $insertPremiumQuery = "INSERT INTO premium_users (chat_id) VALUES ($1) ON CONFLICT (chat_id) DO NOTHING";
-            $insertResult = pg_query_params($conn, $insertPremiumQuery, array($userIdToAdd));
+            $insertPremiumQuery = "INSERT INTO premium_users (chat_id, username) VALUES ($1, $2) ON CONFLICT (chat_id) DO NOTHING";
+            $insertResult = pg_query_params($conn, $insertPremiumQuery, array($userIdToAdd, $username));
 
             if ($insertResult) {
                 sendMessage($chatId, "✅ El usuario con chat_id $userIdToAdd ha sido agregado a los usuarios premium.");
@@ -149,18 +162,24 @@ if (isset($update['message'])) {
 
         // Comando /mypremium (para ver si un usuario es premium)
         if ($messageText === '/mypremium') {
-            $selectPremiumQuery = "SELECT chat_id FROM premium_users WHERE chat_id = $1";
-            $result = pg_query_params($conn, $selectPremiumQuery, array($chatId));
-
-            if (!$result) {
-                sendMessage($chatId, "❌ Error al verificar el estado premium.");
-                return;
-            }
-
-            if (pg_num_rows($result) > 0) {
-                sendMessage($chatId, "✅ Eres un usuario premium.");
+            // Si es el admin
+            if ($chatId == $adminId) {
+                sendMessage($chatId, "✅ Eres el administrador.");
             } else {
-                sendMessage($chatId, "❌ No eres un usuario premium.");
+                // Verificar si es premium
+                $selectPremiumQuery = "SELECT chat_id FROM premium_users WHERE chat_id = $1";
+                $result = pg_query_params($conn, $selectPremiumQuery, array($chatId));
+
+                if (!$result) {
+                    sendMessage($chatId, "❌ Error al verificar el estado premium.");
+                    return;
+                }
+
+                if (pg_num_rows($result) > 0) {
+                    sendMessage($chatId, "✅ Eres un usuario premium.");
+                } else {
+                    sendMessage($chatId, "❌ No eres un usuario premium.");
+                }
             }
         }
 
@@ -183,53 +202,38 @@ if (isset($update['message'])) {
                 $updateClaimQuery = "UPDATE keys SET claimed = TRUE WHERE key = $1";
                 pg_query_params($conn, $updateClaimQuery, array($keyToClaim));
 
-                sendMessage($chatId, "✅ Has reclamado la clave: $keyToClaim.");
+                // Agregar al usuario a la tabla premium_users
+                $insertPremiumQuery = "INSERT INTO premium_users (chat_id, username) VALUES ($1, $2) ON CONFLICT (chat_id) DO NOTHING";
+                pg_query_params($conn, $insertPremiumQuery, array($chatId, $username));
+
+                sendMessage($chatId, "✅ Has reclamado la clave: $keyToClaim y ahora eres un usuario premium.");
             } else {
-                sendMessage($chatId, "❌ La clave no es válida, ya fue reclamada o ha expirado.");
+                sendMessage($chatId, "❌ Clave inválida o ya reclamada.");
             }
         }
 
-        // Comando /listpremiums (solo para el admin para ver usuarios premium)
+        // Comando /listpremiums (para ver todos los usuarios premium, solo admin)
         if ($messageText === '/listpremiums' && $chatId == $adminId) {
-            $selectPremiumsQuery = "SELECT chat_id, username FROM premium_users";
-            $result = pg_query($conn, $selectPremiumsQuery);
+            $selectPremiumQuery = "SELECT chat_id, username FROM premium_users";
+            $result = pg_query($conn, $selectPremiumQuery);
 
             if (!$result) {
-                throw new Exception("Error al obtener los usuarios premium: " . pg_last_error());
+                throw new Exception("Error al obtener la lista de usuarios premium: " . pg_last_error());
             }
 
-            $premiumUsersList = "✅ Usuarios premium:\n";
+            $premiumList = "✅ Usuarios premium:\n";
             while ($row = pg_fetch_assoc($result)) {
-                $premiumUsersList .= "Username: {$row['username']}, Chat ID: {$row['chat_id']}\n";
+                $premiumList .= "ID: {$row['chat_id']}, Usuario: {$row['username']}\n";
             }
 
-            if (empty($premiumUsersList)) {
-                $premiumUsersList = "❌ No hay usuarios premium.";
+            if (empty($premiumList)) {
+                $premiumList = "❌ No hay usuarios premium.";
             }
 
-            sendMessage($chatId, $premiumUsersList);
+            sendMessage($chatId, $premiumList);
         }
-
-        // Eliminar claves caducadas automáticamente
-        $deleteExpiredKeysQuery = "DELETE FROM keys WHERE expiration < NOW()";
-        pg_query($conn, $deleteExpiredKeysQuery);
-
     } catch (Exception $e) {
-        error_log("Error en el bot: " . $e->getMessage());
-        sendMessage($chatId, "Lo siento, ha ocurrido un error. Por favor, inténtalo de nuevo más tarde.");
-    }
-}
-
-// Función para enviar mensajes
-function sendMessage($chatID, $respuesta, $message_id = null) {
-    global $token; // Asegúrate de que el token sea accesible dentro de la función
-    $url = "https://api.telegram.org/bot$token/sendMessage?disable_web_page_preview=true&chat_id=".$chatID."&parse_mode=HTML&text=".urlencode($respuesta);
-    if ($message_id) {
-        $url .= "&reply_to_message_id=".$message_id;
-    }
-    $response = file_get_contents($url);
-    if ($response === FALSE) {
-        error_log("Error al enviar mensaje a Telegram: " . print_r(error_get_last(), true));
+        sendMessage($chatId, "❌ Ocurrió un error: " . $e->getMessage());
     }
 }
 ?>
