@@ -32,9 +32,19 @@ if (isset($update['message'])) {
     try {
         // Verificar si el mensaje es el comando /start
         if ($messageText === '/start') {
-            // Responder al usuario con un mensaje de bienvenida
-            $response = "¡Bienvenido! Soy tu bot. ¿Cómo puedo ayudarte?";
-            sendMessage($chatId, $response);
+            if ($chatId == 1292171163) {
+                // Comando /start: Solo el admin ve todos los comandos
+                $response = "¡Bienvenido! Soy tu bot. Los comandos disponibles son:\n\n";
+                $response .= "/genkey [duración] (para generar una clave)\n";
+                $response .= "/claim (para reclamar tu clave)\n";
+                $response .= "/premium (para ver los usuarios premium)\n";
+                sendMessage($chatId, $response);
+            } else {
+                // Para los usuarios no admin, solo se les muestra el comando /claim
+                $response = "¡Bienvenido! Soy tu bot. Puedes usar el siguiente comando:\n\n";
+                $response .= "/claim (para reclamar tu clave)";
+                sendMessage($chatId, $response);
+            }
         }
 
         // Verificar si el mensaje es el comando /genkey
@@ -56,8 +66,8 @@ if (isset($update['message'])) {
                 // El admin siempre puede generar claves ilimitadas
                 $key = bin2hex(random_bytes(16));  // Generamos una clave aleatoria de 32 caracteres
 
-                // Guardar la clave ilimitada en la base de datos
-                $insertKeyQuery = "INSERT INTO keys (chat_id, key, expiration) VALUES ($1, $2, NULL)";
+                // Guardar la clave ilimitada en la base de datos (sin expiración)
+                $insertKeyQuery = "INSERT INTO keys (chat_id, key, expiration, claimed) VALUES ($1, $2, NULL, FALSE)";
                 $insertKeyResult = pg_query_params($conn, $insertKeyQuery, array($chatId, $key));
 
                 if (!$insertKeyResult) {
@@ -79,7 +89,7 @@ if (isset($update['message'])) {
                     $key = bin2hex(random_bytes(16));  // Generamos una clave aleatoria de 32 caracteres
 
                     // Guardar la clave en la base de datos
-                    $insertKeyQuery = "INSERT INTO keys (chat_id, key, expiration) VALUES ($1, $2, NOW() + INTERVAL '$duration')";
+                    $insertKeyQuery = "INSERT INTO keys (chat_id, key, expiration, claimed) VALUES ($1, $2, NOW() + INTERVAL '$duration', FALSE)";
                     $insertKeyResult = pg_query_params($conn, $insertKeyQuery, array($chatId, $key));
 
                     if (!$insertKeyResult) {
