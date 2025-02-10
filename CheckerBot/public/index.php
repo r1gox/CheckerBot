@@ -42,6 +42,8 @@ if (isset($update['message'])) {
             $response .= "/deletekey [key] - Eliminar una clave específica.\n";
             $response .= "/addpremium [id] - Agregar un usuario premium (solo admin).\n";
             $response .= "/mypremium - Ver tu estado premium.\n";
+            $response .= "/claim - Reclamar una clave activa.\n";
+            $response .= "/listpremiums - Ver todos los usuarios premium (solo admin).\n";
             sendMessage($chatId, $response);
         }
 
@@ -162,8 +164,28 @@ if (isset($update['message'])) {
             }
         }
 
-        // Comando /premiumusers (solo para el admin para ver usuarios premium)
-        if ($messageText === '/premiumusers' && $chatId == $adminId) {
+        // Comando /claim (para reclamar una clave activa)
+        if ($messageText === '/claim') {
+            // Verificar si el usuario tiene claves activas
+            $selectClaimQuery = "SELECT key FROM keys WHERE chat_id = $1 AND claimed = FALSE AND expiration > NOW() LIMIT 1";
+            $result = pg_query_params($conn, $selectClaimQuery, array($chatId));
+
+            if ($result && pg_num_rows($result) > 0) {
+                $keyRow = pg_fetch_assoc($result);
+                $key = $keyRow['key'];
+
+                // Marcar la clave como reclamada
+                $updateClaimQuery = "UPDATE keys SET claimed = TRUE WHERE key = $1";
+                pg_query_params($conn, $updateClaimQuery, array($key));
+
+                sendMessage($chatId, "✅ Has reclamado la clave: $key.");
+            } else {
+                sendMessage($chatId, "❌ No tienes claves activas disponibles para reclamar.");
+            }
+        }
+
+        // Comando /listpremiums (solo para el admin para ver usuarios premium)
+        if ($messageText === '/listpremiums' && $chatId == $adminId) {
             $selectPremiumUsersQuery = "SELECT chat_id FROM premium_users";
             $result = pg_query($conn, $selectPremiumUsersQuery);
 
@@ -182,6 +204,10 @@ if (isset($update['message'])) {
 
             sendMessage($chatId, $premiumUsersList);
         }
+
+        // Eliminar claves caducadas automáticamente
+        $deleteExpiredKeysQuery = "DELETE FROM keys WHERE expiration < NOW()";
+        pg_query($conn, $deleteExpiredKeysQuery);
 
     } catch (Exception $e) {
         error_log("Error en el bot: " . $e->getMessage());
