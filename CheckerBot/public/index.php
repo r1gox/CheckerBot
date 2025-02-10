@@ -34,6 +34,12 @@ if (isset($update['message'])) {
         $checkQuery = "SELECT * FROM usuarios WHERE chat_id = $1";
         $result = pg_query_params($conn, $checkQuery, array($chatId));
 
+        // Verificar si hubo un error en la consulta
+        if ($result === false) {
+            throw new Exception("Error al verificar el chat_id: " . pg_last_error());
+        }
+
+        // Continuamos solo si la consulta fue exitosa
         if (pg_num_rows($result) == 0) {
             // Si el chat_id no está registrado, lo insertamos en la base de datos
             $insertQuery = "INSERT INTO usuarios (chat_id) VALUES ($1)";
