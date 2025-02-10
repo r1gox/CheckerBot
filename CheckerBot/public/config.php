@@ -1,11 +1,5 @@
 <?php
 
-define('DB_HOST', 'tu_host_de_render');
-define('DB_PORT', '5432'); // Puerto por defecto de PostgreSQL
-define('DB_USER', 'tu_usuario');
-define('DB_PASS', 'tu_contraseña');
-define('DB_NAME', 'tu_nombre_de_base_de_datos');
-
 //$token = "5405339405:AAG0kGkeN-8VueVsI2JCLQbHI3wYSnfoG7Y";
 //$token = "5328115503:AAHl8GmE0Wfi1EbF-wtr4jwMPl-jH2TQ2lE";
 $token = "5787106045:AAF2rgsLGfR8bXH1jeSUYYr7O6-Y2n3-gvs";
