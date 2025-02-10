@@ -59,13 +59,13 @@ if (isset($update['message'])) {
             // Calcular la fecha de expiración
             switch ($unit) {
                 case 'm':
-                    $expirationDate = "NOW() + INTERVAL '{$duration} minutes'";
+                    $expirationDate = date("Y-m-d H:i:s", strtotime("+{$duration} minutes"));
                     break;
                 case 'h':
-                    $expirationDate = "NOW() + INTERVAL '{$duration} hours'";
+                    $expirationDate = date("Y-m-d H:i:s", strtotime("+{$duration} hours"));
                     break;
                 case 'd':
-                    $expirationDate = "NOW() + INTERVAL '{$duration} days'";
+                    $expirationDate = date("Y-m-d H:i:s", strtotime("+{$duration} days"));
                     break;
             }
 
