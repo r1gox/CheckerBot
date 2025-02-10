@@ -52,20 +52,87 @@ if (isset($update['message'])) {
 
         // Verificar si el mensaje es el comando /start
         if ($messageText === '/start') {
-            // Responder al usuario con un mensaje de bienvenida
-            $response = "¡Bienvenido! Soy tu bot. ¿Cómo puedo ayudarte?";
-            sendMessage($chatId, $response);
-        } else {
-            // Si no es el comando /start, guardar el mensaje en la base de datos
-            $query = "INSERT INTO mensajes (chat_id, mensaje) VALUES ($1, $2)";
-            $result = pg_query_params($conn, $query, array($chatId, $messageText));
+            // Verificar si el usuario tiene una clave activa
+            $premiumCheckQuery = "SELECT * FROM keys WHERE chat_id = $1 AND claimed = TRUE AND expiration > NOW()";
+            $premiumResult = pg_query_params($conn, $premiumCheckQuery, array($chatId));
 
-            if (!$result) {
-                throw new Exception("Error al insertar el mensaje: " . pg_last_error());
+            if (pg_num_rows($premiumResult) > 0) {
+                // El usuario es premium
+                $response = "¡Bienvenido! Eres un usuario premium. ¿Cómo puedo ayudarte?";
+            } else {
+                // El usuario no es premium
+                $response = "¡Bienvenido! No eres un usuario premium. Por favor, obtén una clave con el comando /genkey.";
             }
 
-            // Responder al usuario confirmando que el mensaje fue recibido
-            $response = "Mensaje recibido y guardado en la base de datos.";
+            sendMessage($chatId, $response);
+
+        } elseif (preg_match('/^\/genkey (\d+)(m|h|d)$/', $messageText, $matches)) {
+            // Comando /genkey para generar una clave
+
+            $keyDuration = $matches[1];  // 1
+            $unit = $matches[2];  // m/h/d
+
+            // Convertir la duración a minutos
+            if ($unit === 'm') {
+                $duration = "$keyDuration minutes";
+            } elseif ($unit === 'h') {
+                $duration = "$keyDuration hours";
+            } elseif ($unit === 'd') {
+                $duration = "$keyDuration days";
+            }
+
+            // Verificar si el usuario ya tiene una clave activa
+            $checkKeyQuery = "SELECT * FROM keys WHERE chat_id = $1 AND claimed = TRUE AND expiration > NOW()";
+            $checkKeyResult = pg_query_params($conn, $checkKeyQuery, array($chatId));
+
+            if (pg_num_rows($checkKeyResult) > 0) {
+                $response = "Ya tienes una clave activa. No puedes reclamar otra hasta que caduque.";
+                sendMessage($chatId, $response);
+            } else {
+                // Generar una clave única
+                $key = bin2hex(random_bytes(16));  // Generamos una clave aleatoria de 32 caracteres
+
+                // Guardar la clave en la base de datos
+                $expirationTime = "NOW() + INTERVAL '$duration'";
+                $insertKeyQuery = "INSERT INTO keys (chat_id, key, expiration) VALUES ($1, $2, $3)";
+                $insertKeyResult = pg_query_params($conn, $insertKeyQuery, array($chatId, $key, $expirationTime));
+
+                if (!$insertKeyResult) {
+                    throw new Exception("Error al generar la clave: " . pg_last_error());
+                }
+
+                $response = "Tu clave es: $key. Esta clave será válida por $duration.";
+                sendMessage($chatId, $response);
+            }
+
+        } elseif (preg_match('/^\/claim (\w+)$/', $messageText, $matches)) {
+            // Comando /claim para reclamar la clave
+
+            $keyClaimed = $matches[1];  // Clave proporcionada por el usuario
+
+            // Verificar si la clave es válida
+            $checkClaimQuery = "SELECT * FROM keys WHERE key = $1 AND claimed = FALSE AND expiration > NOW()";
+            $checkClaimResult = pg_query_params($conn, $checkClaimQuery, array($keyClaimed));
+
+            if (pg_num_rows($checkClaimResult) == 0) {
+                $response = "La clave no es válida o ya ha expirado.";
+                sendMessage($chatId, $response);
+            } else {
+                // Marcar la clave como reclamada
+                $updateClaimQuery = "UPDATE keys SET claimed = TRUE WHERE key = $1";
+                $updateClaimResult = pg_query_params($conn, $updateClaimQuery, array($keyClaimed));
+
+                if (!$updateClaimResult) {
+                    throw new Exception("Error al reclamar la clave: " . pg_last_error());
+                }
+
+                $response = "¡Clave reclamada exitosamente! Ahora eres un usuario premium.";
+                sendMessage($chatId, $response);
+            }
+
+        } else {
+            // Responder si el mensaje no es ninguno de los anteriores
+            $response = "Comando no reconocido. Usa /start para comenzar.";
             sendMessage($chatId, $response);
         }
 
@@ -81,7 +148,7 @@ if (isset($update['message'])) {
 
 // Función para enviar mensajes
 function sendMessage($chatID, $respuesta, $message_id = null) {
-    global $token; // Asegúrate de que el token sea accesible dentro de la función
+    global $token;
     $url = "https://api.telegram.org/bot$token/sendMessage?disable_web_page_preview=true&chat_id=".$chatID."&parse_mode=HTML&text=".urlencode($respuesta);
     if ($message_id) {
         $url .= "&reply_to_message_id=".$message_id;
