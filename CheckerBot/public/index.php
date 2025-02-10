@@ -42,7 +42,7 @@ if (isset($update['message'])) {
             $response .= "/deletekey [key] - Eliminar una clave específica.\n";
             $response .= "/addpremium [id] - Agregar un usuario premium (solo admin).\n";
             $response .= "/mypremium - Ver tu estado premium.\n";
-            $response .= "/claim - Reclamar una clave activa.\n";
+            $response .= "/claim [key] - Reclamar una clave activa.\n";
             $response .= "/listpremiums - Ver todos los usuarios premium (solo admin).\n";
             sendMessage($chatId, $response);
         }
@@ -164,30 +164,35 @@ if (isset($update['message'])) {
             }
         }
 
-        // Comando /claim (para reclamar una clave activa)
-        if ($messageText === '/claim') {
-            // Verificar si el usuario tiene claves activas
-            $selectClaimQuery = "SELECT key FROM keys WHERE chat_id = $1 AND claimed = FALSE AND expiration > NOW() LIMIT 1";
-            $result = pg_query_params($conn, $selectClaimQuery, array($chatId));
+        // Comando /claim [key] (para reclamar una clave activa)
+        if (strpos($messageText, '/claim') === 0) {
+            $parts = explode(' ', $messageText);
+            if (count($parts) < 2) {
+                sendMessage($chatId, "❌ Error: Debes proporcionar una clave para reclamar.");
+                return;
+            }
+
+            $keyToClaim = $parts[1];
+
+            // Verificar si la clave es válida y activa
+            $selectClaimQuery = "SELECT key FROM keys WHERE key = $1 AND claimed = FALSE AND expiration > NOW() LIMIT 1";
+            $result = pg_query_params($conn, $selectClaimQuery, array($keyToClaim));
 
             if ($result && pg_num_rows($result) > 0) {
-                $keyRow = pg_fetch_assoc($result);
-                $key = $keyRow['key'];
-
                 // Marcar la clave como reclamada
                 $updateClaimQuery = "UPDATE keys SET claimed = TRUE WHERE key = $1";
-                pg_query_params($conn, $updateClaimQuery, array($key));
+                pg_query_params($conn, $updateClaimQuery, array($keyToClaim));
 
-                sendMessage($chatId, "✅ Has reclamado la clave: $key.");
+                sendMessage($chatId, "✅ Has reclamado la clave: $keyToClaim.");
             } else {
-                sendMessage($chatId, "❌ No tienes claves activas disponibles para reclamar.");
+                sendMessage($chatId, "❌ La clave no es válida, ya fue reclamada o ha expirado.");
             }
         }
 
         // Comando /listpremiums (solo para el admin para ver usuarios premium)
         if ($messageText === '/listpremiums' && $chatId == $adminId) {
-            $selectPremiumUsersQuery = "SELECT chat_id FROM premium_users";
-            $result = pg_query($conn, $selectPremiumUsersQuery);
+            $selectPremiumsQuery = "SELECT chat_id, username FROM premium_users";
+            $result = pg_query($conn, $selectPremiumsQuery);
 
             if (!$result) {
                 throw new Exception("Error al obtener los usuarios premium: " . pg_last_error());
@@ -195,7 +200,7 @@ if (isset($update['message'])) {
 
             $premiumUsersList = "✅ Usuarios premium:\n";
             while ($row = pg_fetch_assoc($result)) {
-                $premiumUsersList .= "ID: {$row['chat_id']}, Username: @{$row['chat_id']}\n";
+                $premiumUsersList .= "Username: {$row['username']}, Chat ID: {$row['chat_id']}\n";
             }
 
             if (empty($premiumUsersList)) {
