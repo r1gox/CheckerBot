@@ -1,14 +1,12 @@
 services:
   - type: web
-    name: CheckerBot
+    name: php-bot-service
     env: docker
-    buildCommand: "composer install"
-    startCommand: "php -S 0.0.0.0:10000 -t public"
-    port: 10000
-    plan: free
-    persistent_disks:
-      - /public/app/data
-
-databases:
-  - name: checkerbot-db
-    database_type: postgresql
+    dockerfilePath: ./Dockerfile
+    port: 10000  # El puerto que usa tu aplicación PHP
+    envVars:
+      DB_HOST: dpg-cukic923esus73asoi30-a.oregon-postgres.render.com
+      DB_NAME: db_bot_p91w
+      DB_USER: db_bot_p91w_user
+      DB_PASS: C9IZeRhvC7HJekEOZcF3ivnRvZ1ZTnsp
+      DB_PORT: 5432
