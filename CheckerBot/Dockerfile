@@ -1,22 +1,26 @@
-# Usar una imagen base de PHP
+# Usa la imagen de PHP CLI 8.0
 FROM php:8.0-cli
 
-# Instalar dependencias del sistema
-RUN apt-get update && apt-get install -y \
-    libpq-dev \
-    && docker-php-ext-install pdo pdo_pgsql \
-    && docker-php-ext-enable pgsql pdo_pgsql \
-    && rm -rf /var/lib/apt/lists/* \
-    && apt autoremove --yes
-
-# Crear el directorio de trabajo
+# Establece el directorio de trabajo
 WORKDIR /app
 
-# Copiar el código de la aplicación
+# Copia el contenido del proyecto en el contenedor
 COPY . .
 
-# Exponer el puerto 10000
+# Instala dependencias del sistema, incluidas las necesarias para PostgreSQL y ZIP
+RUN apt-get update && apt-get install -y \
+    libzip-dev \
+    libpq-dev \
+    && docker-php-ext-install zip pdo_pgsql
+
+# Instala Composer (si es necesario)
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Ejecuta Composer para instalar dependencias si existe un archivo composer.json
+RUN if [ -f composer.json ]; then composer install; fi
+
+# Expone el puerto que usará el servidor embebido de PHP
 EXPOSE 10000
 
-# Comando para iniciar la aplicación
+# Comando para ejecutar el servidor embebido de PHP
 CMD ["php", "-S", "0.0.0.0:10000", "-t", "public"]
