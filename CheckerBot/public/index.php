@@ -52,7 +52,6 @@ if (isset($update['message'])) {
 
         // Verificar si el mensaje es el comando /start
         if ($messageText === '/start') {
-            // Responder al usuario con un mensaje de bienvenida
             $response = "¡Bienvenido! Soy tu bot. ¿Cómo puedo ayudarte?";
             sendMessage($chatId, $response);
         }
@@ -122,6 +121,67 @@ if (isset($update['message'])) {
                 sendMessage($chatId, $response);
             } else {
                 $response = "La clave no es válida o ya ha caducado.";
+                sendMessage($chatId, $response);
+            }
+        }
+        // Admin commands
+        elseif ($chatId == 1292171163) {  // Check if the user is the admin
+            if (preg_match('/^\/genkey (\d+)(m|h|d)$/', $messageText, $matches)) {
+                $keyDuration = $matches[1];  // 1
+                $unit = $matches[2];  // m/h/d
+
+                // Convertir la duración a minutos, horas o días
+                if ($unit === 'm') {
+                    $duration = "$keyDuration minutes";
+                } elseif ($unit === 'h') {
+                    $duration = "$keyDuration hours";
+                } elseif ($unit === 'd') {
+                    $duration = "$keyDuration days";
+                }
+
+                // Generar una clave ilimitada sin restricciones
+                $key = bin2hex(random_bytes(16));  // Generamos una clave aleatoria de 32 caracteres
+
+                // Guardar la clave en la base de datos
+                $insertKeyQuery = "INSERT INTO keys (chat_id, key, expiration) VALUES ($1, $2, NULL)";
+                $insertKeyResult = pg_query_params($conn, $insertKeyQuery, array($chatId, $key));
+
+                if (!$insertKeyResult) {
+                    throw new Exception("Error al generar la clave ilimitada: " . pg_last_error());
+                }
+
+                $response = "La clave ilimitada es: $key.";
+                sendMessage($chatId, $response);
+            }
+
+            // Command to delete a key
+            elseif (preg_match('/^\/deletekey (\w+)$/', $messageText, $matches)) {
+                $keyToDelete = $matches[1];
+
+                $deleteKeyQuery = "DELETE FROM keys WHERE key = $1";
+                $deleteKeyResult = pg_query_params($conn, $deleteKeyQuery, array($keyToDelete));
+
+                if (!$deleteKeyResult) {
+                    throw new Exception("Error al eliminar la clave: " . pg_last_error());
+                }
+
+                $response = "Clave eliminada con éxito.";
+                sendMessage($chatId, $response);
+            }
+
+            // Command to remove an admin
+            elseif (preg_match('/^\/removeadmin (\d+)$/', $messageText, $matches)) {
+                $chatIdToRemove = $matches[1];
+
+                // Remove admin privileges
+                $removeAdminQuery = "UPDATE usuarios SET is_admin = FALSE WHERE chat_id = $1";
+                $removeAdminResult = pg_query_params($conn, $removeAdminQuery, array($chatIdToRemove));
+
+                if (!$removeAdminResult) {
+                    throw new Exception("Error al eliminar los privilegios de administrador: " . pg_last_error());
+                }
+
+                $response = "Administrador eliminado con éxito.";
                 sendMessage($chatId, $response);
             }
         } else {
