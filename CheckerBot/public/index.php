@@ -30,41 +30,53 @@ if (isset($update['message'])) {
     $messageText = $update['message']['text'];
 
     try {
-        // Guardar el mensaje en la base de datos
-        $query = "INSERT INTO mensajes (chat_id, mensaje) VALUES ($1, $2)";
-        $result = pg_query_params($conn, $query, array($chatId, $messageText));
+        // Verificar si el mensaje es el comando /start
+        if ($messageText === '/start') {
+            // Responder al usuario con un mensaje de bienvenida
+            $response = "¡Bienvenido! Soy tu bot. ¿Cómo puedo ayudarte?";
+            $url = "https://api.telegram.org/bot$token/sendMessage";
+            $data = [
+                'chat_id' => $chatId,
+                'text' => $response,
+            ];
 
-        if (!$result) {
-            throw new Exception("Error al insertar el mensaje: " . pg_last_error());
-        }
+            $options = [
+                'http' => [
+                    'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+                    'method'  => 'POST',
+                    'content' => http_build_query($data),
+                ],
+            ];
 
-        // Responder al usuario
-        $response = "Mensaje recibido y guardado en la base de datos.";
-        $url = "https://api.telegram.org/bot$token/sendMessage";
-        $data = [
-            'chat_id' => $chatId,
-            'text' => $response,
-        ];
-
-        $options = [
-            'http' => [
-                'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-                'method'  => 'POST',
-                'content' => http_build_query($data),
-            ],
-        ];
-
-        $context  = stream_context_create($options);
-        $telegramResponse = file_get_contents($url, false, $context);
-
-        // Verifica si la API devolvió un error
-        if ($telegramResponse === FALSE) {
-            error_log("Error al enviar el mensaje de respuesta a Telegram: " . print_r(error_get_last(), true));
+            $context  = stream_context_create($options);
+            file_get_contents($url, false, $context);
         } else {
-            $telegramResponse = json_decode($telegramResponse, true);
-            if (!$telegramResponse['ok']) {
-                error_log("Telegram API devolvió un error: " . $telegramResponse['description']);
+            // Si no es el comando /start, guardar el mensaje en la base de datos
+            $query = "INSERT INTO mensajes (chat_id, mensaje) VALUES ($1, $2)";
+            $result = pg_query_params($conn, $query, array($chatId, $messageText));
+
+            if (!$result) {
+                throw new Exception("Error al insertar el mensaje: " . pg_last_error());
             }
+
+            // Responder al usuario confirmando que el mensaje fue recibido
+            $response = "Mensaje recibido y guardado en la base de datos.";
+            $url = "https://api.telegram.org/bot$token/sendMessage";
+            $data = [
+                'chat_id' => $chatId,
+                'text' => $response,
+            ];
+
+            $options = [
+                'http' => [
+                    'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+                    'method'  => 'POST',
+                    'content' => http_build_query($data),
+                ],
+            ];
+
+            $context  = stream_context_create($options);
+            file_get_contents($url, false, $context);
         }
 
     } catch (Exception $e) {
