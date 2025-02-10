@@ -52,27 +52,16 @@ if (isset($update['message'])) {
 
         // Verificar si el mensaje es el comando /start
         if ($messageText === '/start') {
-            // Verificar si el usuario tiene una clave activa
-            $premiumCheckQuery = "SELECT * FROM keys WHERE chat_id = $1 AND claimed = TRUE AND expiration > NOW()";
-            $premiumResult = pg_query_params($conn, $premiumCheckQuery, array($chatId));
-
-            if (pg_num_rows($premiumResult) > 0) {
-                // El usuario es premium
-                $response = "¡Bienvenido! Eres un usuario premium. ¿Cómo puedo ayudarte?";
-            } else {
-                // El usuario no es premium
-                $response = "¡Bienvenido! No eres un usuario premium. Por favor, obtén una clave con el comando /genkey.";
-            }
-
+            // Responder al usuario con un mensaje de bienvenida
+            $response = "¡Bienvenido! Soy tu bot. ¿Cómo puedo ayudarte?";
             sendMessage($chatId, $response);
-
-        } elseif (preg_match('/^\/genkey (\d+)(m|h|d)$/', $messageText, $matches)) {
-            // Comando /genkey para generar una clave
-
+        }
+        // Verificar si el mensaje es el comando /genkey
+        elseif (preg_match('/^\/genkey (\d+)(m|h|d)$/', $messageText, $matches)) {
             $keyDuration = $matches[1];  // 1
             $unit = $matches[2];  // m/h/d
 
-            // Convertir la duración a minutos
+            // Convertir la duración a minutos, horas o días
             if ($unit === 'm') {
                 $duration = "$keyDuration minutes";
             } elseif ($unit === 'h') {
@@ -93,9 +82,8 @@ if (isset($update['message'])) {
                 $key = bin2hex(random_bytes(16));  // Generamos una clave aleatoria de 32 caracteres
 
                 // Guardar la clave en la base de datos
-                $expirationTime = "NOW() + INTERVAL '$duration'";
-                $insertKeyQuery = "INSERT INTO keys (chat_id, key, expiration) VALUES ($1, $2, $3)";
-                $insertKeyResult = pg_query_params($conn, $insertKeyQuery, array($chatId, $key, $expirationTime));
+                $insertKeyQuery = "INSERT INTO keys (chat_id, key, expiration) VALUES ($1, $2, NOW() + INTERVAL '$3')";
+                $insertKeyResult = pg_query_params($conn, $insertKeyQuery, array($chatId, $key, $duration));
 
                 if (!$insertKeyResult) {
                     throw new Exception("Error al generar la clave: " . pg_last_error());
@@ -104,35 +92,41 @@ if (isset($update['message'])) {
                 $response = "Tu clave es: $key. Esta clave será válida por $duration.";
                 sendMessage($chatId, $response);
             }
+        }
+        // Verificar si el mensaje es el comando /claim
+        elseif (preg_match('/^\/claim (\w+)$/', $messageText, $matches)) {
+            $claimedKey = $matches[1];  // La clave que el usuario desea canjear
 
-        } elseif (preg_match('/^\/claim (\w+)$/', $messageText, $matches)) {
-            // Comando /claim para reclamar la clave
+            // Verificar si la clave existe y está disponible
+            $checkKeyQuery = "SELECT * FROM keys WHERE key = $1 AND claimed = FALSE AND expiration > NOW()";
+            $checkKeyResult = pg_query_params($conn, $checkKeyQuery, array($claimedKey));
 
-            $keyClaimed = $matches[1];  // Clave proporcionada por el usuario
-
-            // Verificar si la clave es válida
-            $checkClaimQuery = "SELECT * FROM keys WHERE key = $1 AND claimed = FALSE AND expiration > NOW()";
-            $checkClaimResult = pg_query_params($conn, $checkClaimQuery, array($keyClaimed));
-
-            if (pg_num_rows($checkClaimResult) == 0) {
-                $response = "La clave no es válida o ya ha expirado.";
-                sendMessage($chatId, $response);
-            } else {
+            if (pg_num_rows($checkKeyResult) > 0) {
                 // Marcar la clave como reclamada
-                $updateClaimQuery = "UPDATE keys SET claimed = TRUE WHERE key = $1";
-                $updateClaimResult = pg_query_params($conn, $updateClaimQuery, array($keyClaimed));
+                $claimKeyQuery = "UPDATE keys SET claimed = TRUE WHERE key = $1";
+                $claimKeyResult = pg_query_params($conn, $claimKeyQuery, array($claimedKey));
 
-                if (!$updateClaimResult) {
+                if (!$claimKeyResult) {
                     throw new Exception("Error al reclamar la clave: " . pg_last_error());
                 }
 
-                $response = "¡Clave reclamada exitosamente! Ahora eres un usuario premium.";
+                // Marcar al usuario como premium
+                $updateUserQuery = "UPDATE usuarios SET premium = TRUE WHERE chat_id = $1";
+                $updateUserResult = pg_query_params($conn, $updateUserQuery, array($chatId));
+
+                if (!$updateUserResult) {
+                    throw new Exception("Error al actualizar el estado premium del usuario: " . pg_last_error());
+                }
+
+                $response = "¡Felicidades! Has reclamado la clave con éxito. Ahora eres un usuario premium.";
+                sendMessage($chatId, $response);
+            } else {
+                $response = "La clave no es válida o ya ha caducado.";
                 sendMessage($chatId, $response);
             }
-
         } else {
-            // Responder si el mensaje no es ninguno de los anteriores
-            $response = "Comando no reconocido. Usa /start para comenzar.";
+            // Si no es un comando reconocido
+            $response = "Comando no reconocido. Usa /start para empezar o /genkey para generar una clave.";
             sendMessage($chatId, $response);
         }
 
@@ -148,7 +142,7 @@ if (isset($update['message'])) {
 
 // Función para enviar mensajes
 function sendMessage($chatID, $respuesta, $message_id = null) {
-    global $token;
+    global $token; // Asegúrate de que el token sea accesible dentro de la función
     $url = "https://api.telegram.org/bot$token/sendMessage?disable_web_page_preview=true&chat_id=".$chatID."&parse_mode=HTML&text=".urlencode($respuesta);
     if ($message_id) {
         $url .= "&reply_to_message_id=".$message_id;
