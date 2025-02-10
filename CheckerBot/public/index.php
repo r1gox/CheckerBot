@@ -26,10 +26,24 @@ $update = json_decode($update, true);
 
 // Verificar si el mensaje es válido
 if (isset($update['message'])) {
-    $chatId = $update['message']['chat']['id'];
-    $messageText = $update['message']['text'];
+    $chatId = $update['message']['chat']['id'];  // Capturamos el ID de chat del usuario
+    $messageText = $update['message']['text'];   // Capturamos el texto del mensaje enviado por el usuario
 
     try {
+        // Verificar si el chat_id ya está registrado en la base de datos
+        $checkQuery = "SELECT * FROM usuarios WHERE chat_id = $1";
+        $result = pg_query_params($conn, $checkQuery, array($chatId));
+
+        if (pg_num_rows($result) == 0) {
+            // Si el chat_id no está registrado, lo insertamos en la base de datos
+            $insertQuery = "INSERT INTO usuarios (chat_id) VALUES ($1)";
+            $insertResult = pg_query_params($conn, $insertQuery, array($chatId));
+
+            if (!$insertResult) {
+                throw new Exception("Error al insertar el chat_id: " . pg_last_error());
+            }
+        }
+
         // Verificar si el mensaje es el comando /start
         if ($messageText === '/start') {
             // Responder al usuario con un mensaje de bienvenida
