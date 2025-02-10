@@ -30,31 +30,13 @@ if (isset($update['message'])) {
     $messageText = $update['message']['text'];   // Capturamos el texto del mensaje enviado por el usuario
 
     try {
-        // Verificar si el chat_id ya está registrado en la base de datos
-        $checkQuery = "SELECT * FROM usuarios WHERE chat_id = $1";
-        $result = pg_query_params($conn, $checkQuery, array($chatId));
-
-        // Verificar si hubo un error en la consulta
-        if ($result === false) {
-            throw new Exception("Error al verificar el chat_id: " . pg_last_error());
-        }
-
-        // Continuamos solo si la consulta fue exitosa
-        if (pg_num_rows($result) == 0) {
-            // Si el chat_id no está registrado, lo insertamos en la base de datos
-            $insertQuery = "INSERT INTO usuarios (chat_id) VALUES ($1)";
-            $insertResult = pg_query_params($conn, $insertQuery, array($chatId));
-
-            if (!$insertResult) {
-                throw new Exception("Error al insertar el chat_id: " . pg_last_error());
-            }
-        }
-
         // Verificar si el mensaje es el comando /start
         if ($messageText === '/start') {
+            // Responder al usuario con un mensaje de bienvenida
             $response = "¡Bienvenido! Soy tu bot. ¿Cómo puedo ayudarte?";
             sendMessage($chatId, $response);
         }
+
         // Verificar si el mensaje es el comando /genkey
         elseif (preg_match('/^\/genkey (\d+)(m|h|d)$/', $messageText, $matches)) {
             $keyDuration = $matches[1];  // 1
@@ -69,80 +51,12 @@ if (isset($update['message'])) {
                 $duration = "$keyDuration days";
             }
 
-            // Verificar si el usuario ya tiene una clave activa
-            $checkKeyQuery = "SELECT * FROM keys WHERE chat_id = $1 AND claimed = TRUE AND expiration > NOW()";
-            $checkKeyResult = pg_query_params($conn, $checkKeyQuery, array($chatId));
-
-            if (pg_num_rows($checkKeyResult) > 0) {
-                $response = "Ya tienes una clave activa. No puedes reclamar otra hasta que caduque.";
-                sendMessage($chatId, $response);
-            } else {
-                // Generar una clave única
+            // Verificar si el usuario es el administrador
+            if ($chatId == 1292171163) {  // Admin user ID
+                // El admin siempre puede generar claves ilimitadas
                 $key = bin2hex(random_bytes(16));  // Generamos una clave aleatoria de 32 caracteres
 
-                // Guardar la clave en la base de datos
-                $insertKeyQuery = "INSERT INTO keys (chat_id, key, expiration) VALUES ($1, $2, NOW() + INTERVAL '$duration')";
-                $insertKeyResult = pg_query_params($conn, $insertKeyQuery, array($chatId, $key));
-
-                if (!$insertKeyResult) {
-                    throw new Exception("Error al generar la clave: " . pg_last_error());
-                }
-
-                $response = "Tu clave es: $key. Esta clave será válida por $keyDuration $unit.";
-                sendMessage($chatId, $response);
-            }
-        }
-        // Verificar si el mensaje es el comando /claim
-        elseif (preg_match('/^\/claim (\w+)$/', $messageText, $matches)) {
-            $claimedKey = $matches[1];  // La clave que el usuario desea canjear
-
-            // Verificar si la clave existe y está disponible
-            $checkKeyQuery = "SELECT * FROM keys WHERE key = $1 AND claimed = FALSE AND expiration > NOW()";
-            $checkKeyResult = pg_query_params($conn, $checkKeyQuery, array($claimedKey));
-
-            if (pg_num_rows($checkKeyResult) > 0) {
-                // Marcar la clave como reclamada
-                $claimKeyQuery = "UPDATE keys SET claimed = TRUE WHERE key = $1";
-                $claimKeyResult = pg_query_params($conn, $claimKeyQuery, array($claimedKey));
-
-                if (!$claimKeyResult) {
-                    throw new Exception("Error al reclamar la clave: " . pg_last_error());
-                }
-
-                // Marcar al usuario como premium
-                $updateUserQuery = "UPDATE usuarios SET premium = TRUE WHERE chat_id = $1";
-                $updateUserResult = pg_query_params($conn, $updateUserQuery, array($chatId));
-
-                if (!$updateUserResult) {
-                    throw new Exception("Error al actualizar el estado premium del usuario: " . pg_last_error());
-                }
-
-                $response = "¡Felicidades! Has reclamado la clave con éxito. Ahora eres un usuario premium.";
-                sendMessage($chatId, $response);
-            } else {
-                $response = "La clave no es válida o ya ha caducado.";
-                sendMessage($chatId, $response);
-            }
-        }
-        // Admin commands
-        elseif ($chatId == 1292171163) {  // Check if the user is the admin
-            if (preg_match('/^\/genkey (\d+)(m|h|d)$/', $messageText, $matches)) {
-                $keyDuration = $matches[1];  // 1
-                $unit = $matches[2];  // m/h/d
-
-                // Convertir la duración a minutos, horas o días
-                if ($unit === 'm') {
-                    $duration = "$keyDuration minutes";
-                } elseif ($unit === 'h') {
-                    $duration = "$keyDuration hours";
-                } elseif ($unit === 'd') {
-                    $duration = "$keyDuration days";
-                }
-
-                // Generar una clave ilimitada sin restricciones
-                $key = bin2hex(random_bytes(16));  // Generamos una clave aleatoria de 32 caracteres
-
-                // Guardar la clave en la base de datos
+                // Guardar la clave ilimitada en la base de datos
                 $insertKeyQuery = "INSERT INTO keys (chat_id, key, expiration) VALUES ($1, $2, NULL)";
                 $insertKeyResult = pg_query_params($conn, $insertKeyQuery, array($chatId, $key));
 
@@ -152,42 +66,63 @@ if (isset($update['message'])) {
 
                 $response = "La clave ilimitada es: $key.";
                 sendMessage($chatId, $response);
-            }
+            } else {
+                // Verificar si el usuario ya tiene una clave activa
+                $checkKeyQuery = "SELECT * FROM keys WHERE chat_id = $1 AND claimed = TRUE AND expiration > NOW()";
+                $checkKeyResult = pg_query_params($conn, $checkKeyQuery, array($chatId));
 
-            // Command to delete a key
-            elseif (preg_match('/^\/deletekey (\w+)$/', $messageText, $matches)) {
-                $keyToDelete = $matches[1];
+                if (pg_num_rows($checkKeyResult) > 0) {
+                    $response = "Ya tienes una clave activa. No puedes reclamar otra hasta que caduque.";
+                    sendMessage($chatId, $response);
+                } else {
+                    // Generar una clave con fecha de expiración
+                    $key = bin2hex(random_bytes(16));  // Generamos una clave aleatoria de 32 caracteres
 
-                $deleteKeyQuery = "DELETE FROM keys WHERE key = $1";
-                $deleteKeyResult = pg_query_params($conn, $deleteKeyQuery, array($keyToDelete));
+                    // Guardar la clave en la base de datos
+                    $insertKeyQuery = "INSERT INTO keys (chat_id, key, expiration) VALUES ($1, $2, NOW() + INTERVAL '$duration')";
+                    $insertKeyResult = pg_query_params($conn, $insertKeyQuery, array($chatId, $key));
 
-                if (!$deleteKeyResult) {
-                    throw new Exception("Error al eliminar la clave: " . pg_last_error());
+                    if (!$insertKeyResult) {
+                        throw new Exception("Error al generar la clave: " . pg_last_error());
+                    }
+
+                    $response = "Tu clave es: $key. Esta clave será válida por $keyDuration $unit.";
+                    sendMessage($chatId, $response);
                 }
+            }
+        }
 
-                $response = "Clave eliminada con éxito.";
+        // Verificar si el mensaje es el comando /claim
+        elseif (preg_match('/^\/claim$/', $messageText)) {
+            // Verificar si el usuario tiene una clave activa
+            $checkKeyQuery = "SELECT * FROM keys WHERE chat_id = $1 AND claimed = TRUE AND expiration > NOW()";
+            $checkKeyResult = pg_query_params($conn, $checkKeyQuery, array($chatId));
+
+            if (pg_num_rows($checkKeyResult) > 0) {
+                $response = "Ya tienes una clave activa. No puedes reclamar otra hasta que caduque.";
+                sendMessage($chatId, $response);
+            } else {
+                $response = "No tienes ninguna clave activa. Usa el comando /genkey para obtener una clave.";
                 sendMessage($chatId, $response);
             }
+        }
 
-            // Command to remove an admin
-            elseif (preg_match('/^\/removeadmin (\d+)$/', $messageText, $matches)) {
-                $chatIdToRemove = $matches[1];
+        // Verificar si el mensaje es el comando /premium
+        elseif ($messageText === '/premium' && $chatId == 1292171163) { // Solo el admin puede usar /premium
+            // Obtener todos los usuarios premium
+            $premiumUsersQuery = "SELECT chat_id FROM keys WHERE claimed = TRUE AND expiration > NOW()";
+            $premiumUsersResult = pg_query($conn, $premiumUsersQuery);
 
-                // Remove admin privileges
-                $removeAdminQuery = "UPDATE usuarios SET is_admin = FALSE WHERE chat_id = $1";
-                $removeAdminResult = pg_query_params($conn, $removeAdminQuery, array($chatIdToRemove));
-
-                if (!$removeAdminResult) {
-                    throw new Exception("Error al eliminar los privilegios de administrador: " . pg_last_error());
+            if (pg_num_rows($premiumUsersResult) > 0) {
+                $premiumList = "Usuarios premium activos:\n";
+                while ($row = pg_fetch_assoc($premiumUsersResult)) {
+                    $premiumList .= "Chat ID: " . $row['chat_id'] . "\n";
                 }
-
-                $response = "Administrador eliminado con éxito.";
+                sendMessage($chatId, $premiumList);
+            } else {
+                $response = "No hay usuarios premium activos.";
                 sendMessage($chatId, $response);
             }
-        } else {
-            // Si no es un comando reconocido
-            $response = "Comando no reconocido. Usa /start para empezar o /genkey para generar una clave.";
-            sendMessage($chatId, $response);
         }
 
     } catch (Exception $e) {
