@@ -2416,7 +2416,8 @@ $id_text = file_get_contents("ID");
 $startTime = microtime(true); //TIEMPO DE INICIO
 $BinData = BinData($bin); //Extrae los datos del bin
 
-///SACA EL NONCE///
+
+
 $curl = curl_init();
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://fstopgear.com/my-account/add-payment-method/',
@@ -2426,11 +2427,11 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'GET',
-  CURLOPT_COOKIE => 'ac_enable_tracking=1; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2025-01-27%2017%3A23%3A48%7C%7C%7Cep%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2025-01-27%2017%3A23%3A48%7C%7C%7Cep%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F132.0.0.0%20Mobile%20Safari%2F537.36; __stripe_mid=cb6543e0-289b-4747-959a-773956e4b9e15eced5; __stripe_sid=e3af39e4-7c23-4e16-8f62-cd42f017171ac09c0f; yith_wcmcs_currency=USD; fp_logged_in_roles=customer; wordpress_logged_in_92ff63d1ba7051ba8c3b940c6bfa0f68=xipay59414%7C1739208351%7CC9BaUKB1fMIHiO0A5l0mqnc4TMCynOzk5HYR5EPUpAo%7Cdd427edd05095f84ddce0dce0ed91427fbf0bd3ed46cbe9092c35150d3ec2a32; wp_woocommerce_session_92ff63d1ba7051ba8c3b940c6bfa0f68=16386%7C%7C1738171519%7C%7C1738167919%7C%7Cf8df7b0e07cc467473eb185cabd6176f; sbjs_session=pgs%3D11%7C%7C%7Ccpg%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fpayment-methods%2F',
+  CURLOPT_COOKIE => 'ac_enable_tracking=1; __stripe_mid=cb6543e0-289b-4747-959a-773956e4b9e15eced5; yith_wcmcs_currency=USD; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2025-02-13%2000%3A49%3A55%7C%7C%7Cep%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2025-02-13%2000%3A49%3A55%7C%7C%7Cep%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F132.0.0.0%20Mobile%20Safari%2F537.36; __stripe_sid=8a04437d-8e0a-4484-ae15-1fd72d8ca3ed8380fe; fp_logged_in_roles=customer; wordpress_logged_in_92ff63d1ba7051ba8c3b940c6bfa0f68=rigoj4847%7C1740618072%7CJtgw5vdQV9tk8STDQuwHeKlreZ4m7BcHfVOgL0yKZiX%7C7d032f7e5afc64bfb14a8e2e0a30cb6c5a53705aaa0d5bd7c9bf69f04575ad18; wp_woocommerce_session_92ff63d1ba7051ba8c3b940c6bfa0f68=16513%7C%7C1739580533%7C%7C1739576933%7C%7C1c74f2e4ec017ea18797033e25106eb4; sbjs_session=pgs%3D19%7C%7C%7Ccpg%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fedit-address%2F',
   CURLOPT_HTTPHEADER => [
     'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Mobile Safari/537.36',
     'sec-ch-ua-platform: "Android"',
-    'accept-language: es-US,es;q=0.8',
+    'accept-language: es-US,es;q=0.9',
     'referer: https://fstopgear.com/my-account/payment-methods/',
   ],
 ]);
@@ -2438,7 +2439,6 @@ curl_setopt_array($curl, [
 $response = curl_exec($curl);
 $err = curl_error($curl);
 curl_close($curl);
-
 
 //file_put_contents('index.html', $response);
 //$response = file_get_contents('index.html');
