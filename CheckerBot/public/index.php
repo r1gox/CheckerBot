@@ -2114,7 +2114,7 @@ $mes   = $i[1];
 $ano  = trim(substr($i[2], -2));
 $cvv   = $i[3];
 
-$lista = "$cc|$mes|$ano|cvv";
+$lista = "$cc|$mes|$ano|$cvv";
 
 
 $bin = substr($lista, 0, 6);
