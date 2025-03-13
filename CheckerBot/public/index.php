@@ -2152,6 +2152,42 @@ for ($i = 0; $i < strlen($cc); $i += $longitud) {
 ////EXTRAE EL NONCE////
 $cc = implode('+', $partes);
 
+
+$curl = curl_init();
+
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://stainlessnutsandbolts.co.uk/my-account/add-payment-method/',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',                                                                 CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_COOKIE => 'sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2025-03-13%2017%3A06%3A07%7C%7C%7Cep%3Dhttps%3A%2F%2Fstainlessnutsandbolts.co.uk%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2025-03-13%2017%3A06%3A07%7C%7C%7Cep%3Dhttps%3A%2F%2Fstainlessnutsandbolts.co.uk%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F134.0.0.0%20Mobile%20Safari%2F537.36; wordpress_logged_in_3dc49451096e94637e98b7d302410bbe=tataji3523%7C1743095179%7C6ykFKTmQOiQ8TVaZQ08uhYAymLk9M7zTVate4fls0E3%7C3800628016aa866c6fcc02818d9bc626224a03f58f175ef9036dd2b3b063bdc6; sbjs_session=pgs%3D3%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fstainlessnutsandbolts.co.uk%2Fmy-account%2Fadd-payment-method%2F',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Mobile Safari/537.36',
+    'sec-ch-ua-platform: "Android"',
+    'accept-language: es-US,es;q=0.7',
+    'referer: https://stainlessnutsandbolts.co.uk/my-account/add-payment-method/',
+  ],
+]);
+
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+$patron = '/createSetupIntentNonce":"([a-zA-Z0-9]+)"/';
+preg_match($patron, $response, $coincidencias);
+$nonce = $coincidencias[1];
+/////
+$patron = '/pk_live_[a-zA-Z0-9]*/';
+preg_match($patron, $response, $coincidencia);
+$pk_live = $coincidencia[0];
+curl_close($curl);
+
+/////EXTRAE EL ID//
+
+echo "$nonce\n";
+echo "$pk_live\n";
+	
 $curl = curl_init();                                                                    
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://api.stripe.com/v1/payment_methods',
@@ -2195,7 +2231,7 @@ curl_setopt_array($curl, [
   CURLOPT_POSTFIELDS => [
     'action' => 'create_setup_intent',
     'wcpay-payment-method' => ''.$id.'',
-    '_ajax_nonce' => 'bc1c31483f',
+    '_ajax_nonce' => ''.$nonce.'',
   ],
   CURLOPT_COOKIE => 'wordpress_sec_3dc49451096e94637e98b7d302410bbe=tataji3523%7C1743095179%7C6ykFKTmQOiQ8TVaZQ08uhYAymLk9M7zTVate4fls0E3%7C4d04ba1c80d1fb76591327d6f56bb7ad385e7a75384526499dacb690aabc850e; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2025-03-13%2017%3A06%3A07%7C%7C%7Cep%3Dhttps%3A%2F%2Fstainlessnutsandbolts.co.uk%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2025-03-13%2017%3A06%3A07%7C%7C%7Cep%3Dhttps%3A%2F%2Fstainlessnutsandbolts.co.uk%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F134.0.0.0%20Mobile%20Safari%2F537.36; wordpress_logged_in_3dc49451096e94637e98b7d302410bbe=tataji3523%7C1743095179%7C6ykFKTmQOiQ8TVaZQ08uhYAymLk9M7zTVate4fls0E3%7C3800628016aa866c6fcc02818d9bc626224a03f58f175ef9036dd2b3b063bdc6; sbjs_session=pgs%3D3%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fstainlessnutsandbolts.co.uk%2Fmy-account%2Fadd-payment-method%2F',
   CURLOPT_HTTPHEADER => [
