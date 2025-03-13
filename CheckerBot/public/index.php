@@ -1886,6 +1886,9 @@ ob_flush();
 
 
 elseif((strpos($message, "!go") === 0)||(strpos($message, "/go") === 0)||(strpos($message, ".go") === 0)){
+		$respuesta = "Gate no disponible por el momento !!!";
+	sendMessage($chat_id,$respuesta, $message_id);
+	die();
 //$lista = preg_replace('/\s+/', '', $lista);
 $lista = substr($message, 4);
 //$i = preg_split('/[|:| ]/', $lista);
