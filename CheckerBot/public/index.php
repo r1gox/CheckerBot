@@ -5,10 +5,10 @@ $token = getenv('TELEGRAM_BOT_TOKEN');
 if (empty($token)) {
     die("❌ Error: No se encontró el token del bot.");
 }
-include 'chk/app/functions.php';
-include 'chk/app/bot.php';
-include 'chk/chds/ats.php';
-include 'chk/ats/ats.php';
+include 'app/functions.php';
+include 'app/bot.php';
+include 'chds/ats.php';
+include 'ats/ats.php';
 
 header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
 header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
