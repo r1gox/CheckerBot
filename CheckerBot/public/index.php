@@ -97,11 +97,9 @@ if (isset($update['message'])) {
         sendMessage($chatId, $respuesta, $message_id);
         die();
     }
-}
 
-////PARTE PARA COMANDOS//
-
-
+    
+    ////PARTE PARA COMANDOS//
 
 
 
