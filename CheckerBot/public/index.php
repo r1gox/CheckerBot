@@ -66,17 +66,35 @@ if (isset($update['message'])) {
         $TypeUser = "Free";
     }
 
-    if (in_array($private_id, $adminIds)) {
+    //if (in_array($private_id, $adminIds)) {
+    if (in_array($private_id, $adminIds) || $chatId == "-1002452370727") {
     // El código se ejecutará si $private_id está en el array de administradores
-        } elseif ($chatId == "-1002452370727") {
-    if ($userType == "ғʀᴇᴇ ᴜsᴇʀ" && preg_match('/^(!|\/|\.)claim/', $message)) {
+  //      } elseif ($chatId == "-1002452370727") {
+   // if ($userType == "ғʀᴇᴇ ᴜsᴇʀ" && preg_match('/^(!|\/|\.)claim/', $message)) {
 
     } else {
     // Si no es un administrador, pero el chatId coincide con el grupo específico
         die(); // Termina la ejecución del script
     }
     }
- 
+
+
+    if (preg_match('/^(!|\/|\.)id$/', $message)) {
+        if ($private_title == "Channel"){
+            $name_title = $group_title;
+            $ID = $group_id;
+        }else{
+            $name_title = $private_title;
+            $ID = $private_id;
+        }
+        $respuesta = "🔹 <b>Información de Usuario</b> 🔹\n\n" .
+            "📛 <b>Nombre:</b> {$name_title}\n" .
+            "💬 <b>Tipo de Chat:</b> {$chat_type}\n" .
+            "🆔 <b>Tu ID:</b> <code>{$ID}</code>\n" .
+            "✨ <b>Estado Actual:</b> {$tipoUsuario}\n";
+        sendMessage($chatId, $respuesta, $message_id);
+        die();
+    }
 
 // Si el usuario NO es premium y el comando es una variante de "start"
     if ($userType == "ғʀᴇᴇ ᴜsᴇʀ" && preg_match('/^(!|\/|\.)start$/', $message)) {
