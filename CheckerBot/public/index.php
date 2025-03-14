@@ -76,7 +76,6 @@ if (isset($update['message'])) {
     // Si no es un administrador, pero el chatId coincide con el grupo específico
         die(); // Termina la ejecución del script
     }
-    }
 
 
     if (preg_match('/^(!|\/|\.)id$/', $message)) {
