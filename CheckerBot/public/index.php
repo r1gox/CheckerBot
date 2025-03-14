@@ -7,7 +7,7 @@ if (empty($token)) {
 }
 include 'app/functions.php';
 include 'app/bot.php';
-include 'chds/ats.php';
+include 'chds/chds.php';
 include 'ats/ats.php';
 
 header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
