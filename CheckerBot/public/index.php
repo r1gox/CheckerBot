@@ -3780,9 +3780,9 @@ ob_flush();
 
 ////https://panoramitalia.com/index.php/subscribe/
 elseif((strpos($message, "!br") === 0)||(strpos($message, "/br") === 0)||(strpos($message, ".br") === 0)){
-  //  $respuesta = "🚫 Oops!\n Comando En reparacion\n";
-   // sendMessage($chat_id, $respuesta, $message_id);
-	//die();
+    $respuesta = "🚫 Oops!\n Comando En reparacion\n";
+   sendMessage($chat_id, $respuesta, $message_id);
+	die();
 $lista = substr($message, 4);
 $i = preg_split('/[|:| ]/', $lista);
 $cc    = $i[0];
