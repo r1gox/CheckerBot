@@ -3,7 +3,7 @@
 session_start();
 error_reporting(0);
 set_time_limit(0);
-
+$token = getenv('TELEGRAM_BOT_TOKEN');
 date_default_timezone_set('America/Mexico_city');
 $fecha = date("Y/m/d h:i:m");
 //echo "$fecha\n";
