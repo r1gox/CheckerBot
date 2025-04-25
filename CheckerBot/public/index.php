@@ -474,8 +474,10 @@ if ($update["from"]["id"] == $myid || in_array($update["from"]["id"], $autorizad
 	'Telegram ➜ '.$contact.'';
 	sendMessage($chat_id,$respuesta,$message_id);
 	//------MENSAJE PERSONAL-------//
-        $personal = "Hola Rigo Jimenez, ".$Name." Intento Acceder a tu Bot";
-        sendPv($myid, $personal);
+	if (!empty($Name)){
+		$personal = "Hola Rigo Jimenez, ".$Name." Intento Acceder a tu Bot";
+		sendPv($myid, $personal);
+	}
         die();
 }
 
