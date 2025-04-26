@@ -1947,28 +1947,32 @@ $BinData = BinData($bin); //Extrae los datos del bin
 
 
 //RANDOM USER//
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'https://randomuser.me/api/1.2/?nat=us');
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-$get = curl_exec($ch);
-curl_close($ch);
-        preg_match_all("(\"first\":\"(.*)\")siU", $get, $matches1);
-        $name = $matches1[1][0];
-        preg_match_all("(\"last\":\"(.*)\")siU", $get, $matches1);
-        $last = $matches1[1][0];
-//        preg_match_all("(\"email\":\"(.*)\")siU", $get, $matches1);
-//        $email = $matches1[1][0];
-        preg_match_all("(\"street\":\"(.*)\")siU", $get, $matches1);
-        $street = $matches1[1][0];
-        preg_match_all("(\"city\":\"(.*)\")siU", $get, $matches1);
-        $city = $matches1[1][0];
-        preg_match_all("(\"state\":\"(.*)\")siU", $get, $matches1);
-        $state = $matches1[1][0];
-        preg_match_all("(\"phone\":\"(.*)\")siU", $get, $matches1);
-        $phone = $matches1[1][0];
-        preg_match_all("(\"postcode\":(.*),\")siU", $get, $matches1);
-        $postcode = $matches1[1][0];
+// Nombres
+$names = array(
+    'Juan', 'María', 'Pedro', 'Ana', 'Luis', 'Sofía', 'Carlos', 'Elena', 'Alejandro', 'Isabel'
+);
+
+// Apellidos
+$lastNames = array(
+    'García', 'Rodríguez', 'González', 'Martínez', 'Hernández', 'López', 'Díaz', 'Pérez', 'Sánchez', 'Ramírez'
+);
+
+// Números de teléfono
+function generatePhoneNumber() {
+    $areaCode = rand(200, 999);
+    $prefix = rand(200, 999);
+    $lineNumber = rand(1000, 9999);
+    return "($areaCode) $prefix-$lineNumber";
+}
+
+// Generar datos
+$name = $names[array_rand($names)];
+$last = $lastNames[array_rand($lastNames)];
+$phone = generatePhoneNumber();
+
+// Imprimir datos
+echo "Nombre: $name $lastName\n";
+echo "Teléfono: $phone\n";
 
 ////SACA EL TOKEN//
 $response = file_get_contents('https://www.fakemailgenerator.com');
