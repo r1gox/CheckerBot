@@ -470,7 +470,7 @@ if ($update["from"]["id"] == $myid || in_array($update["from"]["id"], $autorizad
 } else {
 	// Enviar mensaje de error
 	$contact = "<a href='t.me/rigo_jz'>ʀɪɢᴏ ᴊɪᴍᴇɴᴇᴢ</a>";
-	$respuesta = "━━━━━━━•⟮𝑁𝑎𝑧𝑢𝑛𝑎 𝑁𝑎𝑛𝑎𝑘𝑢𝑠𝑎⟯•━━━━━━━\nHola ".$Name." este bot es premium y para poder acceder a el necesitas una key de autorización.\n\nAdquiérelo yaa!.\n\nPuedes usarlo gratis aqui: https://t.me/Bins_checker - https://t.me/checker_bins\n\n".
+	$respuesta = "━━━━━━━•⟮𝑁𝑎𝑧𝑢𝑛𝑎 𝑁𝑎𝑛𝑎𝑘𝑢𝑠𝑎⟯•━━━━━━━\nHola ".$Name." este bot es premium y para poder acceder a el necesitas una key de autorización.\n\nAdquiérelo yaa!.\n\nPuedes usarlo gratis aqui:\nhttps://t.me/Bins_checker\nhttps://t.me/checker_bins\n\n".
 	'Telegram ➜ '.$contact.'';
 	sendMessage($chat_id,$respuesta,$message_id);
 	//------MENSAJE PERSONAL-------//
@@ -780,7 +780,8 @@ $message = $reply_to_message['caption'];
 ///ENVIA LA FOTO AL CANAL DE REFERENCIAS//)
 //$chat_id = '1292171163'; // reemplaza con el ID del chat
 $chat_id_refes = '-1002324412436'; //CANAL DE REFERENCIAS
-$chat_id_chanel = '-1001697730096'; //CANAL DEL GRUPO
+//$chat_id_chanel = '-1001697730096'; //CANAL DEL GRUPO
+$chat_id_chanel = '-1002682727161'; //CANAL DEL GRUPO
 
 $file_id = $photo_token;
 $i = "<a href='https://t.me/ReferenciasAlyaSan'>么</a>";
