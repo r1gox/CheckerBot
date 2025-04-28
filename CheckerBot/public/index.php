@@ -2658,6 +2658,8 @@ ob_flush();
 
 
 elseif((strpos($message, "!chk") === 0)||(strpos($message, "/chk") === 0)||(strpos($message, ".chk") === 0)){
+
+	die();
 $lista = substr($message, 5);
 $i = preg_split('/[|:| ]/', $lista);
 $cc    = $i[0];
