@@ -2813,11 +2813,11 @@ if (empty($respo)){
 $respo = trim($mensaje);
 }
 
-//if (empty($respo)){
-//$respo = "Payment method successfully added.";
-//}
+if (empty($respo)){
+$respo = "Payment method successfully added.";
+}
 
-
+/*
 if (empty($respo)){
 //if ($respo == "Payment method successfully added.") {
 
@@ -2875,7 +2875,7 @@ $response = curl_exec($curl);
 $err = curl_error($curl);
 curl_close($curl);
 }
-
+*/
 //echo "RESPO: $respo\n"; // Output: There was an error saving your payment method. Reason: Declined - Call Issuer
 
 $timetakeen = (microtime(true) - $startTime);
