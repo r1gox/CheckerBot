@@ -370,6 +370,7 @@ $live_array = array(
     '𝑨𝒑𝒑𝒓𝒐𝒗𝒆𝒅!',
     'Insufficient balance',
     'Charged $10',
+    'Thank You. Success!.',
 //    'Your payment method was rejected due to 3D Secure.',
     'transaction_not_allowed',
     'CVV INVALID',
@@ -1530,6 +1531,16 @@ $respo = explode('</li>', $parts[1])[0];
 
 curl_close($curl);
 
+if (empty($respo)) {
+if (strpos($response, "I've just donated to Environment Victoria!") !== false) {
+        echo "✅ Donación exitosa detectada.\n";
+        $respo = "Thank You. Success!.";
+} else {
+    echo "❌ No se detectó una donación exitosa.";
+        $respo = "Your card was declined.";
+}
+}
+	
 
 $timetakeen = (microtime(true) - $startTime);
 $time = substr_replace($timetakeen, '', 4);
