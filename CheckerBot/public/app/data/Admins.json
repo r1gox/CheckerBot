@@ -12,5 +12,12 @@
         "name": "Checker BINS",
         "username": "checker_bins",
         "premium": true
+    },
+    "-1002743968728": {
+        "id": "-1002743968728",
+        "type": "channel",
+        "name": "\ud83d\udcbb \ud835\udcd1\ud835\udcf2\ud835\udcf7\ud835\udcfc \ud835\udcd2\ud835\udcf1\ud835\udcee\ud835\udcec\ud835\udcf4\ud835\udcee\ud835\udcfb \ud83d\udd0d",
+        "username": "maverick_chkr",
+        "premium": true
     }
 }
