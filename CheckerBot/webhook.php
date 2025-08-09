@@ -50,7 +50,7 @@ system('rm cookie.txt');
 
 
 //--------PRIVACIDAD--------//
-if($grupo == "D4rk Security")
+if($grupo == "💻 𝓑𝓲𝓷𝓼 𝓒𝓱𝓮𝓬𝓴𝓮𝓻 🔍")
 {
 //PERMITE QUE PUEDA EMVIAR MWNSAJES EN EL GRUPO :3
 } else {
